@@ -2,11 +2,11 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>au.org.steps10000</id>
     <name>10000steps</name>
-    <version>1.0</version>
-    <publisher>praj</publisher>
+    <version>3.00</version>
+    <publisher>10000 steps</publisher>
     <url>http://www.10000steps.org.au</url>
-    <description>undefined</description>
-    <copyright>2016 by praj</copyright>
+    <description/>
+    <copyright>10000 Steps</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -58,7 +58,7 @@
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>5.2.0.GA</sdk-version>
+    <sdk-version>5.4.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
