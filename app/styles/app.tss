@@ -24,3 +24,33 @@ overrode the settings with other TSS, XML, or JS settings:
 }
 
 */
+"Window": {
+	layout: "vertical"	
+}
+
+"View": {
+	layout: "vertical"
+}
+
+"Button": {
+	width: "50%",
+	height: "50%"
+}
+
+"Label": {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "#000"
+}
+
+".error": {
+	color: "red"
+}
+
+"TextField": {
+	backgroundColor: "white",
+	borderRadius: "5px",
+	borderStyle: "solid",
+	borderWidth: "1px",
+	width: '50%'
+}
