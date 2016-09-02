@@ -1,5 +1,66 @@
 <Alloy>
 	<Window>
-		<Label>Hello</Label>
+		<View id="header" height="Ti.UI.SIZE" layout="vertical">
+			<ImageView 
+				top="0px"
+				height="90dp"
+				width="Ti.UI.FILL"
+				image="/common/homepage_logo_background@2x.png">
+			</ImageView>
+			
+			<ImageView
+				top="-60dp"
+				height="120dp"
+				width="auto"
+				image="/common/homepage_logo@2x.png">
+			</ImageView>
+		</View>
+		
+		<View class="container">
+			<View class="wrapper" width="50%">
+				<ImageView
+					id="btnStepLog"
+					onClick="btnStepLog_click"
+					class="padding"
+					image="/common/homepage_button_step-log@2x.png">
+				</ImageView>
+			</View>
+			
+			<View class="wrapper" width="50%">
+				<ImageView
+					id="btnStatistics"
+					onClick="btnStatistics_click"
+					class="padding"
+					image="/common/homepage_button_progress@2x.png">
+				</ImageView>
+			</View>
+			
+			<View class="wrapper" width="50%">
+				<ImageView
+					id="btnChallenges"
+					onClick="btnChallenges_click"
+					class="padding"
+					image="/common/homepage_button_ichallenges@2x.png">
+				</ImageView>
+			</View>
+			
+			<View class="wrapper" width="50%">
+				<ImageView
+					id="btnTournaments"
+					onClick="btnTournaments_click"
+					class="padding"
+					image="/common/homepage_button_friend-challenges@2x.png">
+				</ImageView>
+			</View>
+			
+			<View class="wrapper" left="25%" width="50%">
+				<ImageView
+					id="btnSettings"
+					onClick="btnSettings_click"
+					class="padding"
+					image="/common/homepage_button_profile-&-settings@2x.png">
+				</ImageView>
+			</View>
+		</View>
 	</Window>
 </Alloy>

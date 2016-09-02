@@ -1,0 +1,28 @@
+'.container': {
+	layout: 'horizontal',
+	center: '0px',
+	width: '50%',
+	//backgroundColor: 'red'
+}
+
+'Button': {
+	color: 'none'
+}
+
+'.wrapper': {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	
+	//backgroundColor: 'red'
+}
+
+'.padding': {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	
+	top: '10dp', right: '10dp', bottom: '10dp', left: '10dp'
+}
+
+'Window': {
+	left: '-100%'
+}

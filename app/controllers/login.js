@@ -2,10 +2,12 @@
 var args = $.args;
 
 function btnLogin_click(e) {
-	//First validation
+	//TODO: validation
 	
 	//On success, try a login
-	tryLogin($.txtUsername.value, $.txtPassword.value);
+	//tryLogin($.txtUsername.value, $.txtPassword.value);
+	
+	goHome();
 }
 
 function tryLogin(username, password) {
@@ -19,30 +21,50 @@ function tryLogin(username, password) {
 					Ti.API.info(this.responseText);
 					
 					//TODO: store the auth key
-					$.login.close();
+					//TODO: save the login status?
 					
-					var win = Alloy.createController('home').getView();
-					win.open();
+					goHome();
 				}
 			}
 		}
 		catch(err) {
-			Ti.API.error("Caught error: " + err);
+			Ti.API.error('Caught error: ' + err);
 		}
 	};
 	
 	req.onerror = function(e) {
-		Ti.API.error("Request error. Code: " + e.code + ", error: " + e.error);
+		Ti.API.error('Request error. Code: ' + e.code + ', error: ' + e.error);
 		
 		if(e.code === 400) {
-			$.lblError.text = "Couldn't log in. Are your details right?";
+			$.lblError.text = 'Couldn\'t log in. Are your details right?';
 		}
 	};
 	
-	req.open("POST", "http://steps10000.webfactional.com/api/auth/login/");
-	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.open('POST', 'http://steps10000.webfactional.com/api/auth/login/');
+	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	req.send({
 		username: username,
 		password: password
 	});
+}
+
+function goHome() {
+	var win = Alloy.createController('home').getView();
+
+	win.addEventListener('open', function() {
+		var anim = Ti.UI.createAnimation({
+			left: 0,
+			duration: 1000
+		});
+		
+		win.animate(anim);
+		
+		/*
+		setTimeout(function() {
+			$.login.close();
+		}, 1000);
+		*/
+	});
+	
+	win.open();
 }
