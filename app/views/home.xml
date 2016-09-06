@@ -17,50 +17,48 @@
 		</View>
 		
 		<View class="container">
-			<View class="wrapper" width="50%">
-				<ImageView
+			<!-- TODO: These are a little small on Android. Review -->
+			
+				<Button
 					id="btnStepLog"
+					style="PLAIN"
+					width="50%"
 					onClick="btnStepLog_click"
-					class="padding"
 					image="/common/homepage_button_step-log@2x.png">
-				</ImageView>
-			</View>
-			
-			<View class="wrapper" width="50%">
-				<ImageView
+				</Button>
+				
+				<Button
 					id="btnStatistics"
+					style="PLAIN"
+					width="50%"
 					onClick="btnStatistics_click"
-					class="padding"
 					image="/common/homepage_button_progress@2x.png">
-				</ImageView>
-			</View>
+				</Button>
 			
-			<View class="wrapper" width="50%">
-				<ImageView
+				<Button
 					id="btnChallenges"
+					style="PLAIN"
+					width="50%"
 					onClick="btnChallenges_click"
-					class="padding"
 					image="/common/homepage_button_ichallenges@2x.png">
-				</ImageView>
-			</View>
-			
-			<View class="wrapper" width="50%">
-				<ImageView
+				</Button>
+				
+				<Button
 					id="btnTournaments"
+					style="PLAIN"
+					width="50%"
 					onClick="btnTournaments_click"
-					class="padding"
 					image="/common/homepage_button_friend-challenges@2x.png">
-				</ImageView>
-			</View>
+				</Button>
 			
-			<View class="wrapper" left="25%" width="50%">
-				<ImageView
+				<Button
 					id="btnSettings"
+					style="PLAIN"
+					left="25%"
+					width="50%"
 					onClick="btnSettings_click"
-					class="padding"
 					image="/common/homepage_button_profile-&-settings@2x.png">
-				</ImageView>
-			</View>
+				</Button>
 		</View>
 	</Window>
 </Alloy>

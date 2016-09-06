@@ -1,0 +1,21 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios">
+		<Window title="Step Log" id="log" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>
+			</LeftNavButton>
+			
+			<RightNavButton>
+				<Button id="btnSync" onClick="btnSync_click">Sync</Button>
+			</RightNavButton>
+			
+			<TableView id = "tblDays"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window platform="android" id="log" title="Step Log" onOpen="window_open">
+		<TableView id = "tblDays" />
+	</Window>
+</Alloy>

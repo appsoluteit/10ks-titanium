@@ -2,7 +2,24 @@
 var args = $.args;
 
 function btnStepLog_click(e) {
-	alert("Clicked step log");
+	var win = Alloy.createController('log').getView();
+	
+	win.addEventListener('open', function() {
+		var anim = Ti.UI.createAnimation({
+			left: 0,
+			duration: 1000
+		});
+		
+		win.animate(anim);
+		
+		/*
+		setTimeout(function() {
+			$.login.close();
+		}, 1000);
+		*/
+	});
+	
+	win.open();
 }
 
 function btnStatistics_click(e) {
