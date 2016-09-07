@@ -1,0 +1,16 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios" id="logEntry">
+		<Window title="" id="window1" onPostlayout="window_open">
+			<LeftNavButton>
+				<Button id="btnDone" onClick="btnDone_click">Back</Button>
+			</LeftNavButton>
+			
+			<!-- TODO -->
+			<Label>Fields coming soon</Label>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<!-- TODO -->
+</Alloy>

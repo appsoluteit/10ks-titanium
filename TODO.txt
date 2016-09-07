@@ -1,0 +1,8 @@
+
+- Add a register link to the login screen + add a new view/controller for it. 
+	(What about a password reset?)
+	(What about a logout feature?)
+	(Once logged in, does the user ever 'expire'?)
+	
+- 'Enter log' view/controller
+- More to come
