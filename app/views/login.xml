@@ -20,13 +20,20 @@
 			<Label>Username</Label>
 			<TextField 
 				id="txtUsername" 
+				class="half"
 				autocorrect="false" 
 				autocapitalization="false" 
+				softKeyboardOnFocus="true"
 				keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
 			</TextField>
 			
 			<Label>Password</Label>
-			<TextField id="txtPassword" passwordMask="true"></TextField>
+			<TextField 
+				id="txtPassword" 
+				class="half"
+				softKeyboardOnFocus="true"
+				passwordMask="true">
+			</TextField>
 			
 			<Label id="lblError" class="error"></Label>
 			<Button id="btnLogin" title="Login" onClick="btnLogin_click"></Button>
