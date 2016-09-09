@@ -1,5 +1,5 @@
 <Alloy>
-	<Window>
+	<Window id="login">
 		<View id="header" height="Ti.UI.SIZE" layout="vertical">
 			<ImageView 
 				top="0px"
@@ -23,15 +23,13 @@
 				class="half"
 				autocorrect="false" 
 				autocapitalization="false" 
-				softKeyboardOnFocus="true"
 				keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-			</TextField>
+			</TextField>			
 			
 			<Label>Password</Label>
 			<TextField 
 				id="txtPassword" 
 				class="half"
-				softKeyboardOnFocus="true"
 				passwordMask="true">
 			</TextField>
 			

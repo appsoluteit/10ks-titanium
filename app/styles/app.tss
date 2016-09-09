@@ -45,6 +45,11 @@
 	borderColor: 'black'
 }
 
+'TextField[platform=android]': {
+	softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_SHOW_ON_FOCUS,
+	color: 'blue'
+}
+
 '.error': {
 	color: 'red'
 }

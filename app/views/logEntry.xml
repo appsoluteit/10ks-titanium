@@ -12,8 +12,10 @@
 						<TextField 
 							id="txtStepsWalked" 
 							width="33%"
-							keyboardType="Ti.UI.KEYBOARD_TYPE_DECIMAL_PAD" 
-							softKeyboardOnFocus="true">
+							keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" 
+							softKeyboardOnFocus="true"
+							maxLength="5"
+							onChange="txtStepsWalked_change">
 						</TextField>
 				</View>
 				
@@ -26,8 +28,10 @@
 					<TextField 
 						id="txtModerateMins"
 						width="33%"
-						keyboardType="KEYBOARD_TYPE_DECIMAL_PAD"
-						softKeyboardOnFocus="true">
+						keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+						softKeyboardOnFocus="true"
+						maxLength="5"
+						onChange="txtModerateMins_change">
 					</TextField>
 					<Label class="italic" left="10dp">mins</Label>
 				</View>
@@ -37,8 +41,10 @@
 					<TextField
 						id="txtVigorousMins"
 						width="33%"
-						keyboardType="KEYBOARD_TYPE_DECIMAL_PAD"
-						softKeyboardOnFocus="true">
+						keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+						softKeyboardOnFocus="true"
+						maxLength="5"
+						onChange="txtVigorousMins_change">
 					</TextField>
 					<Label class="italic" left="10dp">mins</Label>
 				</View>
@@ -52,5 +58,8 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<!-- TODO -->
+	<Window platform="android" id="logEntry">
+		<!-- TODO -->
+		<Label>Coming soon</Label>
+	</Window>
 </Alloy>
