@@ -47,6 +47,20 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton) {
 	});
 	row.addEventListener('click', tblRow_click);
 	
+	var view = Ti.UI.createView({
+		//backgroundColor: 'blue'	
+	});
+	
+	var label = Ti.UI.createLabel({
+		textAlign: "right",
+		right: "10dp",
+		text: "Hello",
+		color: "red"
+	});
+	
+	view.add(label);
+	row.add(view);
+	
 	$.tblDays.appendRow(row);	
 }
 
@@ -87,7 +101,8 @@ function tblRow_click(e) {
 	else {
 		var entryWin = Alloy.createController('logEntry', {
 			title: e.source.title,
-			date:  e.source.date
+			date:  e.source.date,
+			obj: e.source
 		}).getView();
 		
 		entryWin.open();

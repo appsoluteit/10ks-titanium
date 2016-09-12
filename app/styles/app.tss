@@ -8,10 +8,6 @@
 	height: Ti.UI.SIZE
 }
 
-'.quarter': {
-	width: '25%'
-}
-
 '.half': {
 	width: '50%'
 }
