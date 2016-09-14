@@ -34,5 +34,6 @@ function calculateTotal() {
 	
 	var total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
 	
+	$.lblDailyTotal.total = total;	//store the total in a custom attribute
 	$.lblDailyTotal.text = String.formatDecimal(total, 'en-US', '##,##0');
 }

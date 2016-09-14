@@ -35,8 +35,10 @@ function getDayBefore(dateObj) {
  * @param {String} strLabel The label to add
  * @param {Date} dateObj The date that this record represents.
  * @param {Boolean} isLoadMoreButton A boolean to indicate whether this is the 'Load More' button
+ * @param {Integer} index (Optional) The index to add the new row at. If omitted, it will be appended to the end.
+ * @param {String} numSteps (Optional) The text to add to the right of the row, in red
  */
-function addDateRow(strLabel, dateObj, isLoadMoreButton) {
+function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
 		title: strLabel,
@@ -54,14 +56,22 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton) {
 	var label = Ti.UI.createLabel({
 		textAlign: "right",
 		right: "10dp",
-		text: "Hello",
+		text: numSteps == undefined ? "" : numSteps,
 		color: "red"
 	});
 	
 	view.add(label);
-	row.add(view);
+	row.add(view);		//Adding the view to the TableViewRow causes its properties
+						//to become inaccessible by the logEntry controller...need to fix.
+						
+	row.title = strLabel;
+	row.date = dateObj;
+	row.isLoadMoreButton = isLoadMoreButton;
 	
-	$.tblDays.appendRow(row);	
+	if(index == undefined)
+		$.tblDays.appendRow(row, { animated: false });
+	else
+		$.tblDays.insertRowAfter(index, row, { animated: false});	
 }
 
 /**
@@ -90,19 +100,29 @@ function window_open() {
 	var yesterday = getDayBefore(today);
 	addDateRow("Yesterday", yesterday);
 	
+	//TODO: Load any existing data from local storage and display it in the table
+	//TODO: Fix step log compatibility for Android. Possibly the animation argument to tableview methods?
 	loadDatesFrom(getDayBefore(yesterday));	
 }
 
 function tblRow_click(e) {
-	if(e.source.isLoadMoreButton) {
-		$.tblDays.deleteRow(e.source);
-		loadDatesFrom(e.source.date);
+	//Due to the child view in the TableViewRow, e.source doesn't
+	//contain custom properties. Using e.row instead.
+	if(e.row.isLoadMoreButton) {
+		$.tblDays.deleteRow(e.row, { animated: false });
+		loadDatesFrom(e.row.date);
 	}
 	else {
 		var entryWin = Alloy.createController('logEntry', {
-			title: e.source.title,
-			date:  e.source.date,
-			obj: e.source
+			title: e.row.title,
+			date:  e.row.date,
+			obj: e.row,
+			callback: function(stepsLogged) {
+				//Ti.API.info("Callback for: " + e.row.title);
+				
+				addDateRow(e.row.title, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
+				$.tblDays.deleteRow(e.row, { animated: false });
+			}
 		}).getView();
 		
 		entryWin.open();

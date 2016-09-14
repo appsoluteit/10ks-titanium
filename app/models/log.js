@@ -1,8 +1,8 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "day": "date",
-		    "steps": "int"
+		    "day": "TEXT",		//no native datetime support in sqlite. Store as text and parse
+		    "steps": "INTEGER"
 		},
 		adapter: {
 			type: "sql",

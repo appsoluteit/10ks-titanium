@@ -5,14 +5,16 @@ function window_open() {
 }
 
 function btnDone_click() {
-	//TODO: Save value in local storage until Sync
-	Ti.API.info($.logDetails.lblDailyTotal.text);
-	
+	//Save value in local storage until Sync
 	/*
 	Alloy.createModel("log", {
-			
+		day: args.date,
+		steps: $.logDetails.lblDailyTotal.total		
 	});
 	*/
+	
+	//Pass the formatted string back to the parent to display it in the table	
+	args.callback($.logDetails.lblDailyTotal.text);
 	
 	$.logEntry.close();
 }
