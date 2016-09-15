@@ -1,0 +1,27 @@
+<Alloy>
+	<Require src="header" type="view"></Require>
+	<View id="auth" layout="vertical">
+		<Label>Username</Label>
+		<TextField 
+			id="txtUsername" 
+			class="half"
+			autocorrect="false" 
+			autocapitalization="false" 
+			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
+		</TextField>			
+		
+		<Label>Password</Label>
+		<TextField 
+			id="txtPassword" 
+			class="half"
+			passwordMask="true">
+		</TextField>
+		
+		<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>
+		
+		<View layout="horizontal" class="margin-10">
+			<Button id="btnRegister" class="half" title="Register"></Button>
+			<Button id="btnLogin" class="half" title="Login"></Button>
+		</View>
+	</View>
+</Alloy>

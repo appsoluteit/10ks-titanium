@@ -1,10 +1,13 @@
 
 - Add a register link to the login screen + add a new view/controller for it. 
 	(What about a password reset?)
-	(What about a logout feature?)
+	(What about a logout feature?) => See 'Settings'
 	(Once logged in, does the user ever 'expire'?)
 	
-- When saving entering a new log, store the numeric data as a custom attribute of the log label for easy retrieval
-- When closing the log entry view, save the step log to the newly created log local DB model
 
+- Restructure project into areas
+- Add stub views for other areas not built yet
+- Add logout link
 - Add 'sync' support
+
+6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9

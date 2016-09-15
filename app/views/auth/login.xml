@@ -1,0 +1,13 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios" id="navWinlogin">
+		<Window title="login" onOpen="window_open">
+			<Require src="auth/auth" type="view"></Require>			
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window title="login" onOpen="window_open">
+		<Require id="hello" src="auth/auth" type="view"></Require>			
+	</Window>	
+</Alloy>

@@ -1,14 +1,7 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-function btnLogin_click(e) {
-	//TODO: validation
-	
-	//On success, try a login
-	//tryLogin($.txtUsername.value, $.txtPassword.value);
-	
-	goHome();
-}
+/*********************************** BUSINESS FUNCTIONS ***********************************/
 
 function tryLogin(username, password) {
 	var req = Ti.Network.createHTTPClient();
@@ -20,8 +13,8 @@ function tryLogin(username, password) {
 				if(this.status === 200) {
 					Ti.API.info(this.responseText);
 					
-					//TODO: store the auth key
-					//TODO: save the login status?
+					//Store the auth key. This doesn't change?
+					Ti.App.Properties.setString(this.responseText);
 					
 					goHome();
 				}
@@ -58,13 +51,23 @@ function goHome() {
 		});
 		
 		win.animate(anim);
-		
-		/*
-		setTimeout(function() {
-			$.login.close();
-		}, 1000);
-		*/
 	});
 	
 	win.open();
+}
+
+/*********************************** EVENT HANDLERS     ***********************************/
+function btnLogin_click() {
+	//On success, try a login
+	tryLogin($.txtUsername.value, $.txtPassword.value);
+}
+
+function btnRegister_click() {
+	
+}
+
+function window_open() {
+	$.hello.btnLogin.addEventListener('click', function() {
+		alert("hi");
+	});
 }

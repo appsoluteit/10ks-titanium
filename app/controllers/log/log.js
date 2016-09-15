@@ -41,9 +41,12 @@ function getDayBefore(dateObj) {
 function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
-		title: strLabel,
+		//title: strLabel,
 		color: 'black',
 		height: '50dp',
+		
+		//custom attributes
+		label: strLabel,
 		date: dateObj,
 		isLoadMoreButton: isLoadMoreButton
 	});
@@ -53,25 +56,34 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		//backgroundColor: 'blue'	
 	});
 	
-	var label = Ti.UI.createLabel({
-		textAlign: "right",
-		right: "10dp",
-		text: numSteps == undefined ? "" : numSteps,
-		color: "red"
+	var labelLeft = Ti.UI.createLabel({
+		left: '10dp',
+		textAlign: 'left',
+		color: 'black',
+		font: {
+			fontWeight: 'bold'
+		},
+		text: strLabel,
+		width: Ti.UI.SIZE
 	});
 	
-	view.add(label);
+	var labelRight = Ti.UI.createLabel({
+		right: "10dp",
+		textAlign: "right",
+		color: "red",
+		text: numSteps == undefined ? "" : numSteps,
+		width: Ti.UI.SIZE
+	});
+	
+	view.add(labelLeft);
+	view.add(labelRight);
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
 						//to become inaccessible by the logEntry controller...need to fix.
-						
-	row.title = strLabel;
-	row.date = dateObj;
-	row.isLoadMoreButton = isLoadMoreButton;
 	
 	if(index == undefined)
-		$.tblDays.appendRow(row, { animated: false });
+		$.tblDays.appendRow(row);
 	else
-		$.tblDays.insertRowAfter(index, row, { animated: false});	
+		$.tblDays.insertRowAfter(index, row);	
 }
 
 /**
@@ -109,19 +121,19 @@ function tblRow_click(e) {
 	//Due to the child view in the TableViewRow, e.source doesn't
 	//contain custom properties. Using e.row instead.
 	if(e.row.isLoadMoreButton) {
-		$.tblDays.deleteRow(e.row, { animated: false });
+		$.tblDays.deleteRow(e.row);
 		loadDatesFrom(e.row.date);
 	}
 	else {
-		var entryWin = Alloy.createController('logEntry', {
+		var entryWin = Alloy.createController('log/logEntry', {
 			title: e.row.title,
 			date:  e.row.date,
 			obj: e.row,
 			callback: function(stepsLogged) {
 				//Ti.API.info("Callback for: " + e.row.title);
 				
-				addDateRow(e.row.title, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
-				$.tblDays.deleteRow(e.row, { animated: false });
+				addDateRow(e.row.label, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
+				$.tblDays.deleteRow(e.row);
 			}
 		}).getView();
 		

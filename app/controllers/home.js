@@ -2,7 +2,7 @@
 var args = $.args;
 
 function btnStepLog_click(e) {
-	var win = Alloy.createController('log').getView();
+	var win = Alloy.createController('log/log').getView();
 	
 	win.addEventListener('open', function() {
 		var anim = Ti.UI.createAnimation({

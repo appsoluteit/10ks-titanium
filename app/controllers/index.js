@@ -7,7 +7,7 @@ if(isLoggedIn) {
 	win = Alloy.createController('home').getView();
 }
 else {
-	win = Alloy.createController('login').getView();
+	win = Alloy.createController('auth/login').getView();
 }
 
 win.open();
