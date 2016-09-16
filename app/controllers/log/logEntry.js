@@ -1,7 +1,14 @@
 var args = $.args;
 
 function window_open() {
-	$.window1.title = args.title;	
+	if(Ti.Platform.osname === "ios") {
+		$.window1.title = args.title;
+	}	
+	else if(Ti.Platform.osname === "android") {
+		$.logEntry.activity.actionBar.title = args.title;
+		
+		Ti.API.info("Setting action bar title: " + args.title);
+	}
 }
 
 function btnDone_click() {

@@ -1,28 +1,28 @@
 <Alloy>
 	<!-- iOS -->
-	<NavigationWindow platform="ios" id="navWinlogin">
-		<Window id="login" title="Login">
+	<NavigationWindow platform="ios" id="navWinRegister">
+		<Window id="register" title="Register">
 			<Require id="auth" src="auth/auth" type="view"></Require>	
 			
 			<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>
 			
 			<View layout="horizontal" class="margin-10">
-				<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
 				<Button id="btnLogin" class="half" title="Login" onClick="btnLogin_click"></Button>
+				<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
 			</View>
 		</Window>
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window title="login" platform="android">
-		<ActionBar title="Login"></ActionBar>
+	<Window title="register" platform="android">
+		<ActionBar title="Register"></ActionBar>
 		<Require id="auth" src="auth/auth" type="view"></Require>
 		
 		<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>
 		
 		<View layout="horizontal" class="margin-10">
-			<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
 			<Button id="btnLogin" class="half" title="Login" onClick="btnLogin_click"></Button>
+			<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
 		</View>		
 	</Window>	
 </Alloy>

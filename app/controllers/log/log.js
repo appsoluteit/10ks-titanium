@@ -126,7 +126,7 @@ function tblRow_click(e) {
 	}
 	else {
 		var entryWin = Alloy.createController('log/logEntry', {
-			title: e.row.title,
+			title: e.row.label,
 			date:  e.row.date,
 			obj: e.row,
 			callback: function(stepsLogged) {

@@ -4,41 +4,27 @@ var args = $.args;
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
 function tryLogin(username, password) {
-	var req = Ti.Network.createHTTPClient();
-	req.onload = function() {
-		try {
-			Ti.API.info(this.readyState);
-			
-			if(this.readyState === 4) {
-				if(this.status === 200) {
-					Ti.API.info(this.responseText);
-					
-					//Store the auth key. This doesn't change?
-					Ti.App.Properties.setString(this.responseText);
-					
-					goHome();
-				}
-			}
-		}
-		catch(err) {
-			Ti.API.error('Caught error: ' + err);
-		}
-	};
+	var API = require("/common/source/API");
+	var api = new API();
 	
-	req.onerror = function(e) {
-		Ti.API.error('Request error. Code: ' + e.code + ', error: ' + e.error);
-		
-		if(e.code === 400) {
+	function onSuccess() {
+		//Store the auth key. This doesn't change?
+		Ti.App.Properties.setString("authKey", this.responseText);		
+		goHome();		
+	}
+	
+	function onFail(e) {	
+		if(e.code == 400) {
 			$.lblError.text = 'Couldn\'t log in. Are your details right?';
-		}
-	};
+		}		
+	}
 	
-	req.open('POST', 'http://steps10000.webfactional.com/api/auth/login/');
-	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	req.send({
+	var data = {
 		username: username,
 		password: password
-	});
+	};
+	
+	api.post('http://steps10000.webfactional.com/api/auth/login/', data, onSuccess, onFail);
 }
 
 function goHome() {
@@ -59,15 +45,10 @@ function goHome() {
 /*********************************** EVENT HANDLERS     ***********************************/
 function btnLogin_click() {
 	//On success, try a login
-	tryLogin($.txtUsername.value, $.txtPassword.value);
+	tryLogin($.auth.txtUsername.value, $.auth.txtPassword.value);
 }
 
 function btnRegister_click() {
-	
-}
-
-function window_open() {
-	$.hello.btnLogin.addEventListener('click', function() {
-		alert("hi");
-	});
+	var win = Alloy.createController('auth/register').getView();
+	win.open();
 }
