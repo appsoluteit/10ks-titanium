@@ -2,10 +2,8 @@
 var args = $.args;
 
 function btnLogin_click() {
-	if(Ti.Platform.osname == "ios")
-		$.navWinRegister.close();
-	else
-		$.register.close();
+	Ti.API.info(Ti.Platform.osname);
+	$.register.close();
 }
 
 function btnRegister_click() {

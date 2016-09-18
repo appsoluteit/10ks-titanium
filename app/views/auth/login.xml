@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
-	<NavigationWindow platform="ios" id="navWinlogin">
-		<Window id="login" title="Login">
+	<NavigationWindow platform="ios" id="login">
+		<Window id="window" title="Login">
 			<Require id="auth" src="auth/auth" type="view"></Require>	
 			
 			<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>

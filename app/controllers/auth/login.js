@@ -4,7 +4,7 @@ var args = $.args;
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
 function tryLogin(username, password) {
-	var API = require("/common/source/API");
+	var API = require("API");
 	var api = new API();
 	
 	function onSuccess() {
@@ -29,15 +29,10 @@ function tryLogin(username, password) {
 
 function goHome() {
 	var win = Alloy.createController('home').getView();
-
-	win.addEventListener('open', function() {
-		var anim = Ti.UI.createAnimation({
-			left: 0,
-			duration: 1000
-		});
-		
-		win.animate(anim);
-	});
+	
+	setTimeout(function() {
+		$.login.close();
+	}, 1000);
 	
 	win.open();
 }

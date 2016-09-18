@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="settings" platform="ios">
+		<Window title="Settings">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
+			</LeftNavButton>
+			
+			<Require id="statsView" src="settings/settingsView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="settings" platform="android">
+		<ActionBar 
+			title="Statistics" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="statsView" src="settings/settingsView" type="view"/>
+	</Window>
+</Alloy>

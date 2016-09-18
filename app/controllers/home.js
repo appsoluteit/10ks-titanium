@@ -3,37 +3,25 @@ var args = $.args;
 
 function btnStepLog_click(e) {
 	var win = Alloy.createController('log/log').getView();
-	
-	win.addEventListener('open', function() {
-		var anim = Ti.UI.createAnimation({
-			left: 0,
-			duration: 1000
-		});
-		
-		win.animate(anim);
-		
-		/*
-		setTimeout(function() {
-			$.login.close();
-		}, 1000);
-		*/
-	});
-	
 	win.open();
 }
 
 function btnStatistics_click(e) {
-	alert("Clicked stats");
+	var win = Alloy.createController('stats/stats').getView();
+	win.open();
 }
 
 function btnChallenges_click(e) {
-	alert("Clicked challenges");
+	var win = Alloy.createController('challenges/challenges').getView();
+	win.open();
 }
 
 function btnTournaments_click(e) {
-	alert("Clicked tournaments");
+	var win = Alloy.createController('tournaments/tournaments').getView();
+	win.open();
 }
 
 function btnSettings_click(e) {
-	alert("Clicked settings");
+	var win = Alloy.createController('settings/settings').getView();
+	win.open();
 }

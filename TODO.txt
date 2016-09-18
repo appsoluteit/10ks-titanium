@@ -1,11 +1,6 @@
 
-- Add a register link to the login screen + add a new view/controller for it. 
-	(What about a password reset?)
-	(What about a logout feature?) => See 'Settings'
-	(Once logged in, does the user ever 'expire'?)
-	
-
-- Restructure project into areas
+- Register function
 - Add stub views for other areas not built yet
 - Add logout link
+
 - Add 'sync' support

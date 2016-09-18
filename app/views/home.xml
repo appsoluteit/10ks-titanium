@@ -11,7 +11,7 @@
 					style="PLAIN"
 					width="50%"
 					onClick="btnStepLog_click"
-					image="/common/images/homepage_button_step-log@2x.png">
+					image="/common/homepage_button_step-log@2x.png">
 				</Button>
 				
 				<Button
@@ -19,7 +19,7 @@
 					style="PLAIN"
 					width="50%"
 					onClick="btnStatistics_click"
-					image="/common/images/homepage_button_progress@2x.png">
+					image="/common/homepage_button_progress@2x.png">
 				</Button>
 			
 				<Button
@@ -27,7 +27,7 @@
 					style="PLAIN"
 					width="50%"
 					onClick="btnChallenges_click"
-					image="/common/images/homepage_button_ichallenges@2x.png">
+					image="/common/homepage_button_ichallenges@2x.png">
 				</Button>
 				
 				<Button
@@ -35,7 +35,7 @@
 					style="PLAIN"
 					width="50%"
 					onClick="btnTournaments_click"
-					image="/common/images/homepage_button_friend-challenges@2x.png">
+					image="/common/homepage_button_friend-challenges@2x.png">
 				</Button>
 			
 				<Button
@@ -44,7 +44,7 @@
 					left="25%"
 					width="50%"
 					onClick="btnSettings_click"
-					image="/common/images/homepage_button_profile-&-settings@2x.png">
+					image="/common/homepage_button_profile-&-settings@2x.png">
 				</Button>
 		</View>
 	</Window>
