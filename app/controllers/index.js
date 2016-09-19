@@ -1,9 +1,9 @@
-var isLoggedIn = Ti.App.Properties.getBool('isLoggedIn', false);
 var win = null;
 
-isLoggedIn = true; //skip login (dev only)
+//Dev over-ride
+Alloy.Globals.IsLoggedIn = false;
 
-if(isLoggedIn) {
+if(Alloy.Globals.IsLoggedIn) {
 	win = Alloy.createController('home').getView();
 }
 else {

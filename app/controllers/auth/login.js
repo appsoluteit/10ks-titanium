@@ -7,16 +7,21 @@ function tryLogin(username, password) {
 	var API = require("API");
 	var api = new API();
 	
-	function onSuccess() {
+	function onSuccess(response) {
 		//Store the auth key. This doesn't change?
-		Ti.App.Properties.setString("authKey", this.responseText);		
+		Ti.App.Properties.setString("AuthKey", response.key);		
 		goHome();		
 	}
 	
-	function onFail(e) {	
-		if(e.code == 400) {
-			$.lblError.text = 'Couldn\'t log in. Are your details right?';
-		}		
+	function onFail(response) {	
+		Ti.API.info(response);
+		
+		if(response.password) {
+			$.lblError.text = "Password: " + response.password;
+		}
+		else if(response.non_field_errors) {
+			$.lblError.text = response.non_field_errors[0];
+		}
 	}
 	
 	var data = {

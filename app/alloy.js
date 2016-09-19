@@ -10,6 +10,10 @@
 //
 // Alloy.Globals.someGlobalFunction = function(){};
 
+Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
+Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
+
+Ti.API.info("Logged in already. Key: " + Alloy.Globals.AuthKey);
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)
