@@ -6,7 +6,7 @@
 				<Button id="btnDone" onClick="btnDone_click">Done</Button>
 			</LeftNavButton>
 			
-			<Widget id="logDetails" src="logDetails"></Widget>
+			<Require id="logEntryView" src="log/logEntryView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
@@ -18,6 +18,6 @@
 			displayHomeAsUp="true" 
 			onHomeIconItemSelected="btnDone_click"></ActionBar>
 
-		<Widget id="logDetails" src="logDetails"></Widget>
+		<Require id="logEntryView" src="log/logEntryView" type="view"/>
 	</Window>
 </Alloy>

@@ -22,6 +22,14 @@ function btnTournaments_click(e) {
 }
 
 function btnSettings_click(e) {
-	var win = Alloy.createController('settings/settings').getView();
+	var win = Alloy.createController('settings/settings', {
+		logoutCallback: function() {
+			Ti.API.info("logging out...");
+			
+			$.home.close();
+			args.logoutCallback();
+		}	
+	}).getView();
+	
 	win.open();
 }

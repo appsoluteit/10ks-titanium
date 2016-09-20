@@ -1,6 +1,10 @@
 
-- Register function
-- Add stub views for other areas not built yet
+- Register page needs more fields
+- Need a loading spinner, especially while performing an async call
+- Window transitions
+- Add 'next' icon to table view rows where applicable
+
+- Fill in the other areas with content taken from the existing app for now
 - Add logout link
 
 - Add 'sync' support

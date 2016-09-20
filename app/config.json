@@ -9,6 +9,5 @@
     "os:mobileweb": {},
     "os:windows": {},
     "dependencies": {
-        "logDetails": "1.0"
     }
 }

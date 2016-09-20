@@ -1,5 +1,23 @@
 <Alloy>
-	<View class="container">
-		<Label>Settings</Label>
-	</View>
+	<TableView class="margin-10">
+		<!-- Reminder to log steps-->
+		<TableViewRow>
+			<Label>Reminder to Log Steps</Label>
+		</TableViewRow>
+		
+		<!-- Goal Steps -->
+		<TableViewRow>
+			<Label>Goal Steps</Label>
+		</TableViewRow>
+		
+		<!-- About -->
+		<TableViewRow>
+			<Label>About</Label>
+		</TableViewRow>
+		
+		<!-- Logout -->
+		<TableViewRow>
+			<Button id="btnLogout">Logout</Button>
+		</TableViewRow>
+	</TableView>
 </Alloy>

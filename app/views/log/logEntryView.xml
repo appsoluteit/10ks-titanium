@@ -6,8 +6,7 @@
 					id="txtStepsWalked" 
 					width="33%"
 					keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" 
-					maxLength="5"
-					onChange="txtStepsWalked_change">
+					maxLength="5">
 				</TextField>
 		</View>
 		
@@ -21,8 +20,7 @@
 				id="txtModerateMins"
 				width="33%"
 				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
-				maxLength="5"
-				onChange="txtModerateMins_change">
+				maxLength="5">
 			</TextField>
 			<Label class="italic" left="10dp">mins</Label>
 		</View>
@@ -33,8 +31,7 @@
 				id="txtVigorousMins"
 				width="33%"
 				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
-				maxLength="5"
-				onChange="txtVigorousMins_change">
+				maxLength="5">
 			</TextField>
 			<Label class="italic" left="10dp">mins</Label>
 		</View>

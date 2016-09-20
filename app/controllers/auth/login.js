@@ -33,7 +33,9 @@ function tryLogin(username, password) {
 }
 
 function goHome() {
-	var win = Alloy.createController('home').getView();
+	var win = Alloy.createController('home', {
+		logoutCallback: args.logoutCallback
+	}).getView();
 	
 	setTimeout(function() {
 		$.login.close();
