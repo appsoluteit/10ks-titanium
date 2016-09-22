@@ -7,10 +7,25 @@ function btnBack_click() {
 
 function window_open() {
 	//Set child view event handlers
-	$.settingsView.btnLogout.addEventListener('click', btnLogout_click);
+	$.settingsView.tblRowReminder.addEventListener('click', tblRowReminder_click);
+	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
+	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
+	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 }
 
-function btnLogout_click() {
+function tblRowReminder_click() {
+	alert("Clicked reminder");
+}
+
+function tblRowGoalSteps_click() {
+	alert("Clicked goal steps");
+}
+
+function tblRowAbout_click() {
+	alert("Clicked about");
+}
+
+function tblRowLogout_click() {
 	var confirmDialog = Ti.UI.createAlertDialog({
 		cancel: 0,
 		buttonNames: ['Cancel', 'OK'],

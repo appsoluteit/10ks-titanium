@@ -1,28 +1,14 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow platform="ios" id="register">
-		<Window id="window" title="Register">
-			<Require id="auth" src="auth/auth" type="view"></Require>	
-			
-			<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>
-			
-			<View layout="horizontal" class="margin-10">
-				<Button id="btnLogin" class="half" title="Login" onClick="btnLogin_click"></Button>
-				<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
-			</View>
+		<Window id="window" title="Register" onOpen="window_open">
+			<Require id="registerView" src="auth/registerView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window title="register" platform="android">
+	<Window title="register" platform="android" onOpen="window_open">
 		<ActionBar title="Register"></ActionBar>
-		<Require id="auth" src="auth/auth" type="view"></Require>
-		
-		<Label id="lblError" top="10dp" textAlign="center" class="whole error"></Label>
-		
-		<View layout="horizontal" class="margin-10">
-			<Button id="btnLogin" class="half" title="Login" onClick="btnLogin_click"></Button>
-			<Button id="btnRegister" class="half" title="Register" onClick="btnRegister_click"></Button>
-		</View>		
+		<Require id="registerView" src="auth/registerView" type="view"/>
 	</Window>	
 </Alloy>

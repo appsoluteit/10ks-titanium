@@ -1,23 +1,24 @@
 <Alloy>
 	<TableView class="margin-10">
 		<!-- Reminder to log steps-->
-		<TableViewRow>
+		<TableViewRow id="tblRowReminder">
 			<Label>Reminder to Log Steps</Label>
 		</TableViewRow>
 		
 		<!-- Goal Steps -->
-		<TableViewRow>
+		<TableViewRow id="tblRowGoalSteps">
 			<Label>Goal Steps</Label>
+			<Label id="lblGoalSteps" right = "0"></Label>
 		</TableViewRow>
 		
 		<!-- About -->
-		<TableViewRow>
+		<TableViewRow id="tblRowAbout">
 			<Label>About</Label>
 		</TableViewRow>
 		
 		<!-- Logout -->
-		<TableViewRow>
-			<Button id="btnLogout">Logout</Button>
+		<TableViewRow id="tblRowLogout">
+			<Label>Logout</Label>
 		</TableViewRow>
 	</TableView>
 </Alloy>

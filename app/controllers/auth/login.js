@@ -17,10 +17,10 @@ function tryLogin(username, password) {
 		Ti.API.info(response);
 		
 		if(response.password) {
-			$.lblError.text = "Password: " + response.password;
+			$.loginView.lblError.text = "Password: " + response.password;
 		}
 		else if(response.non_field_errors) {
-			$.lblError.text = response.non_field_errors[0];
+			$.loginView.lblError.text = response.non_field_errors[0];
 		}
 	}
 	
@@ -45,9 +45,14 @@ function goHome() {
 }
 
 /*********************************** EVENT HANDLERS     ***********************************/
+function window_open() {
+	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
+	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
+}
+
 function btnLogin_click() {
 	//On success, try a login
-	tryLogin($.auth.txtUsername.value, $.auth.txtPassword.value);
+	tryLogin($.loginView.txtUsername.value, $.loginView.txtPassword.value);
 }
 
 function btnRegister_click() {
