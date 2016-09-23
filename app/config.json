@@ -9,5 +9,6 @@
     "os:mobileweb": {},
     "os:windows": {},
     "dependencies": {
+    	"nl.fokkezb.loading": "*"
     }
 }

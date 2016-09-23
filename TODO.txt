@@ -1,9 +1,14 @@
+UI stuff:
+	- Need a loading spinner, especially while performing an async call
+		(in progress)
+		(http://alloylove.com/#)
+		(currently using https://github.com/FokkeZB/nl.fokkezb.loading)
+	
+	- Window transitions
+	- Include chevrons. Might need to use custom images here - doesn't look like Ti supports them.
 
-- Register page needs more fields
-- Need a loading spinner, especially while performing an async call
-- Window transitions
-- Add 'next' icon to table view rows where applicable
+Content:
+	- Fill in the other areas with content taken from the existing app for now
 
-- Fill in the other areas with content taken from the existing app for now
-
-- Add 'sync' support
+Functionality:
+	- Add 'sync' support

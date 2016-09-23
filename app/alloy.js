@@ -13,6 +13,8 @@
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 
+Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
+
 Ti.API.info("Logged in already. Key: " + Alloy.Globals.AuthKey);
 
 // added during app creation. this will automatically login to

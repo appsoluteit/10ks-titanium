@@ -22,7 +22,8 @@ function tblRowGoalSteps_click() {
 }
 
 function tblRowAbout_click() {
-	alert("Clicked about");
+	var win = Alloy.createController('settings/about').getView();
+	win.open();
 }
 
 function tblRowLogout_click() {

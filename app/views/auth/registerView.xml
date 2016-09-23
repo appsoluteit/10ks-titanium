@@ -9,11 +9,27 @@
 			autocorrect="false" 
 			autocapitalization="false" 
 			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-		</TextField>			
+		</TextField>	
+		
+		<Label>Email</Label>		
+		<TextField
+			id="txtEmail"
+			class="half"
+			autocorrect="false"
+			autocapitalization="false"
+			keyboardType="TYPE_EMAIL">
+		</TextField>
 		
 		<Label>Password</Label>
 		<TextField 
 			id="txtPassword" 
+			class="half"
+			passwordMask="true">
+		</TextField>
+		
+		<Label>Retype Password</Label>
+		<TextField 
+			id="txtPassword2" 
 			class="half"
 			passwordMask="true">
 		</TextField>

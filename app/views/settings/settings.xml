@@ -3,7 +3,7 @@
 	<NavigationWindow id="settings" platform="ios">
 		<Window title="Settings" onOpen="window_open">
 			<LeftNavButton>
-				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
+				<Button id="btnBack" onClick="btnBack_click">Home</Button>	
 			</LeftNavButton>
 			
 			<Require id="settingsView" src="settings/settingsView" type="view"/>
