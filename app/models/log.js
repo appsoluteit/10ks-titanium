@@ -1,8 +1,12 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "day": "TEXT",		//no native datetime support in sqlite. Store as text and parse
-		    "steps": "INTEGER"
+		    "steps_date": 	 "TEXT",		//no native datetime support in sqlite. Store as text and parse. yyyy-mm-dd
+		    "steps_total": 	 "INTEGER",
+		    "steps_walked":  "INTEGER",
+		    "activity_part": "INTEGER",
+		    "moderate":      "INTEGER",
+		    "vigorous":      "INTEGER"
 		},
 		adapter: {
 			type: "sql",
@@ -12,6 +16,9 @@ exports.definition = {
 	extendModel: function(Model) {
 		_.extend(Model.prototype, {
 			// extended functions and properties go here
+			validate: function(attrs) {
+				
+			}
 		});
 
 		return Model;

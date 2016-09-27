@@ -2,12 +2,24 @@ var args = $.args;
 
 function btnDone_click() {
 	//Save value in local storage until Sync
-	/*
-	Alloy.createModel("log", {
-		day: args.date,
-		steps: $.logDetails.lblDailyTotal.total		
+	
+	var logInstance = Alloy.createModel('log', {
+	    steps_date: 	'1990-01-01', 
+	    steps_total: 	 1,
+	    steps_walked:  	 2,
+	    activity_part: 	 3,
+	    moderate:      	 4,
+	    vigorous:     	 5
 	});
-	*/
+	
+	if(logInstance.isValid()) {
+		Ti.API.info("Model valid. Saving");
+		logInstance.save();
+	}
+	else {
+		Ti.API.error("Model not valid. Destroying");
+		logInstance.destroy();
+	}
 	
 	//Pass the formatted string back to the parent to display it in the table	
 	args.callback($.logEntryView.lblDailyTotal.text);
@@ -42,7 +54,6 @@ function txtModerateMins_change() {
 function txtVigorousMins_change() {
 	calculateTotal();
 }
-
 
 function calculateTotal() {
 	//total = steps walked + (moderate x 100) + (vigorous x 200)

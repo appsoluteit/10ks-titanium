@@ -22,9 +22,6 @@ function btnTournaments_click(e) {
 }
 
 function btnSettings_click(e) {
-	Alloy.Globals.Loading.show("Hello, World", false);
-	return;
-	
 	var win = Alloy.createController('settings/settings', {
 		logoutCallback: function() {
 			Ti.API.info("logging out...");

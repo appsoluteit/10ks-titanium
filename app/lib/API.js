@@ -21,6 +21,8 @@ function API() {
 	};
 	
 	this.send = function(method, url, data, onSuccess, onFail) {
+		Alloy.Globals.Loading.show("Loading...", false);
+		
 		var req = Ti.Network.createHTTPClient();
 		req.onload = function() {
 			try {
@@ -31,6 +33,8 @@ function API() {
 					
 					if(this.status == 200 || this.status == 201) {
 						Ti.API.info("API success response: " + this.responseText);
+						Alloy.Globals.Loading.hide();
+						
 						onSuccess(makeResponse(this.responseText));
 					}
 				}
@@ -44,6 +48,7 @@ function API() {
 			Ti.API.error('API Request error. ' + JSON.stringify(e));
 			Ti.API.error('Response object: ' + this.responseText);
 			
+			Alloy.Globals.Loading.hide();
 			onFail(makeResponse(this.responseText));
 		};
 		

@@ -1,9 +1,4 @@
 UI stuff:
-	- Need a loading spinner, especially while performing an async call
-		(in progress)
-		(http://alloylove.com/#)
-		(currently using https://github.com/FokkeZB/nl.fokkezb.loading)
-	
 	- Window transitions
 	- Include chevrons. Might need to use custom images here - doesn't look like Ti supports them.
 
