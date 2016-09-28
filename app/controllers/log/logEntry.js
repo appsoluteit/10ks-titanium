@@ -1,28 +1,40 @@
 var args = $.args;
 
+var stepsWalked = 0;
+var moderateMins = 0;
+var vigorousMins = 0;
+var total = 0;
+
 function btnDone_click() {
 	//Save value in local storage until Sync
+	Ti.API.info("Date object: " + args.date);
 	
-	var logInstance = Alloy.createModel('log', {
-	    steps_date: 	'1990-01-01', 
-	    steps_total: 	 1,
-	    steps_walked:  	 2,
-	    activity_part: 	 3,
-	    moderate:      	 4,
-	    vigorous:     	 5
-	});
-	
-	if(logInstance.isValid()) {
-		Ti.API.info("Model valid. Saving");
-		logInstance.save();
-	}
-	else {
-		Ti.API.error("Model not valid. Destroying");
-		logInstance.destroy();
+	if(total > 0) {
+		var dateStr = Alloy.Globals.GetDateString(args.date);
+		
+		Ti.API.info("Made date string: " + dateStr);
+		
+		var logInstance = Alloy.createModel('log', {
+		    steps_date: 	dateStr, 
+		    steps_total: 	 total,
+		    steps_walked:  	 stepsWalked,
+		    activity_part: 	 1,	//what is this?
+		    moderate:      	 moderateMins,
+		    vigorous:     	 vigorousMins
+		});
+		
+		if(logInstance.isValid()) {
+			Ti.API.info("Model valid. Saving");
+			logInstance.save();
+		}
+		else {
+			Ti.API.error("Model not valid. Destroying");
+			logInstance.destroy();
+		}	
 	}
 	
 	//Pass the formatted string back to the parent to display it in the table	
-	args.callback($.logEntryView.lblDailyTotal.text);
+	args.callback(total);
 	
 	$.logEntry.close();
 }
@@ -57,9 +69,9 @@ function txtVigorousMins_change() {
 
 function calculateTotal() {
 	//total = steps walked + (moderate x 100) + (vigorous x 200)
-	var stepsWalked = $.logEntryView.txtStepsWalked.value;
-	var moderateMins = $.logEntryView.txtModerateMins.value;
-	var vigorousMins = $.logEntryView.txtVigorousMins.value;
+	stepsWalked = $.logEntryView.txtStepsWalked.value;
+	moderateMins = $.logEntryView.txtModerateMins.value;
+	vigorousMins = $.logEntryView.txtVigorousMins.value;
 	
 	if(stepsWalked == '')
 		stepsWalked = 0;
@@ -76,7 +88,7 @@ function calculateTotal() {
 	else
 		vigorousMins = parseInt(vigorousMins, 10);
 	
-	var total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
+	total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
 	
 	$.logEntryView.lblDailyTotal.total = total;	//store the total in a custom attribute
 	$.logEntryView.lblDailyTotal.text = String.formatDecimal(total, 'en-US', '##,##0');

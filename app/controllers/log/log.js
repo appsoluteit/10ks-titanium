@@ -4,23 +4,6 @@ logCollection.fetch();
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
 /**
- * Computes and returns a dd-mm-yyyy formatted string from a date. Eg: 1990-02-03
- */
-function getDateString(dateObj) {
-	var y = dateObj.getFullYear();
-	var m = dateObj.getMonth();
-	var d = dateObj.getDay();
-	
-	if(m < 10)
-		m = "0" + m;
-		
-	if(d < 10)
-		d = "0" + d;
-		
-	return y + "-" + m + "-" + d;
-}
-
-/**
  * Computes and returns a label that represents the given date. Eg: Mon Feb 24.
  * @param {Date} dateObj A date object for the date to process
  * @returns {String} The date label
@@ -88,24 +71,25 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		width: Ti.UI.SIZE
 	});
 	
-	var dateString = getDateString(dateObj);
-	Ti.API.log("Made date string: " + dateString);
+	var dateString = Alloy.Globals.GetDateString(dateObj);
+	//Ti.API.log("Made date string: " + dateString);
 	
 	//findWhere seems to be unsupported??
 	var item = logCollection.where({
-		steps_date: dateString
+		'steps_date': dateString
 	});
 	
 	if(item.length > 0) {
-		Ti.API.log(JSON.stringify(item));
-		numSteps = item.steps_total;
+		//Ti.API.log(JSON.stringify(item[0]));
+		numSteps = item[0].get('steps_total');
+		//Ti.API.log("Found a match for: " + strLabel + ". Steps: " + numSteps);
 	}
 	
 	var labelRight = Ti.UI.createLabel({
 		right: "10dp",
 		textAlign: "right",
 		color: "red",
-		text: numSteps == undefined ? "" : numSteps,
+		text: numSteps > 0 ? String.formatDecimal(numSteps, 'en-US', '##,##0') : "",
 		width: Ti.UI.SIZE
 	});
 	

@@ -18,7 +18,8 @@ function tblRowReminder_click() {
 }
 
 function tblRowGoalSteps_click() {
-	alert("Clicked goal steps");
+	var win = Alloy.createController('settings/goalSteps').getView();
+	win.open();
 }
 
 function tblRowAbout_click() {

@@ -1,21 +1,24 @@
-// The contents of this file will be executed before any of
-// your view controllers are ever executed, including the index.
-// You have access to all functionality on the `Alloy` namespace.
-//
-// This is a great place to do any initialization for your app
-// or create any global variables/functions that you'd like to
-// make available throughout your app. You can easily make things
-// accessible globally by attaching them to the `Alloy.Globals`
-// object. For example:
-//
-// Alloy.Globals.someGlobalFunction = function(){};
-
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 
+if(Alloy.Globals.IsLoggedIn)
+	Ti.API.info("Logged in already. Key: " + Alloy.Globals.AuthKey);
+
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
 
-Ti.API.info("Logged in already. Key: " + Alloy.Globals.AuthKey);
+Alloy.Globals.GetDateString = function(dateObj) {
+	var y = dateObj.getFullYear();
+	var m = dateObj.getMonth() + 1;
+	var d = dateObj.getDate();
+	
+	if(m < 10)
+		m = "0" + m;
+		
+	if(d < 10)
+		d = "0" + d;
+		
+	return y + "-" + m + "-" + d;	
+};
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)

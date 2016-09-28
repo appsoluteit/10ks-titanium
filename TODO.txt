@@ -7,3 +7,4 @@ Content:
 
 Functionality:
 	- Add 'sync' support
+	- Call login after the auth token expires to get the updated token
