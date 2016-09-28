@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="goalSteps" platform="ios">
+		<Window title="Goal Steps" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Settings</Button>	
+			</LeftNavButton>
+			
+			<Require id="goalStepsView" src="settings/goalStepsView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="goalSteps" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="Goal Steps" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="goalStepsView" src="settings/goalStepsView" type="view"/>
+	</Window>
+</Alloy>
