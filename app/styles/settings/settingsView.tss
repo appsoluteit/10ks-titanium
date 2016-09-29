@@ -9,3 +9,13 @@
 		fontWeight: "bold"
 	}
 }
+
+"#lblGoalSteps" : {
+	left: undefined,
+	textAlign: "right",
+	right: "10dp",
+	
+	font: {
+		fontWeight: 'normal'
+	}
+}

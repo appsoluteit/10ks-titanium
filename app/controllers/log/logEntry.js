@@ -90,6 +90,6 @@ function calculateTotal() {
 	
 	total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
 	
-	$.logEntryView.lblDailyTotal.total = total;	//store the total in a custom attribute
-	$.logEntryView.lblDailyTotal.text = String.formatDecimal(total, 'en-US', '##,##0');
+	//$.logEntryView.lblDailyTotal.total = total;	//store the total in a custom attribute
+	$.logEntryView.lblDailyTotal.text = Alloy.Globals.FormatNumber(total);
 }

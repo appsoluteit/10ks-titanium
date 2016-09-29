@@ -11,6 +11,13 @@ function window_open() {
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
 	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
+	
+	//Pre-load the goal steps
+	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
+	
+	if(goalSteps > -1) {
+		$.settingsView.lblGoalSteps.text = Alloy.Globals.FormatNumber(goalSteps);
+	}
 }
 
 function tblRowReminder_click() {
@@ -18,7 +25,13 @@ function tblRowReminder_click() {
 }
 
 function tblRowGoalSteps_click() {
-	var win = Alloy.createController('settings/goalSteps').getView();
+	var win = Alloy.createController('settings/goalSteps', {
+		callback: function(goalSteps) {
+			var formatted = Alloy.Globals.FormatNumber(goalSteps);
+			$.settingsView.lblGoalSteps.text = formatted;
+		}		
+	}).getView();
+	
 	win.open();
 }
 

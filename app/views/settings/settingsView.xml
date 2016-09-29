@@ -7,8 +7,15 @@
 		
 		<!-- Goal Steps -->
 		<TableViewRow id="tblRowGoalSteps">
-			<Label>Goal Steps</Label>
-			<Label id="lblGoalSteps" right = "0"></Label>
+			<View layout="horizontal">
+				<View class="half">
+					<Label>Goal Steps</Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblGoalSteps"></Label>
+				</View>
+			</View>
 		</TableViewRow>
 		
 		<!-- About -->

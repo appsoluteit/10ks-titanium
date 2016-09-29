@@ -89,7 +89,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		right: "10dp",
 		textAlign: "right",
 		color: "red",
-		text: numSteps > 0 ? String.formatDecimal(numSteps, 'en-US', '##,##0') : "",
+		text: numSteps > 0 ? Alloy.Globals.FormatNumber(numSteps) : "",
 		width: Ti.UI.SIZE
 	});
 	

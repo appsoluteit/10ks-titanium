@@ -2,9 +2,30 @@
 var args = $.args;
 
 function window_open() {
-	
+	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 }
 
 function btnBack_click() {
+	$.goalSteps.close();
+}
+
+function btnSave_click() {
+	var goalSteps = $.goalStepsView.txtGoalSteps.value;
+	
+	if(!goalSteps) {
+		var alertDialog = Ti.UI.createAlertDialog({
+			buttonNames: ['OK'],
+			message: 'Please enter goal steps and click save',
+			title: 'Enter goal steps'
+		});	
+		
+		alertDialog.show();
+		return;
+	}
+	
+	goalSteps = parseInt(goalSteps, 10);
+	
+	Ti.App.Properties.setInt('GoalSteps', goalSteps);
+	args.callback(goalSteps);
 	$.goalSteps.close();
 }
