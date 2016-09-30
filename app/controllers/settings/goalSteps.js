@@ -3,6 +3,12 @@ var args = $.args;
 
 function window_open() {
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
+	
+	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
+	
+	if(goalSteps > -1) {
+		$.goalStepsView.txtGoalSteps.value = goalSteps;
+	}
 }
 
 function btnBack_click() {

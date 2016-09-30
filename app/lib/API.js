@@ -23,6 +23,8 @@ function API() {
 	this.send = function(method, url, data, onSuccess, onFail) {
 		Alloy.Globals.Loading.show("Loading...", false);
 		
+		Ti.API.info("Sending: ", data);
+		
 		var req = Ti.Network.createHTTPClient();
 		req.onload = function() {
 			try {
@@ -54,7 +56,19 @@ function API() {
 		
 		req.open(method, url);
 		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.send(data);
+		
+		if(method == "GET") {	
+			for(var i in data) {
+				console.log("Data: " + i);
+				
+				req.setRequestHeader(i, data[i]);
+			}
+			
+			req.send();
+		}
+		else if(method == "POST") {	
+			req.send(data);
+		}
 	};
 }
 

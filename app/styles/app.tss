@@ -8,6 +8,28 @@
 	height: Ti.UI.SIZE
 }
 
+"TableViewRow": {
+	height: "50dp"
+}
+
+".row-label": {
+	left: "10dp",
+	textAlign: "left",
+	font: {
+		fontWeight: "bold"
+	}
+}
+
+".row-value" : {
+	left: undefined,
+	textAlign: "right",
+	right: "10dp",
+	
+	font: {
+		fontWeight: 'normal'
+	}
+}
+
 '.half': {
 	width: '50%'
 }

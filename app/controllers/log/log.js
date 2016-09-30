@@ -162,5 +162,20 @@ function btnBack_click() {
 }
 
 function btnSync_click() {
+	var API = require("API");
+	var api = new API();
 	
+	function onSuccess(e) {
+		
+	}
+	
+	function onFail(e) {
+		
+	}
+	
+	var data = {
+		Authorization: "Token " + Alloy.Globals.AuthKey
+	};
+	
+	api.get("http://steps10000.webfactional.com/api/steps/", data, onSuccess, onFail);
 }

@@ -21,7 +21,8 @@ function window_open() {
 }
 
 function tblRowReminder_click() {
-	alert("Clicked reminder");
+	var win = Alloy.createController('settings/reminder/reminder').getView();
+	win.open();
 }
 
 function tblRowGoalSteps_click() {

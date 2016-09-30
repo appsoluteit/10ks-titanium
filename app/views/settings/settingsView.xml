@@ -2,30 +2,30 @@
 	<TableView class="margin-10">
 		<!-- Reminder to log steps-->
 		<TableViewRow id="tblRowReminder">
-			<Label>Reminder to Log Steps</Label>
+			<Label class="row-label">Reminder to Log Steps</Label>
 		</TableViewRow>
 		
 		<!-- Goal Steps -->
 		<TableViewRow id="tblRowGoalSteps">
 			<View layout="horizontal">
 				<View class="half">
-					<Label>Goal Steps</Label>
+					<Label class="row-label">Goal Steps</Label>
 				</View>
 				
 				<View class="half">
-					<Label id="lblGoalSteps"></Label>
+					<Label id="lblGoalSteps" class="row-value"></Label>
 				</View>
 			</View>
 		</TableViewRow>
 		
 		<!-- About -->
 		<TableViewRow id="tblRowAbout">
-			<Label>About</Label>
+			<Label class="row-label">About</Label>
 		</TableViewRow>
 		
 		<!-- Logout -->
 		<TableViewRow id="tblRowLogout">
-			<Label>Logout</Label>
+			<Label class="row-label">Logout</Label>
 		</TableViewRow>
 	</TableView>
 </Alloy>
