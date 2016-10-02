@@ -10,7 +10,7 @@ function btnDone_click() {
 	Ti.API.info("Date object: " + args.date);
 	
 	if(total > 0) {
-		var dateStr = Alloy.Globals.GetDateString(args.date);
+		var dateStr = Alloy.Globals.FormatDate(args.date);
 		
 		Ti.API.info("Made date string: " + dateStr);
 		

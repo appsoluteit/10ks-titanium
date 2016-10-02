@@ -11,6 +11,12 @@ function window_open() {
 	$.reminderView.tblRowTime.addEventListener('click', tblRowTime_click);
 	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
 	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+	
+	if(Ti.App.Properties.hasProperty("ReminderTime")) {
+		var strReminderTime = Ti.App.Properties.getString("ReminderTime");
+		$.reminderView.lblTime.text = strReminderTime;
+	}
+	//TODO: Show the 'remove reminder' button if there is a reminder set
 }
 
 function tblRowRepeat_click() {
@@ -22,7 +28,14 @@ function tblRowLabel_click() {
 }
 
 function tblRowTime_click() {
-	alert("Time row clicked!");
+	var win = Alloy.createController('settings/reminder/reminderTime', {
+		callback: function(timeStr) {
+			Ti.API.info("Callback raw time: ", timeStr);
+			
+			$.reminderView.lblTime.text = timeStr;
+		}
+	}).getView();
+	win.open();
 }
 
 function tblRowAddReminder_click() {

@@ -6,7 +6,10 @@ if(Alloy.Globals.IsLoggedIn)
 
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
 
-Alloy.Globals.GetDateString = function(dateObj) {
+/**
+ * Accepts a JS Date object and returns a formatted string in y-m-d. Used for storing dates consistently internally.
+ */
+Alloy.Globals.FormatDate = function(dateObj) {
 	var y = dateObj.getFullYear();
 	var m = dateObj.getMonth() + 1;
 	var d = dateObj.getDate();
@@ -18,6 +21,25 @@ Alloy.Globals.GetDateString = function(dateObj) {
 		d = "0" + d;
 		
 	return y + "-" + m + "-" + d;	
+};
+
+Alloy.Globals.FormatTime = function(dateObj) {
+	var h = dateObj.getHours();
+	var m = dateObj.getMinutes();
+	var postfix = h < 12 ? "am" : "pm";
+	
+	if(h > 12)
+		h -= 12;
+	
+	/*
+	if(h < 10)
+		h = "0" + h;
+	*/
+	
+	if(m < 10)
+		m = "0" + m;
+	
+	return h + ":" + m + postfix;
 };
 
 Alloy.Globals.FormatNumber = function(input) {

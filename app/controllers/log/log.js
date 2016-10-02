@@ -71,7 +71,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		width: Ti.UI.SIZE
 	});
 	
-	var dateString = Alloy.Globals.GetDateString(dateObj);
+	var dateString = Alloy.Globals.FormatDate(dateObj);
 	//Ti.API.log("Made date string: " + dateString);
 	
 	//findWhere seems to be unsupported??

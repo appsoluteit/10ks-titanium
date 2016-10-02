@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="reminderTime" platform="ios">
+		<Window title="Time">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Reminder</Button>	
+			</LeftNavButton>
+			
+			<Require id="reminderTimeView" src="settings/reminder/reminderTimeView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="reminderTime" platform="android">
+		<ActionBar 
+			title="Time" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="reminderTimeView" src="settings/reminder/reminderTimeView" type="view"/>
+	</Window>
+</Alloy>
