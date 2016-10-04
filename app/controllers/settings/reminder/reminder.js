@@ -12,19 +12,38 @@ function window_open() {
 	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
 	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
 	
+	if(Ti.App.Properties.hasProperty("ReminderLabel")) {
+		var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
+		$.reminderView.lblLabel.text = strReminderLabel;
+	}
+	
 	if(Ti.App.Properties.hasProperty("ReminderTime")) {
 		var strReminderTime = Ti.App.Properties.getString("ReminderTime");
 		$.reminderView.lblTime.text = strReminderTime;
 	}
+	
 	//TODO: Show the 'remove reminder' button if there is a reminder set
 }
 
 function tblRowRepeat_click() {
-	alert("Repeat row clicked!");
+	var win = Alloy.createController('settings/reminder/reminderRepeat', {
+		callback: function(repeatArr) {
+			
+		}
+	}).getView();
+	
+	win.open();
 }
 
 function tblRowLabel_click() {
-	alert("Label row clicked!");
+	var win = Alloy.createController('settings/reminder/reminderLabel', {
+		callback: function(labelStr) {
+			Ti.API.info("Callback row label: ", labelStr);
+			$.reminderView.lblLabel.text = labelStr;
+		}
+	}).getView();
+	
+	win.open();
 }
 
 function tblRowTime_click() {

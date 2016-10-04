@@ -41,6 +41,24 @@ Alloy.Globals.FormatTime = function(dateObj) {
 	
 	return h + ":" + m + postfix;
 };
+Alloy.Globals.UnformatTime = function(dateStr) {
+	var timeparts = dateStr.split(":");
+	
+	var h = parseInt(timeparts[0], 10);
+	var m = parseInt(timeparts[1].substr(0, 2), 10);
+	var postfix = timeparts[1].substr(2,2); //get the am/pm postfix
+	
+	if(postfix === "pm") {
+		h += 12;
+	}
+	
+	Ti.API.info("UnformatTime created new time string: " + h + ":" + m);
+	
+	var d = new Date();
+	d.setHours(h, m);
+	
+	return d;
+};
 
 Alloy.Globals.FormatNumber = function(input) {
 	//More reliable than String.formatDecimal, which isn't documented in many places.

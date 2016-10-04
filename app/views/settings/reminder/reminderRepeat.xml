@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="reminderRepeat" platform="ios">
+		<Window title="Repeat" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Reminder</Button>	
+			</LeftNavButton>
+			
+			<Require id="reminderRepeatView" src="settings/reminder/reminderRepeatView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="reminderRepeat" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="Label" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="reminderRepeatView" src="settings/reminder/reminderRepeatView" type="view"/>
+	</Window>
+</Alloy>

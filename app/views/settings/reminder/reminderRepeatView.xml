@@ -1,0 +1,23 @@
+<Alloy>
+	<View>
+		<TableView class="margin-10">
+			<!-- Sunday -->
+			<TableViewRow id="tblRowSunday">
+				<Label class="row-label">Every Sunday</Label>
+			</TableViewRow>
+			
+			<!-- Monday -->
+			
+			<!-- Tuesday -->
+			
+			<!-- Wednesday -->
+			
+			<!-- Thursday -->
+			
+			<!-- Friday -->
+			
+			<!-- Saturday -->
+			
+		</TableView>
+	</View>
+</Alloy>
