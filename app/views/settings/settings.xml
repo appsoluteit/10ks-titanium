@@ -13,7 +13,7 @@
 	<!-- Android -->
 	<Window id="settings" platform="android" onOpen="window_open">
 		<ActionBar 
-			title="Statistics" 
+			title="Settings" 
 			displayHomeAsUp="true" 
 			homeButtonEnabled="true" 
 			onHomeIconItemSelected="btnBack_click"></ActionBar>

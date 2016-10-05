@@ -46,7 +46,7 @@
 			</TableViewRow>
 			
 			<!-- Remove Reminder-->
-			<TableViewRow id="tblRowRemoveReminder">
+			<TableViewRow id="tblRowRemoveReminder" visible="false">
 				<Label class="row-label">Remove Reminder</Label>
 			</TableViewRow>
 		</TableView>

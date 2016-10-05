@@ -12,6 +12,19 @@ function window_open() {
 	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
 	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
 	
+	//Pre-populate the row values
+	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
+		var strReminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
+		var objReminderRepeat = JSON.parse(strReminderRepeat);
+	
+		var activeDays = objReminderRepeat.filter(function(e) { return e.active; });
+		
+		if(activeDays.length === 1)
+			$.reminderView.lblRepeat.text = activeDays[0].name;
+		else
+			$.reminderView.lblRepeat.text = activeDays.length + " days";	
+	}
+	
 	if(Ti.App.Properties.hasProperty("ReminderLabel")) {
 		var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 		$.reminderView.lblLabel.text = strReminderLabel;
@@ -22,13 +35,21 @@ function window_open() {
 		$.reminderView.lblTime.text = strReminderTime;
 	}
 	
-	//TODO: Show the 'remove reminder' button if there is a reminder set
+	if(Ti.App.Properties.hasProperty("HasReminder")) {
+		$.reminderView.tblRowRemoveReminder.visible = true;
+	}
 }
 
 function tblRowRepeat_click() {
 	var win = Alloy.createController('settings/reminder/reminderRepeat', {
 		callback: function(repeatArr) {
+			var activeDays = repeatArr.filter(function(e) { return e.active; });
 			
+			if(activeDays.length === 1)
+				$.reminderView.lblRepeat.text = activeDays[0].name;
+			else
+				$.reminderView.lblRepeat.text = activeDays.length + " days";
+					
 		}
 	}).getView();
 	
