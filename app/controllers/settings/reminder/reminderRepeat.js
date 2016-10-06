@@ -2,13 +2,16 @@
 var args = $.args;
 
 function window_open() {
-	$.reminderRepeatView.tblRowSunday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowMonday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowTuesday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowWednesday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowThursday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowFriday.addEventListener('click', tblRow_click);
-	$.reminderRepeatView.tblRowSaturday.addEventListener('click', tblRow_click);
+	//This causes a bug on Android where switch values are always off by 1
+	if(Ti.Platform.osname != "android") {
+		$.reminderRepeatView.tblRowSunday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowMonday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowTuesday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowWednesday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowThursday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowFriday.addEventListener('click', tblRow_click);
+		$.reminderRepeatView.tblRowSaturday.addEventListener('click', tblRow_click);
+	}
 	
 	//Preset the switches if there is existing data
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
@@ -52,6 +55,7 @@ function window_open() {
 
 function tblRow_click(e) {
 	//Ti.API.info(JSON.stringify(e));
+	Ti.API.info("Clicked a row");
 	
 	switch(e.row.id) {
 		case 'tblRowSunday':
@@ -95,8 +99,12 @@ function btnBack_click() {
 		{ name: 'Saturday', active: $.reminderRepeatView.swSaturday.value }
 	];
 		
+	//Ti.API.info("Thursday: " + $.reminderRepeatView.swThursday.value);
+	//Ti.API.info("Sunday: " + $.reminderRepeatView.swSunday.value);
+	
+	//Ti.API.info(JSON.stringify(obj));
+	
 	Ti.App.Properties.setString("ReminderRepeat", JSON.stringify(obj));
 	args.callback(obj);
-	
 	$.reminderRepeat.close();
 }

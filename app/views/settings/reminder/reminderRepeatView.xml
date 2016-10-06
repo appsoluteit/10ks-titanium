@@ -9,7 +9,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swSunday"/>
+						<Switch id="swSunday" value="false" />
 					</View>
 				</View>
 			</TableViewRow>
@@ -22,7 +22,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swMonday"/>
+						<Switch id="swMonday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>		
@@ -35,7 +35,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swTuesday"/>
+						<Switch id="swTuesday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>
@@ -48,7 +48,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swWednesday"/>
+						<Switch id="swWednesday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>
@@ -61,7 +61,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swThursday"/>
+						<Switch id="swThursday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>
@@ -74,7 +74,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swFriday"/>
+						<Switch id="swFriday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>
@@ -87,7 +87,7 @@
 					</View>
 					
 					<View class="half">
-						<Switch id="swSaturday"/>
+						<Switch id="swSaturday" value="false"/>
 					</View>
 				</View>
 			</TableViewRow>

@@ -43,15 +43,26 @@ function window_open() {
 function tblRowRepeat_click() {
 	var win = Alloy.createController('settings/reminder/reminderRepeat', {
 		callback: function(repeatArr) {
-			var activeDays = repeatArr.filter(function(e) { return e.active; });
+			//Ti.API.info("Callback days:", JSON.stringify(repeatArr));
 			
-			if(activeDays.length === 1)
-				$.reminderView.lblRepeat.text = activeDays[0].name;
-			else
-				$.reminderView.lblRepeat.text = activeDays.length + " days";
-					
+			setTimeout(function() {
+				var activeDays = repeatArr.filter(function(e) { return e.active; });
+				
+				Ti.API.info("Active days: ", activeDays.length);
+				
+				if(activeDays.length === 1)
+					$.reminderView.lblRepeat.text = activeDays[0].name;
+				else
+					$.reminderView.lblRepeat.text = activeDays.length + " days";
+			}, 1000);
 		}
 	}).getView();
+	
+	//TODO: Android sometimes doesn't refresh the label, even when the returned data is correct.
+	//		Try loading the data from the App Properties after the window closes and modifying it this way.
+	win.addEventListener('close', function() {
+		
+	});
 	
 	win.open();
 }
