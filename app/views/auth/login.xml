@@ -7,7 +7,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window title="login" platform="android" onOpen="window_open">
+	<Window title="login" platform="android" onOpen="window_open" exitOnClose="true">
 		<ActionBar title="Login"></ActionBar>
 		<Require id="loginView" src="auth/loginView" type="view"></Require>	
 	</Window>	

@@ -58,12 +58,6 @@ function tblRowRepeat_click() {
 		}
 	}).getView();
 	
-	//TODO: Android sometimes doesn't refresh the label, even when the returned data is correct.
-	//		Try loading the data from the App Properties after the window closes and modifying it this way.
-	win.addEventListener('close', function() {
-		
-	});
-	
 	win.open();
 }
 

@@ -65,6 +65,13 @@ Alloy.Globals.FormatNumber = function(input) {
 	return input.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
+Alloy.Globals.Quit = function() {
+	Ti.API.info("Alloy Globals Quit");
+	
+    var activity = Titanium.Android.currentActivity;
+    activity.finish(); 	
+};
+
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)
 // when connected or errored. if you do not use ACS in your

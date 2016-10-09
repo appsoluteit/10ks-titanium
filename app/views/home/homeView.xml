@@ -1,0 +1,40 @@
+<Alloy>
+	<Require src="header" type="view"></Require>
+	<View class="container">
+		<Button
+			id="btnStepLog"
+			style="PLAIN"
+			width="50%"
+			image="/common/homepage_button_step-log@2x.png">
+		</Button>
+		
+		<Button
+			id="btnStatistics"
+			style="PLAIN"
+			width="50%"
+			image="/common/homepage_button_progress@2x.png">
+		</Button>
+	
+		<Button
+			id="btnChallenges"
+			style="PLAIN"
+			width="50%"
+			image="/common/homepage_button_ichallenges@2x.png">
+		</Button>
+		
+		<Button
+			id="btnTournaments"
+			style="PLAIN"
+			width="50%"
+			image="/common/homepage_button_friend-challenges@2x.png">
+		</Button>
+	
+		<Button
+			id="btnSettings"
+			style="PLAIN"
+			left="25%"
+			width="50%"
+			image="/common/homepage_button_profile-&-settings@2x.png">
+		</Button>
+	</View>
+</Alloy>

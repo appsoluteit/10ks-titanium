@@ -33,3 +33,28 @@ function btnSettings_click(e) {
 	
 	win.open();
 }
+ 
+function androidBack_click() {
+	var confirmDialog = Ti.UI.createAlertDialog({
+		cancel: 0,
+		buttonNames: ['Cancel', 'OK'],
+		message: 'Are you sure you want to exit 10,000 steps?',
+		title: 'Exit App?'
+	});
+	
+	confirmDialog.addEventListener('click', function(e) {
+		if(e.index !== e.source.cancel) {
+			$.home.close();
+			args.quit();
+		}	
+	});
+	
+	confirmDialog.show();
+}
+
+function window_open() {
+	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
+	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
+	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
+	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+}

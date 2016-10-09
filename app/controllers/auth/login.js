@@ -3,13 +3,25 @@ var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
-function tryLogin(username, password) {
+function quit() {
+	//close the root view
+	args.quit();
+}
+
+function doLogout() {
+	Ti.App.Properties.removeProperty("AuthKey");
+	Alloy.Globals.IsLoggedIn = false;	
+}
+
+function doLogin(username, password) {
 	var API = require("API");
 	var api = new API();
 	
 	function onSuccess(response) {
 		//Store the auth key. This doesn't change?
-		Ti.App.Properties.setString("AuthKey", response.key);		
+		Ti.App.Properties.setString("AuthKey", response.key);	
+		Alloy.Globals.IsLoggedIn = true;
+			
 		goHome();		
 	}
 	
@@ -33,13 +45,10 @@ function tryLogin(username, password) {
 }
 
 function goHome() {
-	var win = Alloy.createController('home', {
-		logoutCallback: args.logoutCallback
+	var win = Alloy.createController('home/home', {
+		logoutCallback: doLogout,
+		quit: quit
 	}).getView();
-	
-	setTimeout(function() {
-		$.login.close();
-	}, 1000);
 	
 	win.open();
 }
@@ -48,11 +57,15 @@ function goHome() {
 function window_open() {
 	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
 	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
+	
+	if(Alloy.Globals.IsLoggedIn) {
+		goHome();	
+	}
 }
 
 function btnLogin_click() {
 	//On success, try a login
-	tryLogin($.loginView.txtUsername.value, $.loginView.txtPassword.value);
+	doLogin($.loginView.txtUsername.value, $.loginView.txtPassword.value);
 }
 
 function btnRegister_click() {
