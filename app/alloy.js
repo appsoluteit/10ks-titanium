@@ -1,9 +1,10 @@
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
+Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 
-if(Alloy.Globals.IsLoggedIn)
-	Ti.API.info("Logged in already. Key: " + Alloy.Globals.AuthKey);
-
+if(Alloy.Globals.IsLoggedIn) {
+	Ti.API.info("Logged in already. Key: ", Alloy.Globals.AuthKey, " URL: ", Alloy.Globals.UserURL);
+}
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
 
 /**

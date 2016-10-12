@@ -6,7 +6,8 @@ exports.definition = {
 		    "steps_walked":  "INTEGER",
 		    "activity_part": "INTEGER",
 		    "moderate":      "INTEGER",
-		    "vigorous":      "INTEGER"
+		    "vigorous":      "INTEGER",
+		    "synced":        "INTEGER"		//no bool in sqlite.
 		},
 		adapter: {
 			type: "sql",

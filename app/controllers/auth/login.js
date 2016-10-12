@@ -2,7 +2,8 @@
 var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
-
+var API = require("API");
+	
 function quit() {
 	//close the root view
 	args.quit();
@@ -14,15 +15,17 @@ function doLogout() {
 }
 
 function doLogin(username, password) {
-	var API = require("API");
 	var api = new API();
 	
 	function onSuccess(response) {
 		//Store the auth key. This doesn't change?
 		Ti.App.Properties.setString("AuthKey", response.key);	
 		Alloy.Globals.IsLoggedIn = true;
+		Alloy.Globals.AuthKey = response.key;
 			
-		goHome();		
+		//goHome();	
+		
+		getUser();	
 	}
 	
 	function onFail(response) {	
@@ -41,7 +44,45 @@ function doLogin(username, password) {
 		password: password
 	};
 	
-	api.post('http://steps10000.webfactional.com/api/auth/login/', data, onSuccess, onFail);
+	api.post({
+		url: 		'http://steps10000.webfactional.com/api/auth/login/',
+		data: 		data,
+		success: 	onSuccess,
+		fail:		onFail
+	});
+}
+
+/**
+ * Gets the user object from the server (mainly for the URL)
+ */
+function getUser() {
+	var api = new API();
+	
+	function onSuccess(response) {	
+		Ti.App.Properties.setString("UserURL", response.url);
+		Alloy.Globals.UserURL = response.url;
+		
+		goHome();
+	}
+	
+	function onFail(e) {
+		Ti.API.info("Failed to get user: ", JSON.stringify(e));
+	}
+	
+	var data = {
+		Authorization: "Token " + Alloy.Globals.AuthKey
+	};
+	
+	api.get({
+		url: "http://steps10000.webfactional.com/api/auth/user/",
+		headers: [{
+			key: "Authorization",
+			value: "Token " + Alloy.Globals.AuthKey
+		}],
+		
+		success: onSuccess,
+		fail: onFail
+	});
 }
 
 function goHome() {
@@ -59,6 +100,7 @@ function window_open() {
 	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
 	
 	if(Alloy.Globals.IsLoggedIn) {
+		Ti.API.info("Already logged in. Going home...");
 		goHome();	
 	}
 }

@@ -121,6 +121,71 @@ function loadDatesFrom(dateObj) {
 	addDateRow("Load More", dateObj, true);
 }
 
+/**
+ * Loads steps for the current user from the server and adds them to local storage, if they don't exist.
+ */
+function getSteps() {
+	var API = require("API");
+	var api = new API();
+	
+	function onSuccess(e) {
+		Ti.API.info("Get steps success", JSON.stringify(e));
+	}
+	
+	function onFail(e) {
+		
+	}
+	
+	var data = {
+		Authorization: "Token " + Alloy.Globals.AuthKey
+	};
+	
+	api.get({
+		url:	 "http://steps10000.webfactional.com/api/steps/",
+		headers: [{
+			key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: onSuccess,
+		fail: onFail
+	});
+}
+
+/**
+ * Pushes unsynced steps from local storage to the server.
+ */
+function postSteps() {
+	var API = require("API");
+	var api = new API();
+	
+	function onSuccess(e) {
+		Ti.API.info("Post steps success", JSON.stringify(e));
+	}
+	
+	function onFail(e) {
+		Ti.API.info("Post steps fail", JSON.stringify(e));
+	}
+	
+	var data = {
+		user: Alloy.Globals.UserURL,
+		steps_date: "2016-10-12",
+		steps_total: "9999",
+		steps_walked: "9999",
+		moderate: "9999",
+		vigorous: "9999",
+		activity_part: "9999"
+	};
+	
+	api.post({
+		url: 	"http://steps10000.webfactional.com/api/steps/",
+		headers: [{
+			key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		
+		data: data,
+		success: onSuccess,
+		fail: onFail
+	});
+}
 
 /*********************************** EVENT HANDLERS ***********************************/
 function window_open() {
@@ -162,20 +227,9 @@ function btnBack_click() {
 }
 
 function btnSync_click() {
-	var API = require("API");
-	var api = new API();
 	
-	function onSuccess(e) {
-		
-	}
+	//TODO: have getSteps return a promise. Then call postSteps.
+	getSteps();
 	
-	function onFail(e) {
-		
-	}
-	
-	var data = {
-		Authorization: "Token " + Alloy.Globals.AuthKey
-	};
-	
-	api.get("http://steps10000.webfactional.com/api/steps/", data, onSuccess, onFail);
+	postSteps();
 }

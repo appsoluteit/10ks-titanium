@@ -12,18 +12,23 @@ function API() {
 		return response;
 	}
 	
-	this.get = function(url, data, onSuccess, onFail) {
-		return this.send("GET", url, data, onSuccess, onFail);
+	this.get = function(options) {
+		options.method = "GET";
+		return this.send(options);
 	};
 	
-	this.post = function(url, data, onSuccess, onFail) {
-		return this.send("POST", url, data, onSuccess, onFail);
+	this.post = function(options) {
+		options.method = "POST";
+		return this.send(options);
 	};
 	
-	this.send = function(method, url, data, onSuccess, onFail) {
-		Alloy.Globals.Loading.show("Loading...", false);
-		
-		Ti.API.info("Sending: ", data);
+	this.send = function(options) {
+		if(options.message)
+			Alloy.Globals.Loading.show(options.message, false);
+		else
+			Alloy.Globals.Loading.show("Loading...", false);
+			
+		//Ti.API.info("Sending: ", options.data);
 		
 		var req = Ti.Network.createHTTPClient();
 		req.onload = function() {
@@ -37,7 +42,12 @@ function API() {
 						Ti.API.info("API success response: " + this.responseText);
 						Alloy.Globals.Loading.hide();
 						
-						onSuccess(makeResponse(this.responseText));
+						if(typeof(options.success === "function")) {
+							options.success(makeResponse(this.responseText));
+						}
+						else {
+							Ti.API.warn("No success handler defined for API call. Is this intended?");
+						}
 					}
 				}
 			}
@@ -51,24 +61,25 @@ function API() {
 			Ti.API.error('Response object: ' + this.responseText);
 			
 			Alloy.Globals.Loading.hide();
-			onFail(makeResponse(this.responseText));
+			
+			if(typeof(options.fail) === "function") {
+				options.fail(makeResponse(this.responseText));
+			}
+			else {
+				Ti.API.warn("No fail handler defined for API call. Is this intended?");
+			}
 		};
 		
-		req.open(method, url);
+		req.open(options.method, options.url);
 		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		
-		if(method == "GET") {	
-			for(var i in data) {
-				console.log("Data: " + i);
-				
-				req.setRequestHeader(i, data[i]);
-			}
-			
-			req.send();
+		if(options.headers) {
+			options.headers.forEach(function(ele) {
+				req.setRequestHeader(ele.key, ele.value);
+			});
 		}
-		else if(method == "POST") {	
-			req.send(data);
-		}
+		
+		req.send(options.data);
 	};
 }
 

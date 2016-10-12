@@ -1,4 +1,5 @@
 //Use the login view as the root window
+/*
 var win = Alloy.createController('auth/login', {
 	quit: quit
 }).getView();			
@@ -10,13 +11,12 @@ function quit() {
 	
 	Alloy.Globals.Quit();
 }
+*/
 
-//Open the base window first
-//$.index.open();
-
+//Note: I used to think that conditionally opening a window on top of the index might cause the Android app to not
+//resume. Tried changin it, no effect.
 //Dev over-ride
 //Alloy.Globals.IsLoggedIn = false;
-/*
 (function loadRootView() {
 	Ti.API.info("Loading root view");
 	
@@ -50,7 +50,7 @@ function quit() {
 	}
 	
 	function goHome() {
-		win = Alloy.createController('home', {
+		win = Alloy.createController('home/home', {
 			logoutCallback: logoutCallback
 		}).getView();
 		win.open();
@@ -71,4 +71,3 @@ function quit() {
 		}
 	});
 })();
-*/

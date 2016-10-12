@@ -15,12 +15,13 @@ function btnDone_click() {
 		Ti.API.info("Made date string: " + dateStr);
 		
 		var logInstance = Alloy.createModel('log', {
-		    steps_date: 	dateStr, 
+		    steps_date: 	 dateStr, 
 		    steps_total: 	 total,
 		    steps_walked:  	 stepsWalked,
 		    activity_part: 	 1,	//what is this?
 		    moderate:      	 moderateMins,
-		    vigorous:     	 vigorousMins
+		    vigorous:     	 vigorousMins,
+		    synced:			 false
 		});
 		
 		if(logInstance.isValid()) {
