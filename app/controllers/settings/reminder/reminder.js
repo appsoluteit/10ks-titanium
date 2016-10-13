@@ -1,6 +1,82 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+/*********************************** BUSINESS FUNCTIONS ***********************************/
+
+function addReminder() {
+	var defCalendar = Ti.Calendar.defaultCalendar;
+	
+	var strReminderTime = Ti.App.Properties.getString("ReminderTime");
+	var dtReminderTime = Alloy.Globals.UnformatTime(strReminderTime);
+	
+	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
+	
+	//TODO: dtReminderTime needs to point to the next set repeat day.
+	//TODO: we need to store a list of event IDs so that we can call
+	//		Calendar.getEventById(id).remove(Ti.Calendar.SPAN_FUTUREEVENTS)
+	//		when the user clicks remove reminder.
+	var evReminder = defCalendar.createEvent({
+		title:	strReminderLabel,
+		begin:  dtReminderTime,
+		end:    dtReminderTime,
+		allDay: false,
+		availability: Ti.Calendar.AVAILABILITY_FREE,
+        notes: 'Don\t forget to log your steps!',
+        location: 'Home',
+	});
+	
+	var evAlert = evReminder.createAlert({
+		absoluteDate: dtReminderTime
+	});
+	
+	evReminder.alerts = [evAlert];
+	
+	var evRecurrenceRule = evReminder.createRecurrenceRule({
+		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
+		interval: 1,
+		daysOfTheWeek: [{
+			dayOfWeek: 1	
+		}],
+		end: {occurenceCount: 10}
+	});
+	
+	evReminder.recurrenceRules = [evRecurrenceRule];
+	if(evReminder.save(Ti.Calendar.SPAN_FUTUREEVENTS)) {
+		alert("Reminder saved!");
+		Ti.App.Properties.setBool("HasProperty", true);
+		
+		enableDisableReminderButtons();
+	}
+	else {
+		alert("Couldn't save reminder");
+	}
+}
+
+function removeReminder() {
+	enableDisableReminderButtons();
+}
+
+function enableDisableReminderButtons() {
+	//Remove both event handlers first
+	$.reminderView.tblRowAddReminder.removeEventListener('click', tblRowAddReminder_click);
+	$.reminderView.tblRowRemoveReminder.removeEventListener('click', tblRowRemoveReminder_click);
+	
+	if(Ti.App.Properties.hasProperty("HasReminder")) {
+		$.reminderView.tblRowAddReminder.touchEnabled = false;
+		$.reminderView.lblAddReminder.opacity = 0.5;
+		
+		$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+	}
+	else {
+		$.reminderView.tblRowRemoveReminder.touchEnabled = false;
+		$.reminderView.lblRemoveReminder.opacity = 0.5;
+		
+		$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+	}
+}
+
+/*********************************** EVENT HANDLERS ***********************************/
+
 function btnBack_click() {
 	$.reminder.close();
 }
@@ -9,8 +85,9 @@ function window_open() {
 	$.reminderView.tblRowRepeat.addEventListener('click', tblRowRepeat_click);
 	$.reminderView.tblRowLabel.addEventListener('click', tblRowLabel_click);
 	$.reminderView.tblRowTime.addEventListener('click', tblRowTime_click);
-	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+	
 	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
 	
 	//Pre-populate the row values
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
@@ -35,9 +112,7 @@ function window_open() {
 		$.reminderView.lblTime.text = strReminderTime;
 	}
 	
-	if(Ti.App.Properties.hasProperty("HasReminder")) {
-		$.reminderView.tblRowRemoveReminder.visible = true;
-	}
+	enableDisableReminderButtons();
 }
 
 function tblRowRepeat_click() {
@@ -84,7 +159,22 @@ function tblRowTime_click() {
 }
 
 function tblRowAddReminder_click() {
-	alert("Reminder row clicked!");	
+	//alert("Reminder row clicked!");	
+	if(Ti.Calendar.hasCalendarPermissions()) {
+		addReminder();
+		//performCalendarWriteFunctions();
+	}
+	else {
+		Ti.Calendar.requestCalendarPermissions(function(e) {
+			if(e.success) {
+				addReminder();
+				//performCalendarWriteFunctions();
+			}
+			else {
+				alert("Access to Calendar denied");
+			}
+		});
+	}
 }
 
 function tblRowRemoveReminder_click() {

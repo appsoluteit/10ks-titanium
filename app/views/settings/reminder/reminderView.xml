@@ -42,12 +42,12 @@
 			
 			<!-- Add Reminder -->
 			<TableViewRow id="tblRowAddReminder">
-				<Label class="row-label">Add Reminder</Label>
+				<Label id="lblAddReminder" class="row-label">Add Reminder</Label>
 			</TableViewRow>
 			
 			<!-- Remove Reminder-->
 			<TableViewRow id="tblRowRemoveReminder" visible="false">
-				<Label class="row-label">Remove Reminder</Label>
+				<Label id="lblRemoveReminder" class="row-label">Remove Reminder</Label>
 			</TableViewRow>
 		</TableView>
 	</View>
