@@ -105,6 +105,5 @@ function btnBack_click() {
 	//Ti.API.info(JSON.stringify(obj));
 	
 	Ti.App.Properties.setString("ReminderRepeat", JSON.stringify(obj));
-	args.callback(obj);
 	$.reminderRepeat.close();
 }

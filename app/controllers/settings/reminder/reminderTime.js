@@ -15,7 +15,6 @@ function btnBack_click() {
 	var timeStr = Alloy.Globals.FormatTime(rawTime);
 	
 	Ti.App.Properties.setString('ReminderTime', timeStr);
-	args.callback(timeStr);
 	
 	$.reminderTime.close();
 }

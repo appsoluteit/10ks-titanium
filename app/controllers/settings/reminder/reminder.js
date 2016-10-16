@@ -31,6 +31,7 @@ function addReminder() {
 	
 	evReminder.alerts = [evAlert];
 	
+	//TODO: Set the days of the week based on the settings
 	var evRecurrenceRule = evReminder.createRecurrenceRule({
 		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
 		interval: 1,
@@ -56,39 +57,62 @@ function removeReminder() {
 	enableDisableReminderButtons();
 }
 
-function enableDisableReminderButtons() {
-	//Remove both event handlers first
+function disableAddReminderButton() {
+	$.reminderView.lblAddReminder.opacity = 0.5;
 	$.reminderView.tblRowAddReminder.removeEventListener('click', tblRowAddReminder_click);
+}
+
+function disableRemoveReminderButton() {
+	$.reminderView.lblRemoveReminder.opacity = 0.5;
 	$.reminderView.tblRowRemoveReminder.removeEventListener('click', tblRowRemoveReminder_click);
+}
+
+function enableAddReminderButton() {
+	$.reminderView.lblAddReminder.opacity = 1.0;
+	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+}
+
+function enableRemoveReminderButton() {
+	$.reminderView.lblRemoveReminder.opacity = 1.0;
+	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+}
+
+function enableDisableReminderButtons() {
+	//Disable both buttons first
+	disableAddReminderButton();
+	disableRemoveReminderButton();
 	
 	if(Ti.App.Properties.hasProperty("HasReminder")) {
-		$.reminderView.tblRowAddReminder.touchEnabled = false;
-		$.reminderView.lblAddReminder.opacity = 0.5;
-		
-		$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+		enableRemoveReminderButton();
 	}
 	else {
-		$.reminderView.tblRowRemoveReminder.touchEnabled = false;
-		$.reminderView.lblRemoveReminder.opacity = 0.5;
+		if(Ti.App.Properties.hasProperty("ReminderRepeat") &&
+		   Ti.App.Properties.hasProperty("ReminderLabel") &&
+		   Ti.App.Properties.hasProperty("ReminderTime") ) {
+		 
+		 	Ti.API.info("Required reminder properties exist. Checking...");
+		 	
+		 	var reminderLabel = Ti.App.Properties.getString("ReminderLabel");
+		 	if(reminderLabel.trim().length === 0) {
+		 		Ti.API.info("Reminder label is empty. Can't enable add reminder");
+		 		return;
+		 	}
+		 		
+		 	var reminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
+			var objReminderRepeat = JSON.parse(reminderRepeat);
 		
-		$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+			var activeDays = objReminderRepeat.filter(function(e) { return e.active; });
+			
+			if(activeDays.length === 0) {
+				return;
+			}
+		 	
+		 	enableAddReminderButton();  	
+		}
 	}
 }
 
-/*********************************** EVENT HANDLERS ***********************************/
-
-function btnBack_click() {
-	$.reminder.close();
-}
-
-function window_open() {
-	$.reminderView.tblRowRepeat.addEventListener('click', tblRowRepeat_click);
-	$.reminderView.tblRowLabel.addEventListener('click', tblRowLabel_click);
-	$.reminderView.tblRowTime.addEventListener('click', tblRowTime_click);
-	
-	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
-	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
-	
+function populateRows() {
 	//Pre-populate the row values
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
 		var strReminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
@@ -114,48 +138,51 @@ function window_open() {
 	
 	enableDisableReminderButtons();
 }
+/*********************************** EVENT HANDLERS ***********************************/
+
+function btnBack_click() {
+	$.reminder.close();
+}
+
+function window_open() {
+	$.reminderView.tblRowRepeat.addEventListener('click', tblRowRepeat_click);
+	$.reminderView.tblRowLabel.addEventListener('click', tblRowLabel_click);
+	$.reminderView.tblRowTime.addEventListener('click', tblRowTime_click);
+	
+	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+	
+	populateRows();
+}
+
+function childWindow_close() {
+	if(Ti.Platform.osname == "android") {
+		$.reminder.close();	//go back to settings to refresh the view
+	}
+	else {
+		populateRows();
+	}
+}
 
 function tblRowRepeat_click() {
-	var win = Alloy.createController('settings/reminder/reminderRepeat', {
-		callback: function(repeatArr) {
-			//Ti.API.info("Callback days:", JSON.stringify(repeatArr));
-			
-			setTimeout(function() {
-				var activeDays = repeatArr.filter(function(e) { return e.active; });
-				
-				Ti.API.info("Active days: ", activeDays.length);
-				
-				if(activeDays.length === 1)
-					$.reminderView.lblRepeat.text = activeDays[0].name;
-				else
-					$.reminderView.lblRepeat.text = activeDays.length + " days";
-			}, 1000);
-		}
-	}).getView();
-	
+	var win = Alloy.createController('settings/reminder/reminderRepeat').getView();
 	win.open();
+	
+	win.addEventListener('close', childWindow_close);
 }
 
 function tblRowLabel_click() {
-	var win = Alloy.createController('settings/reminder/reminderLabel', {
-		callback: function(labelStr) {
-			Ti.API.info("Callback row label: ", labelStr);
-			$.reminderView.lblLabel.text = labelStr;
-		}
-	}).getView();
-	
+	var win = Alloy.createController('settings/reminder/reminderLabel').getView();
 	win.open();
+	
+	win.addEventListener('close', childWindow_close);
 }
 
 function tblRowTime_click() {
-	var win = Alloy.createController('settings/reminder/reminderTime', {
-		callback: function(timeStr) {
-			Ti.API.info("Callback raw time: ", timeStr);
-			
-			$.reminderView.lblTime.text = timeStr;
-		}
-	}).getView();
+	var win = Alloy.createController('settings/reminder/reminderTime').getView();
 	win.open();
+	
+	win.addEventListener('close', childWindow_close);
 }
 
 function tblRowAddReminder_click() {
@@ -171,7 +198,7 @@ function tblRowAddReminder_click() {
 				//performCalendarWriteFunctions();
 			}
 			else {
-				alert("Access to Calendar denied");
+				alert("Access to Calendar denied. Message = " + e.error);
 			}
 		});
 	}

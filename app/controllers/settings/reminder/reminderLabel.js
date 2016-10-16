@@ -15,6 +15,5 @@ function btnBack_click() {
 function btnSave_click() {
 	var reminderLabel = $.reminderLabelView.txtReminderLabel.value;
 	Ti.App.Properties.setString("ReminderLabel", reminderLabel);
-	args.callback(reminderLabel);
 	$.reminderLabel.close();
 }
