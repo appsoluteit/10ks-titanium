@@ -90,13 +90,13 @@ function tblRow_click(e) {
 
 function btnBack_click() {
 	var obj = [
-		{ name: 'Sunday', active: $.reminderRepeatView.swSunday.value },
-		{ name: 'Monday', active: $.reminderRepeatView.swMonday.value },
-		{ name: 'Tuesday', active: $.reminderRepeatView.swTuesday.value },
-		{ name: 'Wednesday', active: $.reminderRepeatView.swWednesday.value },
-		{ name: 'Thursday', active: $.reminderRepeatView.swThursday.value },
-		{ name: 'Friday', active: $.reminderRepeatView.swFriday.value },
-		{ name: 'Saturday', active: $.reminderRepeatView.swSaturday.value }
+		{ name: 'Sunday', active: $.reminderRepeatView.swSunday.value, dayOfWeek: 1 },
+		{ name: 'Monday', active: $.reminderRepeatView.swMonday.value, dayOfWeek: 2 },
+		{ name: 'Tuesday', active: $.reminderRepeatView.swTuesday.value, dayOfWeek: 3 },
+		{ name: 'Wednesday', active: $.reminderRepeatView.swWednesday.value, dayOfWeek: 4 },
+		{ name: 'Thursday', active: $.reminderRepeatView.swThursday.value, dayOfWeek: 5 },
+		{ name: 'Friday', active: $.reminderRepeatView.swFriday.value, dayOfWeek: 6 },
+		{ name: 'Saturday', active: $.reminderRepeatView.swSaturday.value, dayOfWeek: 7 }
 	];
 		
 	//Ti.API.info("Thursday: " + $.reminderRepeatView.swThursday.value);

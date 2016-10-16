@@ -24,6 +24,9 @@ Alloy.Globals.FormatDate = function(dateObj) {
 	return y + "-" + m + "-" + d;	
 };
 
+/**
+ * Accepts a JS Date object and returns a formatted string in H:m. Includes am/pm postfix. 
+ */
 Alloy.Globals.FormatTime = function(dateObj) {
 	var h = dateObj.getHours();
 	var m = dateObj.getMinutes();
@@ -42,6 +45,10 @@ Alloy.Globals.FormatTime = function(dateObj) {
 	
 	return h + ":" + m + postfix;
 };
+
+/**
+ * Accepts an H:m am/pm string and returns a JS Date object.
+ */
 Alloy.Globals.UnformatTime = function(dateStr) {
 	var timeparts = dateStr.split(":");
 	
@@ -61,11 +68,76 @@ Alloy.Globals.UnformatTime = function(dateStr) {
 	return d;
 };
 
+/**
+ * Accepts a double and returns a string in $123,45.67 format.
+ */
 Alloy.Globals.FormatNumber = function(input) {
 	//More reliable than String.formatDecimal, which isn't documented in many places.
 	return input.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
+/**
+ * Returns an array containing the defined reminder days.
+ * @returns {Array[Object]}
+ */
+Alloy.Globals.GetReminderDays = function() {
+	var activeDays = [];
+	
+	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
+ 		var reminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
+		var objReminderRepeat = JSON.parse(reminderRepeat);
+
+		activeDays = objReminderRepeat.filter(function(e) { return e.active; });		
+	}
+	
+	return activeDays;
+};
+
+/**
+ * Returns a JS DateTime for the next reminder date at the specified reminder time.
+ */
+Alloy.Globals.GetNextReminderDateTime = function() {
+  function makeDate(dayObj, timeObj) {
+  		console.log("Making date");
+			dayObj.setHours(timeObj.getHours());
+      dayObj.setMinutes(timeObj.getMinutes());
+      
+      return dayObj;
+  }
+
+  var now = new Date();
+  var curDayOfWeek = now.getDay() + 1;
+
+  var activeDays = Alloy.Globals.GetReminderDays();
+  var reminderTime = Alloy.Globals.UnformatTime(Ti.App.Properties.getString("ReminderTime"));
+
+  console.log("Current day of week: " + curDayOfWeek);
+  console.log("Reminder time: ", reminderTime);
+      
+  for(var i = 0; i < activeDays.length; i++) {
+    var ele = activeDays[i];
+    console.log("Active day day of week: " + ele.dayOfWeek);
+    
+    if (ele.dayOfWeek === curDayOfWeek) {
+      //If checking today, make sure we haven't passed the time cutoff
+      if ((now.getHours() < reminderTime.getHours()) ||
+        (now.getHours() === reminderTime.getHours() &&
+          now.getMinutes() < reminderTime.getMinutes())) {
+
+				console.log("Today is the next active reminder day");
+        return makeDate(now, reminderTime);
+      }
+    } else if (ele.dayOfWeek > curDayOfWeek) {
+      var nextDay = new Date();
+      //Add days to the date object based on the difference between today and the day in settings
+      nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
+
+      return makeDate(nextDay, reminderTime);
+    }
+  };
+};
+
+//Not used anymore
 Alloy.Globals.Quit = function() {
 	Ti.API.info("Alloy Globals Quit");
 	

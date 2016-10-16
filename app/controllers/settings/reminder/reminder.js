@@ -6,19 +6,18 @@ var args = $.args;
 function addReminder() {
 	var defCalendar = Ti.Calendar.defaultCalendar;
 	
-	var strReminderTime = Ti.App.Properties.getString("ReminderTime");
-	var dtReminderTime = Alloy.Globals.UnformatTime(strReminderTime);
-	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
-	//TODO: dtReminderTime needs to point to the next set repeat day.
+	var activeDays = Alloy.Globals.GetReminderDays();
+	var nextReminder = Alloy.Globals.GetNextReminderDateTime();
+	
 	//TODO: we need to store a list of event IDs so that we can call
 	//		Calendar.getEventById(id).remove(Ti.Calendar.SPAN_FUTUREEVENTS)
 	//		when the user clicks remove reminder.
 	var evReminder = defCalendar.createEvent({
 		title:	strReminderLabel,
-		begin:  dtReminderTime,
-		end:    dtReminderTime,
+		begin:  nextReminder,
+		end:    nextReminder,
 		allDay: false,
 		availability: Ti.Calendar.AVAILABILITY_FREE,
         notes: 'Don\t forget to log your steps!',
@@ -31,13 +30,11 @@ function addReminder() {
 	
 	evReminder.alerts = [evAlert];
 	
-	//TODO: Set the days of the week based on the settings
+	//Set the days of the week based on the settings
 	var evRecurrenceRule = evReminder.createRecurrenceRule({
 		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
 		interval: 1,
-		daysOfTheWeek: [{
-			dayOfWeek: 1	
-		}],
+		daysOfTheWeek: [activeDays],
 		end: {occurenceCount: 10}
 	});
 	
@@ -98,10 +95,7 @@ function enableDisableReminderButtons() {
 		 		return;
 		 	}
 		 		
-		 	var reminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
-			var objReminderRepeat = JSON.parse(reminderRepeat);
-		
-			var activeDays = objReminderRepeat.filter(function(e) { return e.active; });
+		 	var activeDays = Alloy.Globals.GetReminderDays();
 			
 			if(activeDays.length === 0) {
 				return;
@@ -115,10 +109,7 @@ function enableDisableReminderButtons() {
 function populateRows() {
 	//Pre-populate the row values
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
-		var strReminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
-		var objReminderRepeat = JSON.parse(strReminderRepeat);
-	
-		var activeDays = objReminderRepeat.filter(function(e) { return e.active; });
+		var activeDays = Alloy.Globals.GetReminderDays();
 		
 		if(activeDays.length === 1)
 			$.reminderView.lblRepeat.text = activeDays[0].name;
