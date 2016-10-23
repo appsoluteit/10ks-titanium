@@ -9,6 +9,7 @@
     "os:mobileweb": {},
     "os:windows": {},
     "dependencies": {
-    	"nl.fokkezb.loading": "*"
+    	"nl.fokkezb.loading": "*",
+    	"com.mcongrove.toast": "*"
     }
 }

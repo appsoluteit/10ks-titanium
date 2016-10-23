@@ -41,10 +41,11 @@ function register(username, email, password, password2) {
 	Ti.API.info("Sending: " + JSON.stringify(data));
 	
 	api.post({
-		url: "http://steps10000.webfactional.com/api/auth/registration/",
-		data: data,
-		success: onSuccess,
-		fail: onFail	
+		message:	"Registering your account...",
+		url: 		"http://steps10000.webfactional.com/api/auth/registration/",
+		data: 		data,
+		success: 	onSuccess,
+		fail: 		onFail	
 	});
 }
 

@@ -141,12 +141,13 @@ function getSteps() {
 	};
 	
 	api.get({
-		url:	 "http://steps10000.webfactional.com/api/steps/",
+		message:	"Fetching steps...",
+		url:		"http://steps10000.webfactional.com/api/steps/",
 		headers: [{
-			key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
-		success: onSuccess,
-		fail: onFail
+		success: 	onSuccess,
+		fail: 		onFail
 	});
 }
 
@@ -176,14 +177,15 @@ function postSteps() {
 	};
 	
 	api.post({
-		url: 	"http://steps10000.webfactional.com/api/steps/",
+		message:	"Sending steps...",
+		url: 		"http://steps10000.webfactional.com/api/steps/",
 		headers: [{
-			key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
 		
-		data: data,
-		success: onSuccess,
-		fail: onFail
+		data: 		data,
+		success: 	onSuccess,
+		fail: 		onFail
 	});
 }
 

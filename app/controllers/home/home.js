@@ -57,4 +57,13 @@ function window_open() {
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+	
+	setTimeout(function() {
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "This is a notification",
+			duration: 2000,
+			view: $.home,
+			theme: "error"
+		});
+	}, 2000);
 }

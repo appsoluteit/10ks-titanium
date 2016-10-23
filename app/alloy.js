@@ -60,10 +60,10 @@ Alloy.Globals.UnformatTime = function(dateStr) {
 		h += 12;
 	}
 	
-	Ti.API.info("UnformatTime created new time string: " + h + ":" + m);
-	
 	var d = new Date();
 	d.setHours(h, m);
+	
+	Ti.API.info("UnformatTime created new time: " + d.toString());
 	
 	return d;
 };
@@ -98,11 +98,11 @@ Alloy.Globals.GetReminderDays = function() {
  */
 Alloy.Globals.GetNextReminderDateTime = function() {
   function makeDate(dayObj, timeObj) {
-  		console.log("Making date");
-			dayObj.setHours(timeObj.getHours());
-      dayObj.setMinutes(timeObj.getMinutes());
+		dayObj.setHours(timeObj.getHours());
+      	dayObj.setMinutes(timeObj.getMinutes());
       
-      return dayObj;
+      	Ti.API.info("Made date: ", dayObj.toString());
+      	return dayObj;
   }
 
   var now = new Date();
@@ -112,27 +112,31 @@ Alloy.Globals.GetNextReminderDateTime = function() {
   var reminderTime = Alloy.Globals.UnformatTime(Ti.App.Properties.getString("ReminderTime"));
 
   console.log("Current day of week: " + curDayOfWeek);
-  console.log("Reminder time: ", reminderTime);
-      
+  console.log("Reminder time: ", reminderTime.toString());
+  console.log("Active days: ", activeDays);
+  
   for(var i = 0; i < activeDays.length; i++) {
     var ele = activeDays[i];
     console.log("Active day day of week: " + ele.dayOfWeek);
     
     if (ele.dayOfWeek === curDayOfWeek) {
       //If checking today, make sure we haven't passed the time cutoff
-      if ((now.getHours() < reminderTime.getHours()) ||
-        (now.getHours() === reminderTime.getHours() &&
-          now.getMinutes() < reminderTime.getMinutes())) {
-
-				console.log("Today is the next active reminder day");
+      var isBeforeCutoffTime = (now.getHours() < reminderTime.getHours()) ||
+      						   (now.getHours() === reminderTime.getHours() &&
+      						   now.getMinutes() < reminderTime.getMinutes());
+      						   
+      if (isBeforeCutoffTime) {
+		console.log("Today is the next active reminder day");
         return makeDate(now, reminderTime);
       }
     } else if (ele.dayOfWeek > curDayOfWeek) {
-      var nextDay = new Date();
-      //Add days to the date object based on the difference between today and the day in settings
-      nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
+      	
+      	var nextDay = new Date();
+      	
+      	//Add days to the date object based on the difference between today and the day in settings
+      	nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
 
-      return makeDate(nextDay, reminderTime);
+      	return makeDate(nextDay, reminderTime);
     }
   };
 };

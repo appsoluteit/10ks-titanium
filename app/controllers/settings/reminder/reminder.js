@@ -11,21 +11,18 @@ function addReminder() {
 	var activeDays = Alloy.Globals.GetReminderDays();
 	var nextReminder = Alloy.Globals.GetNextReminderDateTime();
 	
-	//TODO: we need to store a list of event IDs so that we can call
-	//		Calendar.getEventById(id).remove(Ti.Calendar.SPAN_FUTUREEVENTS)
-	//		when the user clicks remove reminder.
 	var evReminder = defCalendar.createEvent({
 		title:	strReminderLabel,
 		begin:  nextReminder,
 		end:    nextReminder,
 		allDay: false,
 		availability: Ti.Calendar.AVAILABILITY_FREE,
-        notes: 'Don\t forget to log your steps!',
+        notes: 'Don\'t forget to log your steps!',
         location: 'Home',
 	});
 	
 	var evAlert = evReminder.createAlert({
-		absoluteDate: dtReminderTime
+		absoluteDate: nextReminder
 	});
 	
 	evReminder.alerts = [evAlert];
@@ -34,14 +31,16 @@ function addReminder() {
 	var evRecurrenceRule = evReminder.createRecurrenceRule({
 		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
 		interval: 1,
-		daysOfTheWeek: [activeDays],
-		end: {occurenceCount: 10}
+		daysOfTheWeek: activeDays,
+		//end: {occurenceCount: 10}
 	});
 	
 	evReminder.recurrenceRules = [evRecurrenceRule];
 	if(evReminder.save(Ti.Calendar.SPAN_FUTUREEVENTS)) {
 		alert("Reminder saved!");
-		Ti.App.Properties.setBool("HasProperty", true);
+		
+		Ti.App.Properties.setBool("HasReminder", true);
+		Ti.App.Properties.setString("ReminderEventID", evReminder.getId());
 		
 		enableDisableReminderButtons();
 	}
@@ -51,30 +50,66 @@ function addReminder() {
 }
 
 function removeReminder() {
+	function removeReminderData() {
+		Ti.App.Properties.removeProperty("HasReminder");
+		Ti.App.Properties.removeProperty("ReminderEventID");			
+	}
+	
+	var evReminderID = Ti.App.Properties.getString("ReminderEventID", "");
+	console.log("Removing reminders. ID: ", evReminderID);
+	
+	if(evReminderID.length > 0) {
+		var defCalendar = Ti.Calendar.defaultCalendar;
+		
+		var evt = defCalendar.getEventById(evReminderID);
+		
+		if(evt == null) {
+			alert("Event does not exist");
+			removeReminderData();
+		}
+		else if(evt.remove(Ti.Calendar.SPAN_FUTUREEVENTS)) {
+			alert("Reminder removed.");
+			removeReminderData();
+		}
+		else {
+			alert("Couldn't remove reminder");
+			//Note: there may be a reason why remove is failing. We probably shouldn't
+			//remove the reminder event ID.
+		}
+	}
+	else {
+		alert("No reminder found");
+		
+		//Our data wasn't reset properly. Reset it now
+		removeReminderData();
+	}
+	
 	enableDisableReminderButtons();
 }
 
 function disableAddReminderButton() {
 	$.reminderView.lblAddReminder.opacity = 0.5;
-	$.reminderView.tblRowAddReminder.removeEventListener('click', tblRowAddReminder_click);
+	$.reminderView.tblRowAddReminder.disabled = true;
 }
 
 function disableRemoveReminderButton() {
 	$.reminderView.lblRemoveReminder.opacity = 0.5;
-	$.reminderView.tblRowRemoveReminder.removeEventListener('click', tblRowRemoveReminder_click);
+	$.reminderView.tblRowRemoveReminder.disabled = true;
 }
 
 function enableAddReminderButton() {
 	$.reminderView.lblAddReminder.opacity = 1.0;
-	$.reminderView.tblRowAddReminder.addEventListener('click', tblRowAddReminder_click);
+	$.reminderView.tblRowAddReminder.disabled = false;
 }
 
 function enableRemoveReminderButton() {
 	$.reminderView.lblRemoveReminder.opacity = 1.0;
-	$.reminderView.tblRowRemoveReminder.addEventListener('click', tblRowRemoveReminder_click);
+	$.reminderView.tblRowRemoveReminder.disabled = false;
 }
 
 function enableDisableReminderButtons() {
+	console.log("Enabling / disabling buttons");
+	
 	//Disable both buttons first
 	disableAddReminderButton();
 	disableRemoveReminderButton();
@@ -177,16 +212,16 @@ function tblRowTime_click() {
 }
 
 function tblRowAddReminder_click() {
-	//alert("Reminder row clicked!");	
+	if($.reminderView.tblRowAddReminder.disabled)
+		return;
+		
 	if(Ti.Calendar.hasCalendarPermissions()) {
 		addReminder();
-		//performCalendarWriteFunctions();
 	}
 	else {
 		Ti.Calendar.requestCalendarPermissions(function(e) {
 			if(e.success) {
 				addReminder();
-				//performCalendarWriteFunctions();
 			}
 			else {
 				alert("Access to Calendar denied. Message = " + e.error);
@@ -196,5 +231,8 @@ function tblRowAddReminder_click() {
 }
 
 function tblRowRemoveReminder_click() {
-	alert("Remove reminder row clicked!");
+	if($.reminderView.tblRowRemoveReminder.disabled)
+		return;
+		
+	removeReminder();
 }

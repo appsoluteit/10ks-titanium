@@ -45,6 +45,7 @@ function doLogin(username, password) {
 	};
 	
 	api.post({
+		message:    'Logging in...',
 		url: 		'http://steps10000.webfactional.com/api/auth/login/',
 		data: 		data,
 		success: 	onSuccess,
@@ -74,14 +75,15 @@ function getUser() {
 	};
 	
 	api.get({
-		url: "http://steps10000.webfactional.com/api/auth/user/",
+		message: 	"Fetching your account...",
+		url: 		"http://steps10000.webfactional.com/api/auth/user/",
 		headers: [{
-			key: "Authorization",
-			value: "Token " + Alloy.Globals.AuthKey
+					key: "Authorization",
+					value: "Token " + Alloy.Globals.AuthKey
 		}],
 		
-		success: onSuccess,
-		fail: onFail
+		success: 	onSuccess,
+		fail: 		onFail
 	});
 }
 
