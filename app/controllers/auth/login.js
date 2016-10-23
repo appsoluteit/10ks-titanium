@@ -22,10 +22,17 @@ function doLogin(username, password) {
 		Ti.App.Properties.setString("AuthKey", response.key);	
 		Alloy.Globals.IsLoggedIn = true;
 		Alloy.Globals.AuthKey = response.key;
-			
-		//goHome();	
 		
-		getUser();	
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Logged in successfully",
+			duration: 2000,
+			view: $.login,
+			theme: "success"
+		});
+		
+		setTimeout(function() {
+			getUser();
+		}, 2000);	
 	}
 	
 	function onFail(response) {	
@@ -37,6 +44,13 @@ function doLogin(username, password) {
 		else if(response.non_field_errors) {
 			$.loginView.lblError.text = response.non_field_errors[0];
 		}
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Failed to login",
+			duration: 2000,
+			view: $.login,
+			theme: "error"
+		});
 	}
 	
 	var data = {
@@ -63,11 +77,20 @@ function getUser() {
 		Ti.App.Properties.setString("UserURL", response.url);
 		Alloy.Globals.UserURL = response.url;
 		
-		goHome();
+		setTimeout(function() {
+			goHome();
+		}, 2000);
 	}
 	
 	function onFail(e) {
 		Ti.API.info("Failed to get user: ", JSON.stringify(e));
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Couldn't get user information",
+			duration: 2000,
+			view: $.login,
+			theme: "error"
+		});
 	}
 	
 	var data = {

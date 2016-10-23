@@ -4,7 +4,31 @@ var args = $.args;
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
 function addReminder() {
-	var defCalendar = Ti.Calendar.defaultCalendar;
+	var defCalendar = null;
+	
+	if(Ti.Platform.osname === "android") {
+		/*
+		var selectableCalendars = Ti.Calendar.getSelectableCalendars();
+		
+		if(selectableCalendars.length > 0) {
+			defCalendar = selectableCalendars[0];
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "No selectable calendars",
+				duration: 2000,
+				view: $.reminder,
+				theme: "error"
+			});
+		
+			return;
+		}
+		*/
+		defCalendar = Ti.Calendar.getCalendarById(3);
+	}
+	else {
+		defCalendar = Ti.Calendar.defaultCalendar;
+	}
 	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
@@ -37,15 +61,25 @@ function addReminder() {
 	
 	evReminder.recurrenceRules = [evRecurrenceRule];
 	if(evReminder.save(Ti.Calendar.SPAN_FUTUREEVENTS)) {
-		alert("Reminder saved!");
-		
 		Ti.App.Properties.setBool("HasReminder", true);
 		Ti.App.Properties.setString("ReminderEventID", evReminder.getId());
 		
 		enableDisableReminderButtons();
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Reminder saved",
+			duration: 2000,
+			view: $.reminder,
+			theme: "success"
+		});
 	}
 	else {
-		alert("Couldn't save reminder");
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Couldn't create reminder",
+			duration: 2000,
+			view: $.reminder,
+			theme: "error"
+		});
 	}
 }
 
@@ -64,21 +98,44 @@ function removeReminder() {
 		var evt = defCalendar.getEventById(evReminderID);
 		
 		if(evt == null) {
-			alert("Event does not exist");
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Event does not exist",
+				duration: 2000,
+				view: $.reminder,
+				theme: "error"
+			});
+		
 			removeReminderData();
 		}
 		else if(evt.remove(Ti.Calendar.SPAN_FUTUREEVENTS)) {
-			alert("Reminder removed.");
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Reminder removed",
+				duration: 2000,
+				view: $.reminder,
+				theme: "success"
+			});
+		
 			removeReminderData();
 		}
 		else {
-			alert("Couldn't remove reminder");
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't remove reminder",
+				duration: 2000,
+				view: $.reminder,
+				theme: "error"
+			});
+			
 			//Note: there may be a reason why remove is failing. We probably shouldn't
 			//remove the reminder event ID.
 		}
 	}
 	else {
-		alert("No reminder found");
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "No reminder found",
+			duration: 2000,
+			view: $.reminder,
+			theme: "error"
+		});
 		
 		//Our data wasn't reset properly. Reset it now
 		removeReminderData();

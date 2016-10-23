@@ -55,15 +55,7 @@ function androidBack_click() {
 function window_open() {
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
+	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
-	
-	setTimeout(function() {
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "This is a notification",
-			duration: 2000,
-			view: $.home,
-			theme: "error"
-		});
-	}, 2000);
 }

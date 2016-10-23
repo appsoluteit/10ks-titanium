@@ -15,5 +15,15 @@ function btnBack_click() {
 function btnSave_click() {
 	var reminderLabel = $.reminderLabelView.txtReminderLabel.value;
 	Ti.App.Properties.setString("ReminderLabel", reminderLabel);
-	$.reminderLabel.close();
+	
+	Alloy.createWidget("com.mcongrove.toast", null, {
+		text: "Label saved",
+		duration: 2000,
+		view: $.reminderLabel,
+		theme: "success"
+	});
+		
+	setTimeout(function() {
+		$.reminderLabel.close();
+	}, 2000);
 }

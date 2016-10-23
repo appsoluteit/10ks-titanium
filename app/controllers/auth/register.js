@@ -6,11 +6,26 @@ function register(username, email, password, password2) {
 	var api = new API();
 	
 	function onSuccess(response) {
-		//TODO: Add a success notification
-		$.register.close();
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Account created. Please check your emails.",
+			duration: 2000,
+			view: $.register,
+			theme: "success"
+		});
+		
+		setTimeout(function (){
+			$.register.close();
+		}, 2000);
 	}
 	
 	function onFail(response) {
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Registration failed",
+			duration: 2000,
+			view: $.register,
+			theme: "error"
+		});
+		
 		if(response.username) {
 			$.registerView.lblError.text = "Username: " + response.username;
 		}

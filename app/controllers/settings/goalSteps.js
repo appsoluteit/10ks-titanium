@@ -32,6 +32,16 @@ function btnSave_click() {
 	goalSteps = parseInt(goalSteps, 10);
 	
 	Ti.App.Properties.setInt('GoalSteps', goalSteps);
-	args.callback(goalSteps);
-	$.goalSteps.close();
+	
+	Alloy.createWidget("com.mcongrove.toast", null, {
+		text: "Goal steps saved",
+		duration: 2000,
+		view: $.goalSteps,
+		theme: "success"
+	});
+	
+	setTimeout(function() {
+		args.callback(goalSteps);
+		$.goalSteps.close();
+	}, 2000);
 }
