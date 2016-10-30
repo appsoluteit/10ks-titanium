@@ -7,7 +7,6 @@ function addReminder() {
 	var defCalendar = null;
 	
 	if(Ti.Platform.osname === "android") {
-		/*
 		var selectableCalendars = Ti.Calendar.getSelectableCalendars();
 		
 		if(selectableCalendars.length > 0) {
@@ -23,8 +22,6 @@ function addReminder() {
 		
 			return;
 		}
-		*/
-		defCalendar = Ti.Calendar.getCalendarById(3);
 	}
 	else {
 		defCalendar = Ti.Calendar.defaultCalendar;

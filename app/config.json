@@ -10,6 +10,7 @@
     "os:windows": {},
     "dependencies": {
     	"nl.fokkezb.loading": "*",
-    	"com.mcongrove.toast": "*"
+    	"com.mcongrove.toast": "*",
+    	"com.alco.highcharts": "*"
     }
 }

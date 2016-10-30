@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="dailyGraph" platform="ios">
+		<Window title="Daily Graph" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
+			</LeftNavButton>
+			
+			<Require id="dailyGraphView" src="stats/dailyGraphView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="dailyGraph" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="Daily Graph" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="dailyGraphView" src="stats/dailyGraphView" type="view"/>
+	</Window>
+</Alloy>

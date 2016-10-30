@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highstock Example</title>
+		<script src="jquery.min.js"></script>
+		<script src="highcharts.js"></script>
+		<script src="exporting.js"></script>
+		<script type="text/javascript">
+			function plotChart(options) {
+		        Ti.API.info('Webview: plotChart(' + JSON.stringify(options) + ')');
+		        
+		        new Highcharts.Chart({
+		        	//TODO: Add legends
+		        	credits: {
+		        		enabled: false	
+		        	},
+		        	
+		        	exporting: {
+		        		enabled: false	
+		        	},
+		        	
+		            chart: {
+		            	renderTo: 'container',
+		                plotBackgroundColor: null,
+		                plotBorderWidth: null,
+		                plotShadow: false
+		            },
+		            title: {
+		                text: options.name
+		            },
+		            tooltip: {
+		        	    pointFormat: '{series.name}: <b>{series.y}%</b>'
+		            },
+		           
+		            plotOptions: {
+		                pie: {
+		                    allowPointSelect: true,
+		                    cursor: 'pointer',
+		                    dataLabels: {
+		                        enabled: false
+		                    },
+		                    showInLegend: false
+		                },
+		                
+		                line: {
+		                    allowPointSelect: true,
+		                    cursor: 'pointer',
+		                    dataLabels: {
+		                        enabled: false
+		                    },
+		                    showInLegend: false
+		                },
+		                
+		                column: {
+		                    allowPointSelect: true,
+		                    cursor: 'pointer',
+		                    dataLabels: {
+		                        enabled: false
+		                    },
+		                    showInLegend: false
+		                }
+		            },
+		            
+		            series: [options]
+		        });
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="container"></div>
+	</body>
+</html> 

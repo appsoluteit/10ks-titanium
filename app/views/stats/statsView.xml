@@ -1,5 +1,78 @@
 <Alloy>
-	<View class="container">
-		<Label>Statistics</Label>
-	</View>
+	<TableView class="margin-10">
+		<!-- Current Goal Steps -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label class="row-label">Current Goal Steps:</Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblGoalSteps" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+		
+		<!-- Avg Steps per day -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label class="row-label">Avg Steps / Day:</Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblAvgSteps" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+				
+		<!-- Busiest Month (Current Year) -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label id="lblBusiestMonthLabel" class="row-label"></Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblBusiestMonth" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+		
+		<!-- Busiest Day (Current Year) -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label id="lblBusiestDayLabel" class="row-label"></Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblBusiestDay" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+		
+		<!-- Annual Steps -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label class="row-label">Annual Steps:</Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblAnnualSteps" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+		
+		<!-- Daily Graph Button -->
+		<TableViewRow id="tblRowDailyGraph">
+			<Label class="row-label">Daily Graph</Label>
+		</TableViewRow>
+		
+		<!-- Monthly Graph Button -->
+		<TableViewRow id="tblRowMonthlyGraph">
+			<Label class="row-label">Monthly Graph</Label>
+		</TableViewRow>
+	</TableView>
 </Alloy>

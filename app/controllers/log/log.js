@@ -133,7 +133,12 @@ function getSteps() {
 	}
 	
 	function onFail(e) {
-		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Failed to get steps",
+			duration: 2000,
+			view: $.log,
+			theme: "error"
+		});
 	}
 	
 	var data = {
