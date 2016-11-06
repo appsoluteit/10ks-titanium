@@ -51,8 +51,13 @@ function tblRowLogout_click() {
 	
 	confirmDialog.addEventListener('click', function(e) {
 		if(e.index !== e.source.cancel) {
-			$.settings.close();
-			args.logoutCallback();
+			Alloy.Globals.Logout();
+			Alloy.Globals.Loading.show("Logging out...");
+			
+			setTimeout(function() {
+				Alloy.Globals.Loading.hide();
+				$.settings.close();
+			}, 500);
 		}	
 	});
 	

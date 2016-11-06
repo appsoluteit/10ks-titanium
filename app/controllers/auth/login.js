@@ -2,21 +2,10 @@
 var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
-var API = require("API");
-	
-function quit() {
-	//close the root view
-	args.quit();
-}
-
-function doLogout() {
-	Ti.App.Properties.removeProperty("AuthKey");
-	Alloy.Globals.IsLoggedIn = false;	
-}
 
 function doLogin(username, password) {
 	function onSuccess(response) {
-		//Store the auth key. This doesn't change?
+		//Store the auth key. Use it until it expires.
 		Ti.App.Properties.setString("AuthKey", response.key);	
 		Alloy.Globals.IsLoggedIn = true;
 		Alloy.Globals.AuthKey = response.key;
@@ -58,7 +47,7 @@ function doLogin(username, password) {
 		password: password
 	};
 	
-	API.post({
+	Alloy.Globals.API.post({
 		message:    'Logging in...',
 		url: 		'http://steps10000.webfactional.com/api/auth/login/',
 		data: 		data,
@@ -76,7 +65,7 @@ function getUser() {
 		Alloy.Globals.UserURL = response.url;
 		
 		setTimeout(function() {
-			goHome();
+			$.login.close();
 		}, 2000);
 	}
 	
@@ -99,7 +88,7 @@ function getUser() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	API.get({
+	Alloy.Globals.API.get({
 		message: 	"Fetching your account...",
 		url: 		"http://steps10000.webfactional.com/api/auth/user/",
 		headers: [{
@@ -112,24 +101,10 @@ function getUser() {
 	});
 }
 
-function goHome() {
-	var win = Alloy.createController('home/home', {
-		logoutCallback: doLogout,
-		quit: quit
-	}).getView();
-	
-	win.open();
-}
-
 /*********************************** EVENT HANDLERS     ***********************************/
 function window_open() {
 	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
 	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
-	
-	if(Alloy.Globals.IsLoggedIn) {
-		Ti.API.info("Already logged in. Going home...");
-		goHome();	
-	}
 }
 
 function btnLogin_click() {
@@ -140,4 +115,8 @@ function btnLogin_click() {
 function btnRegister_click() {
 	var win = Alloy.createController('auth/register').getView();
 	win.open();
+}
+
+function androidBack_click() {
+	alert("You cannot close the login screen");
 }

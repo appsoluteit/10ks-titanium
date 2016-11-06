@@ -125,8 +125,6 @@ function loadDatesFrom(dateObj) {
  * Loads steps for the current user from the server and adds them to local storage, if they don't exist.
  */
 function getSteps() {
-	var API = require("API");
-	
 	function onSuccess(e) {
 		Ti.API.info("Get steps success", JSON.stringify(e));
 	}
@@ -144,7 +142,7 @@ function getSteps() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	API.get({
+	Alloy.Globals.API.get({
 		message:	"Fetching steps...",
 		url:		"http://steps10000.webfactional.com/api/steps/",
 		headers: [{
@@ -159,9 +157,6 @@ function getSteps() {
  * Pushes unsynced steps from local storage to the server.
  */
 function postSteps() {
-	var API = require("API");
-	var api = new API();
-	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));
 	}
@@ -180,7 +175,7 @@ function postSteps() {
 		activity_part: "9999"
 	};
 	
-	api.post({
+	Alloy.Globals.API.post({
 		message:	"Sending steps...",
 		url: 		"http://steps10000.webfactional.com/api/steps/",
 		headers: [{

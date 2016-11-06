@@ -5,6 +5,12 @@ Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 if(Alloy.Globals.IsLoggedIn) {
 	Ti.API.info("Logged in already. Key: ", Alloy.Globals.AuthKey, " URL: ", Alloy.Globals.UserURL);
 }
+
+Alloy.Globals.Logout = function() {
+	Ti.App.Properties.removeProperty("AuthKey");
+	Alloy.Globals.IsLoggedIn = false;	
+};
+
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
 
 /**
@@ -165,13 +171,7 @@ Alloy.Globals.GetCurrentMonthName = function() {
 	return Alloy.Globals.GetMonthNameFromIndex(m);	
 };
 
-//Not used anymore
-Alloy.Globals.Quit = function() {
-	Ti.API.info("Alloy Globals Quit");
-	
-    var activity = Titanium.Android.currentActivity;
-    activity.finish(); 	
-};
+Alloy.Globals.API = require("API");
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)

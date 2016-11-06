@@ -16,8 +16,6 @@ function send(options) {
 		Alloy.Globals.Loading.show(options.message, false);
 	else
 		Alloy.Globals.Loading.show("Loading...", false);
-		
-	//Ti.API.info("Sending: ", options.data);
 	
 	var req = Ti.Network.createHTTPClient();
 	req.onload = function() {

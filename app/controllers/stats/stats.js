@@ -2,8 +2,6 @@
 var args = $.args;
 
 function calculateStatistics() {
-	var API = require("API");
-	
 	function onSuccess(response) {
 		Ti.API.info("Get steps success", JSON.stringify(response));
 		
@@ -17,7 +15,14 @@ function calculateStatistics() {
 	function onFail(response) {
 		if(response.detail) {
 			//If the token expired, open the login window to login again
+			if(response.detail == "Token has expired") {
+				var win = Alloy.createController("auth/login").getView();
+				win.open();
 				
+				win.addEventListener("close", function() {
+					calculateStatistics();
+				});
+			}
 		}
 		
 		Alloy.createWidget("com.mcongrove.toast", null, {
@@ -32,7 +37,7 @@ function calculateStatistics() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	API.get({
+	Alloy.Globals.API.get({
 		message:	"Calculating statistics...",
 		url:		"http://steps10000.webfactional.com/api/steps/", //TODO: Change this
 		headers: [{

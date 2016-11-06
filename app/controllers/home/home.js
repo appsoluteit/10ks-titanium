@@ -1,6 +1,13 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+function loginIfNeeded() {
+	if(!Alloy.Globals.IsLoggedIn) {
+		win = Alloy.createController('auth/login').getView();
+		win.open();
+	}	
+}
+
 function btnStepLog_click(e) {
 	var win = Alloy.createController('log/log').getView();
 	win.open();
@@ -22,16 +29,12 @@ function btnTournaments_click(e) {
 }
 
 function btnSettings_click(e) {
-	var win = Alloy.createController('settings/settings', {
-		logoutCallback: function() {
-			Ti.API.info("logging out...");
-			
-			$.home.close();
-			args.logoutCallback();
-		}	
-	}).getView();
-	
+	var win = Alloy.createController('settings/settings').getView();
 	win.open();
+	
+	win.addEventListener('close', function() {
+		loginIfNeeded();
+	});
 }
  
 function androidBack_click() {
@@ -58,4 +61,6 @@ function window_open() {
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+	
+	loginIfNeeded();
 }
