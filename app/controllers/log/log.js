@@ -126,7 +126,6 @@ function loadDatesFrom(dateObj) {
  */
 function getSteps() {
 	var API = require("API");
-	var api = new API();
 	
 	function onSuccess(e) {
 		Ti.API.info("Get steps success", JSON.stringify(e));
@@ -145,7 +144,7 @@ function getSteps() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	api.get({
+	API.get({
 		message:	"Fetching steps...",
 		url:		"http://steps10000.webfactional.com/api/steps/",
 		headers: [{

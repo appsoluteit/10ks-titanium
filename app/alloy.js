@@ -1,6 +1,6 @@
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
-Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
+Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 
 if(Alloy.Globals.IsLoggedIn) {
 	Ti.API.info("Logged in already. Key: ", Alloy.Globals.AuthKey, " URL: ", Alloy.Globals.UserURL);
@@ -139,6 +139,30 @@ Alloy.Globals.GetNextReminderDateTime = function() {
       	return makeDate(nextDay, reminderTime);
     }
   };
+};
+
+Alloy.Globals.GetMonthNameFromIndex = function(index) {
+	var monthNames = [
+		"January", 
+		"February", 
+		"March", 
+		"April", 
+		"May", 
+		"June", 
+		"July", 
+		"August", 
+		"September", 
+		"October", 
+		"November", 
+		"December"
+	];	
+	
+	return monthNames[index];
+};
+
+Alloy.Globals.GetCurrentMonthName = function() {
+	var m = new Date().getMonth();
+	return Alloy.Globals.GetMonthNameFromIndex(m);	
 };
 
 //Not used anymore

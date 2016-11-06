@@ -12,7 +12,6 @@
 		        Ti.API.info('Webview: plotChart(' + JSON.stringify(options) + ')');
 		        
 		        new Highcharts.Chart({
-		        	//TODO: Add legends
 		        	credits: {
 		        		enabled: false	
 		        	},
@@ -31,7 +30,7 @@
 		                text: options.name
 		            },
 		            tooltip: {
-		        	    pointFormat: '{series.name}: <b>{series.y}%</b>'
+		        	    pointFormat: '{series.name}: <b>{point.y}</b>'
 		            },
 		           
 		            plotOptions: {

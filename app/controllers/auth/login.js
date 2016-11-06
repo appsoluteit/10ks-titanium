@@ -15,13 +15,13 @@ function doLogout() {
 }
 
 function doLogin(username, password) {
-	var api = new API();
-	
 	function onSuccess(response) {
 		//Store the auth key. This doesn't change?
 		Ti.App.Properties.setString("AuthKey", response.key);	
 		Alloy.Globals.IsLoggedIn = true;
 		Alloy.Globals.AuthKey = response.key;
+		
+		$.loginView.lblError.text = ""; 
 		
 		Alloy.createWidget("com.mcongrove.toast", null, {
 			text: "Logged in successfully",
@@ -58,7 +58,7 @@ function doLogin(username, password) {
 		password: password
 	};
 	
-	api.post({
+	API.post({
 		message:    'Logging in...',
 		url: 		'http://steps10000.webfactional.com/api/auth/login/',
 		data: 		data,
@@ -71,8 +71,6 @@ function doLogin(username, password) {
  * Gets the user object from the server (mainly for the URL)
  */
 function getUser() {
-	var api = new API();
-	
 	function onSuccess(response) {	
 		Ti.App.Properties.setString("UserURL", response.url);
 		Alloy.Globals.UserURL = response.url;
@@ -82,8 +80,12 @@ function getUser() {
 		}, 2000);
 	}
 	
-	function onFail(e) {
-		Ti.API.info("Failed to get user: ", JSON.stringify(e));
+	function onFail(response) {
+		Ti.API.info("Failed to get user: ", JSON.stringify(response));
+		
+		if(response.detail) {
+			$.loginView.lblError.text = response.detail;
+		}
 		
 		Alloy.createWidget("com.mcongrove.toast", null, {
 			text: "Couldn't get user information",
@@ -97,7 +99,7 @@ function getUser() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	api.get({
+	API.get({
 		message: 	"Fetching your account...",
 		url: 		"http://steps10000.webfactional.com/api/auth/user/",
 		headers: [{

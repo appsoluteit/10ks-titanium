@@ -3,7 +3,6 @@ var args = $.args;
 
 function register(username, email, password, password2) {
 	var API = require("API");
-	var api = new API();
 	
 	function onSuccess(response) {
 		Alloy.createWidget("com.mcongrove.toast", null, {
@@ -55,7 +54,7 @@ function register(username, email, password, password2) {
 	
 	Ti.API.info("Sending: " + JSON.stringify(data));
 	
-	api.post({
+	API.post({
 		message:	"Registering your account...",
 		url: 		"http://steps10000.webfactional.com/api/auth/registration/",
 		data: 		data,
@@ -81,5 +80,3 @@ function btnRegister_click() {
 			 $.registerView.txtPassword2.value
 	);
 }
-
-

@@ -3,10 +3,9 @@ var args = $.args;
 
 function calculateStatistics() {
 	var API = require("API");
-	var api = new API();
 	
-	function onSuccess(e) {
-		Ti.API.info("Get steps success", JSON.stringify(e));
+	function onSuccess(response) {
+		Ti.API.info("Get steps success", JSON.stringify(response));
 		
 		//TODO: Correct these
 		$.statsView.lblAvgSteps.text = Alloy.Globals.FormatNumber(5558);
@@ -15,7 +14,12 @@ function calculateStatistics() {
 		$.statsView.lblAnnualSteps.text = Alloy.Globals.FormatNumber(27789);
 	}
 	
-	function onFail(e) {
+	function onFail(response) {
+		if(response.detail) {
+			//If the token expired, open the login window to login again
+				
+		}
+		
 		Alloy.createWidget("com.mcongrove.toast", null, {
 			text: "Couldn't get statistics",
 			duration: 2000,
@@ -28,7 +32,7 @@ function calculateStatistics() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	api.get({
+	API.get({
 		message:	"Calculating statistics...",
 		url:		"http://steps10000.webfactional.com/api/steps/", //TODO: Change this
 		headers: [{
@@ -40,12 +44,38 @@ function calculateStatistics() {
 }
 
 function tblRowDailyGraph_click() {
-	var win = Alloy.createController("stats/dailyGraph").getView();
+	var data = [];
+	
+	//TODO: pass in real values
+	for(var i = 1; i < 31; i++) {
+		data.push({
+			name: i + "/10/2016",
+			x: i,
+			y: Math.floor((Math.random() * 10000) + 1)
+		});
+	}
+
+	var win = Alloy.createController("stats/dailyGraph", {
+		data: data
+	}).getView();
 	win.open();
 }
 
 function tblRowMonthlyGraph_click() {
-	var win = Alloy.createController("stats/monthlyGraph").getView();
+	var data = [];
+	
+	//TODO: Pass in real values
+	for(var i = 1; i < 13; i++) {
+		data.push({
+			name: Alloy.Globals.GetMonthNameFromIndex(i - 1),
+			x: i,
+			y: Math.floor((Math.random() * 10000) + 1) * 30
+		});
+	}
+	
+	var win = Alloy.createController("stats/monthlyGraph", {
+		data: data
+	}).getView();
 	win.open();
 }
 
@@ -69,6 +99,6 @@ function window_open() {
 	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
 	setTimeout(function() {
-		//calculateStatistics();
+		calculateStatistics();
 	}, 1000);
 }

@@ -6,5 +6,9 @@ function btnBack_click() {
 }
 
 function window_open() {
-	
+	$.monthlyGraphView.monthlyGraphChart.loadChart({
+		type: "column",
+		name: "Monthly Steps for " + new Date().getFullYear(),
+		data: args.data
+	});
 }

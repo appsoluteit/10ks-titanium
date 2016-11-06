@@ -6,13 +6,11 @@ function btnBack_click() {
 }
 
 function window_open() {
+	var currentMonthLabel = Alloy.Globals.GetCurrentMonthName();
+	
 	$.dailyGraphView.dailyGraphChart.loadChart({
 		type: "column",
-		name: "My faviourite fruit",
-		data: [
-			{ name: "Apples", x: 0, y: 1 },
-			{ name: "Oranges", x: 1, y: 5 },
-			{ name: "Bananas", x: 2, y: 9 }
-		]
+		name: "Daily Steps for " + currentMonthLabel,
+		data: args.data
 	});
 }
