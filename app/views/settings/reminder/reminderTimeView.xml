@@ -5,6 +5,7 @@
 		<Picker 
 			id="pkrReminderTime"
 			type="Ti.UI.PICKER_TYPE_TIME"
+			color="black"
 			locale="en-AU" />
 	</View>
 </Alloy>

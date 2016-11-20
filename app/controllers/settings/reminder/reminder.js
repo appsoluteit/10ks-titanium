@@ -32,14 +32,20 @@ function addReminder() {
 	var activeDays = Alloy.Globals.GetReminderDays();
 	var nextReminder = Alloy.Globals.GetNextReminderDateTime();
 	
+	alert("Creating Reminder. Label = " + strReminderLabel);
+	
 	var evReminder = defCalendar.createEvent({
 		title:	strReminderLabel,
+		description: "Hello, World!",
 		begin:  nextReminder,
-		end:    nextReminder,
+		end:    nextReminder
+		
+		/*
 		allDay: false,
 		availability: Ti.Calendar.AVAILABILITY_FREE,
         notes: 'Don\'t forget to log your steps!',
         location: 'Home',
+        */
 	});
 	
 	var evAlert = evReminder.createAlert({

@@ -1,5 +1,6 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
+	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true">
 	<View id="homeContainer" class="container">
 		<Button
 			id="btnStepLog"
@@ -37,4 +38,5 @@
 			image="/common/homepage_button_profile-&-settings@2x.png">
 		</Button>
 	</View>
+	</ScrollView>
 </Alloy>
