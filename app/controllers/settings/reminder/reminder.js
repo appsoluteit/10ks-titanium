@@ -3,6 +3,17 @@ var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
+//TODO: We will need to implement dedicated methods for adding / removing events for iOS vs Android
+//Android does not support the Ti.Calendar.RecurenceRule, so we should use the AlarmManager
+//available at: https://github.com/benbahrenburg/benCoding.AlarmManager
+function addReminderForAndroid() {
+	
+}
+
+function addReminderForIOS() {
+	
+}
+
 function addReminder() {
 	var defCalendar = null;
 	
@@ -30,27 +41,43 @@ function addReminder() {
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
 	var activeDays = Alloy.Globals.GetReminderDays();
-	var nextReminder = Alloy.Globals.GetNextReminderDateTime();
+	var nextReminder;
 	
-	alert("Creating Reminder. Label = " + strReminderLabel);
+	try {
+		nextReminder = Alloy.Globals.GetNextReminderDateTime();
+	}
+	catch(e) {
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Couldn't add reminder. Reason: " + e,
+			duration: 2000,
+			view: $.reminder,
+			theme: "error"
+		});	
+		
+		return;
+	}
+	
+	Ti.API.info("Creating Reminder. Label = ", strReminderLabel, "Next reminder: ", nextReminder);
 	
 	var evReminder = defCalendar.createEvent({
 		title:	strReminderLabel,
 		description: "Hello, World!",
 		begin:  nextReminder,
 		end:    nextReminder
-		
-		/*
-		allDay: false,
-		availability: Ti.Calendar.AVAILABILITY_FREE,
-        notes: 'Don\'t forget to log your steps!',
-        location: 'Home',
-        */
 	});
 	
-	var evAlert = evReminder.createAlert({
-		absoluteDate: nextReminder
-	});
+	var evAlert;
+	
+	if(Ti.Platform.osname === "android") {
+		 evAlert = evReminder.createAlert({
+			alarmTime: nextReminder
+		 });		
+	}
+	else {
+		 evAlert = evReminder.createAlert({
+			absoluteDate: nextReminder
+		 });
+	}
 	
 	evReminder.alerts = [evAlert];
 	
@@ -84,6 +111,14 @@ function addReminder() {
 			theme: "error"
 		});
 	}
+}
+
+function removeReminderForAndroid() {
+	
+}
+
+function removeReminderForIOS() {
+	
 }
 
 function removeReminder() {
