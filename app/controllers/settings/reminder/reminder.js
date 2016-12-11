@@ -7,36 +7,12 @@ var args = $.args;
 //Android does not support the Ti.Calendar.RecurenceRule, so we should use the AlarmManager
 //available at: https://github.com/benbahrenburg/benCoding.AlarmManager
 function addReminderForAndroid() {
-	
+	var alarmManager = require('com.bencoding.alarmmanager');
+	alert("Alarm manager working!");
 }
 
 function addReminderForIOS() {
-	
-}
-
-function addReminder() {
-	var defCalendar = null;
-	
-	if(Ti.Platform.osname === "android") {
-		var selectableCalendars = Ti.Calendar.getSelectableCalendars();
-		
-		if(selectableCalendars.length > 0) {
-			defCalendar = selectableCalendars[0];
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "No selectable calendars",
-				duration: 2000,
-				view: $.reminder,
-				theme: "error"
-			});
-		
-			return;
-		}
-	}
-	else {
-		defCalendar = Ti.Calendar.defaultCalendar;
-	}
+	var defCalendar = Ti.Calendar.defaultCalendar;
 	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
@@ -57,8 +33,6 @@ function addReminder() {
 		return;
 	}
 	
-	Ti.API.info("Creating Reminder. Label = ", strReminderLabel, "Next reminder: ", nextReminder);
-	
 	var evReminder = defCalendar.createEvent({
 		title:	strReminderLabel,
 		description: "Hello, World!",
@@ -66,18 +40,9 @@ function addReminder() {
 		end:    nextReminder
 	});
 	
-	var evAlert;
-	
-	if(Ti.Platform.osname === "android") {
-		 evAlert = evReminder.createAlert({
-			alarmTime: nextReminder
-		 });		
-	}
-	else {
-		 evAlert = evReminder.createAlert({
+	var evAlert = evReminder.createAlert({
 			absoluteDate: nextReminder
-		 });
-	}
+	});
 	
 	evReminder.alerts = [evAlert];
 	
@@ -85,8 +50,7 @@ function addReminder() {
 	var evRecurrenceRule = evReminder.createRecurrenceRule({
 		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
 		interval: 1,
-		daysOfTheWeek: activeDays,
-		//end: {occurenceCount: 10}
+		daysOfTheWeek: activeDays
 	});
 	
 	evReminder.recurrenceRules = [evRecurrenceRule];
@@ -113,15 +77,20 @@ function addReminder() {
 	}
 }
 
+function addReminder() {
+	if(Ti.Platform.osname === "android") {
+		addReminderForAndroid();
+	}
+	else {
+		addReminderForIOS();
+	}
+}
+
 function removeReminderForAndroid() {
 	
 }
 
 function removeReminderForIOS() {
-	
-}
-
-function removeReminder() {
 	function removeReminderData() {
 		Ti.App.Properties.removeProperty("HasReminder");
 		Ti.App.Properties.removeProperty("ReminderEventID");			
@@ -179,7 +148,16 @@ function removeReminder() {
 		removeReminderData();
 	}
 	
-	enableDisableReminderButtons();
+	enableDisableReminderButtons();	
+}
+
+function removeReminder() {
+	if(Ti.Platform.osname === "android") {
+		removeReminderForAndroid();
+	}
+	else {
+		removeReminderForIOS();
+	}
 }
 
 function disableAddReminderButton() {
