@@ -3,7 +3,7 @@
 
 Call this to get user information. We call this mainly to get the user URL which is required for some other API calls *(should it be?)*
 ``` 
-http://steps10000.webfactional.com/api/auth/user/
+http://10000steps.org.au/api/auth/user/
 ```
 
 ### Status ###
@@ -20,6 +20,6 @@ http://steps10000.webfactional.com/api/auth/user/
 #### Returns ####
 | Name | Type | Sample | Description |
 | --   | --   | --     | --          | 
-| `url` | `string` | `http://steps10000.webfactional.com/api/users/9999` | A URL that identifies the user |
+| `url` | `string` | `http://10000steps.org.au/api/users/9999` | A URL that identifies the user |
 
 {% endmethod %}

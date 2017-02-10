@@ -3,7 +3,7 @@
 
 Call this to get a list of logged steps or to add a new step record.
 ``` 
-http://steps10000.webfactional.com/api/steps/
+http://10000steps.org.au/api/steps/
 ```
 
 ### Status ###
@@ -21,15 +21,15 @@ http://steps10000.webfactional.com/api/steps/
 | Name | Type | Sample | Description |
 | --   | --   | --     | --          | 
 | `count` | `int` | `91` | The number of step records for this user |
-| `next`  | `string` | `http://steps10000.webfactional.com/api/steps/?page=2` | A URL to the next page of steps for this user |
-| `previous` | `string` | `http://steps10000.webfactional.com/api/steps/?page=1` | A URL to the previous page |
+| `next`  | `string` | `http://10000steps.org.au/api/steps/?page=2` | A URL to the next page of steps for this user |
+| `previous` | `string` | `http://10000steps.org.au/api/steps/?page=1` | A URL to the previous page |
 | `results` | `object[]` | See POST params | A list of step records for this user |
 
 ### POST ###
 #### Parameters ####
 | Name | Type | Required | Sample | Description |
 | --   | --   | --       | --     |             |
-| `user` | `string` | `true` | `http://steps10000.webfactional.com.au/api/user/1111` | `A URL to a user account` See [User](USER.md) |
+| `user` | `string` | `true` | `http://10000steps.org.au/api/user/1111` | `A URL to a user account` See [User](USER.md) |
 | `steps_date` | `string` | `???` | `2016-10-12` | `A YYYY-MM-DD date` |
 | `steps_total` | `int` | `???` | `10000` | `A number indicating the total # of steps (including other exercise) for the day` |
 | `steps_walked` | `int` | `???` | `6000` | `A number indicating the # of steps walked` |

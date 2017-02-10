@@ -3,7 +3,7 @@
 
 Call this to login to the application and get an authorization token. The token is required for all subsequent calls to the API.
 ``` 
-http://steps10000.webfactional.com/api/auth/login/ 
+http://10000steps.org.au/api/auth/login/ 
 ```
 
 ### Status ###

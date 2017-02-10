@@ -3,7 +3,7 @@
 
 Call this to register a user to the application.
 ``` 
-http://steps10000.webfactional.com/api/auth/registration/ 
+http://10000steps.org.au/api/auth/registration/ 
 ```
 
 ### Status ###
