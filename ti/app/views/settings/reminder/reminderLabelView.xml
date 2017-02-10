@@ -1,0 +1,14 @@
+<Alloy>
+	<View layout="vertical" class="margin-10">
+		<Label>What would you like your reminder to say?</Label>
+		
+		<View layout="vertical" class="margin-10">
+			<TextField 
+				id = "txtReminderLabel" 
+				class="half" 
+			 />
+				
+			<Button id = "btnSave" title="Save"  />
+		</View>
+	</View>
+</Alloy>

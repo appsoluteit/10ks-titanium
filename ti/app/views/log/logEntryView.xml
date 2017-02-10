@@ -1,0 +1,44 @@
+<Alloy>
+	<View layout="vertical" left="0" top="0">
+		<View layout="horizontal" class="margin-10 whole" textAlign="right">
+				<Label class="bold" width="33%" right="10dp" textAlign="right">Steps Walked</Label>
+				<TextField 
+					id="txtStepsWalked" 
+					width="33%"
+					keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" 
+					maxLength="5">
+				</TextField>
+		</View>
+		
+		<View class="whole margin-10">
+			<Label left = "0" class="bold" width="33%" textAlign="right">Extra Activities</Label>
+		</View>
+		
+		<View layout="horizontal" class="margin-10 whole">
+			<Label class="italic" width="33%" right="10dp" textAlign="right">Moderate</Label>
+			<TextField 
+				id="txtModerateMins"
+				width="33%"
+				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+				maxLength="5">
+			</TextField>
+			<Label class="italic" left="10dp">mins</Label>
+		</View>
+		
+		<View layout="horizontal" class="margin-10 whole">
+			<Label class="italic" width="33%" right="10dp" textAlign="right">Vigorous</Label>
+			<TextField
+				id="txtVigorousMins"
+				width="33%"
+				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+				maxLength="5">
+			</TextField>
+			<Label class="italic" left="10dp">mins</Label>
+		</View>
+		
+		<View layout="horizontal" class="margin-10 whole">
+			<Label class="bold" width="33%" right="10dp" textAlign="right">Daily Total</Label>
+			<Label id="lblDailyTotal" color="red">0</Label>
+		</View>
+	</View>
+</Alloy>

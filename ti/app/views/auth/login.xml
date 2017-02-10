@@ -1,0 +1,14 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios" id="login">
+		<Window id="window" title="Login" onOpen="window_open">
+			<Require id="loginView" src="auth/loginView" type="view"></Require>	
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window title="login" platform="android" onAndroid:back="androidBack_click" onOpen="window_open">
+		<ActionBar title="Login"></ActionBar>
+		<Require id="loginView" src="auth/loginView" type="view"></Require>	
+	</Window>	
+</Alloy>

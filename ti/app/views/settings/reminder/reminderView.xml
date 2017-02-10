@@ -1,0 +1,54 @@
+<Alloy>
+	<View>
+		<TableView class="margin-10">
+			<!-- Repeat Row -->
+			<TableViewRow id="tblRowRepeat">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Repeat</Label>
+					</View>
+					
+					<View class="half">
+						<Label id="lblRepeat" class="row-value"></Label>
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Label Row -->
+			<TableViewRow id="tblRowLabel">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Label</Label>
+					</View>
+					
+					<View class="half">
+						<Label id="lblLabel" class="row-value"></Label>
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Time Row -->
+			<TableViewRow id="tblRowTime">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Time</Label>
+					</View>
+					
+					<View class="half">
+						<Label id="lblTime" class="row-value"></Label>
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Add Reminder -->
+			<TableViewRow id="tblRowAddReminder">
+				<Label id="lblAddReminder" class="row-label">Add Reminder</Label>
+			</TableViewRow>
+			
+			<!-- Remove Reminder-->
+			<TableViewRow id="tblRowRemoveReminder" visible="false">
+				<Label id="lblRemoveReminder" class="row-label">Remove Reminder</Label>
+			</TableViewRow>
+		</TableView>
+	</View>
+</Alloy>

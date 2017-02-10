@@ -1,0 +1,10 @@
+'.container': {
+	layout: 'horizontal',
+	center: '0px',
+	width: '50%',
+	//backgroundColor: 'yellow'
+}
+
+"Button": {
+	backgroundColor: 'transparent' 
+}

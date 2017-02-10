@@ -1,0 +1,11 @@
+<Alloy>
+	<View layout="vertical" class="margin-10">
+		<Label>At what time would you like your reminder?</Label>
+		
+		<Picker 
+			id="pkrReminderTime"
+			type="Ti.UI.PICKER_TYPE_TIME"
+			color="black"
+			locale="en-AU" />
+	</View>
+</Alloy>

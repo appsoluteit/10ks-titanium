@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="about" platform="ios">
+		<Window title="About" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Settings</Button>	
+			</LeftNavButton>
+			
+			<Require id="aboutView" src="settings/aboutView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="about" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="About" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="aboutView" src="settings/aboutView" type="view"/>
+	</Window>
+</Alloy>

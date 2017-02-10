@@ -1,0 +1,32 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios" id="log">
+		<Window title="Step Log" id="window" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>
+			</LeftNavButton>
+			
+			<RightNavButton>
+				<Button id="btnSync" onClick="btnSync_click">Sync</Button>
+			</RightNavButton>
+			
+			<TableView id = "tblDays"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window platform="android" id="log" title="Step Log" onOpen="window_open">
+		<ActionBar 
+			title="Step Log" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click">
+	
+			<!-- TODO: Review this post -->			
+			<!-- http://www.appcelerator.com/blog/2014/07/android-tabs-and-actionbar-menu-items/ -->
+			<Button>Sync</Button>	
+		</ActionBar>
+			
+		<TableView id = "tblDays" />
+	</Window>
+</Alloy>

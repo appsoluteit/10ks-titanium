@@ -1,0 +1,14 @@
+<Alloy>
+	<View class="container margin-10" layout="vertical">
+		<Label>Your current daily goal steps are:</Label>
+		
+		<View layout="vertical" class="margin-10">
+			<TextField 
+				id = "txtGoalSteps" 
+				class="half" 
+				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" />
+				
+			<Button id = "btnSave" title="Save"  />
+		</View>
+	</View>
+</Alloy>

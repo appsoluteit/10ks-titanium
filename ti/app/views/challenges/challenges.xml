@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="challenges" platform="ios">
+		<Window title="Challenges">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
+			</LeftNavButton>
+			
+			<Require id="challengesView" src="challenges/challengesView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="challenges" platform="android">
+		<ActionBar 
+			title="Challenges" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="challengesView" src="challenges/challengesView" type="view"/>
+	</Window>
+</Alloy>

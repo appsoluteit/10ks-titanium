@@ -1,0 +1,14 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow platform="ios" id="register">
+		<Window id="window" title="Register" onOpen="window_open">
+			<Require id="registerView" src="auth/registerView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window title="register" platform="android" onOpen="window_open">
+		<ActionBar title="Register"></ActionBar>
+		<Require id="registerView" src="auth/registerView" type="view"/>
+	</Window>	
+</Alloy>

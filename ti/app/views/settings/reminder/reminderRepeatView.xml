@@ -1,0 +1,97 @@
+<Alloy>
+	<View>
+		<TableView class="margin-10">
+			<!-- Sunday -->
+			<TableViewRow id="tblRowSunday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Sunday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swSunday" value="false" />
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Monday -->
+			<TableViewRow id="tblRowMonday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Monday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swMonday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>		
+				
+			<!-- Tuesday -->
+			<TableViewRow id="tblRowTuesday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Tuesday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swTuesday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Wednesday -->
+			<TableViewRow id="tblRowWednesday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Wednesday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swWednesday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>
+			
+			<!-- Thursday -->
+			<TableViewRow id="tblRowThursday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Thursday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swThursday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>
+						
+			<!-- Friday -->
+			<TableViewRow id="tblRowFriday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Friday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swFriday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>
+						
+			<!-- Saturday -->
+			<TableViewRow id="tblRowSaturday">
+				<View layout="horizontal">
+					<View class="half">
+						<Label class="row-label">Every Saturday</Label>
+					</View>
+					
+					<View class="half">
+						<Switch id="swSaturday" value="false"/>
+					</View>
+				</View>
+			</TableViewRow>
+						
+		</TableView>
+	</View>
+</Alloy>
