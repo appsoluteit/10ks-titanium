@@ -1,5 +1,3 @@
-var baseURL = 'https://www.10000steps.org.au/api/';
-
 function makeResponse(responseText) {
 	var response = {};
 	
@@ -59,7 +57,7 @@ function send(options) {
 		}
 	};
 	
-	req.open(options.method, baseUrl + options.url);
+	req.open(options.method, Alloy.Globals.BaseURL + options.url);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	
 	if(options.headers) {
