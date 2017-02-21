@@ -11,7 +11,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="reminderTime" platform="android" onOpen="window_open">
+	<Window id="reminderTime" platform="android" onOpen="window_open" theme="Theme.AppCompat.Light">
 		<ActionBar 
 			title="Time" 
 			displayHomeAsUp="true" 
