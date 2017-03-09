@@ -1,0 +1,16 @@
+{
+  "name": "apitests",
+  "version": "1.0.0",
+  "description": "Tests for the 10ksteps api in Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "unirest": "^0.5.1"
+  }
+}
