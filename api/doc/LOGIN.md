@@ -3,7 +3,7 @@
 
 Call this to login to the application and get an authorization token. The token is required for all subsequent calls to the API.
 ``` 
-http://10000steps.org.au/api/auth/login/ 
+https://www.10000steps.org.au/api/auth/login/ 
 ```
 
 {% sample lang="js" -%}

@@ -3,11 +3,8 @@
 
 Call this to get user information. We call this mainly to get the user URL which is required for some other API calls *(should it be?)*
 ``` 
-http://10000steps.org.au/api/auth/user/
+https://www.10000steps.org.au/api/auth/user/
 ```
-
-### Status ###
-<span style="color: red;">405 Not Allowed (06/02/2017)</span>
 
 {% sample lang="js" -%}
 
@@ -17,9 +14,21 @@ http://10000steps.org.au/api/auth/user/
 | -- | -- | -- | -- |
 | `Authorization` | `string` | `true` | `Token 6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9` |
 
-#### Returns ####
+#### Returns {Object} ####
 | Name | Type | Sample | Description |
 | --   | --   | --     | --          | 
-| `url` | `string` | `http://10000steps.org.au/api/users/9999` | A URL that identifies the user |
+| `url` | `string` | `https://www.10000steps.org.au/api/users/334098/` | A URL that identifies the user |
+| `username` | `string` | `walker334098` | |
+| `email` | `string` | `admin@jasonsultana.com` | The user's email |
+| `groups` | `array` | `[]` | An array of joined groups? |
+| `walker` | `object` | See below | Usage data |
+
+##### Walker Object #####
+| Name | Type | Sample | Description |
+| --   | --   | --     | --          | 
+| `gender` | `integer` | `1` | An emum that represents the gender. 1 = M, 2 = F? |
+| `goal` | `integer` | `10000` | The user's daily goal |
+| `total_steps` | `integer` | `277790` | The sum of the user's logged steps to date |
+| `average_daily_steps` | `integer` | `5558` | An integer average of the user's daily steps |
 
 {% endmethod %}

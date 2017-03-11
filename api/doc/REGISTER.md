@@ -3,7 +3,7 @@
 
 Call this to register a user to the application.
 ``` 
-http://10000steps.org.au/api/auth/registration/ 
+https://www.10000steps.org.au/api/auth/registration/ 
 ```
 
 ### Status ###
@@ -23,6 +23,8 @@ http://10000steps.org.au/api/auth/registration/
 #### Returns ####
 | Name | Type | Sample |
 | -- | -- | -- |
-|    | `boolean` | `true` |
+|    | `object` | `{}` |
+
+On success, this method returns an empty object. On error, it retuns the error reason.
 
 {% endmethod %}
