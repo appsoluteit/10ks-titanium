@@ -1,3 +1,5 @@
+require('tests/mytests');
+
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");

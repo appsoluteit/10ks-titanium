@@ -1,7 +1,7 @@
 {% method -%}
 ## User {#user}
 
-Call this to get user information. We call this mainly to get the user URL which is required for some other API calls *(should it be?)*
+Call this to get user information. We call this mainly to get the user URL which is required for some other API calls
 ``` 
 https://www.10000steps.org.au/api/auth/user/
 ```

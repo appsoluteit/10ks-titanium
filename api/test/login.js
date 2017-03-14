@@ -15,10 +15,17 @@ describe("POST /auth/login/", function(url, quiet) {
 		};
 
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+			var config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
 		});
 
 		it("Should pass", function() {
@@ -33,10 +40,17 @@ describe("POST /auth/login/", function(url, quiet) {
 		};
 
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response){
-				responseBody = response;
-				done();
-			});
+			var config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
 		});
 
 		it("Should prompt for password", function() {
@@ -51,10 +65,17 @@ describe("POST /auth/login/", function(url, quiet) {
 		};
 
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+			var config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
 		});
 
 		it("Should prompt for username", function() {
@@ -69,10 +90,17 @@ describe("POST /auth/login/", function(url, quiet) {
 		};
 
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+			var config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
 		});
 
 		it("Should fail", function() {

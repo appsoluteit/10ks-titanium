@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="USER.html" />
+    <link rel="next" href="LOGOUT.html" />
     
     
     <link rel="prev" href="REGISTER.html" />
@@ -132,7 +132,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="USER.html">
+        <li class="chapter " data-level="1.4" data-path="LOGOUT.html">
+            
+                <a href="LOGOUT.html">
+            
+                    
+                    Logout
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="USER.html">
             
                 <a href="USER.html">
             
@@ -145,7 +158,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="STEPS.html">
+        <li class="chapter " data-level="1.6" data-path="STEPS.html">
             
                 <a href="STEPS.html">
             
@@ -206,7 +219,24 @@
                                 <div class="api-method"><div class="api-method-definition"><h2 id="login">Login </h2>
 <p>Call this to login to the application and get an authorization token. The token is required for all subsequent calls to the API.</p>
 <pre><code>https://www.10000steps.org.au/api/auth/login/
-</code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="post">POST</h3>
+</code></pre><p>Authorisation tokens will expire after ??? minutes. When this happens, endpoints will respond with:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>detail</code></td>
+<td><code>string</code></td>
+<td><code>Token has expired</code></td>
+</tr>
+</tbody>
+</table>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="post">POST</h3>
 <h4 id="params">Params</h4>
 <table>
 <thead>
@@ -282,7 +312,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Login","level":"1.3","depth":1,"next":{"title":"User","level":"1.4","depth":1,"path":"USER.md","ref":"USER.md","articles":[]},"previous":{"title":"Register","level":"1.2","depth":1,"path":"REGISTER.md","ref":"REGISTER.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"LOGIN.md","mtime":"2017-03-11T08:11:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-11T06:38:39.162Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Login","level":"1.3","depth":1,"next":{"title":"Logout","level":"1.4","depth":1,"path":"LOGOUT.md","ref":"LOGOUT.md","articles":[]},"previous":{"title":"Register","level":"1.2","depth":1,"path":"REGISTER.md","ref":"REGISTER.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"LOGIN.md","mtime":"2017-03-13T08:18:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T07:52:58.589Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

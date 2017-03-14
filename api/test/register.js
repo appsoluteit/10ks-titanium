@@ -35,10 +35,17 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         requestBody = {};
 
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+            var config = {
+                to: url,
+                request: requestBody,
+                quiet: quiet,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
+            
+			http.post(config);
 		});
 
         it("Should require an email, password and password confirmation", function() {
@@ -56,10 +63,17 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         };
 
  		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+            var config = {
+                to: url,
+                request: requestBody,
+                quiet: quiet,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }    
+            };
+
+			http.post(config);
 		});
 
         it("Should enforce an email, password and password confirmation are not empty", function() {
@@ -77,10 +91,17 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         };
 
         before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+            var config = {
+                to: url,
+                request: requestBody,
+                quiet: quiet,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
+
+			http.post(config);
         });
 
         it("Should inform that a user already exists with that email", function() {
@@ -97,10 +118,17 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         };
 
  		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+            var config = {
+                to: url,
+                request: requestBody,
+                quiet: quiet,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
+
+			http.post(config);
 		});
 
         it("Should complain that the password is too short", function() {

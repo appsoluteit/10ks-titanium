@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Steps · GitBook</title>
+        <title>Logout · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,8 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="USER.html" />
     
-    <link rel="prev" href="USER.html" />
+    
+    <link rel="prev" href="LOGIN.html" />
     
 
     </head>
@@ -130,7 +132,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="LOGOUT.html">
+        <li class="chapter active" data-level="1.4" data-path="LOGOUT.html">
             
                 <a href="LOGOUT.html">
             
@@ -156,7 +158,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.6" data-path="STEPS.html">
+        <li class="chapter " data-level="1.6" data-path="STEPS.html">
             
                 <a href="STEPS.html">
             
@@ -199,7 +201,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Steps</a>
+        <a href="." >Logout</a>
     </h1>
 </div>
 
@@ -214,12 +216,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="login">Steps </h2>
-<p>Call this to get a list of logged steps or to add a new step record.</p>
-<pre><code>http://10000steps.org.au/api/steps/
-</code></pre><h3 id="status">Status</h3>
-<p><span style="color: red;">405 Not Allowed (06/02/2017)</span></p>
-</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
+                                <div class="api-method"><div class="api-method-definition"><h2 id="logout">Logout </h2>
+<p>Call this to manually reset the authorization token associated with a user, so calling login will regenerate a new token.</p>
+<pre><code>https://www.10000steps.org.au/api/auth/logout/
+</code></pre><h3 id="post">POST</h3>
 <h4 id="headers">Headers</h4>
 <table>
 <thead>
@@ -239,108 +239,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="returns">Returns</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>count</code></td>
-<td><code>int</code></td>
-<td><code>91</code></td>
-<td>The number of step records for this user</td>
-</tr>
-<tr>
-<td><code>next</code></td>
-<td><code>string</code></td>
-<td><code>http://10000steps.org.au/api/steps/?page=2</code></td>
-<td>A URL to the next page of steps for this user</td>
-</tr>
-<tr>
-<td><code>previous</code></td>
-<td><code>string</code></td>
-<td><code>http://10000steps.org.au/api/steps/?page=1</code></td>
-<td>A URL to the previous page</td>
-</tr>
-<tr>
-<td><code>results</code></td>
-<td><code>object[]</code></td>
-<td>See POST params</td>
-<td>A list of step records for this user</td>
-</tr>
-</tbody>
-</table>
-<h3 id="post">POST</h3>
-<h4 id="parameters">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>user</code></td>
-<td><code>string</code></td>
-<td><code>true</code></td>
-<td><code>http://10000steps.org.au/api/user/1111</code></td>
-<td><code>A URL to a user account</code> See <a href="USER.html">User</a></td>
-</tr>
-<tr>
-<td><code>steps_date</code></td>
-<td><code>string</code></td>
-<td><code>???</code></td>
-<td><code>2016-10-12</code></td>
-<td><code>A YYYY-MM-DD date</code></td>
-</tr>
-<tr>
-<td><code>steps_total</code></td>
-<td><code>int</code></td>
-<td><code>???</code></td>
-<td><code>10000</code></td>
-<td><code>A number indicating the total # of steps (including other exercise) for the day</code></td>
-</tr>
-<tr>
-<td><code>steps_walked</code></td>
-<td><code>int</code></td>
-<td><code>???</code></td>
-<td><code>6000</code></td>
-<td><code>A number indicating the # of steps walked</code></td>
-</tr>
-<tr>
-<td><code>moderate</code></td>
-<td><code>int</code></td>
-<td><code>???</code></td>
-<td><code>3000</code></td>
-<td><code>A number indicating the equivalent # of steps taken through moderate exercise</code></td>
-</tr>
-<tr>
-<td><code>vigorous</code></td>
-<td><code>int</code></td>
-<td><code>???</code></td>
-<td><code>1000</code></td>
-<td><code>A number indicating the equivalent # of steps taken through vigorous exercise</code></td>
-</tr>
-<tr>
-<td><code>activity_part</code></td>
-<td><code>int</code></td>
-<td><code>???</code></td>
-<td><code>???</code></td>
-<td><code>??? I don&apos;t know what this means</code></td>
-</tr>
-</tbody>
-</table>
-</div></div></div>
+</div><div class="api-method-code"></div></div>
                                 
                                 </section>
                             
@@ -373,7 +272,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Steps","level":"1.6","depth":1,"previous":{"title":"User","level":"1.5","depth":1,"path":"USER.md","ref":"USER.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"STEPS.md","mtime":"2017-03-04T21:49:47.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T07:52:58.589Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Logout","level":"1.4","depth":1,"next":{"title":"User","level":"1.5","depth":1,"path":"USER.md","ref":"USER.md","articles":[]},"previous":{"title":"Login","level":"1.3","depth":1,"path":"LOGIN.md","ref":"LOGIN.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"LOGOUT.md","mtime":"2017-03-14T07:59:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T07:52:58.589Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
