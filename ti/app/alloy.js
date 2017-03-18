@@ -1,20 +1,24 @@
-require('tests/mytests');
+//Unit tests follow guide at https://gist.github.com/lbrenman/0c18239184cec1c8c74b
+//To skip tests, comment out this line
+require('tests/bootstrap');
 
+//Globals
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
 
-if (Alloy.Globals.IsLoggedIn) {
-	Ti.API.info("Logged in already. Key: ", Alloy.Globals.AuthKey, " URL: ", Alloy.Globals.UserURL);
-}
+//Global objects
+Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
+Alloy.Globals.API = require("API");
 
+//Global methods (soon to be moved to helper object)
 Alloy.Globals.Logout = function() {
+	console.warn("This function is deprecated and will soon be replaced by an API call to logout");
+	
 	Ti.App.Properties.removeProperty("AuthKey");
 	Alloy.Globals.IsLoggedIn = false;
 };
-
-Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
 
 /**
  * Accepts a JS Date object and returns a formatted string in y-m-d. Used for storing dates consistently internally.
@@ -43,11 +47,6 @@ Alloy.Globals.FormatTime = function(dateObj) {
 
 	if (h > 12)
 		h -= 12;
-
-	/*
-	 if(h < 10)
-	 h = "0" + h;
-	 */
 
 	if (m < 10)
 		m = "0" + m;
@@ -225,8 +224,6 @@ Alloy.Globals.GetCurrentMonthName = function() {
 	var m = new Date().getMonth();
 	return Alloy.Globals.GetMonthNameFromIndex(m);
 };
-
-Alloy.Globals.API = require("API");
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)
