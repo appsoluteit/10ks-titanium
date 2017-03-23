@@ -1,3 +1,5 @@
+var FormatHelper = require("helpers/FormatHelper");
+
 var logCollection = Alloy.createCollection('log');
 logCollection.fetch();
 
@@ -71,8 +73,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		width: Ti.UI.SIZE
 	});
 	
-	var dateString = Alloy.Globals.FormatDate(dateObj);
-	//Ti.API.log("Made date string: " + dateString);
+	var dateString = FormatHelper.formatDate(dateObj);
 	
 	//findWhere seems to be unsupported??
 	var item = logCollection.where({
@@ -89,7 +90,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		right: "10dp",
 		textAlign: "right",
 		color: "red",
-		text: numSteps > 0 ? Alloy.Globals.FormatNumber(numSteps) : "",
+		text: numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "",
 		width: Ti.UI.SIZE
 	});
 	

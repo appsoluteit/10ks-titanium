@@ -1,3 +1,5 @@
+var FormatHelper = require("helpers/FormatHelper");
+
 var args = $.args;
 
 var stepsWalked = 0;
@@ -10,9 +12,7 @@ function btnDone_click() {
 	Ti.API.info("Date object: " + args.date);
 	
 	if(total > 0) {
-		var dateStr = Alloy.Globals.FormatDate(args.date);
-		
-		Ti.API.info("Made date string: " + dateStr);
+		var dateStr = FormatHelper.formatDate(args.date);
 		
 		var logInstance = Alloy.createModel('log', {
 		    steps_date: 	 dateStr, 
@@ -91,6 +91,5 @@ function calculateTotal() {
 	
 	total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
 	
-	//$.logEntryView.lblDailyTotal.total = total;	//store the total in a custom attribute
-	$.logEntryView.lblDailyTotal.text = Alloy.Globals.FormatNumber(total);
+	$.logEntryView.lblDailyTotal.text = FormatHelper.formatNumber(total);
 }

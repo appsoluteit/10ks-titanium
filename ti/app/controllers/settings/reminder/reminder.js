@@ -1,4 +1,5 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var Reminder = require("classes/Reminder");
+var reminder = new Reminder();
 var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
@@ -16,11 +17,11 @@ function addReminderForIOS() {
 	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
-	var activeDays = Alloy.Globals.GetReminderDays();
+	var activeDays = reminder.getReminderDays();
 	var nextReminder;
 	
 	try {
-		nextReminder = Alloy.Globals.GetNextReminderDateTime();
+		nextReminder = reminder.getNextReminderDateTime();
 	}
 	catch(e) {
 		Alloy.createWidget("com.mcongrove.toast", null, {
@@ -203,7 +204,7 @@ function enableDisableReminderButtons() {
 		 		return;
 		 	}
 		 		
-		 	var activeDays = Alloy.Globals.GetReminderDays();
+		 	var activeDays = reminder.getReminderDays();
 			
 			if(activeDays.length === 0) {
 				return;
@@ -217,7 +218,7 @@ function enableDisableReminderButtons() {
 function populateRows() {
 	//Pre-populate the row values
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
-		var activeDays = Alloy.Globals.GetReminderDays();
+		var activeDays = reminder.getReminderDays();
 		
 		if(activeDays.length === 1)
 			$.reminderView.lblRepeat.text = activeDays[0].name;

@@ -1,4 +1,4 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var FormatHelper = require("helpers/FormatHelper");
 var args = $.args;
 
 function btnBack_click() {
@@ -16,7 +16,7 @@ function window_open() {
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
 	
 	if(goalSteps > -1) {
-		$.settingsView.lblGoalSteps.text = Alloy.Globals.FormatNumber(goalSteps);
+		$.settingsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
 	}
 }
 
@@ -28,7 +28,7 @@ function tblRowReminder_click() {
 function tblRowGoalSteps_click() {
 	var win = Alloy.createController('settings/goalSteps', {
 		callback: function(goalSteps) {
-			var formatted = Alloy.Globals.FormatNumber(goalSteps);
+			var formatted = FormatHelper.formatNumber(goalSteps);
 			$.settingsView.lblGoalSteps.text = formatted;
 		}		
 	}).getView();

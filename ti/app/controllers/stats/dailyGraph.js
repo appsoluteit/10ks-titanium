@@ -1,4 +1,4 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var DateTimeHelper = require("helpers/DateTimeHelper");
 var args = $.args;
 
 function btnBack_click() {
@@ -6,7 +6,7 @@ function btnBack_click() {
 }
 
 function window_open() {
-	var currentMonthLabel = Alloy.Globals.GetCurrentMonthName();
+	var currentMonthLabel = DateTimeHelper.getCurrentMonthName();
 	
 	$.dailyGraphView.dailyGraphChart.loadChart({
 		type: "column",

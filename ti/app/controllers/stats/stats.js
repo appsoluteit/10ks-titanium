@@ -1,4 +1,6 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var FormatHelper = require("helpers/FormatHelper");
+var DateTimeHelper = require("helpers/DateTimeHelper");
+
 var args = $.args;
 
 function calculateStatistics() {
@@ -6,10 +8,10 @@ function calculateStatistics() {
 		Ti.API.info("Get steps success", JSON.stringify(response));
 		
 		//TODO: Correct these
-		$.statsView.lblAvgSteps.text = Alloy.Globals.FormatNumber(5558);
+		$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(5558);
 		$.statsView.lblBusiestMonth.text = "August";
 		$.statsView.lblBusiestDay.text = "09/08/2016";
-		$.statsView.lblAnnualSteps.text = Alloy.Globals.FormatNumber(27789);
+		$.statsView.lblAnnualSteps.text = FormatHelper.formatNumber(27789);
 	}
 	
 	function onFail(response) {
@@ -72,7 +74,7 @@ function tblRowMonthlyGraph_click() {
 	//TODO: Pass in real values
 	for(var i = 1; i < 13; i++) {
 		data.push({
-			name: Alloy.Globals.GetMonthNameFromIndex(i - 1),
+			name: DateTimeHelper.getMonthNameFromIndex(i - 1),
 			x: i,
 			y: Math.floor((Math.random() * 10000) + 1) * 30
 		});
@@ -92,7 +94,7 @@ function window_open() {
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
 	var currentYear = new Date().getFullYear();
 	
-	$.statsView.lblGoalSteps.text = Alloy.Globals.FormatNumber(goalSteps);
+	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
 	$.statsView.lblAvgSteps.text = 0;
 	$.statsView.lblBusiestMonthLabel.text = "Busiest Month (" + currentYear + "):";
 	$.statsView.lblBusiestMonth.text = 0;

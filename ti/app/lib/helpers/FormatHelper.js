@@ -1,3 +1,6 @@
+/**
+ * Accepts a Date object and returns a formatted string in y-m-d. Used for storing dates consistently internally.
+ */
 function formatDate(dateObj) {
 	var y = dateObj.getFullYear();
 	var m = dateObj.getMonth() + 1;
@@ -12,6 +15,9 @@ function formatDate(dateObj) {
 	return y + "-" + m + "-" + d;
 }
 
+/**
+ * Accepts a Date object and returns a formatted string in H:m. Includes am/pm postfix.
+ */
 function formatTime(dateObj) {
 	var h = dateObj.getHours();
 	var m = dateObj.getMinutes();
@@ -26,6 +32,9 @@ function formatTime(dateObj) {
 	return h + ":" + m + postfix;
 }
 
+/**
+ * Accepts an H:m am/pm string and returns a JS Date object.
+ */
 function unformatTime(dateStr) {
 	var timeparts = dateStr.split(":");
 
@@ -41,11 +50,12 @@ function unformatTime(dateStr) {
 	var d = new Date();
 	d.setHours(h, m);
 
-	Ti.API.info("UnformatTime created new time: " + d.toString());
-
 	return d;
 }
 
+/**
+ * Accepts a double and returns a string in 123,45 format.
+ */
 function formatNumber(input) {
 	//More reliable than String.formatDecimal, which isn't documented in many places.
 	return input.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
