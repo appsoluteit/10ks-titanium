@@ -1,4 +1,5 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
+var setting = new ReminderRepeatSetting();
 var args = $.args;
 
 function window_open() {
@@ -14,11 +15,9 @@ function window_open() {
 	}
 	
 	//Preset the switches if there is existing data
-	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
-		var strReminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
-		var objReminderRepeat = JSON.parse(strReminderRepeat);
-	
-		var activeDays = objReminderRepeat.filter(function(e) { return e.active; });
+	if(setting.isSet()) {
+		var activeDays = setting.get();
+		
 		for(var i = 0; i < activeDays.length; i++) {
 			switch(activeDays[i].name) {
 				case 'Sunday':
@@ -53,10 +52,7 @@ function window_open() {
 	}
 }
 
-function tblRow_click(e) {
-	//Ti.API.info(JSON.stringify(e));
-	Ti.API.info("Clicked a row");
-	
+function tblRow_click(e) {	
 	switch(e.row.id) {
 		case 'tblRowSunday':
 			$.reminderRepeatView.swSunday.value = !$.reminderRepeatView.swSunday.value;
@@ -98,12 +94,7 @@ function btnBack_click() {
 		{ name: 'Friday', active: $.reminderRepeatView.swFriday.value, dayOfWeek: 6 },
 		{ name: 'Saturday', active: $.reminderRepeatView.swSaturday.value, dayOfWeek: 7 }
 	];
-		
-	//Ti.API.info("Thursday: " + $.reminderRepeatView.swThursday.value);
-	//Ti.API.info("Sunday: " + $.reminderRepeatView.swSunday.value);
 	
-	//Ti.API.info(JSON.stringify(obj));
-	
-	Ti.App.Properties.setString("ReminderRepeat", JSON.stringify(obj));
+	setting.set(obj);
 	$.reminderRepeat.close();
 }

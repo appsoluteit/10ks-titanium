@@ -1,5 +1,4 @@
 var FormatHelper = require('helpers/FormatHelper');
-
 var args = $.args;
 
 function window_open() {

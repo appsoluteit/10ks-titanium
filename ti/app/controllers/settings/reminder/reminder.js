@@ -1,5 +1,6 @@
-var Reminder = require("classes/Reminder");
-var reminder = new Reminder();
+var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
+var reminderRepeatSetting = new ReminderRepeatSetting();
+
 var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
@@ -17,11 +18,11 @@ function addReminderForIOS() {
 	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
 	
-	var activeDays = reminder.getReminderDays();
+	var activeDays = reminderRepeatSetting.get();
 	var nextReminder;
 	
 	try {
-		nextReminder = reminder.getNextReminderDateTime();
+		nextReminder = reminderRepeatSetting.getNextReminderDateTime();
 	}
 	catch(e) {
 		Alloy.createWidget("com.mcongrove.toast", null, {
@@ -204,7 +205,7 @@ function enableDisableReminderButtons() {
 		 		return;
 		 	}
 		 		
-		 	var activeDays = reminder.getReminderDays();
+		 	var activeDays = reminderRepeatSetting.get();
 			
 			if(activeDays.length === 0) {
 				return;
@@ -218,7 +219,7 @@ function enableDisableReminderButtons() {
 function populateRows() {
 	//Pre-populate the row values
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
-		var activeDays = reminder.getReminderDays();
+		var activeDays = reminderRepeatSetting.get();
 		
 		if(activeDays.length === 1)
 			$.reminderView.lblRepeat.text = activeDays[0].name;

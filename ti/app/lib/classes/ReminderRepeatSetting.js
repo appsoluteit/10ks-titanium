@@ -1,18 +1,29 @@
 var FormatHelper = require("helpers/FormatHelper");
 
-function Reminder() { }
+function ReminderRepeatSetting() { 
+	this.PropertyName = 'ReminderRepeat';	
+}
 
 /**
  * Returns an array containing the defined reminder days.
  * @returns {Array[Object]}
  */
-Reminder.prototype.getReminderDays = function() {
+ReminderRepeatSetting.prototype.get = function() {
+	console.log("Getting reminder days");
+	
 	var activeDays = [];
 
-	if (Ti.App.Properties.hasProperty("ReminderRepeat")) {
-		var reminderRepeat = Ti.App.Properties.getString("ReminderRepeat");
+	if (this.isSet()) {
+		var reminderRepeat = Ti.App.Properties.getString(this.PropertyName);
+		
+		console.info("Repeat proprty: ", reminderRepeat);
+		
 		var objReminderRepeat = JSON.parse(reminderRepeat);
 
+		if(!objReminderRepeat) {
+			return activeDays;
+		}
+		
 		activeDays = objReminderRepeat.filter(function(e) {
 			return e.active;
 		});
@@ -22,9 +33,25 @@ Reminder.prototype.getReminderDays = function() {
 };
 
 /**
- * Returns a JS DateTime for the next reminder date at the specified reminder time.
+ * Sets the reminder days.
+ * @param reminderDays An array containing name/active attributes.
  */
-Reminder.prototype.getNextReminderDateTime = function() {
+ReminderRepeatSetting.prototype.set = function(reminderDays) {
+	Ti.App.Properties.setString(this.PropertyName, JSON.stringify(reminderDays));
+};
+
+/**
+ * @returns {Boolean} Indicates whether or not reminder days are already saved.
+ */
+ReminderRepeatSetting.prototype.isSet = function() {
+	return Ti.App.Properties.hasProperty(this.PropertyName);
+};
+
+/**
+ * Returns a JS DateTime for the next reminder date at the specified reminder time.
+ * @param startFrom Date The date to start calculations from. This will most likely be new Date()
+ */
+ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	/*	There are four different cases to handle when finding the next reminder (in order):
 	 * 
 	 * 	1. Today is the next active day and its before the cutoff time. 
@@ -48,14 +75,15 @@ Reminder.prototype.getNextReminderDateTime = function() {
 		return dayObj;
 	}
 
-	var now = new Date();
+	var now = startFrom;
 	var curDayOfWeek = now.getDay() + 1;
 	
-	var activeDays = this.getReminderDays();
+	var activeDays = this.get();
 	var reminderTime = FormatHelper.unformatTime(Ti.App.Properties.getString("ReminderTime"));
 
 	//If checking today, make sure we haven't passed the time cutoff
-	var isBeforeCutoffTime = (now.getHours() < reminderTime.getHours()) || (now.getHours() === reminderTime.getHours() && now.getMinutes() < reminderTime.getMinutes());
+	var isBeforeCutoffTime = (now.getHours() < reminderTime.getHours()) || 
+							 (now.getHours() === reminderTime.getHours() && now.getMinutes() < reminderTime.getMinutes());
 
 	console.log("Current day of week: " + curDayOfWeek);
 	console.log("Reminder time: ", reminderTime.toString());
@@ -108,27 +136,6 @@ Reminder.prototype.getNextReminderDateTime = function() {
 		console.error("Couldn't find active days");
 		throw "Couldn't find active days";
 	}
-	
-	/*
-	for (var i = 0; i < activeDays.length; i++) {
-		var ele = activeDays[i];
-		console.log("Active day day of week: " + ele.dayOfWeek);
-
-		if (ele.dayOfWeek === curDayOfWeek && isBeforeCutoffTime) {
-			console.log("Today is the next active reminder day");
-			return makeDate(now, reminderTime);
-		} else if (ele.dayOfWeek > curDayOfWeek) {
-			var nextDay = new Date();
-
-			//Add days to the date object based on the difference between today and the day in settings
-			nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
-
-			return makeDate(nextDay, reminderTime);
-		} else if (ele.dayOfWeek === curDayOfWeek && !isBeforeCutoffTime) {
-
-		}
-	}
-	*/
 };
 
-module.exports = Reminder;
+module.exports = ReminderRepeatSetting;

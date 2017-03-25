@@ -2,12 +2,14 @@
 	require('ti-mocha');
 	mocha.setup( { reporter: 'ti-spec-studio' } );
 	
-	var formatHelper = require('tests/FormatHelperTester');
-	var dateTimeHelper = require('tests/DateTimeHelperTester');
+	var formatHelperTester = require('tests/FormatHelperTester');
+	var dateTimeHelperTester = require('tests/DateTimeHelperTester');
+	var reminderRepeatSettingTester = require('tests/ReminderRepeatSettingTester');
 	
 	var tests = [
-		formatHelper,
-		dateTimeHelper
+		formatHelperTester,
+		dateTimeHelperTester,
+		reminderRepeatSettingTester
 	];
 	
 	tests.forEach(function(testSuite) {
