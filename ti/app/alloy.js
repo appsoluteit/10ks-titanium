@@ -2,8 +2,8 @@
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
-Alloy.Globals.RunTests = true;
 Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
+Alloy.Globals.IsDebug = true;
 
 //Global objects
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");

@@ -1,5 +1,5 @@
 <Alloy>
-	<TableView class="margin-10">
+	<TableView id="tblContainer" class="margin-10">
 		<!-- Reminder to log steps-->
 		<TableViewRow id="tblRowReminder">
 			<Label class="row-label">Reminder to Log Steps</Label>
@@ -27,5 +27,10 @@
 		<TableViewRow id="tblRowLogout">
 			<Label class="row-label">Logout</Label>
 		</TableViewRow>
+		
+		<!-- Run Tests -->
+		<TableViewRow id="tblRowRunTests">
+			<Label class="row-label">Run Tests</Label>
+		</TableViewRow>		
 	</TableView>
 </Alloy>

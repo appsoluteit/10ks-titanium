@@ -1,4 +1,5 @@
 var FormatHelper = require("helpers/FormatHelper");
+var Tests = require('tests/bootstrap');
 var args = $.args;
 
 function btnBack_click() {
@@ -6,18 +7,25 @@ function btnBack_click() {
 }
 
 function window_open() {
-	//Set child view event handlers
-	$.settingsView.tblRowReminder.addEventListener('click', tblRowReminder_click);
-	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
-	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
-	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
-	
 	//Pre-load the goal steps
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
 	
 	if(goalSteps > -1) {
 		$.settingsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
 	}
+	
+	if(Alloy.Globals.IsDebug) {
+		$.settingsView.tblRowRunTests.addEventListener('click', tblRowTests_click);
+	}
+	else {
+		$.settingsView.tblContainer.deleteRow($.settingsView.tblRowRunTests);
+	}
+	
+	//Set child view event handlers
+	$.settingsView.tblRowReminder.addEventListener('click', tblRowReminder_click);
+	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
+	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
+	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 }
 
 function tblRowReminder_click() {
@@ -62,4 +70,8 @@ function tblRowLogout_click() {
 	});
 	
 	confirmDialog.show();
+}
+
+function tblRowTests_click() {
+	Tests.run();
 }

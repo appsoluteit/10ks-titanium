@@ -89,19 +89,21 @@ function test() {
 			it("Should return today", function() {
 				//Build
 				var startFrom = new Date(2017, 01, 21, 13, 28);			//start from 21/02/2017 (Tuesday) 1:28pm
-				Ti.App.Properties.setString('ReminderTime', '2:00pm');	//reminder cutoff at 2pm
+				Ti.App.Properties.setString('ReminderTime', '2:30pm');	//reminder cutoff at 2:30pm
 				setting.set([
 					{ name: 'Tuesday', active: true, dayOfWeek: 3}
 				]);
 				
 				//Run
 				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
-				console.info(nextReminderDate);
-				
-				var nextDay = nextReminderDate.getDate();
-				
+				//console.info(nextReminderDate);
+			
 				//Test
-				expect(nextDay).to.equal(21);
+				expect(nextReminderDate.getDate()).to.equal(21);
+				expect(nextReminderDate.getMonth()).to.equal(1);
+				expect(nextReminderDate.getFullYear()).to.equal(2017);
+				expect(nextReminderDate.getHours()).to.equal(14);
+				expect(nextReminderDate.getMinutes()).to.equal(30);
 			});
 			
 			//TODO: Add more tests to cover more cases.

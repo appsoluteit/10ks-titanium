@@ -9,14 +9,14 @@ function ReminderRepeatSetting() {
  * @returns {Array[Object]}
  */
 ReminderRepeatSetting.prototype.get = function() {
-	console.log("Getting reminder days");
+	Ti.API.debug("Getting reminder days");
 	
 	var activeDays = [];
 
 	if (this.isSet()) {
 		var reminderRepeat = Ti.App.Properties.getString(this.PropertyName);
 		
-		console.info("Repeat proprty: ", reminderRepeat);
+		Ti.API.debug("Repeat proprty: ", reminderRepeat);
 		
 		var objReminderRepeat = JSON.parse(reminderRepeat);
 
@@ -71,7 +71,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 		dayObj.setHours(timeObj.getHours());
 		dayObj.setMinutes(timeObj.getMinutes());
 
-		Ti.API.info("Made date: ", dayObj.toString());
+		Ti.API.debug("Made date: ", dayObj.toString());
 		return dayObj;
 	}
 
@@ -85,10 +85,10 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	var isBeforeCutoffTime = (now.getHours() < reminderTime.getHours()) || 
 							 (now.getHours() === reminderTime.getHours() && now.getMinutes() < reminderTime.getMinutes());
 
-	console.log("Current day of week: " + curDayOfWeek);
-	console.log("Reminder time: ", reminderTime.toString());
-	console.log("Is before cutoff time today: " + isBeforeCutoffTime);
-	console.log("Active days: ", activeDays);
+	Ti.API.debug("Current day of week: " + curDayOfWeek);
+	Ti.API.debug("Reminder time: ", reminderTime.toString());
+	Ti.API.debug("Is before cutoff time today: " + isBeforeCutoffTime);
+	Ti.API.debug("Active days: ", activeDays);
 
 	var activeDayForToday = activeDays.filter(function(ele) {
 		return ele.dayOfWeek === curDayOfWeek;	
@@ -103,11 +103,11 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	});
 	
 	if(activeDayForToday && isBeforeCutoffTime) {
-		console.log("Today is the next active reminder day and we are before the cutoff time");
+		Ti.API.debug("Today is the next active reminder day and we are before the cutoff time");
 		return makeDate(now, reminderTime);		
 	}
 	else if(activeDaysAfterToday.length > 0) {
-		console.log("The next active reminder today is after today");
+		Ti.API.debug("The next active reminder today is after today");
 		
 		var ele = activeDaysAfterToday[0];
 		var nextDay = new Date();
@@ -116,7 +116,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 		return makeDate(nextDay, reminderTime);		
 	}
 	else if(activeDaysBeforeToday.length > 0) {
-		console.log("The next active reminder today is before today, next week");
+		Ti.API.debug("The next active reminder today is before today, next week");
 		
 		var ele = activeDaysBeforeToday[0];
 		var nextDay = new Date();
@@ -125,7 +125,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 		return makeDate(nextDay, reminderTime);	
 	}
 	else if(activeDayForToday && !isBeforeCutoffTime) {
-		console.log("The next active reminder day is today, next week");
+		Ti.API.debug("The next active reminder day is today, next week");
 		
 		var nextDay = new Date();
 		//Add days to the date object based on the difference between today and the day in settings
@@ -133,7 +133,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 		return makeDate(nextDay, reminderTime);	
 	}
 	else {
-		console.error("Couldn't find active days");
+		Ti.API.error("Couldn't find active days");
 		throw "Couldn't find active days";
 	}
 };
