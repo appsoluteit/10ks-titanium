@@ -60,7 +60,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	 *	2. The next active day is after today. 
 	 * 		Eg: the next reminder time is Tuesday and today is Monday.
 	 * 
-	 * 	3. The next active day is before today.
+	 * 	3. The next active day is before today (next week)
 	 * 		eG: The next reminder time is Tuesday and its wednesday, so we should remind NEXT tuesday.
 	 * 
 	 * 	4. The next active day is today and its after the cutoff time.

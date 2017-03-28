@@ -96,17 +96,43 @@ function test() {
 				
 				//Run
 				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
-				//console.info(nextReminderDate);
 			
 				//Test
-				expect(nextReminderDate.getDate()).to.equal(21);
-				expect(nextReminderDate.getMonth()).to.equal(1);
-				expect(nextReminderDate.getFullYear()).to.equal(2017);
-				expect(nextReminderDate.getHours()).to.equal(14);
-				expect(nextReminderDate.getMinutes()).to.equal(30);
+				expect(nextReminderDate.getDate()).to.equal(21);		//Day
+				expect(nextReminderDate.getMonth()).to.equal(1);		//Month
+				expect(nextReminderDate.getFullYear()).to.equal(2017);	//Year
+				expect(nextReminderDate.getHours()).to.equal(14);		//Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);		//Minutes
+				expect(nextReminderDate.getDay()).to.equal(3);			//Day of the week
 			});
 			
-			//TODO: Add more tests to cover more cases.
+			it("Should return tomorrow", function() {
+				//Build
+				var startFrom = new Date(2017, 01, 21, 15, 15);			//start from 21/02/2017 (Tuesday) 3:15pm
+				Ti.App.Properties.setString('ReminderTime', '2:30pm');	//reminder cutoff at 2:30pm
+				setting.set([
+					{ name: 'Wednesday', active: true, dayOfWeek: 4}
+				]);		
+						
+				//Run
+				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
+								
+				//Test
+				expect(nextReminderDate.getDate()).to.equal(22);		//Day
+				expect(nextReminderDate.getMonth()).to.equal(1);		//Month
+				expect(nextReminderDate.getFullYear()).to.equal(2017);	//Year
+				expect(nextReminderDate.getHours()).to.equal(14);		//Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);		//Minutes
+				expect(nextReminderDate.getDay()).to.equal(4);			//Day of the week				
+			});
+			
+			it("Should return a yesterday next week", function() {
+				
+			});
+			
+			it("Should return today next week", function() {
+				
+			});
 		});
 	});
 }

@@ -2,12 +2,9 @@
 ## Steps {#login}
 
 Call this to get a list of logged steps or to add a new step record.
-``` 
-http://10000steps.org.au/api/steps/
 ```
-
-### Status ###
-<span style="color: red;">405 Not Allowed (06/02/2017)</span>
+https://www.10000steps.org.au/api/steps/
+```
 
 {% sample lang="js" -%}
 
@@ -19,7 +16,7 @@ http://10000steps.org.au/api/steps/
 
 #### Returns ####
 | Name | Type | Sample | Description |
-| --   | --   | --     | --          | 
+| --   | --   | --     | --          |
 | `count` | `int` | `91` | The number of step records for this user |
 | `next`  | `string` | `http://10000steps.org.au/api/steps/?page=2` | A URL to the next page of steps for this user |
 | `previous` | `string` | `http://10000steps.org.au/api/steps/?page=1` | A URL to the previous page |

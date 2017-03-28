@@ -44,7 +44,7 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
                     done();
                 }
             };
-            
+
 			http.post(config);
 		});
 
@@ -70,7 +70,7 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
                 then: function(response) {
                     responseBody = response;
                     done();
-                }    
+                }
             };
 
 			http.post(config);
@@ -80,7 +80,7 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
             expect(responseBody.email[0]).to.equal('This field may not be blank.');
             expect(responseBody.password1[0]).to.equal('This field may not be blank.');
             expect(responseBody.password2[0]).to.equal('This field may not be blank.');
-        });     
+        });
     });
 
     describe("USER EXISTS", function(requestBody, responseBody) {
@@ -133,6 +133,6 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
 
         it("Should complain that the password is too short", function() {
             expect(responseBody.password1[0]).to.equal('This password is too short. It must contain at least 8 characters.');
-        });     
+        });
     });
 });
