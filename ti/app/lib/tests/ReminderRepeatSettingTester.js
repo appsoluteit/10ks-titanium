@@ -1,14 +1,27 @@
+/*
+ * Note: There is a 1 day difference between the dayOfWeek value saved in the ReminderRepeat
+ * property and the result of calling getDay() on a JavaScript object. This difference is due to a one day
+ * discrepency between the implementation of getDay() and Appcelerator's Calendar.
+ * 
+ * JS Dates have Sunday starting at 0, while Appcelerator has them start at 1.
+ * 
+ * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+ * http://docs.appcelerator.com/platform/latest/#!/api/daysOfTheWeekDictionary
+ */
+
 require('ti-mocha');
 
 var chai = require('chai');
 var expect = chai.expect;
 
+var FormatHelper = require('helpers/FormatHelper');
 var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
 var setting = new ReminderRepeatSetting();
 
 function test() {
 	describe("ReminderRepeatSetting", function() {
 		before(function() {
+			Ti.API.debug("Removing Property:", setting.PropertyName);
 			Ti.App.Properties.removeProperty(setting.PropertyName);		
 		});
 		
@@ -86,52 +99,108 @@ function test() {
 		});
 	
 		describe("Get next reminder date", function() {
+			var year = 2017,	
+				month = 1,		//February
+				day = 21;		//21st (Tuesday)
+				
 			it("Should return today", function() {
 				//Build
-				var startFrom = new Date(2017, 01, 21, 13, 28);			//start from 21/02/2017 (Tuesday) 1:28pm
-				Ti.App.Properties.setString('ReminderTime', '2:30pm');	//reminder cutoff at 2:30pm
+				var startFrom = new Date(year, month, day);
+				var startHours = FormatHelper.unformatTime('2:28pm');
+				startFrom.setHours( startHours.getHours(), startHours.getMinutes() );
+							
+				Ti.App.Properties.setString('ReminderTime', '2:30pm');		//reminder cutoff at 2:30pm
+				
+				var tmpSetting = { name: 'Tuesday', active: true, dayOfWeek: 3};
 				setting.set([
-					{ name: 'Tuesday', active: true, dayOfWeek: 3}
+					tmpSetting	
 				]);
 				
 				//Run
 				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
 			
 				//Test
-				expect(nextReminderDate.getDate()).to.equal(21);		//Day
-				expect(nextReminderDate.getMonth()).to.equal(1);		//Month
-				expect(nextReminderDate.getFullYear()).to.equal(2017);	//Year
-				expect(nextReminderDate.getHours()).to.equal(14);		//Hours
-				expect(nextReminderDate.getMinutes()).to.equal(30);		//Minutes
-				expect(nextReminderDate.getDay()).to.equal(3);			//Day of the week
+				expect(nextReminderDate.getDate()).to.equal(day);					  //Day
+				expect(nextReminderDate.getMonth()).to.equal(month);				  //Month
+				expect(nextReminderDate.getFullYear()).to.equal(year);			 	  //Year
+				expect(nextReminderDate.getHours()).to.equal(14);				      //Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);			          //Minutes
+				expect(nextReminderDate.getDay()).to.equal(tmpSetting.dayOfWeek - 1); //Day of the week
 			});
 			
-			it("Should return tomorrow", function() {
+			it("Should return tomorrow", function() {				
 				//Build
-				var startFrom = new Date(2017, 01, 21, 15, 15);			//start from 21/02/2017 (Tuesday) 3:15pm
+				var startFrom = new Date(year, month, day);		
+				var startHours = FormatHelper.unformatTime('3:15pm');
+				startFrom.setHours( startHours.getHours(), startHours.getMinutes() );
+				
 				Ti.App.Properties.setString('ReminderTime', '2:30pm');	//reminder cutoff at 2:30pm
+				
+				var tmpSetting = { name: 'Wednesday', active: true, dayOfWeek: 4 };
 				setting.set([
-					{ name: 'Wednesday', active: true, dayOfWeek: 4}
+					tmpSetting
 				]);		
 						
 				//Run
 				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
 								
 				//Test
-				expect(nextReminderDate.getDate()).to.equal(22);		//Day
-				expect(nextReminderDate.getMonth()).to.equal(1);		//Month
-				expect(nextReminderDate.getFullYear()).to.equal(2017);	//Year
-				expect(nextReminderDate.getHours()).to.equal(14);		//Hours
-				expect(nextReminderDate.getMinutes()).to.equal(30);		//Minutes
-				expect(nextReminderDate.getDay()).to.equal(4);			//Day of the week				
+				expect(nextReminderDate.getDate()).to.equal(day + 1);  				  //The next Day
+				expect(nextReminderDate.getMonth()).to.equal(month);   				  //Month
+				expect(nextReminderDate.getFullYear()).to.equal(year);				  //Year
+				expect(nextReminderDate.getHours()).to.equal(14);					  //Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);					  //Minutes
+				expect(nextReminderDate.getDay()).to.equal(tmpSetting.dayOfWeek - 1); //Day of the week				
 			});
 			
-			it("Should return a yesterday next week", function() {
+			it("Should return yesterday next week", function() {
+				//Build
+				var startFrom = new Date(year, month, day);
+				var startHours = FormatHelper.unformatTime('2:28pm');
+				startFrom.setHours( startHours.getHours(), startHours.getMinutes() );
 				
+				Ti.App.Properties.setString('ReminderTime', '2:30pm');
+				
+				var tmpSetting = { name: 'Monday', active: true, dayOfWeek: 2 };
+				setting.set([
+					tmpSetting
+				]);
+				
+				//Run
+				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
+				
+				//Test
+				expect(nextReminderDate.getDate()).to.equal(day + 6);  				  //The day before today next week
+				expect(nextReminderDate.getMonth()).to.equal(month);   				  //Month
+				expect(nextReminderDate.getFullYear()).to.equal(year);				  //Year
+				expect(nextReminderDate.getHours()).to.equal(14);					  //Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);					  //Minutes
+				expect(nextReminderDate.getDay()).to.equal(tmpSetting.dayOfWeek - 1); //Day of the week					
 			});
 			
 			it("Should return today next week", function() {
+				//Build
+				var startFrom = new Date(year, month, day);
+				var startHours = FormatHelper.unformatTime('2:35pm');
+				startFrom.setHours( startHours.getHours(), startHours.getMinutes() );
 				
+				Ti.App.Properties.setString('ReminderTime', '2:30pm');
+				
+				var tmpSetting = { name: 'Tuesday', active: true, dayOfWeek: 3 };
+				setting.set([
+					tmpSetting
+				]);
+				
+				//Run
+				var nextReminderDate = setting.getNextReminderDateTime(startFrom);
+				
+				//Test
+				expect(nextReminderDate.getDate()).to.equal(day + 7);  				  //Today next week
+				expect(nextReminderDate.getMonth()).to.equal(month);   				  //Month
+				expect(nextReminderDate.getFullYear()).to.equal(year);				  //Year
+				expect(nextReminderDate.getHours()).to.equal(14);					  //Hours
+				expect(nextReminderDate.getMinutes()).to.equal(30);					  //Minutes
+				expect(nextReminderDate.getDay()).to.equal(tmpSetting.dayOfWeek - 1); //Day of the week					
 			});
 		});
 	});

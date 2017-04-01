@@ -1,3 +1,14 @@
+/*
+ * Note: There is a 1 day difference between the dayOfWeek value saved in the ReminderRepeat
+ * property and the result of calling getDay() on a JavaScript object. This difference is due to a one day
+ * discrepency between the implementation of getDay() and Appcelerator's Calendar.
+ * 
+ * JS Dates have Sunday starting at 0, while Appcelerator has them start at 1.
+ * 
+ * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+ * http://docs.appcelerator.com/platform/latest/#!/api/daysOfTheWeekDictionary
+ */
+
 var FormatHelper = require("helpers/FormatHelper");
 
 function ReminderRepeatSetting() { 
@@ -85,6 +96,7 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	var isBeforeCutoffTime = (now.getHours() < reminderTime.getHours()) || 
 							 (now.getHours() === reminderTime.getHours() && now.getMinutes() < reminderTime.getMinutes());
 
+	Ti.API.debug("Now", now.toString());
 	Ti.API.debug("Current day of week: " + curDayOfWeek);
 	Ti.API.debug("Reminder time: ", reminderTime.toString());
 	Ti.API.debug("Is before cutoff time today: " + isBeforeCutoffTime);
@@ -96,40 +108,47 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	
 	var activeDaysAfterToday = activeDays.filter(function(ele) {
 		return ele.dayOfWeek > curDayOfWeek;
-	});
+	})[0];
 	
 	var activeDaysBeforeToday = activeDays.filter(function(ele) {
 		return ele.dayOfWeek < curDayOfWeek;
-	});
+	})[0];
 	
 	if(activeDayForToday && isBeforeCutoffTime) {
 		Ti.API.debug("Today is the next active reminder day and we are before the cutoff time");
 		return makeDate(now, reminderTime);		
 	}
-	else if(activeDaysAfterToday.length > 0) {
-		Ti.API.debug("The next active reminder today is after today");
+	else if(activeDaysAfterToday) {
+		var ele = activeDaysAfterToday;
 		
-		var ele = activeDaysAfterToday[0];
-		var nextDay = new Date();
+		Ti.API.debug("The next active reminder today is after today:", ele);
+		
+		var nextDay = now;
+		
 		//Add days to the date object based on the difference between today and the day in settings
 		nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
 		return makeDate(nextDay, reminderTime);		
 	}
-	else if(activeDaysBeforeToday.length > 0) {
-		Ti.API.debug("The next active reminder today is before today, next week");
+	else if(activeDaysBeforeToday) {
+		var ele = activeDaysBeforeToday;
 		
-		var ele = activeDaysBeforeToday[0];
-		var nextDay = new Date();
-		//Add days to the date object based on the difference between today and the day in settings
-		nextDay.setDate(now.getDate() + (ele.dayOfWeek + 7));
+		Ti.API.debug("The next active reminder today is before today, next week:", ele);
+		
+		var nextDay = now;
+		
+		//Add days to the date object based on the difference between today and the day in settings plus one week
+		nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek) + 7);
 		return makeDate(nextDay, reminderTime);	
 	}
 	else if(activeDayForToday && !isBeforeCutoffTime) {
-		Ti.API.debug("The next active reminder day is today, next week");
+		var ele = activeDayForToday;
 		
-		var nextDay = new Date();
-		//Add days to the date object based on the difference between today and the day in settings
-		nextDay.setDate(now.getDate() + (curDayOfWeek + 6));
+		Ti.API.debug("The next active reminder day is today, next week:", ele);
+		
+		var nextDay = now;
+		
+		//Add days to the date object for today, next week
+		nextDay.setDate(now.getDate() + 7);
 		return makeDate(nextDay, reminderTime);	
 	}
 	else {
