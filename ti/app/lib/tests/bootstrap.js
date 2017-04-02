@@ -1,16 +1,20 @@
 //Bootstrap the other tests
 require('ti-mocha');
-var formatHelperTester = require('tests/FormatHelperTester');
+var apiHelperTester = require('tests/APIHelperTester');
 var dateTimeHelperTester = require('tests/DateTimeHelperTester');
+var formatHelperTester = require('tests/FormatHelperTester');
 var reminderRepeatSettingTester = require('tests/ReminderRepeatSettingTester');
+var reminderFactoryTester = require('tests/ReminderFactoryTester');
 
 function run() {
 	mocha.setup( { reporter: 'ti-spec-studio' } );
 	
 	var tests = [
-		formatHelperTester,
+		apiHelperTester,
 		dateTimeHelperTester,
-		reminderRepeatSettingTester
+		formatHelperTester,
+		reminderRepeatSettingTester,
+		reminderFactoryTester
 	];
 	
 	tests.forEach(function(testSuite) {

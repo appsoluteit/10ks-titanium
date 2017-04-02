@@ -1,3 +1,6 @@
+var ReminderFactory = require("classes/ReminderFactory");
+var reminderProvider = ReminderFactory.create();
+
 var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
 var reminderRepeatSetting = new ReminderRepeatSetting();
 
@@ -5,162 +8,17 @@ var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
-//TODO: We will need to implement dedicated methods for adding / removing events for iOS vs Android
-//Android does not support the Ti.Calendar.RecurenceRule, so we should use the AlarmManager
-//available at: https://github.com/benbahrenburg/benCoding.AlarmManager
-function addReminderForAndroid() {
-	var alarmManager = require('com.bencoding.alarmmanager');
-	alert("Alarm manager working!");
-}
-
-function addReminderForIOS() {
-	var defCalendar = Ti.Calendar.defaultCalendar;
-	
-	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel");
-	
-	var activeDays = reminderRepeatSetting.get();
-	var nextReminder;
-	
-	try {
-		nextReminder = reminderRepeatSetting.getNextReminderDateTime();
-	}
-	catch(e) {
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Couldn't add reminder. Reason: " + e,
-			duration: 2000,
-			view: $.reminder,
-			theme: "error"
-		});	
-		
-		return;
-	}
-	
-	var evReminder = defCalendar.createEvent({
-		title:	strReminderLabel,
-		description: "Hello, World!",
-		begin:  nextReminder,
-		end:    nextReminder
-	});
-	
-	var evAlert = evReminder.createAlert({
-			absoluteDate: nextReminder
-	});
-	
-	evReminder.alerts = [evAlert];
-	
-	//Set the days of the week based on the settings
-	var evRecurrenceRule = evReminder.createRecurrenceRule({
-		frequency: Ti.Calendar.RECURRENCEFREQUENCY_WEEKLY,
-		interval: 1,
-		daysOfTheWeek: activeDays
-	});
-	
-	evReminder.recurrenceRules = [evRecurrenceRule];
-	if(evReminder.save(Ti.Calendar.SPAN_FUTUREEVENTS)) {
-		Ti.App.Properties.setBool("HasReminder", true);
-		Ti.App.Properties.setString("ReminderEventID", evReminder.getId());
-		
-		enableDisableReminderButtons();
-		
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Reminder saved",
-			duration: 2000,
-			view: $.reminder,
-			theme: "success"
-		});
-	}
-	else {
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Couldn't create reminder",
-			duration: 2000,
-			view: $.reminder,
-			theme: "error"
-		});
-	}
-}
-
 function addReminder() {
-	if(Ti.Platform.osname === "android") {
-		addReminderForAndroid();
-	}
-	else {
-		addReminderForIOS();
-	}
-}
-
-function removeReminderForAndroid() {
-	
-}
-
-function removeReminderForIOS() {
-	function removeReminderData() {
-		Ti.App.Properties.removeProperty("HasReminder");
-		Ti.App.Properties.removeProperty("ReminderEventID");			
-	}
-	
-	var evReminderID = Ti.App.Properties.getString("ReminderEventID", "");
-	console.log("Removing reminders. ID: ", evReminderID);
-	
-	if(evReminderID.length > 0) {
-		var defCalendar = Ti.Calendar.defaultCalendar;
-		
-		var evt = defCalendar.getEventById(evReminderID);
-		
-		if(evt == null) {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Event does not exist",
-				duration: 2000,
-				view: $.reminder,
-				theme: "error"
-			});
-		
-			removeReminderData();
-		}
-		else if(evt.remove(Ti.Calendar.SPAN_FUTUREEVENTS)) {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Reminder removed",
-				duration: 2000,
-				view: $.reminder,
-				theme: "success"
-			});
-		
-			removeReminderData();
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't remove reminder",
-				duration: 2000,
-				view: $.reminder,
-				theme: "error"
-			});
-			
-			//Note: there may be a reason why remove is failing. We probably shouldn't
-			//remove the reminder event ID.
-		}
-	}
-	else {
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "No reminder found",
-			duration: 2000,
-			view: $.reminder,
-			theme: "error"
-		});
-		
-		//Our data wasn't reset properly. Reset it now
-		removeReminderData();
-	}
-	
-	enableDisableReminderButtons();	
+	reminderProvider.add();
+	enableDisableReminderButtons();
 }
 
 function removeReminder() {
-	if(Ti.Platform.osname === "android") {
-		removeReminderForAndroid();
-	}
-	else {
-		removeReminderForIOS();
-	}
+	reminderProvider.remove();
+	enableDisableReminderButtons();	
 }
+
+/*********************************** UI ***********************************/
 
 function disableAddReminderButton() {
 	$.reminderView.lblAddReminder.opacity = 0.5;
@@ -221,10 +79,12 @@ function populateRows() {
 	if(Ti.App.Properties.hasProperty("ReminderRepeat")) {
 		var activeDays = reminderRepeatSetting.get();
 		
-		if(activeDays.length === 1)
+		if(activeDays.length === 1) {
 			$.reminderView.lblRepeat.text = activeDays[0].name;
-		else
+		}
+		else {
 			$.reminderView.lblRepeat.text = activeDays.length + " days";	
+		}
 	}
 	
 	if(Ti.App.Properties.hasProperty("ReminderLabel")) {
@@ -239,6 +99,7 @@ function populateRows() {
 	
 	enableDisableReminderButtons();
 }
+
 /*********************************** EVENT HANDLERS ***********************************/
 
 function btnBack_click() {
@@ -287,9 +148,10 @@ function tblRowTime_click() {
 }
 
 function tblRowAddReminder_click() {
-	if($.reminderView.tblRowAddReminder.disabled)
+	if($.reminderView.tblRowAddReminder.disabled) {
 		return;
-		
+	}
+	
 	if(Ti.Calendar.hasCalendarPermissions()) {
 		addReminder();
 	}
@@ -306,8 +168,9 @@ function tblRowAddReminder_click() {
 }
 
 function tblRowRemoveReminder_click() {
-	if($.reminderView.tblRowRemoveReminder.disabled)
+	if($.reminderView.tblRowRemoveReminder.disabled) {
 		return;
+	}
 		
-	removeReminder();
+	reminderProvider.remove();
 }

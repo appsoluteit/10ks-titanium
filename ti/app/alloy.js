@@ -7,7 +7,7 @@ Alloy.Globals.IsDebug = true;
 
 //Global objects
 Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
-Alloy.Globals.API = require("API");
+//Alloy.Globals.API = require("API");
 
 //Global methods (soon to be moved to helper object)
 Alloy.Globals.Logout = function() {

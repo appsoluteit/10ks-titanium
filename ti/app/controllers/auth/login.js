@@ -1,5 +1,5 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
+var APIHelper = require('helpers/APIHelper');
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
@@ -47,7 +47,7 @@ function doLogin(username, password) {
 		password: password
 	};
 	
-	Alloy.Globals.API.post({
+	APIHelper.post({
 		message:    'Logging in...',
 		url: 		'auth/login/',
 		data: 		data,
@@ -88,7 +88,7 @@ function getUser() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	Alloy.Globals.API.get({
+	APIHelper.get({
 		message: 	"Fetching your account...",
 		url: 		"auth/user/",
 		headers: [{

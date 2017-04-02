@@ -12,21 +12,23 @@ function makeResponse(responseText) {
 }
 
 function send(options) {
-	if(options.message)
+	if(options.message) {
 		Alloy.Globals.Loading.show(options.message, false);
-	else
+	}
+	else {
 		Alloy.Globals.Loading.show("Loading...", false);
+	}
 	
 	var req = Ti.Network.createHTTPClient();
 	req.onload = function() {
 		try {
-			Ti.API.info("API ready state changed: " + this.readyState);
+			Ti.API.debug("API ready state changed: " + this.readyState);
 			
 			if(this.readyState == 4) {
-				Ti.API.info("Status: " + this.status);
+				Ti.API.debug("Status: " + this.status);
 				
 				if(this.status == 200 || this.status == 201) {
-					Ti.API.info("API success response: " + this.responseText);
+					Ti.API.debug("API success response: " + this.responseText);
 					Alloy.Globals.Loading.hide();
 					
 					if(typeof(options.success === "function")) {
@@ -79,5 +81,5 @@ function post(options) {
 	return send(options);
 }
 
-module.exports.get = get;
 module.exports.post = post;
+module.exports.get = get;

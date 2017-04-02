@@ -1,5 +1,6 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
+var APIHelper = require('helpers/APIHelper');
 
 function register(username, email, password, password2) {
 	function onSuccess(response) {
@@ -52,7 +53,7 @@ function register(username, email, password, password2) {
 	
 	Ti.API.info("Sending: " + JSON.stringify(data));
 	
-	Alloy.Globals.API.post({
+	APIHelper.post({
 		message:	"Registering your account...",
 		url: 		"auth/registration/",
 		data: 		data,
