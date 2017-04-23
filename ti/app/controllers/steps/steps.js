@@ -1,9 +1,11 @@
 var FormatHelper = require("helpers/FormatHelper");
+var APIHelper = require("helpers/APIHelper");
 
 var logCollection = Alloy.createCollection('log');
 logCollection.fetch();
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
+//TODO: Move these to DateHelper
 
 /**
  * Computes and returns a label that represents the given date. Eg: Mon Feb 24.
@@ -81,9 +83,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	});
 	
 	if(item.length > 0) {
-		//Ti.API.log(JSON.stringify(item[0]));
 		numSteps = item[0].get('steps_total');
-		//Ti.API.log("Found a match for: " + strLabel + ". Steps: " + numSteps);
 	}
 	
 	var labelRight = Ti.UI.createLabel({
@@ -143,7 +143,7 @@ function getSteps() {
 		Authorization: "Token " + Alloy.Globals.AuthKey
 	};
 	
-	Alloy.Globals.API.get({
+	APIHelper.get({
 		message:	"Fetching steps...",
 		url:		"steps/",
 		headers: [{
@@ -177,7 +177,9 @@ function postSteps() {
 		activity_part: "9999"
 	};
 	
-	Alloy.Globals.API.post({
+	Ti.API.info("Posting", data);
+	
+	APIHelper.post({
 		message:	"Sending steps...",
 		url: 		"steps/",
 		headers: [{
@@ -232,7 +234,7 @@ function btnBack_click() {
 function btnSync_click() {
 	
 	//TODO: have getSteps return a promise. Then call postSteps.
-	getSteps();
+	//getSteps();
 	
 	postSteps();
 }

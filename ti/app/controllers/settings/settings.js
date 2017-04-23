@@ -1,5 +1,7 @@
 var FormatHelper = require("helpers/FormatHelper");
+var AuthProvider = require('classes/AuthProvider');
 var Tests = require('tests/bootstrap');
+
 var args = $.args;
 
 function btnBack_click() {
@@ -59,13 +61,8 @@ function tblRowLogout_click() {
 	
 	confirmDialog.addEventListener('click', function(e) {
 		if(e.index !== e.source.cancel) {
-			Alloy.Globals.Logout();
-			Alloy.Globals.Loading.show("Logging out...");
-			
-			setTimeout(function() {
-				Alloy.Globals.Loading.hide();
-				$.settings.close();
-			}, 500);
+			var authProvider = new AuthProvider($.settings, $.settings);
+			authProvider.logout();
 		}	
 	});
 	

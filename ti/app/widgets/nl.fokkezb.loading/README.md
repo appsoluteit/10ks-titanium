@@ -33,7 +33,7 @@ By default it uses the native [ProgressIndicator](http://docs.appcelerator.com/t
 * Create a global instance of the widget in `alloy.js`:
 
     ```javascript
-    Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
+    var spinner = Alloy.createWidget("nl.fokkezb.loading");
     ```
 
 * Show and hide the loading mask when you need it:
@@ -44,10 +44,10 @@ By default it uses the native [ProgressIndicator](http://docs.appcelerator.com/t
     }
     
     function load() {
-        Alloy.Globals.loading.show('Your message', false);
+        spinner.show('Your message', false);
         
         setTimeout(function(){
-            Alloy.Globals.loading.hide();
+            spinner.hide();
         }, 6000);
     }
     ```

@@ -1,3 +1,5 @@
+var spinner = Alloy.createWidget("nl.fokkezb.loading");
+
 function makeResponse(responseText) {
 	var response = {};
 	
@@ -13,10 +15,10 @@ function makeResponse(responseText) {
 
 function send(options) {
 	if(options.message) {
-		Alloy.Globals.Loading.show(options.message, false);
+		spinner.show(options.message, false);
 	}
 	else {
-		Alloy.Globals.Loading.show("Loading...", false);
+		spinner.show("Loading...", false);
 	}
 	
 	var req = Ti.Network.createHTTPClient();
@@ -29,7 +31,7 @@ function send(options) {
 				
 				if(this.status == 200 || this.status == 201) {
 					Ti.API.debug("API success response: " + this.responseText);
-					Alloy.Globals.Loading.hide();
+					spinner.hide();
 					
 					if(typeof(options.success === "function")) {
 						options.success(makeResponse(this.responseText));
@@ -49,7 +51,7 @@ function send(options) {
 		Ti.API.error('API Request error. ' + JSON.stringify(e));
 		Ti.API.error('Response object: ' + this.responseText);
 		
-		Alloy.Globals.Loading.hide();
+		spinner.hide();
 		
 		if(typeof(options.fail) === "function") {
 			options.fail(makeResponse(this.responseText));

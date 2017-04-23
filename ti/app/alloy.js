@@ -5,17 +5,7 @@ Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
 Alloy.Globals.IsDebug = true;
 
-//Global objects
-Alloy.Globals.Loading = Alloy.createWidget("nl.fokkezb.loading");
-//Alloy.Globals.API = require("API");
-
-//Global methods (soon to be moved to helper object)
-Alloy.Globals.Logout = function() {
-	console.warn("This function is deprecated and will soon be replaced by an API call to logout");
-	
-	Ti.App.Properties.removeProperty("AuthKey");
-	Alloy.Globals.IsLoggedIn = false;
-};
+Alloy.Globals.IsLoggedIn = false;
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)

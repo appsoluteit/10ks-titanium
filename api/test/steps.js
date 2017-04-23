@@ -27,11 +27,35 @@ describe("GET /steps/", function(url, quiet, timestamp) {
             });
         });
 
-        it("Should pass", function() {
+        it("Should return steps data", function() {
             expect(responseBody.count).to.be.a('number');
             expect(responseBody.next).to.not.equal(undefined);
             expect(responseBody.previous).to.not.equal(undefined);
             expect(responseBody.results).to.be.an('array');
         });
     });
+});
+
+descibe("POST /steps/", function(url, quiet, timestamp) {
+	before(function(done) {
+		http.login(function(authKey) {
+			token = "Token " + authKey;
+
+			var config = {
+				to: url,
+				quiet: quiet,
+				token: token,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.get(config);
+		});
+	});
+
+	it("Should send steps data", functon() {
+		//todo: steps_date seems to be the only required field.
+	});
 });
