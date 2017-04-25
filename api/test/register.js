@@ -8,6 +8,8 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
 	url = 'https://www.10000steps.org.au/api/auth/registration/';
 	quiet = true;
 
+		//This has been commented out so we don't create too many
+		//dummy accounts
     /*
     describe("OK", function(requestBody, responseBody) {
         timestamp = Date.now();
@@ -85,7 +87,7 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
 
     describe("USER EXISTS", function(requestBody, responseBody) {
         requestBody = {
-            email: 'admin@jasonsultana.com',
+            email: 'ichimansteps@gmail.com',
             password1: 'password',
             password2: 'password'
         };

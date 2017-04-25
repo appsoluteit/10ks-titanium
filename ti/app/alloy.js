@@ -5,7 +5,7 @@ Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
 Alloy.Globals.IsDebug = true;
 
-Alloy.Globals.IsLoggedIn = false;
+//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)

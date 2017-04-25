@@ -48,8 +48,8 @@ function send(options) {
 	};
 	
 	req.onerror = function(e) {
-		Ti.API.error('API Request error. ' + JSON.stringify(e));
-		Ti.API.error('Response object: ' + this.responseText);
+		Ti.API.debug('API Request error. ' + JSON.stringify(e));
+		Ti.API.debug('Response object: ' + this.responseText);
 		
 		spinner.hide();
 		

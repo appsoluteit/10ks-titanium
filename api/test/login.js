@@ -10,8 +10,8 @@ describe("POST /auth/login/", function(url, quiet) {
 
 	describe("OK", function(responseBody, requestBody) {
 		requestBody = {
-			username: 'admin@jasonsultana.com',
-			password: 'steps1990'
+			username: 'ichimansteps@gmail.com',
+			password: '12345678'
 		};
 
 		before(function(done) {
@@ -35,7 +35,7 @@ describe("POST /auth/login/", function(url, quiet) {
 
 	describe("MISSING PASSWORD", function(responseBody, requestBody) {
 		requestBody = {
-			username: 'admin@jasonsultana.com',
+			username: 'ichimansteps@gmail.com',
 			password: ''
 		};
 
@@ -61,7 +61,7 @@ describe("POST /auth/login/", function(url, quiet) {
 	describe("MISSING USERNAME", function(responseBody, requestBody) {
 		requestBody = {
 			username: '',
-			password: 'steps1990'
+			password: '12345678'
 		};
 
 		before(function(done) {
@@ -85,8 +85,8 @@ describe("POST /auth/login/", function(url, quiet) {
 
 	describe("LOGIN FAILED", function(responseBody, requestBody) {
 		requestBody = {
-			username: 'admin@jasonsultana.com',
-			password: 'steps1991'
+			username: 'ichimansteps@gmail.com',
+			password: '123456789'
 		};
 
 		before(function(done) {

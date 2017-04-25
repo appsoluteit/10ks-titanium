@@ -1,6 +1,8 @@
 //Bootstrap the other tests
 require('ti-mocha');
+
 var apiHelperTester = require('tests/APIHelperTester');
+var authProviderTester = require('tests/AuthProviderTester');
 var dateTimeHelperTester = require('tests/DateTimeHelperTester');
 var formatHelperTester = require('tests/FormatHelperTester');
 var reminderRepeatSettingTester = require('tests/ReminderRepeatSettingTester');
@@ -11,6 +13,7 @@ function run() {
 	
 	var tests = [
 		apiHelperTester,
+		authProviderTester,
 		dateTimeHelperTester,
 		formatHelperTester,
 		reminderRepeatSettingTester,

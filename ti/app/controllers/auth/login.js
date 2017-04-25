@@ -10,10 +10,22 @@ function window_open() {
 function btnLogin_click() {	
 	var authProvider = new AuthProvider($.login, $.loginView.lblError);
 	
+	if(Alloy.Globals.IsDebug) {
+		if($.loginView.txtUsername.value === "") {
+			$.loginView.txtUsername.value = "admin@jasonsultana.com";
+		}	
+		
+		if($.loginView.txtPassword.value === "") {
+			$.loginView.txtPassword.value = "steps1990";
+		}
+	}
+	
 	authProvider.login(
 		$.loginView.txtUsername.value, 
 		$.loginView.txtPassword.value
-	);
+	).then(function() {
+		authProvider.getUser();
+	});
 }
 
 function btnRegister_click() {
