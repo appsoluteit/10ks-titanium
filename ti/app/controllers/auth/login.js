@@ -12,11 +12,11 @@ function btnLogin_click() {
 	
 	if(Alloy.Globals.IsDebug) {
 		if($.loginView.txtUsername.value === "") {
-			$.loginView.txtUsername.value = "admin@jasonsultana.com";
+			$.loginView.txtUsername.value = "ichimansteps@gmail.com";
 		}	
 		
 		if($.loginView.txtPassword.value === "") {
-			$.loginView.txtPassword.value = "steps1990";
+			$.loginView.txtPassword.value = "12345678";
 		}
 	}
 	

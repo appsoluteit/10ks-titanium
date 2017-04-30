@@ -6,7 +6,7 @@ var authProviderTester = require('tests/AuthProviderTester');
 var dateTimeHelperTester = require('tests/DateTimeHelperTester');
 var formatHelperTester = require('tests/FormatHelperTester');
 var reminderRepeatSettingTester = require('tests/ReminderRepeatSettingTester');
-var reminderFactoryTester = require('tests/ReminderFactoryTester');
+var calendarFactoryTester = require('tests/CalendarFactoryTester');
 
 function run() {
 	mocha.setup( { reporter: 'ti-spec-studio' } );
@@ -14,10 +14,10 @@ function run() {
 	var tests = [
 		apiHelperTester,
 		authProviderTester,
+		calendarFactoryTester,
 		dateTimeHelperTester,
 		formatHelperTester,
 		reminderRepeatSettingTester,
-		reminderFactoryTester
 	];
 	
 	tests.forEach(function(testSuite) {

@@ -1,10 +1,14 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
 function loginIfNeeded() {
 	if(!Alloy.Globals.IsLoggedIn) {
 		win = Alloy.createController('auth/login').getView();
 		win.open();
+	}	
+	else if(Ti.Platform.osname === "android") {
+		//TODO: If we need to set the reminders, have the user select a calender and do it.
+		//(Only do this if the reminders are about to expire or it could get annoying)
+		
 	}	
 }
 
@@ -61,6 +65,6 @@ function window_open() {
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
-	
+
 	loginIfNeeded();
 }

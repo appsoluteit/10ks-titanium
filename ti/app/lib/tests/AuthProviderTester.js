@@ -85,8 +85,8 @@ function test() {
 				});
 			});
 			
-			it("Should return that a user with that email already exists", function() {
-				expect(result).to.equal('Email: A user is already registered with this e-mail address.');
+			it("Should return that a user with that username already exists", function() {
+				expect(result).to.equal('Username: A user with that username already exists.');
 			});
 		});
 	});

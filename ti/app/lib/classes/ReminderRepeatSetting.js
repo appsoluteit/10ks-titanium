@@ -78,6 +78,10 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	 * 		Eg: The next reminder time is Sunday at 9pm and its currently Sunday at 10pm. So remind NEXT sunday.
 	 */
 	
+	if(!startFrom) {
+		throw "startFrom is a required parameter";	
+	}
+	
 	function makeDate(dayObj, timeObj) {
 		dayObj.setHours(timeObj.getHours());
 		dayObj.setMinutes(timeObj.getMinutes());

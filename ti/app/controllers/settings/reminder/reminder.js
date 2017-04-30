@@ -1,21 +1,86 @@
-var ReminderFactory = require("classes/ReminderFactory");
-var reminderProvider = ReminderFactory.create();
-
+var CalendarFactory = require("classes/CalendarFactory");
 var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
+
+var reminderProvider = CalendarFactory.create();
 var reminderRepeatSetting = new ReminderRepeatSetting();
 
 var args = $.args;
 
 /*********************************** BUSINESS FUNCTIONS ***********************************/
 
-function addReminder() {
-	reminderProvider.add();
-	enableDisableReminderButtons();
+function addReminder() {	
+	reminderProvider.requestPermission()
+					.then(function success() {
+						return reminderProvider.getCalendar();
+					}, function fail(reason) {
+						alert("Permission to Calendar denied. Reason: " + reason);
+					})
+					.then(function success(selectedCalendar) {
+						Ti.API.debug("Calendar selected: ", selectedCalendar);
+						
+						//Note: iOS doesn't like passing the default calendar via the promise argument. Do it here.
+						if(Ti.Platform.osname !== "android") {
+							selectedCalendar = Ti.Calendar.defaultCalendar;	
+						}
+						
+						return reminderProvider.add(selectedCalendar);
+					}, function fail(reason) {
+						alert("Couldn't select calendar. Reason: " + reason);
+					})
+					.then(function success() {						
+						Alloy.createWidget("com.mcongrove.toast", null, {
+							text: "Reminder saved",
+							duration: 2000,
+							view: $.reminder,
+							theme: "success"
+						});
+						
+						if(Ti.Platform.osname === "android") {
+							$.reminder.close();
+						}
+						else {
+							enableDisableReminderButtons();	
+						}
+					}, function fail(reason) {
+						alert("Couldn't add reminder. Reason: " + reason);
+					});
 }
 
 function removeReminder() {
-	reminderProvider.remove();
-	enableDisableReminderButtons();	
+	reminderProvider.requestPermission()
+					.then(function success() {
+						return reminderProvider.getCalendar();
+					}, function fail(reason) {
+						alert("Permission to Calendar denied. Reason: " + reason);
+					})
+					.then(function success(selectedCalendar) {
+						if(Ti.Platform.osname !== "android") {
+							selectedCalendar = Ti.Calendar.defaultCalendar;	
+						}
+						
+						return reminderProvider.remove(selectedCalendar);
+					}, function fail(reason) {
+						alert("Couldn't select calendar. Reason: " + reason);
+					})
+					.then(function success() {
+						Alloy.createWidget("com.mcongrove.toast", null, {
+							text: "Reminder removed",
+							duration: 2000,
+							view: $.reminder,
+							theme: "success"
+						});	
+						
+						if(Ti.Platform.osname === "android") {
+							//Ti doesn't support removing events from a calendar on Android. Inform the user.
+							alert("Reminders still exist in your selected Calendar. They must be manually removed");
+							$.reminder.close();
+						}
+						else {
+							enableDisableReminderButtons();	
+						}
+					}, function fail(reason) {
+						alert("Couldn't remove reminder. Reason: " + reason);
+					});
 }
 
 /*********************************** UI ***********************************/
@@ -152,19 +217,7 @@ function tblRowAddReminder_click() {
 		return;
 	}
 	
-	if(Ti.Calendar.hasCalendarPermissions()) {
-		addReminder();
-	}
-	else {
-		Ti.Calendar.requestCalendarPermissions(function(e) {
-			if(e.success) {
-				addReminder();
-			}
-			else {
-				alert("Access to Calendar denied. Message = " + e.error);
-			}
-		});
-	}
+	addReminder();
 }
 
 function tblRowRemoveReminder_click() {
@@ -172,5 +225,5 @@ function tblRowRemoveReminder_click() {
 		return;
 	}
 		
-	reminderProvider.remove();
+	removeReminder();
 }
