@@ -93,24 +93,24 @@ AndroidReminder.prototype.add = function(calendar) {
 		return;
 	}
 	
-	var nextReminder;
+	var scheduledReminders;
 	try {
-		//calculate the next reminder DT from now
-		nextReminder = reminderRepeatSetting.getNextReminderDateTime(new Date()); 
-		Ti.API.debug("Next reminder:", nextReminder.toString());
+		//calculate the next reminders until 1 month from now
+		scheduledReminders = reminderRepeatSetting.getScheduledRemindersBetween(new Date(), Alloy.Globals.ReminderEndDate);
 	}
 	catch(e) {
 		defer.reject(e);
 		return;
 	}
 	
-	var event = createEvent(calendar, nextReminder);	//create the next event
-	var activeDays = reminderRepeatSetting.get();
-
-	//TODO: Get a list of all reminder instances between now and the reminder period (3 months?)
+	var eventIDs = [];
+	scheduledReminders.forEach(function(reminderTime) {
+		var event = createEvent(calendar, reminderTime);	//create the next event
+		eventIDs.push(event.getId());
+	});
 	
 	Ti.App.Properties.setBool("HasReminder", true);
-	Ti.App.Properties.setString("ReminderEventID", event.getId());	//TODO: On Android, we won't save just 1 event but a range of them
+	Ti.App.Properties.setString("ReminderEventID", JSON.stringify(eventIDs));
 	
 	defer.resolve();
 	

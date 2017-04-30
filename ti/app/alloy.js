@@ -5,7 +5,8 @@ Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
 Alloy.Globals.IsDebug = true;
 
-Alloy.Globals.AndroidAlarmRequestCode = 9999;
+Alloy.Globals.ReminderEndDate = new Date();
+Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
 Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login

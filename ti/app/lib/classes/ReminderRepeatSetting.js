@@ -161,4 +161,60 @@ ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	}
 };
 
+/**
+ * Returns an array of scheduled reminders from now until the endDate.
+ */
+ReminderRepeatSetting.prototype.getScheduledRemindersBetween = function(startDate, endDate) {
+	Ti.API.debug("Getting reminders between " + startDate.toString() + " and " + endDate.toString());
+	
+	function isReminderDay(needle, haystack) {
+		return haystack.filter(function(e) { return e.dayOfWeek === needle; }).length > 0;
+	}
+	
+	function isBeforeCutoffTime(time, cutoff) {
+		//If checking today, make sure we haven't passed the time cutoff
+		var isBeforeCutoffTime = (time.getHours() < cutoff.getHours()) || 
+								 (time.getHours() === cutoff.getHours() && time.getMinutes() < cutoff.getMinutes());	
+								 
+		return isBeforeCutoffTime;		
+	}
+	
+	function makeScheduledTime(day, reminderTime) {
+		var reminder = new Date(day.getTime());
+		
+		reminder.setHours(reminderTime.getHours());
+		reminder.setMinutes(reminderTime.getMinutes());
+		
+		return reminder;
+	}
+	
+	var now = startDate;
+	var currentDay = new Date(now.getTime());
+	var reminders = [];
+	var activeDays = this.get();
+	var reminderTime = FormatHelper.unformatTime(Ti.App.Properties.getString("ReminderTime"));
+	//Ti.API.debug("Reminder time: ", reminderTime.toString());	
+	
+	do {
+		//Ti.API.debug("Checking " + now.toString());
+		var curDayOfWeek = now.getDay() + 1;
+			
+		if(currentDay.getTime() === now.getTime() && isBeforeCutoffTime(now, reminderTime)) {
+			if(isReminderDay(curDayOfWeek, activeDays)) {
+				Ti.API.debug("Today (" + now.toString() + ") is a reminder day and its before the cutoff");
+				reminders.push(makeScheduledTime(now, reminderTime));
+			}
+		}
+		else if(isReminderDay(curDayOfWeek, activeDays)) {
+			Ti.API.debug(now.toString() + " is a reminder day");
+			reminders.push(makeScheduledTime(now, reminderTime));
+		}
+		
+		now.setDate(now.getDate() + 1); //add a day
+	}
+	while(now <= endDate);
+	
+	return reminders;
+};
+
 module.exports = ReminderRepeatSetting;

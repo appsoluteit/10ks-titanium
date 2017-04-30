@@ -203,6 +203,28 @@ function test() {
 				expect(nextReminderDate.getDay()).to.equal(tmpSetting.dayOfWeek - 1); //Day of the week					
 			});
 		});
+		
+		describe("Get scheduled reminders until", function() {
+			before(function() {
+				setting.set([{
+					name: 'Sunday', active: true, dayOfWeek: 1	
+				}]);
+				
+				Ti.App.Properties.setString('ReminderTime', '5:30pm');		//reminder cutoff at 5:30pm
+			});
+			
+			it("Should have four", function() {
+				var start = new Date(2017, 3, 30);	//Sunday 30th April
+				var end = new Date(start.getTime());
+				end.setMonth(start.getMonth() + 1);
+				
+				var reminders = setting.getScheduledRemindersBetween(start, end);
+				
+				expect(reminders).to.be.an('array');
+				expect(reminders.length).to.equal(5); 		//5 sundays between 30/04/17 and 30/05/17
+				expect(reminders[0]).to.equal(new Date(2017, 3, 30));	//today (30/04/17)
+			});
+		});
 	});
 }
 
