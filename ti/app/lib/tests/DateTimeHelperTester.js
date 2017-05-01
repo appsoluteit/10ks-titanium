@@ -21,9 +21,9 @@ function test() {
 		
 		//We might need to update this unit test every month?
 		describe("Get current month name", function() {
-			it("Should return March", function() {
+			it("Should return May", function() {
 				var monthName = DateTimeHelper.getCurrentMonthName();
-				expect(monthName).to.equal('April');
+				expect(monthName).to.equal('May');
 			});
 		});
 	});

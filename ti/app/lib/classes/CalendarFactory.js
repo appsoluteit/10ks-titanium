@@ -50,7 +50,11 @@ function requestPermission() {
 
 function removeReminderData() {
 	Ti.App.Properties.removeProperty("HasReminder");
-	Ti.App.Properties.removeProperty("ReminderEventID");			
+	Ti.App.Properties.removeProperty("ReminderEventID");		
+	
+	if(Ti.Platform.osname === "android") {
+		Ti.App.Properties.removeProperty("ReminderExpiryDate");		
+	}
 }
 
 /*	Until Titanium implements the setRecurrence method of Android's Calendar.Event object 
@@ -111,6 +115,7 @@ AndroidReminder.prototype.add = function(calendar) {
 	
 	Ti.App.Properties.setBool("HasReminder", true);
 	Ti.App.Properties.setString("ReminderEventID", JSON.stringify(eventIDs));
+	Ti.App.Properties.setString("ReminderExpiryDate", FormatHelper.formatDate(Alloy.Globals.ReminderEndDate));
 	
 	defer.resolve();
 	

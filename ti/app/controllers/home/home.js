@@ -1,15 +1,54 @@
 var args = $.args;
 
+var CalendarFactory = require('classes/CalendarFactory');
+var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
+
 function loginIfNeeded() {
 	if(!Alloy.Globals.IsLoggedIn) {
 		win = Alloy.createController('auth/login').getView();
 		win.open();
 	}	
-	else if(Ti.Platform.osname === "android") {
-		//TODO: If we need to set the reminders, have the user select a calender and do it.
-		//(Only do this if the reminders are about to expire or it could get annoying)
-		
-	}	
+	else if(Ti.Platform.osname === "android") {		
+		var repeatSetting = new ReminderRepeatSetting();
+		if(repeatSetting.willExpire(new Date())) {
+			var confirmDialog = Ti.UI.createAlertDialog({
+				cancel: 0,
+				buttonNames: ['Cancel', 'OK'],
+				message: 'The reminders on your phone will expire on ' + reminderExpiry.toString() + '. Do you want to update them?',
+				title: 'Update reminders?'
+			});
+			
+			confirmDialog.addEventListener('click', function(e) {
+				if(e.index !== e.source.cancel) {
+					var reminderProvider = CalendarFactory.create();
+					
+					reminderProvider.requestPermission()
+									.then(function success() {
+										return reminderProvider.getCalendar();
+									}, function fail(reason) {
+										alert("Permission denied for calendar. Reason = " + reason);
+									})
+									.then(function success(selectedCalendar) {
+										return reminderProvider.add(selectedCalendar);
+									}, function fail(reason) {
+										alert("Couldn't select calendar. Reason = " + reason);
+									})
+									.then(function success() {
+										Alloy.createWidget("com.mcongrove.toast", null, {
+											text: "Reminder saved",
+											duration: 2000,
+											view: $.home,
+											theme: "success"
+										});
+									}, function fail(reason) {
+										alert("Couldn't save reminders. Reason = " + reason);
+									});
+				}	
+			});
+			
+			confirmDialog.show();	
+		}
+	}
 }
 
 function btnStepLog_click(e) {

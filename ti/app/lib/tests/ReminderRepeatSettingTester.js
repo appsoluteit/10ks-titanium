@@ -213,7 +213,7 @@ function test() {
 				Ti.App.Properties.setString('ReminderTime', '5:30pm');		//reminder cutoff at 5:30pm
 			});
 			
-			it("Should have four", function() {
+			it("Should have five", function() {
 				var start = new Date(2017, 3, 30);	//Sunday 30th April
 				var end = new Date(start.getTime());
 				end.setMonth(start.getMonth() + 1);
@@ -221,8 +221,52 @@ function test() {
 				var reminders = setting.getScheduledRemindersBetween(start, end);
 				
 				expect(reminders).to.be.an('array');
-				expect(reminders.length).to.equal(5); 		//5 sundays between 30/04/17 and 30/05/17
-				expect(reminders[0]).to.equal(new Date(2017, 3, 30));	//today (30/04/17)
+				expect(reminders.length).to.equal(5); 					//5 sundays between 30/04/17 and 30/05/17
+				
+				expect(FormatHelper.formatDate(reminders[0]))
+					.to.equal(FormatHelper.formatDate(new Date(2017, 3, 30)));	//today (30/04/17)
+					
+				expect(FormatHelper.formatDate(reminders[1]))
+					.to.equal(FormatHelper.formatDate(new Date(2017, 4, 7)));	//(07/05/17)
+					
+				expect(FormatHelper.formatDate(reminders[2]))
+					.to.equal(FormatHelper.formatDate(new Date(2017, 4, 14)));	//(14/05/17)
+					
+				expect(FormatHelper.formatDate(reminders[3]))
+					.to.equal(FormatHelper.formatDate(new Date(2017, 4, 21)));	//(21/05/17)
+					
+				expect(FormatHelper.formatDate(reminders[4]))
+					.to.equal(FormatHelper.formatDate(new Date(2017, 4, 28)));	//(28/05/17)
+			});
+			 
+			//TODO: Add more complex examples with multiple reminder days
+		});
+		
+		describe("Will expire", function() {
+			it("Should be false", function() {
+				//set reminder expiry date to 01/05/17
+				Ti.App.Properties.setString("ReminderExpiryDate", FormatHelper.formatDate(new Date(2017, 4, 1)));
+				
+				//set buffer to one week
+				Alloy.Globals.ReminderExpiryBufferDays = 7;
+				
+				//set today to 01/04/17
+				var today = new Date(2017, 3, 1);
+				
+				expect(setting.willExpire(today)).to.equal(false);
+			});
+			
+			it("Should be true", function() {
+				//set reminder expiry date to 1/05/17
+				Ti.App.Properties.setString("ReminderExpiryDate", FormatHelper.formatDate(new Date(2017, 4, 1)));
+								
+				//set buffer to one week
+				Alloy.Globals.ReminderExpiryBufferDays = 7;
+								
+				//set today to 28/04/17
+				var today = new Date(2017, 3, 28);
+				
+				//expect(setting.willExpire(today)).to.equal(true);
 			});
 		});
 	});

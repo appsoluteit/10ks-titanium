@@ -7,6 +7,7 @@ Alloy.Globals.IsDebug = true;
 
 Alloy.Globals.ReminderEndDate = new Date();
 Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
+Alloy.Globals.ReminderExpiryBufferDays = 7; //how many days before the expiry should we ask the user to save reminders again
 Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login

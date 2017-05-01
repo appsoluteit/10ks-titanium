@@ -217,4 +217,32 @@ ReminderRepeatSetting.prototype.getScheduledRemindersBetween = function(startDat
 	return reminders;
 };
 
+/**
+ * Returns true if the reminders are due to expire before the cutoff. Only applicable on Android, since 
+ * the reminders don't recur indefinitely.
+ */
+ReminderRepeatSetting.prototype.willExpire = function(now) {
+	if(!Ti.App.Properties.hasProperty("ReminderExpiryDate")) {
+		return false;	
+	}
+	
+	var reminderExpiry = Ti.App.Properties.getString("ReminderExpiryDate");
+		
+	if(reminderExpiry) {
+		Ti.API.debug("Reminder expiry: " + reminderExpiry);
+		
+		reminderExpiry = new Date(reminderExpiry); //yyyy-mm-dd should work in the constructor
+		var today = new Date(now.getTime());
+		today.setDate(Alloy.Globals.ReminderExpiryBufferDays); //Add days to today based on the config setting
+		
+		Ti.API.debug("Buffer days: " + Alloy.Globals.ReminderExpiryBufferDays);
+		Ti.API.debug("Today plus buffer days: " + today.toString());
+		
+		return today.getTime() >= reminderExpiry.getTime();
+	}
+	else {
+		return false;
+	}
+};
+
 module.exports = ReminderRepeatSetting;

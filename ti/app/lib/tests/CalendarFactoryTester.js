@@ -55,6 +55,10 @@ function test() {
 			it("Should have saved the reminder to properties", function() {
 				expect(Ti.App.Properties.getBool("HasReminder")).to.equal(true);
 				expect(Ti.App.Properties.getString("ReminderEventID")).to.be.a('string');
+				
+				if(Ti.Platform.osname === "android") {
+					expect(Ti.App.Properties.getString("ReminderExpiryDate")).to.be.a('string');
+				}
 			});		
 		});
 		
@@ -88,6 +92,10 @@ function test() {
 			it("Should have removed the reminder data from properties", function() {
 				expect(Ti.App.Properties.hasProperty("HasReminder")).to.equal(false);
 				expect(Ti.App.Properties.hasProperty("ReminderEventID")).to.equal(false);
+				
+				if(Ti.Platform.osname === "android") {
+					expect(Ti.App.Properties.hasProperty("ReminderExpiryDate")).to.equal(false);
+				}
 			});
 		});
 	});
