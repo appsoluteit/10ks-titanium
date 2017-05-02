@@ -18,7 +18,7 @@ function btnDone_click() {
 		    steps_date: 	 dateStr, 
 		    steps_total: 	 total,
 		    steps_walked:  	 stepsWalked,
-		    activity_part: 	 1,	//what is this?
+		    activity_part: 	 1,					//what is this?
 		    moderate:      	 moderateMins,
 		    vigorous:     	 vigorousMins,
 		    synced:			 false

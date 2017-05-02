@@ -1,43 +1,12 @@
-var FormatHelper = require("helpers/FormatHelper");
-var APIHelper = require("helpers/APIHelper");
+var FormatHelper = require('helpers/FormatHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
+var StepsProvider = require('classes/StepsProvider');
 
+var stepsProvider = new StepsProvider($.log);
 var logCollection = Alloy.createCollection('log');
 logCollection.fetch();
 
-/*********************************** BUSINESS FUNCTIONS ***********************************/
-//TODO: Move these to DateHelper
-
-/**
- * Computes and returns a label that represents the given date. Eg: Mon Feb 24.
- * @param {Date} dateObj A date object for the date to process
- * @returns {String} The date label
- */
-function getDateLabel(dateObj) {
-	var dayNames = [
-		"Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"
-	];
-	
-	var monthNames = [
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-	];	
-	
-	var days = dateObj.getDate();
-	var str = dayNames[dateObj.getDay()] + " " + 
-			  monthNames[dateObj.getMonth()] + " " + 
-			  (days < 10? "0" + days : days);
-			  
-	return str;
-}
-
-/**
- * Gets a Date Object for the day before dateObj
- * @param {Date} dateObj The input date
- * @returns {Date} A date object set 1 day before dateObj
- */
-function getDayBefore(dateObj) {
-	return new Date(dateObj.getTime() - (24*60*60*1000));
-}
-
+/*********************************** LOGIC ***********************************/
 /**
  * Adds a row to the dates table
  * @param {String} strLabel The label to add
@@ -99,10 +68,12 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
 						//to become inaccessible by the logEntry controller...need to fix.
 	
-	if(index == undefined)
+	if(index == undefined) {
 		$.tblDays.appendRow(row);
-	else
+	}
+	else {
 		$.tblDays.insertRowAfter(index, row);	
+	}
 }
 
 /**
@@ -113,83 +84,13 @@ function loadDatesFrom(dateObj) {
 	var start = dateObj.getDate();
 	
 	for(var i = start; i >= start - 30; i--) {
-		var labelStr = getDateLabel(dateObj);
+		var labelStr = DateTimeHelper.getDateLabel(dateObj);
 		addDateRow(labelStr, dateObj, false);
 		
-		dateObj = getDayBefore(dateObj);
+		dateObj = DateTimeHelper.getDayBefore(dateObj);
 	}
 	
 	addDateRow("Load More", dateObj, true);
-}
-
-/**
- * Loads steps for the current user from the server and adds them to local storage, if they don't exist.
- */
-function getSteps() {
-	function onSuccess(e) {
-		Ti.API.info("Get steps success", JSON.stringify(e));
-	}
-	
-	function onFail(e) {
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Failed to get steps",
-			duration: 2000,
-			view: $.log,
-			theme: "error"
-		});
-	}
-	
-	var data = {
-		Authorization: "Token " + Alloy.Globals.AuthKey
-	};
-	
-	APIHelper.get({
-		message:	"Fetching steps...",
-		url:		"steps/",
-		headers: [{
-				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
-		}],
-		success: 	onSuccess,
-		fail: 		onFail
-	});
-}
-
-/**
- * Pushes unsynced steps from local storage to the server.
- */
-function postSteps() {
-	function onSuccess(e) {
-		Ti.API.info("Post steps success", JSON.stringify(e));
-	}
-	
-	function onFail(e) {
-		Ti.API.info("Post steps fail", JSON.stringify(e));
-	}
-	
-	//TODO: Make these real
-	var data = {
-		user: Alloy.Globals.UserURL,
-		steps_date: "2016-10-12",
-		steps_total: "9999",
-		steps_walked: "9999",
-		moderate: "9999",
-		vigorous: "9999",
-		activity_part: "9999"
-	};
-	
-	Ti.API.info("Posting", data);
-	
-	APIHelper.post({
-		message:	"Sending steps...",
-		url: 		"steps/",
-		headers: [{
-			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
-		}],
-		
-		data: 		data,
-		success: 	onSuccess,
-		fail: 		onFail
-	});
 }
 
 /*********************************** EVENT HANDLERS ***********************************/
@@ -197,10 +98,10 @@ function window_open() {
 	var today = new Date();
 	addDateRow("Today", today);
 	
-	var yesterday = getDayBefore(today);
+	var yesterday = DateTimeHelper.getDayBefore(today);
 	addDateRow("Yesterday", yesterday);
 	
-	loadDatesFrom(getDayBefore(yesterday));	
+	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
 }
 
 function tblRow_click(e) {
@@ -232,9 +133,32 @@ function btnBack_click() {
 }
 
 function btnSync_click() {
-	
-	//TODO: have getSteps return a promise. Then call postSteps.
-	//getSteps();
-	
-	postSteps();
+	stepsProvider.getSteps()
+			     .then(function success(steps) {
+			     	//TODO: write steps to local storage
+			     	
+			     	return stepsProvider.postSteps();
+			     }, function fail(reason) {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Failed to get steps. Reason: ' + reason,
+						duration: 2000,
+						view: $.log,
+						theme: 'error'
+					});
+			     })
+			     .then(function success() {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Steps synced successfully!',
+						duration: 2000,
+						view: $.log,
+						theme: 'success'
+					});
+			     }, function fail(reason) {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Failed to post steps. Reason: ' + reason,
+						duration: 2000,
+						view: $.log,
+						theme: 'error'
+					});			     	
+			     });
 }

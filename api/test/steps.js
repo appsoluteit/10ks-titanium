@@ -36,7 +36,7 @@ describe("GET /steps/", function(url, quiet, timestamp) {
     });
 });
 
-descibe("POST /steps/", function(url, quiet, timestamp) {
+describe("POST /steps/", function(url, quiet, timestamp) {
 	before(function(done) {
 		http.login(function(authKey) {
 			token = "Token " + authKey;
@@ -55,7 +55,7 @@ descibe("POST /steps/", function(url, quiet, timestamp) {
 		});
 	});
 
-	it("Should send steps data", functon() {
+	it("Should send steps data", function() {
 		//todo: steps_date seems to be the only required field.
 	});
 });
