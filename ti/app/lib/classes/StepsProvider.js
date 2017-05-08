@@ -51,17 +51,17 @@ StepsProvider.prototype.postSteps = function() {
 	function onFail(e) {
 		Ti.API.info("Post steps fail", JSON.stringify(e));
 		
-		defer.reject(e);
+		defer.reject(e.errorMessage);
 	}
 	
 	//TODO: Make these real
 	var data = {
-		user: Alloy.Globals.UserURL,
+		//user: Alloy.Globals.UserURL,
 		steps_date: "2016-10-12",
 		steps_total: "9999",
-		steps_walked: "9999",
-		moderate: "9999",
-		vigorous: "9999",
+		//steps_walked: "9999",
+		//moderate: "9999",
+		//vigorous: "9999",
 		activity_part: "9999"
 	};
 	

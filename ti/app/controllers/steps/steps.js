@@ -93,6 +93,59 @@ function loadDatesFrom(dateObj) {
 	addDateRow("Load More", dateObj, true);
 }
 
+function sync() {
+	stepsProvider.getSteps()
+			     .then(function success(steps) {
+			     	//TODO: write steps to local storage
+			     	
+			     	return stepsProvider.postSteps();
+			     }, function fail(reason) {
+			     	if(reason.detail) {
+			     		if(reason.detail === 'Invalid token.') {
+							Alloy.createWidget('com.mcongrove.toast', null, {
+								text: 'Sesson expired. Please log in again.',
+								duration: 2000,
+								view: $.log,
+								theme: 'error'
+							});	
+							
+							setTimeout(function() {
+								var win = Alloy.createController("auth/login").getView();
+								win.open();
+								
+								win.addEventListener("close", function() {
+									sync();
+								});
+							}, 2000);
+			     		}	
+			     	}
+			     	else {
+						Alloy.createWidget('com.mcongrove.toast', null, {
+							text: 'Failed to get steps. Reason: ' + reason,
+							duration: 2000,
+							view: $.log,
+							theme: 'error'
+						});	
+			     	}
+			     })
+			     .then(function success() {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Steps synced successfully!',
+						duration: 2000,
+						view: $.log,
+						theme: 'success'
+					});
+			     }, function fail(reason) {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Failed to post steps. Reason: ' + reason,
+						duration: 2000,
+						view: $.log,
+						theme: 'error'
+					});			     	
+			     });
+	
+}
+
 /*********************************** EVENT HANDLERS ***********************************/
 function window_open() {
 	var today = new Date();
@@ -133,32 +186,5 @@ function btnBack_click() {
 }
 
 function btnSync_click() {
-	stepsProvider.getSteps()
-			     .then(function success(steps) {
-			     	//TODO: write steps to local storage
-			     	
-			     	return stepsProvider.postSteps();
-			     }, function fail(reason) {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Failed to get steps. Reason: ' + reason,
-						duration: 2000,
-						view: $.log,
-						theme: 'error'
-					});
-			     })
-			     .then(function success() {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Steps synced successfully!',
-						duration: 2000,
-						view: $.log,
-						theme: 'success'
-					});
-			     }, function fail(reason) {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Failed to post steps. Reason: ' + reason,
-						duration: 2000,
-						view: $.log,
-						theme: 'error'
-					});			     	
-			     });
+	sync();
 }

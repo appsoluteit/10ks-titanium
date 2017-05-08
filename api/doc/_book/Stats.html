@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Register · GitBook</title>
+        <title>Stats · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="LOGIN.html" />
     
-    
-    <link rel="prev" href="./" />
+    <link rel="prev" href="STEPS.html" />
     
 
     </head>
@@ -106,7 +104,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="REGISTER.html">
+        <li class="chapter " data-level="1.2" data-path="REGISTER.html">
             
                 <a href="REGISTER.html">
             
@@ -171,7 +169,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.7" data-path="Stats.html">
+        <li class="chapter active" data-level="1.7" data-path="Stats.html">
             
                 <a href="Stats.html">
             
@@ -214,7 +212,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Register</a>
+        <a href="." >Stats</a>
     </h1>
 </div>
 
@@ -229,13 +227,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="register">Register </h2>
-<p>Call this to register a user to the application.</p>
-<pre><code>https://www.10000steps.org.au/api/auth/registration/
-</code></pre><h3 id="status">Status</h3>
-<p><span style="color: red;"></span></p>
-</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="post">POST</h3>
-<h4 id="params">Params</h4>
+                                <div class="api-method"><div class="api-method-definition"><h2 id="login">Steps </h2>
+<p>Call this to get statistics about logged steps for the logged in user.</p>
+<pre><code>https://www.10000steps.org.au/api/stats/
+</code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
+<h4 id="headers">Headers</h4>
 <table>
 <thead>
 <tr>
@@ -247,28 +243,10 @@
 </thead>
 <tbody>
 <tr>
-<td><code>username</code></td>
+<td><code>Authorization</code></td>
 <td><code>string</code></td>
 <td><code>true</code></td>
-<td><code>myUsername</code></td>
-</tr>
-<tr>
-<td><code>email</code></td>
-<td><code>string</code></td>
-<td><code>true</code></td>
-<td><code>myUsername@domain.com</code></td>
-</tr>
-<tr>
-<td><code>password1</code></td>
-<td><code>string</code></td>
-<td><code>true</code></td>
-<td><code>steps1001</code></td>
-</tr>
-<tr>
-<td><code>password2</code></td>
-<td><code>string</code></td>
-<td><code>true</code></td>
-<td><code>steps1001</code></td>
+<td><code>Token 6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9</code></td>
 </tr>
 </tbody>
 </table>
@@ -279,18 +257,112 @@
 <th>Name</th>
 <th>Type</th>
 <th>Sample</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td><code>max_month</code></td>
 <td><code>object</code></td>
-<td><code>{}</code></td>
+<td>See below</td>
+<td>Statistics about the highest recorded month</td>
+</tr>
+<tr>
+<td><code>max_day</code></td>
+<td><code>object</code></td>
+<td>See below</td>
+<td>Statistics about the highest recorded day</td>
+</tr>
+<tr>
+<td><code>average_steps</code></td>
+<td><code>int</code></td>
+<td><code>9999</code></td>
+<td>Average daily steps</td>
 </tr>
 </tbody>
 </table>
-<p>On success, this method returns an empty object. On error, it retuns the error reason.</p>
+<h5 id="max-month">Max Month</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>total</code></td>
+<td><code>int</code></td>
+<td><code>32767</code></td>
+<td>The total of steps recorded in that month</td>
+</tr>
+<tr>
+<td><code>month</code></td>
+<td><code>string</code></td>
+<td><code>2016-10-01</code></td>
+<td>The timestamp for the month with the highest logged steps</td>
+</tr>
+</tbody>
+</table>
+<h5 id="max-day">Max Day</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user</code></td>
+<td><code>string</code></td>
+<td><code>https://www.10000steps.org.au/api/users/346623/</code></td>
+<td>The user URL</td>
+</tr>
+<tr>
+<td><code>steps_total</code></td>
+<td><code>int</code></td>
+<td><code>65535</code></td>
+<td>The total steps logged for the highest day</td>
+</tr>
+<tr>
+<td><code>steps_walked</code></td>
+<td><code>int</code></td>
+<td><code>9999</code></td>
+<td>The number of steps walked for the highest day</td>
+</tr>
+<tr>
+<td><code>steps_date</code></td>
+<td><code>string</code></td>
+<td><code>2016-10-12</code></td>
+<td>The date of the highest recorded steps</td>
+</tr>
+<tr>
+<td><code>activity_part</code></td>
+<td><code>int</code></td>
+<td>256</td>
+<td>No idea. What does this mean?</td>
+</tr>
+<tr>
+<td><code>moderate</code></td>
+<td><code>int</code></td>
+<td>128</td>
+<td>The number of minutes of moderate exercise performed on the day</td>
+</tr>
+<tr>
+<td><code>vigorous</code></td>
+<td><code>int</code></td>
+<td>64</td>
+<td>The number of minutes of vigorous exercise performed on the day</td>
+</tr>
+</tbody>
+</table>
 </div></div></div>
+
                                 
                                 </section>
                             
@@ -323,7 +395,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Register","level":"1.2","depth":1,"next":{"title":"Login","level":"1.3","depth":1,"path":"LOGIN.md","ref":"LOGIN.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"REGISTER.md","mtime":"2017-03-11T08:11:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-08T09:08:02.389Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Stats","level":"1.7","depth":1,"previous":{"title":"Steps","level":"1.6","depth":1,"path":"STEPS.md","ref":"STEPS.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Stats.md","mtime":"2017-05-08T09:07:32.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-08T09:08:02.389Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

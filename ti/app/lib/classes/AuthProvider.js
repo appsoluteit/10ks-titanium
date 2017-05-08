@@ -74,6 +74,7 @@ AuthProvider.prototype.login = function(username, password, closeOnComplete) {
 	return defer.promise;
 };
 
+//TODO: Is this function still necessary?
 AuthProvider.prototype.getUser = function() {
 	var self = this;
 	var defer = q.defer();

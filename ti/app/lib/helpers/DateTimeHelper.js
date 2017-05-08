@@ -52,6 +52,11 @@ function getDateLabel(dateObj) {
 	return str;
 }
 
+//Return August 2017 (eg)
+function getMonthLabel(dateObj) {
+	
+}
+
 /**
  * Gets a Date Object for the day before dateObj
  * @param {Date} dateObj The input date

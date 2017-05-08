@@ -6,3 +6,4 @@
 * [Logout](LOGOUT.md)
 * [User](USER.md)
 * [Steps](STEPS.md)
+* [Stats](Stats.md)
