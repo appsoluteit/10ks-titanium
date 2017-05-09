@@ -4,27 +4,24 @@ var http = require("./http.js");
 var chai = require("chai");
 var expect = chai.expect;
 
+//TODO: Add http.login as a top-level before call here
 describe("GET /auth/user/", function(url, quiet) {
     url = "https://www.10000steps.org.au/api/auth/user/";
     quiet = true;
 
     describe("OK", function(requestBody, responseBody, token) {
         before(function(done) {
-            http.login(function(authKey) {
-                token = "Token " + authKey;
+            var config = {
+                to: url,
+                quiet: quiet,
+                token: AUTH_TOKEN,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
 
-                var config = {
-                    to: url,
-                    quiet: quiet,
-                    token: token,
-                    then: function(response) {
-                        responseBody = response;
-                        done();
-                    }
-                };
-
-                http.get(config);
-            });
+            http.get(config);
         });
 
         it("Should pass", function() {

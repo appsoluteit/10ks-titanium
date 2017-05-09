@@ -6,4 +6,4 @@ Note: Any of the endpoints can return a common response indicating that the auth
 #### Returns ####
 | Name | Type | Sample | Description |
 | --   | --   | --     | --          |
-| `detail` | `string` | `Invalid token` | Indicates that the provided auth token has expired. Login must be called again |
+| `detail` | `string` | `Invalid token.` | Indicates that the provided auth token has expired. Login must be called again |

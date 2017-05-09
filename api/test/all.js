@@ -5,6 +5,6 @@
 
 require('./logout.js'); //run logout first to force-generate a new token for all subsequent calls
 require('./login.js');
-//require('./register.js');
-//require('./user.js');
-require('./steps.js');
+//require('./register.js'); //Comment this out unless needed so we don't flood production with dummy accounts
+require('./user.js');
+//require('./steps.js');

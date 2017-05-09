@@ -11,19 +11,27 @@ function calculateStatistics() {
 		if(response.max_month) {
 			if(response.max_month.month) {
 				var busiestMonth = new Date(response.max_month.month);
-				$.statsView.lblBusiestMonth.text = busiestMonth.toString("MMM yyyy");			
+				$.statsView.lblBusiestMonth.text = DateTimeHelper.getMonthLabel(busiestMonth);	
 			}	
+			
+			if(response.max_month.total) {
+				$.statsView.lblBusiestMonthSteps.text = "(" + FormatHelper.formatNumber(response.max_month.total) + " steps)";
+			}
 		}
 		
 		if(response.max_day) {
 			if(response.max_day.steps_date) {
 				var busiestDay = new Date(response.max_day.steps_date);
-				$.statsView.lblBusiestDay.text = busiestDay.toString("dd MMM yyyy");	
+				$.statsView.lblBusiestDay.text = DateTimeHelper.getDateLabel(busiestDay, true);	
+			}
+			
+			if(response.max_day.steps_total) {
+				$.statsView.lblBusiestDaySteps.text = "(" + FormatHelper.formatNumber(response.max_day.steps_total) + " steps)";
 			}
 		}
 		
 		if(response.average_steps) {
-			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);	
+			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
 		}
 	}
 	

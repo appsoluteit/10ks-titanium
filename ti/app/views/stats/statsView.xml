@@ -33,8 +33,9 @@
 					<Label id="lblBusiestMonthLabel" class="row-label">Busiest Month</Label>
 				</View>
 				
-				<View class="half">
+				<View class="half" layout="vertical">
 					<Label id="lblBusiestMonth" class="row-value"></Label>
+					<Label id="lblBusiestMonthSteps" class="row-value"></Label>
 				</View>
 			</View>
 		</TableViewRow>
@@ -46,8 +47,9 @@
 					<Label id="lblBusiestDayLabel" class="row-label">Busiest Day</Label>
 				</View>
 				
-				<View class="half">
+				<View class="half" layout="vertical">
 					<Label id="lblBusiestDay" class="row-value"></Label>
+					<Label id="lblBusiestDaySteps" class="row-value"></Label>
 				</View>
 			</View>
 		</TableViewRow>

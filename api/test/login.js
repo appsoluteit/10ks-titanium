@@ -8,31 +8,6 @@ describe("POST /auth/login/", function(url, quiet) {
 	url = 'https://www.10000steps.org.au/api/auth/login/';
 	quiet = true;
 
-	describe("OK", function(responseBody, requestBody) {
-		requestBody = {
-			username: 'ichimansteps@gmail.com',
-			password: '12345678'
-		};
-
-		before(function(done) {
-			var config = {
-				to: url,
-				request: requestBody,
-				quiet: quiet,
-				then: function(response) {
-					responseBody = response;
-					done();
-				}
-			};
-
-			http.post(config);
-		});
-
-		it("Should pass", function() {
-			expect(responseBody.key).to.not.be.undefined;
-		});
-	});
-
 	describe("MISSING PASSWORD", function(responseBody, requestBody) {
 		requestBody = {
 			username: 'ichimansteps@gmail.com',
@@ -86,7 +61,7 @@ describe("POST /auth/login/", function(url, quiet) {
 	describe("LOGIN FAILED", function(responseBody, requestBody) {
 		requestBody = {
 			username: 'ichimansteps@gmail.com',
-			password: '123456789'
+			password: '123456789 '
 		};
 
 		before(function(done) {
@@ -105,6 +80,31 @@ describe("POST /auth/login/", function(url, quiet) {
 
 		it("Should fail", function() {
 			expect(responseBody.non_field_errors[0]).to.equal('Unable to log in with provided credentials.');
+		});
+	});
+
+	describe("OK", function(responseBody, requestBody) {
+		requestBody = {
+			username: 'ichimansteps@gmail.com',
+			password: '12345678'
+		};
+
+		before(function(done) {
+			var config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
+		});
+
+		it("Should pass", function() {
+			expect(responseBody.key).to.not.be.undefined;
 		});
 	});
 });

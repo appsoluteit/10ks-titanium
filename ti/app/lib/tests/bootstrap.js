@@ -12,12 +12,12 @@ function run() {
 	mocha.setup( { reporter: 'ti-spec-studio' } );
 	
 	var tests = [
-		apiHelperTester,
-		authProviderTester,
-		calendarFactoryTester,
+		//apiHelperTester,
+		//authProviderTester,
+		//calendarFactoryTester,
 		dateTimeHelperTester,
-		formatHelperTester,
-		reminderRepeatSettingTester,
+		//formatHelperTester,
+		//reminderRepeatSettingTester,
 	];
 	
 	tests.forEach(function(testSuite) {

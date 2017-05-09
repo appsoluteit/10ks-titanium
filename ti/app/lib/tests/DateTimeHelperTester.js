@@ -41,6 +41,14 @@ function test() {
 			});
 		});
 		
+		describe("Get month label", function() {
+			it("Should be May 2017", function() {
+				var month = new Date(2017, 4, 1);
+				var string = DateTimeHelper.getMonthLabel(month);
+				expect(string).to.equal('May 2017');
+			});
+		});
+		
 		describe("Get day before", function() {
 			it("Should get yesterday", function() {
 				var today = new Date(2017, 2, 3);

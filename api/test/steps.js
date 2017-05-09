@@ -4,6 +4,7 @@ var http = require("./http.js");
 var chai = require("chai");
 var expect = chai.expect;
 
+//TODO: Add http.login as a top-level before call here.
 describe("GET /steps/", function(url, quiet, timestamp) {
 	url = 'https://www.10000steps.org.au/api/steps/';
 	quiet = false;
@@ -56,6 +57,7 @@ describe("POST /steps/", function(url, quiet, timestamp) {
 	});
 
 	it("Should send steps data", function() {
+
 		//todo: steps_date seems to be the only required field.
 	});
 });

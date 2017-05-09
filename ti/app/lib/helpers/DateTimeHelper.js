@@ -33,9 +33,10 @@ function getCurrentMonthName() {
 /**
  * Computes and returns a label that represents the given date. Eg: Mon Feb 24.
  * @param {Date} dateObj A date object for the date to process
+ * @param {Boolean} includeYear Whether or not this function should include the year at the end of the string
  * @returns {String} The date label
  */
-function getDateLabel(dateObj) {
+function getDateLabel(dateObj, includeYear) {
 	var dayNames = [
 		"Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"
 	];
@@ -49,12 +50,19 @@ function getDateLabel(dateObj) {
 			  monthNames[dateObj.getMonth()] + " " + 
 			  (days < 10? "0" + days : days);
 			  
+	if(includeYear) {
+		str += " " + dateObj.getFullYear();
+	}
+			  
 	return str;
 }
 
 //Return August 2017 (eg)
-function getMonthLabel(dateObj) {
+function getMonthLabel(dateObj) {	
+	var month = getMonthNameFromIndex(dateObj.getMonth());
+	var year = dateObj.getFullYear();
 	
+	return month + " " + year;
 }
 
 /**
@@ -69,4 +77,5 @@ function getDayBefore(dateObj) {
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getCurrentMonthName = getCurrentMonthName;
 module.exports.getDateLabel = getDateLabel;
+module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
