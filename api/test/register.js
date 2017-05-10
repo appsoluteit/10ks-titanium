@@ -1,43 +1,52 @@
 'use strict';
 
-var http = require("./http.js");
-var chai = require("chai");
-var expect = chai.expect;
+const http = require("./http.js");
+const chai = require("chai");
+const expect = chai.expect;
 
-describe("POST /auth/registration/", function(url, quiet, timestamp) {
-	url = 'https://www.10000steps.org.au/api/auth/registration/';
-	quiet = true;
+describe("POST /auth/registration/", function() {
+	const url = 'https://www.10000steps.org.au/api/auth/registration/';
+	const quiet = true;
 
-		//This has been commented out so we don't create too many
-		//dummy accounts
-    /*
-    describe("OK", function(requestBody, responseBody) {
-        timestamp = Date.now();
-        requestBody = {
+	//This has been commented out so we don't create too many
+	//dummy accounts
+    describe("OK", function() {
+        let timestamp = Date.now();
+        let requestBody = {
             username: timestamp + "@something.com",
             email: timestamp + "@something.com",
             password1: 'password',
             password2: 'password'
         };
+		let responseBody = {};
 
+		/*
 		before(function(done) {
-			http.post(url, requestBody, quiet, function(response) {
-				responseBody = response;
-				done();
-			});
+			let config = {
+				to: url,
+				request: requestBody,
+				quiet: quiet,
+				then: function(response) {
+					responseBody = response;
+					done();
+				}
+			};
+
+			http.post(config);
 		});
 
         it("Should pass", function() {
             expect(responseBody).to.be.empty; //empty object indicates success
         });
+		*/
     });
-    */
 
-    describe("REQUIRED FIELDS", function(requestBody, responseBody) {
-        requestBody = {};
+    describe("REQUIRED FIELDS", function() {
+        let requestBody = {};
+		let responseBody = {};
 
 		before(function(done) {
-            var config = {
+            let config = {
                 to: url,
                 request: requestBody,
                 quiet: quiet,
@@ -57,15 +66,16 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         })
     });
 
-    describe("EMPTY FIELDS", function(requestBody, responseBody) {
-        requestBody = {
+    describe("EMPTY FIELDS", function() {
+        let requestBody = {
             email: "",
             password1: "",
             password2: ""
         };
+		let responseBody = {};
 
  		before(function(done) {
-            var config = {
+            let config = {
                 to: url,
                 request: requestBody,
                 quiet: quiet,
@@ -85,12 +95,14 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         });
     });
 
-    describe("USER EXISTS", function(requestBody, responseBody) {
-        requestBody = {
+    describe("USER EXISTS", function() {
+        let requestBody = {
             email: 'ichimansteps@gmail.com',
             password1: 'password',
             password2: 'password'
         };
+
+		let responseBody = {};
 
         before(function(done) {
             var config = {
@@ -111,16 +123,17 @@ describe("POST /auth/registration/", function(url, quiet, timestamp) {
         });
     });
 
-    describe("PASSWORD MINIMUM LENGTH", function(requestBody, responseBody) {
-        timestamp = Date.now();
-        requestBody = {
+    describe("PASSWORD MINIMUM LENGTH", function() {
+        let timestamp = Date.now();
+        let requestBody = {
             email: timestamp + "@somewhere.com",
             password1: '1234567',
             password2: '1234567'
         };
+		let responseBody = {};
 
  		before(function(done) {
-            var config = {
+            let config = {
                 to: url,
                 request: requestBody,
                 quiet: quiet,

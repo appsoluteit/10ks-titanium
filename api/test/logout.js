@@ -1,59 +1,56 @@
 'use strict';
 
-var http = require("./http.js");
-var chai = require("chai");
-var expect = chai.expect;
+const http = require("./http.js");
+const chai = require("chai");
+const expect = chai.expect;
+let AUTH_TOKEN = null;
 
-describe("POST /auth/logout", function(url, quiet, oldToken) {
-    url = 'https://www.10000steps.org.au/api/auth/logout/';
-    quiet = true;
+describe("POST /auth/logout/", function() {
+    const url = 'https://www.10000steps.org.au/api/auth/logout/';
+    const quiet = true;
 
-    describe("Logout OK", function(requestBody, responseBody, token) {
-        before(function(done) {
-            http.login(function(authKey) {
-                token = "Token " + authKey;
-                oldToken = token;
-
-                var config = {
-                    to: url,
-                    quiet: quiet,
-                    authToken: token,
-                    then: function(response) {
-                        responseBody = response;
-                        done();
-                    }
-                };
-
-                http.post(config);
-            });
-        });
-
-        it("Should pass", function() {
-            expect(responseBody.success).to.equal('Successfully logged out.');
+    before(function(done) {
+        http.login(function(authKey) {
+            AUTH_TOKEN = "Token " + authKey;
+            done();
         });
     });
 
-    describe("Generate new token", function(requestBody, responseBody, token) {
+    describe("Logout OK", function() {
+        let responseBody = {};
+
+        before(function(done) {
+            let config = {
+                to: url,
+                quiet: quiet,
+                authToken: AUTH_TOKEN,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
+
+            http.post(config);
+        });
+
+        it("Should pass", function() {
+            expect(responseBody.detail).to.equal('Successfully logged out.');
+        });
+    });
+
+    describe("Generate new token", function() {
+        let token = null;
+        let responseBody = {};
+
         before(function(done) {
             http.login(function(authKey) {
                 token = "Token " + authKey;
-
-                var config = {
-                    to: url,
-                    quiet: quiet,
-                    authToken: token,
-                    then: function(response) {
-                        responseBody = response;
-                        done();
-                    }
-                };
-
-                http.post(config);
+                done();
             });
         });
 
         it("Should be a new token", function() {
-            expect(token).to.not.equal(oldToken);
+            expect(token).to.not.equal(AUTH_TOKEN);
         });
     });
 });

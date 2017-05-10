@@ -3,29 +3,42 @@
 var http = require("./http.js");
 var chai = require("chai");
 var expect = chai.expect;
+var AUTH_TOKEN = null;
 
-//TODO: Add http.login as a top-level before call here.
-describe("GET /steps/", function(url, quiet, timestamp) {
+Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0'),
+          (dd>9 ? '' : '0') + dd
+	  ].join('-');
+};
+
+before(function(done) {
+	http.login(function(authKey) {
+		AUTH_TOKEN = "Token " + authKey;
+		done();
+	});
+});
+
+describe("GET /steps/", function(url, quiet) {
 	url = 'https://www.10000steps.org.au/api/steps/';
 	quiet = false;
 
-    describe("OK", function(requestBody, responseBody, token) {
+    describe("OK", function(responseBody) {
         before(function(done) {
-            http.login(function(authKey) {
-                token = "Token " + authKey;
+            var config = {
+                to: url,
+                quiet: quiet,
+                token: AUTH_TOKEN,
+                then: function(response) {
+                    responseBody = response;
+                    done();
+                }
+            };
 
-                var config = {
-                    to: url,
-                    quiet: quiet,
-                    token: token,
-                    then: function(response) {
-                        responseBody = response;
-                        done();
-                    }
-                };
-
-                http.get(config);
-            });
+            http.get(config);
         });
 
         it("Should return steps data", function() {
@@ -37,27 +50,38 @@ describe("GET /steps/", function(url, quiet, timestamp) {
     });
 });
 
-describe("POST /steps/", function(url, quiet, timestamp) {
-	before(function(done) {
-		http.login(function(authKey) {
-			token = "Token " + authKey;
+describe("POST /steps/", function(url, quiet, responseBody) {
+    url = 'https://www.10000steps.org.au/api/steps/';
+	quiet = false;
 
-			var config = {
-				to: url,
-				quiet: quiet,
-				token: token,
-				then: function(response) {
-					responseBody = response;
-					done();
-				}
-			};
+    describe("OK", function(requestBody, responseBody) {
+        before(function(done) {
+    		var today = new Date();
 
-			http.get(config);
-		});
-	});
+    		requestBody = {
+    			steps_date: today.yyyymmdd(),
+    			vigorous: 10,
+    			moderate: 5,
+    			steps_walked: 20
+    		};
 
-	it("Should send steps data", function() {
+    		var config = {
+    			authToken: AUTH_TOKEN,
+    			to: url,
+    			request: requestBody,
+    			quiet: quiet,
+    			then: function(response) {
+    				responseBody = response;
+    				done();
+    			}
+    		};
 
-		//todo: steps_date seems to be the only required field.
-	});
+    		http.post(config);
+    	});
+
+    	it("Should send steps data", function() {
+    		expect(responseBody.activity_part).to.equal(2500);
+    		expect(responseBody.steps_total).to.equal(2520);
+    	});
+    });
 });

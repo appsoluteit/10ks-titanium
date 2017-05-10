@@ -1,21 +1,23 @@
 'use strict';
 
-var http = require("./http.js");
-var chai = require("chai");
-var expect = chai.expect;
+const http = require("./http.js");
+const chai = require("chai");
+const expect = chai.expect;
 
-describe("POST /auth/login/", function(url, quiet) {
-	url = 'https://www.10000steps.org.au/api/auth/login/';
-	quiet = true;
+describe("POST /auth/login/", function() {
+	const url = 'https://www.10000steps.org.au/api/auth/login/';
+	const quiet = true;
 
-	describe("MISSING PASSWORD", function(responseBody, requestBody) {
-		requestBody = {
+	describe("MISSING PASSWORD", function() {
+		let requestBody = {
 			username: 'ichimansteps@gmail.com',
 			password: ''
 		};
 
+		let responseBody = {};
+
 		before(function(done) {
-			var config = {
+			let config = {
 				to: url,
 				request: requestBody,
 				quiet: quiet,
@@ -33,14 +35,16 @@ describe("POST /auth/login/", function(url, quiet) {
 		});
 	});
 
-	describe("MISSING USERNAME", function(responseBody, requestBody) {
-		requestBody = {
+	describe("MISSING USERNAME", function() {
+		let requestBody = {
 			username: '',
 			password: '12345678'
 		};
 
+		let responseBody = {};
+
 		before(function(done) {
-			var config = {
+			let config = {
 				to: url,
 				request: requestBody,
 				quiet: quiet,
@@ -58,14 +62,16 @@ describe("POST /auth/login/", function(url, quiet) {
 		});
 	});
 
-	describe("LOGIN FAILED", function(responseBody, requestBody) {
-		requestBody = {
+	describe("LOGIN FAILED", function() {
+		let requestBody = {
 			username: 'ichimansteps@gmail.com',
 			password: '123456789 '
 		};
 
+		let responseBody = {};
+
 		before(function(done) {
-			var config = {
+			let config = {
 				to: url,
 				request: requestBody,
 				quiet: quiet,
@@ -83,14 +89,16 @@ describe("POST /auth/login/", function(url, quiet) {
 		});
 	});
 
-	describe("OK", function(responseBody, requestBody) {
-		requestBody = {
+	describe("OK", function() {
+		let requestBody = {
 			username: 'ichimansteps@gmail.com',
 			password: '12345678'
 		};
 
+		let responseBody = {};
+
 		before(function(done) {
-			var config = {
+			let config = {
 				to: url,
 				request: requestBody,
 				quiet: quiet,

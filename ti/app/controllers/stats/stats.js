@@ -83,6 +83,7 @@ function calculateStatistics() {
 	});
 }
 
+//Note: graphs are temporarily disabled
 function tblRowDailyGraph_click() {
 	var data = [];
 	

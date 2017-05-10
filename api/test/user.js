@@ -1,17 +1,26 @@
 'use strict';
 
-var http = require("./http.js");
-var chai = require("chai");
-var expect = chai.expect;
+const http = require("./http.js");
+const chai = require("chai");
+const expect = chai.expect;
+var AUTH_TOKEN = null;
 
-//TODO: Add http.login as a top-level before call here
-describe("GET /auth/user/", function(url, quiet) {
-    url = "https://www.10000steps.org.au/api/auth/user/";
-    quiet = true;
+describe("GET /auth/user/", function() {
+    const url = "https://www.10000steps.org.au/api/auth/user/";
+    const quiet = true;
 
-    describe("OK", function(requestBody, responseBody, token) {
+    before(function(done) {
+        http.login(function(authKey) {
+            AUTH_TOKEN = "Token " + authKey;
+            done();
+        });
+    });
+
+    describe("OK", function() {
+        let responseBody = {};
+
         before(function(done) {
-            var config = {
+            let config = {
                 to: url,
                 quiet: quiet,
                 token: AUTH_TOKEN,

@@ -18,7 +18,7 @@ var http = {
         }
 
         if (!quiet) {
-            console.log("Post headers", headers);
+            console.log("Posting to " + to, headers);
         }
 
         unirest.post(to)
@@ -64,8 +64,8 @@ var http = {
     // Logs into my default account and returns the auth key
     login: function(then) {
         var request = {
-            username: 'jason.sultana01@gmail.com',
-            password: 'steps1990'
+            username: 'ichimansteps@gmail.com',
+            password: '12345678'
         };
 
         var config = {
