@@ -10,21 +10,21 @@ Date.prototype.yyyymmdd = function() {
   var dd = this.getDate();
 
   return [this.getFullYear(),
-          (mm>9 ? '' : '0'),
-          (dd>9 ? '' : '0') + dd
+          (mm > 9 ? '' : '0') + mm,
+          (dd > 9 ? '' : '0') + dd
 	  ].join('-');
 };
 
-before(function(done) {
-	http.login(function(authKey) {
-		AUTH_TOKEN = "Token " + authKey;
-		done();
-	});
-});
-
 describe("GET /steps/", function(url, quiet) {
 	url = 'https://www.10000steps.org.au/api/steps/';
-	quiet = false;
+	quiet = true;
+
+    before(function(done) {
+    	http.login(function(authKey) {
+    		AUTH_TOKEN = "Token " + authKey;
+    		done();
+    	});
+    });
 
     describe("OK", function(responseBody) {
         before(function(done) {

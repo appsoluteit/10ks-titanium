@@ -34,8 +34,8 @@ https://www.10000steps.org.au/api/stats/
 | `steps_total` | `int` | `65535` | The total steps logged for the highest day |
 | `steps_walked` | `int` | `9999` | The number of steps walked for the highest day |
 | `steps_date` | `string` | `2016-10-12` | The date of the highest recorded steps |
-| `activity_part` | `int` | 256 | No idea. What does this mean? |
-| `moderate` | `int` | 128 | The number of minutes of moderate exercise performed on the day |
-| `vigorous` | `int` | 64 | The number of minutes of vigorous exercise performed on the day |
+| `activity_part` | `int` | `500` | The equivalent number of steps based on the moderate and vigorous exercise. Equal to moderate x 100 plus vigorous x 200 |
+| `moderate` | `int` | `1` | The number of minutes of moderate exercise performed on the day |
+| `vigorous` | `int` | `2` | The number of minutes of vigorous exercise performed on the day |
 
 {% endmethod %}

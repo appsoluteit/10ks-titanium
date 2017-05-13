@@ -26,12 +26,12 @@ https://www.10000steps.org.au/api/steps/
 #### Parameters ####
 | Name | Type | Required | Sample | Description |
 | --   | --   | --       | --     |             |
-| `user` | `string` | `true` | `http://10000steps.org.au/api/user/1111` | `A URL to a user account` See [User](USER.md) |
-| `steps_date` | `string` | `???` | `2016-10-12` | `A YYYY-MM-DD date` |
-| `steps_total` | `int` | `???` | `10000` | `A number indicating the total # of steps (including other exercise) for the day` |
-| `steps_walked` | `int` | `???` | `6000` | `A number indicating the # of steps walked` |
-| `moderate` | `int` | `???` | `3000` | `A number indicating the equivalent # of steps taken through moderate exercise` |
-| `vigorous` | `int` | `???` | `1000` | `A number indicating the equivalent # of steps taken through vigorous exercise` |
-| `activity_part` | `int` | `???` | `???` | `??? I don't know what this means` |
+| `user` | `string` | `false` | `http://10000steps.org.au/api/user/1111` | `A URL to a user account` See [User](USER.md) |
+| `steps_date` | `string` | `true` | `2016-10-12` | `A YYYY-MM-DD date` |
+| `steps_total` | `int` | `false` | `10000` | `A number indicating the total # of steps (including other exercise) for the day` |
+| `steps_walked` | `int` | `false` | `6000` | `A number indicating the # of steps walked` |
+| `moderate` | `int` | `false` | `2` | `A number indicating the equivalent # of steps taken through moderate exercise` |
+| `vigorous` | `int` | `false` | `1` | `A number indicating the equivalent # of steps taken through vigorous exercise` |
+| `activity_part` | `int` | `false` | `500` | `Indicates the equivalent # of steps through moderate and vigorous exercise. Equal to moderate x 100 plus vigorous x 200` |
 
 {% endmethod %}

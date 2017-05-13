@@ -18,7 +18,7 @@ var http = {
         }
 
         if (!quiet) {
-            console.log("Posting to " + to, headers);
+            console.log("Posting to " + to, headers, request);
         }
 
         unirest.post(to)
