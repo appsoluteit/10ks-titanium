@@ -1,0 +1,7049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Namespace: Assert</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Namespace: Assert</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isTrue(value, [message])</h3><p>Asserts that <code>value</code> is true.</p>
+<pre class="prettyprint source"><code>var teaServed = true;
+assert.isTrue(teaServed, 'the tea has been served');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2467">line 2467</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.includeDeepMembers(superset, subset, [message])</h3><p>Asserts that <code>subset</code> is included in <code>superset</code> - using deep equality checking.
+Order is not taken into account.
+Duplicates are ignored.</p>
+<pre class="prettyprint source"><code>assert.includeDeepMembers([ {a: 1}, {b: 2}, {c: 3} ], [ {b: 2}, {a: 1}, {b: 2} ], 'include deep members');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3457">line 3457</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.includeMembers(superset, subset, [message])</h3><p>Asserts that <code>subset</code> is included in <code>superset</code>.
+Order is not taken into account.</p>
+<pre class="prettyprint source"><code>assert.includeMembers([ 1, 2, 3 ], [ 2, 1 ], 'include members');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3437">line 3437</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.sameDeepMembers(set1, set2, [message])</h3><p>Asserts that <code>set1</code> and <code>set2</code> have the same members - using a deep equality checking.
+Order is not taken into account.</p>
+<pre class="prettyprint source"><code>assert.sameDeepMembers([ {b: 3}, {a: 2}, {c: 5} ], [ {c: 5}, {b: 3}, {a: 2} ], 'same deep members');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3417">line 3417</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.sameMembers(set1, set2, [message])</h3><p>Asserts that <code>set1</code> and <code>set2</code> have the same members.
+Order is not taken into account.</p>
+<pre class="prettyprint source"><code>assert.sameMembers([ 1, 2, 3 ], [ 2, 1, 3 ], 'same members');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3397">line 3397</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.approximately(actual, expected, delta, [message])</h3><p>Asserts that the target is equal <code>expected</code>, to within a +/- <code>delta</code> range.</p>
+<pre class="prettyprint source"><code>assert.approximately(1.5, 1, 0.5, 'numbers are close');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3377">line 3377</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.closeTo(actual, expected, delta, [message])</h3><p>Asserts that the target is equal <code>expected</code>, to within a +/- <code>delta</code> range.</p>
+<pre class="prettyprint source"><code>assert.closeTo(1.5, 1, 0.5, 'numbers are close');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3357">line 3357</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.operator(val1, operator, val2, [message])</h3><p>Compares two values using <code>operator</code>.</p>
+<pre class="prettyprint source"><code>assert.operator(1, '&lt;', 2, 'everything is ok');
+assert.operator(1, '>', 2, 'this will fail');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3303">line 3303</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.doesNotThrow(function, [constructor/regexp], [message])</h3><p>Asserts that <code>function</code> will <em>not</em> throw an error that is an instance of
+<code>constructor</code>, or alternately that it will not throw an error with message
+matching <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>assert.doesNotThrow(fn, Error, 'function does not throw');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3275">line 3275</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types">https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.throws(function, [constructor/string/regexp], [string/regexp], [message])</h3><p>Asserts that <code>function</code> will throw an error that is an instance of
+<code>constructor</code>, or alternately that it will throw an error with message
+matching <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>assert.throws(fn, 'function throws a reference error');
+assert.throws(fn, /function throws a reference error/);
+assert.throws(fn, ReferenceError);
+assert.throws(fn, ReferenceError, 'function throws a reference error');
+assert.throws(fn, ReferenceError, /function throws a reference error/);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3240">line 3240</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types">https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.lengthOf(object, length, [message])</h3><p>Asserts that <code>object</code> has a <code>length</code> property with the expected value.</p>
+<pre class="prettyprint source"><code>assert.lengthOf([1,2,3], 3, 'array has length of 3');
+assert.lengthOf('foobar', 6, 'string has length of 6');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3220">line 3220</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.deepPropertyNotVal(object, property, value, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code>, but with a value
+different from that given by <code>value</code>. <code>property</code> can use dot- and
+bracket-notation for deep reference.</p>
+<pre class="prettyprint source"><code>assert.deepPropertyNotVal({ tea: { green: 'matcha' }}, 'tea.green', 'konacha');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3198">line 3198</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.deepPropertyVal(object, property, value, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code> with value given
+by <code>value</code>. <code>property</code> can use dot- and bracket-notation for deep
+reference.</p>
+<pre class="prettyprint source"><code>assert.deepPropertyVal({ tea: { green: 'matcha' }}, 'tea.green', 'matcha');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3176">line 3176</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.propertyNotVal(object, property, value, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code>, but with a value
+different from that given by <code>value</code>.</p>
+<pre class="prettyprint source"><code>assert.propertyNotVal({ tea: 'is good' }, 'tea', 'is bad');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3155">line 3155</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.propertyVal(object, property, value, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code> with value given
+by <code>value</code>.</p>
+<pre class="prettyprint source"><code>assert.propertyVal({ tea: 'is good' }, 'tea', 'is good');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3134">line 3134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notDeepProperty(object, property, [message])</h3><p>Asserts that <code>object</code> does <em>not</em> have a property named by <code>property</code>, which
+can be a string using dot- and bracket-notation for deep reference.</p>
+<pre class="prettyprint source"><code>assert.notDeepProperty({ tea: { green: 'matcha' }}, 'tea.oolong');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3114">line 3114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isBelow(valueToCheck, valueToBeBelow, [message])</h3><p>Asserts <code>valueToCheck</code> is strictly less than (&lt;) <code>valueToBeBelow</code></p>
+<pre class="prettyprint source"><code>assert.isBelow(3, 6, '3 is strictly less than 6');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2428">line 2428</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.deepProperty(object, property, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code>, which can be a
+string using dot- and bracket-notation for deep reference.</p>
+<pre class="prettyprint source"><code>assert.deepProperty({ tea: { green: 'matcha' }}, 'tea.green');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3094">line 3094</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notProperty(object, property, [message])</h3><p>Asserts that <code>object</code> does <em>not</em> have a property named by <code>property</code>.</p>
+<pre class="prettyprint source"><code>assert.notProperty({ tea: { green: 'matcha' }}, 'coffee');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3075">line 3075</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.property(object, property, [message])</h3><p>Asserts that <code>object</code> has a property named by <code>property</code>.</p>
+<pre class="prettyprint source"><code>assert.property({ tea: { green: 'matcha' }}, 'tea');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3056">line 3056</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notMatch(value, regexp, [message])</h3><p>Asserts that <code>value</code> does not match the regular expression <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>assert.notMatch('foobar', /^foo/, 'regexp does not match');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3037">line 3037</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.match(value, regexp, [message])</h3><p>Asserts that <code>value</code> matches the regular expression <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>assert.match('foobar', /^foo/, 'regexp matches');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3018">line 3018</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notInclude(haystack, needle, [message])</h3><p>Asserts that <code>haystack</code> does not include <code>needle</code>. Works
+for strings and arrays.</p>
+<pre class="prettyprint source"><code>assert.notInclude('foobar', 'baz', 'string not include substring');
+assert.notInclude([ 1, 2, 3 ], 4, 'array not include contain value');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2997">line 2997</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.include(haystack, needle, [message])</h3><p>Asserts that <code>haystack</code> includes <code>needle</code>. Works
+for strings and arrays.</p>
+<pre class="prettyprint source"><code>assert.include('foobar', 'bar', 'foobar contains string &quot;bar&quot;');
+assert.include([ 1, 2, 3 ], 3, 'array contains value');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2976">line 2976</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notInstanceOf(object, constructor, [message])</h3><p>Asserts <code>value</code> is not an instance of <code>constructor</code>.</p>
+<pre class="prettyprint source"><code>var Tea = function (name) { this.name = name; }
+  , chai = new String('chai');
+
+assert.notInstanceOf(chai, Tea, 'chai is not an instance of tea');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2954">line 2954</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.instanceOf(object, constructor, [message])</h3><p>Asserts that <code>value</code> is an instance of <code>constructor</code>.</p>
+<pre class="prettyprint source"><code>var Tea = function (name) { this.name = name; }
+  , chai = new Tea('chai');
+
+assert.instanceOf(chai, Tea, 'chai is an instance of tea');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2932">line 2932</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notTypeOf(value, name, [message])</h3><p>Asserts that <code>value</code>'s type is <em>not</em> <code>name</code>, as determined by
+<code>Object.prototype.toString</code>.</p>
+<pre class="prettyprint source"><code>assert.notTypeOf('tea', 'number', 'strings are not numbers');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2912">line 2912</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.typeOf(value, name, [message])</h3><p>Asserts that <code>value</code>'s type is <code>name</code>, as determined by
+<code>Object.prototype.toString</code>.</p>
+<pre class="prettyprint source"><code>assert.typeOf({ tea: 'chai' }, 'object', 'we have an object');
+assert.typeOf(['chai', 'jasmine'], 'array', 'we have an array');
+assert.typeOf('tea', 'string', 'we have a string');
+assert.typeOf(/tea/, 'regexp', 'we have a regular expression');
+assert.typeOf(null, 'null', 'we have a null');
+assert.typeOf(undefined, 'undefined', 'we have an undefined');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2887">line 2887</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotBoolean(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> a boolean.</p>
+<pre class="prettyprint source"><code>var teaReady = 'yep'
+  , teaServed = 'nope';
+
+assert.isNotBoolean(teaReady, 'is the tea ready');
+assert.isNotBoolean(teaServed, 'has tea been served');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2865">line 2865</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isBoolean(value, [message])</h3><p>Asserts that <code>value</code> is a boolean.</p>
+<pre class="prettyprint source"><code>var teaReady = true
+  , teaServed = false;
+
+assert.isBoolean(teaReady, 'is the tea ready');
+assert.isBoolean(teaServed, 'has tea been served');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2843">line 2843</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotNumber(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> a number.</p>
+<pre class="prettyprint source"><code>var cups = '2 cups please';
+assert.isNotNumber(cups, 'how many cups');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2824">line 2824</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNumber(value, [message])</h3><p>Asserts that <code>value</code> is a number.</p>
+<pre class="prettyprint source"><code>var cups = 2;
+assert.isNumber(cups, 'how many cups');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2805">line 2805</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotString(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> a string.</p>
+<pre class="prettyprint source"><code>var teaOrder = 4;
+assert.isNotString(teaOrder, 'order placed');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2786">line 2786</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isString(value, [message])</h3><p>Asserts that <code>value</code> is a string.</p>
+<pre class="prettyprint source"><code>var teaOrder = 'chai';
+assert.isString(teaOrder, 'order placed');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2767">line 2767</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotArray(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> an array.</p>
+<pre class="prettyprint source"><code>var menu = 'green|chai|oolong';
+assert.isNotArray(menu, 'what kind of tea do we want?');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2748">line 2748</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isArray(value, [message])</h3><p>Asserts that <code>value</code> is an array.</p>
+<pre class="prettyprint source"><code>var menu = [ 'green', 'chai', 'oolong' ];
+assert.isArray(menu, 'what kind of tea do we want?');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2729">line 2729</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotFrozen(object)</h3><p>Asserts that <code>object</code> is <em>not</em> frozen.</p>
+<pre class="prettyprint source"><code>assert.isNotFrozen({});</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3759">line 3759</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotObject(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> an object of type 'Object' (as revealed by <code>Object.prototype.toString</code>).</p>
+<pre class="prettyprint source"><code>var selection = 'chai'
+assert.isNotObject(selection, 'tea selection is not an object');
+assert.isNotObject(null, 'null is not an object');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2709">line 2709</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isObject(value, [message])</h3><p>Asserts that <code>value</code> is an object of type 'Object' (as revealed by <code>Object.prototype.toString</code>).
+<em>The assertion does not match subclassed objects.</em></p>
+<pre class="prettyprint source"><code>var selection = { name: 'Chai', serve: 'with spices' };
+assert.isObject(selection, 'tea selection is an object');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2689">line 2689</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotFunction(value, [message])</h3><p>Asserts that <code>value</code> is <em>not</em> a function.</p>
+<pre class="prettyprint source"><code>var serveTea = [ 'heat', 'pour', 'sip' ];
+assert.isNotFunction(serveTea, 'great, we have listed the steps');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2670">line 2670</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isFunction(value, [message])</h3><p>Asserts that <code>value</code> is a function.</p>
+<pre class="prettyprint source"><code>function serveTea() { return 'cup of tea'; };
+assert.isFunction(serveTea, 'great, we can have tea now');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2651">line 2651</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isDefined(value, [message])</h3><p>Asserts that <code>value</code> is not <code>undefined</code>.</p>
+<pre class="prettyprint source"><code>var tea = 'cup of chai';
+assert.isDefined(tea, 'tea has been defined');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2632">line 2632</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isUndefined(value, [message])</h3><p>Asserts that <code>value</code> is <code>undefined</code>.</p>
+<pre class="prettyprint source"><code>var tea;
+assert.isUndefined(tea, 'no tea defined');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2613">line 2613</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isFrozen(object)</h3><p>Asserts that <code>object</code> is frozen (cannot have new properties added to it
+and its existing properties cannot be modified).</p>
+<pre class="prettyprint source"><code>var frozenObject = Object.freeze({});
+assert.frozen(frozenObject);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3738">line 3738</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotNaN</h3><p>Asserts that value is not NaN</p>
+<p>   assert.isNotNaN(4, '4 is not NaN');</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2597">line 2597</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNaN</h3><p>Asserts that value is NaN</p>
+<p>   assert.isNaN('foo', 'foo is NaN');</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2580">line 2580</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotNull(value, [message])</h3><p>Asserts that <code>value</code> is not null.</p>
+<pre class="prettyprint source"><code>var tea = 'tasty chai';
+assert.isNotNull(tea, 'great, time for tea!');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2561">line 2561</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNull(value, [message])</h3><p>Asserts that <code>value</code> is null.</p>
+<pre class="prettyprint source"><code>assert.isNull(err, 'there was no error');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2543">line 2543</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotFalse(value, [message])</h3><p>Asserts that <code>value</code> is not false.</p>
+<pre class="prettyprint source"><code>var tea = 'tasty chai';
+assert.isNotFalse(tea, 'great, time for tea!');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2524">line 2524</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isFalse(value, [message])</h3><p>Asserts that <code>value</code> is false.</p>
+<pre class="prettyprint source"><code>var teaServed = false;
+assert.isFalse(teaServed, 'no tea yet? hmm...');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2505">line 2505</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotSealed(object)</h3><p>Asserts that <code>object</code> is <em>not</em> sealed.</p>
+<pre class="prettyprint source"><code>assert.isNotSealed({});</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3719">line 3719</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotTrue(value, [message])</h3><p>Asserts that <code>value</code> is not true.</p>
+<pre class="prettyprint source"><code>var tea = 'tasty chai';
+assert.isNotTrue(tea, 'great, time for tea!');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2486">line 2486</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isSealed(object)</h3><p>Asserts that <code>object</code> is sealed (cannot have new properties added to it
+and its existing properties cannot be removed).</p>
+<pre class="prettyprint source"><code>var sealedObject = Object.seal({});
+var frozenObject = Object.seal({});
+
+assert.isSealed(sealedObject);
+assert.isSealed(frozenObject);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3695">line 3695</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isAtMost(valueToCheck, valueToBeAtMost, [message])</h3><p>Asserts <code>valueToCheck</code> is less than or equal to (&lt;=) <code>valueToBeAtMost</code></p>
+<pre class="prettyprint source"><code>assert.isAtMost(3, 6, '3 is less than or equal to 6');
+assert.isAtMost(4, 4, '4 is less than or equal to 4');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2447">line 2447</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotExtensible(object)</h3><p>Asserts that <code>object</code> is <em>not</em> extensible.</p>
+<pre class="prettyprint source"><code>var nonExtensibleObject = Object.preventExtensions({});
+var sealedObject = Object.seal({});
+var frozenObject = Object.freese({});
+
+assert.isNotExtensible(nonExtensibleObject);
+assert.isNotExtensible(sealedObject);
+assert.isNotExtensible(frozenObject);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3670">line 3670</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isAtLeast(valueToCheck, valueToBeAtLeast, [message])</h3><p>Asserts <code>valueToCheck</code> is greater than or equal to (&gt;=) <code>valueToBeAtLeast</code></p>
+<pre class="prettyprint source"><code>assert.isAtLeast(5, 2, '5 is greater or equal to 2');
+assert.isAtLeast(3, 3, '3 is greater or equal to 3');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2408">line 2408</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isExtensible(object)</h3><p>Asserts that <code>object</code> is extensible (can have new properties added to it).</p>
+<pre class="prettyprint source"><code>assert.isExtensible({});</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3651">line 3651</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isAbove(valueToCheck, valueToBeAbove, [message])</h3><p>Asserts <code>valueToCheck</code> is strictly greater than (&gt;) <code>valueToBeAbove</code></p>
+<pre class="prettyprint source"><code>assert.isAbove(5, 2, '5 is strictly greater than 2');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2389">line 2389</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.doesNotDecrease(function, object, property)</h3><p>Asserts that a function does not decreases an object property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { obj.val = 15 };
+assert.doesNotDecrease(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3607">line 3607</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.decreases(function, object, property)</h3><p>Asserts that a function decreases an object property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { obj.val = 5 };
+assert.decreases(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3585">line 3585</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.doesNotIncrease(function, object, property)</h3><p>Asserts that a function does not increase object property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { obj.val = 8 };
+assert.doesNotIncrease(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3563">line 3563</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>assert(expression, message)</h3><p>Write your own test expressions.</p>
+<pre class="prettyprint source"><code>assert('foo' !== 'bar', 'foo is not bar');
+assert(Array.isArray([]), 'empty arrays are arrays');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2172">line 2172</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.fail(actual, expected, [message], [operator])</h3><p>Throw a failure. Node.js <code>assert</code> module-compatible.</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2196">line 2196</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isOk(object, [message])</h3><p>Asserts that <code>object</code> is truthy.</p>
+<pre class="prettyprint source"><code>assert.isOk('everything', 'everything is ok');
+assert.isOk(false, 'this will fail');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2219">line 2219</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.isNotOk(object, [message])</h3><p>Asserts that <code>object</code> is falsy.</p>
+<pre class="prettyprint source"><code>assert.isNotOk('everything', 'this will fail');
+assert.isNotOk(false, 'this will pass');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2239">line 2239</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.equal(actual, expected, [message])</h3><p>Asserts non-strict equality (<code>==</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.equal(3, '3', '== coerces values to strings');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2259">line 2259</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.increases(function, object, property)</h3><p>Asserts that a function increases an object property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { obj.val = 13 };
+assert.increases(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3541">line 3541</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notEqual(actual, expected, [message])</h3><p>Asserts non-strict inequality (<code>!=</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.notEqual(3, 4, 'these numbers are not equal');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2286">line 2286</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.doesNotChange(function, object, property)</h3><p>Asserts that a function does not changes the value of a property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { console.log('foo'); };
+assert.doesNotChange(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3519">line 3519</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.changes(function, object, property)</h3><p>Asserts that a function changes the value of a property</p>
+<pre class="prettyprint source"><code>var obj = { val: 10 };
+var fn = function() { obj.val = 22 };
+assert.changes(fn, obj, 'val');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3497">line 3497</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.strictEqual(actual, expected, [message])</h3><p>Asserts strict equality (<code>===</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.strictEqual(true, true, 'these booleans are strictly equal');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2313">line 2313</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notStrictEqual(actual, expected, [message])</h3><p>Asserts strict inequality (<code>!==</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.notStrictEqual(3, '3', 'no coercion for strict equality');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2332">line 2332</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.deepEqual(actual, expected, [message])</h3><p>Asserts that <code>actual</code> is deeply equal to <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.deepEqual({ tea: 'green' }, { tea: 'green' });</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2351">line 2351</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.notDeepEqual(actual, expected, [message])</h3><p>Assert that <code>actual</code> is not deeply equal to <code>expected</code>.</p>
+<pre class="prettyprint source"><code>assert.notDeepEqual({ tea: 'green' }, { tea: 'jasmine' });</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line2370">line 2370</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Assert</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.oneOf(inList, list, [message])</h3><p>Asserts that non-object, non-array value <code>inList</code> appears in the flat array <code>list</code>.</p>
+<pre class="prettyprint source"><code>assert.oneOf(1, [ 2, 1 ], 'Not found in list');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3478">line 3478</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Widgets.com.mcongrove.html#.toast">toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="addChainableMethod.html">addChainableMethod</a></li><li><a href="addMethod.html">addMethod</a></li><li><a href="addProperty.html">addProperty</a></li><li><a href="Assert.html">Assert</a></li><li><a href="BDD.html">BDD</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Expect.html">Expect</a></li><li><a href="expectTypes.html">expectTypes</a></li><li><a href="flag.html">flag</a></li><li><a href="getActual.html">getActual</a></li><li><a href="getEnumerableProperties.html">getEnumerableProperties</a></li><li><a href="getMessage.html">getMessage</a></li><li><a href="getName.html">getName</a></li><li><a href="getPathInfo.html">getPathInfo</a></li><li><a href="getPathValue.html">getPathValue</a></li><li><a href="getProperties.html">getProperties</a></li><li><a href="inspect.html">inspect</a></li><li><a href="overwriteChainableMethod.html">overwriteChainableMethod</a></li><li><a href="overwriteMethod.html">overwriteMethod</a></li><li><a href="overwriteProperty.html">overwriteProperty</a></li><li><a href="Should.html">Should</a></li><li><a href="test.html">test</a></li><li><a href="transferFlags.html">transferFlags</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#assert">assert</a></li><li><a href="global.html#btnLogin_click">btnLogin_click</a></li><li><a href="global.html#canonicalize">canonicalize</a></li><li><a href="global.html#clean">clean</a></li><li><a href="global.html#escape">escape</a></li><li><a href="global.html#EventEmitter">EventEmitter</a></li><li><a href="global.html#files">files</a></li><li><a href="global.html#filter">filter</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#highlightTags">highlightTags</a></li><li><a href="global.html#indexOf">indexOf</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#lookupFiles">lookupFiles</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#parseQuery">parseQuery</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#reduce">reduce</a></li><li><a href="global.html#slug">slug</a></li><li><a href="global.html#stringify">stringify</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#unformatTime">unformatTime</a></li><li><a href="global.html#watch">watch</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 09:59:25 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

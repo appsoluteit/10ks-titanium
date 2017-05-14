@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/steps/steps.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/steps/steps.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var FormatHelper = require('helpers/FormatHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
+var StepsProvider = require('classes/StepsProvider');
+
+var stepsProvider = new StepsProvider($.log);
+var logCollection = Alloy.createCollection('log');
+logCollection.fetch();
+
+/*********************************** LOGIC ***********************************/
+/**
+ * Adds a row to the dates table
+ * @param {String} strLabel The label to add
+ * @param {Date} dateObj The date that this record represents.
+ * @param {Boolean} isLoadMoreButton A boolean to indicate whether this is the 'Load More' button
+ * @param {Integer} index (Optional) The index to add the new row at. If omitted, it will be appended to the end.
+ * @param {String} numSteps (Optional) The text to add to the right of the row, in red
+ */
+function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
+	//Add a new row to the table view	
+	var row = Ti.UI.createTableViewRow({
+		//title: strLabel,
+		color: 'black',
+		height: '50dp',
+		
+		//custom attributes
+		label: strLabel,
+		date: dateObj,
+		isLoadMoreButton: isLoadMoreButton
+	});
+	row.addEventListener('click', tblRow_click);
+	
+	var view = Ti.UI.createView({
+		//backgroundColor: 'blue'	
+	});
+	
+	var labelLeft = Ti.UI.createLabel({
+		left: '10dp',
+		textAlign: 'left',
+		color: 'black',
+		font: {
+			fontWeight: 'bold'
+		},
+		text: strLabel,
+		width: Ti.UI.SIZE
+	});
+	
+	var dateString = FormatHelper.formatDate(dateObj);
+	
+	//findWhere seems to be unsupported??
+	var item = logCollection.where({
+		'steps_date': dateString
+	});
+	
+	if(item.length > 0) {
+		numSteps = item[0].get('steps_total');
+	}
+	
+	var labelRight = Ti.UI.createLabel({
+		right: "10dp",
+		textAlign: "right",
+		color: "red",
+		text: numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "",
+		width: Ti.UI.SIZE
+	});
+	
+	view.add(labelLeft);
+	view.add(labelRight);
+	row.add(view);		//Adding the view to the TableViewRow causes its properties
+						//to become inaccessible by the logEntry controller...need to fix.
+	
+	if(index == undefined) {
+		$.tblDays.appendRow(row);
+	}
+	else {
+		$.tblDays.insertRowAfter(index, row);	
+	}
+}
+
+/**
+ * Adds 30 days to tblDays (the dates table) starting from dateObj, then adds another row that says 'Load More'
+ * @param {Date} dateObj The date to start from
+ */
+function loadDatesFrom(dateObj) {
+	var start = dateObj.getDate();
+	
+	for(var i = start; i >= start - 30; i--) {
+		var labelStr = DateTimeHelper.getDateLabel(dateObj);
+		addDateRow(labelStr, dateObj, false);
+		
+		dateObj = DateTimeHelper.getDayBefore(dateObj);
+	}
+	
+	addDateRow("Load More", dateObj, true);
+}
+
+function sync() {
+	stepsProvider.getSteps()
+			     .then(function success(steps) {
+			     	//TODO: write steps to local storage
+			     	
+			     	return stepsProvider.postSteps();
+			     }, function fail(reason) {
+			     	if(reason.detail) {
+			     		if(reason.detail === 'Invalid token.') {
+							Alloy.createWidget('com.mcongrove.toast', null, {
+								text: 'Sesson expired. Please log in again.',
+								duration: 2000,
+								view: $.log,
+								theme: 'error'
+							});	
+							
+							setTimeout(function() {
+								var win = Alloy.createController("auth/login").getView();
+								win.open();
+								
+								win.addEventListener("close", function() {
+									sync();
+								});
+							}, 2000);
+			     		}	
+			     	}
+			     	else {
+						Alloy.createWidget('com.mcongrove.toast', null, {
+							text: 'Failed to get steps. Reason: ' + reason,
+							duration: 2000,
+							view: $.log,
+							theme: 'error'
+						});	
+			     	}
+			     })
+			     .then(function success() {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Steps synced successfully!',
+						duration: 2000,
+						view: $.log,
+						theme: 'success'
+					});
+			     }, function fail(reason) {
+					Alloy.createWidget('com.mcongrove.toast', null, {
+						text: 'Failed to post steps. Reason: ' + reason,
+						duration: 2000,
+						view: $.log,
+						theme: 'error'
+					});			     	
+			     });
+	
+}
+
+/*********************************** EVENT HANDLERS ***********************************/
+function window_open() {
+	var today = new Date();
+	addDateRow("Today", today);
+	
+	var yesterday = DateTimeHelper.getDayBefore(today);
+	addDateRow("Yesterday", yesterday);
+	
+	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
+}
+
+function tblRow_click(e) {
+	//Due to the child view in the TableViewRow, e.source doesn't
+	//contain custom properties. Using e.row instead.
+	if(e.row.isLoadMoreButton) {
+		$.tblDays.deleteRow(e.row);
+		loadDatesFrom(e.row.date);
+	}
+	else {
+		var entryWin = Alloy.createController('steps/form', {
+			title: e.row.label,
+			date:  e.row.date,
+			obj: e.row,
+			callback: function(stepsLogged) {
+				//Ti.API.info("Callback for: " + e.row.title);
+				
+				addDateRow(e.row.label, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
+				$.tblDays.deleteRow(e.row);
+			}
+		}).getView();
+		
+		entryWin.open();
+	}
+}
+
+function btnBack_click() {
+	$.log.close();
+}
+
+function btnSync_click() {
+	sync();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

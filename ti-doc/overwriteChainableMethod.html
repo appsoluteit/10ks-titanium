@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Namespace: overwriteChainableMethod</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Namespace: overwriteChainableMethod</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>overwriteChainableMethod</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>overwriteChainableMethod (ctx, name, method, chainingBehavior)</h3><p>Overwites an already existing chainable method
+and provides access to the previous function or
+property.  Must return functions to be used for
+name.</p>
+<pre class="prettyprint source"><code>utils.overwriteChainableMethod(chai.Assertion.prototype, 'length',
+  function (_super) {
+  }
+, function (_super) {
+  }
+);</code></pre><p>Can also be accessed directly from <code>chai.Assertion</code>.</p>
+<pre class="prettyprint source"><code>chai.Assertion.overwriteChainableMethod('foo', fn, fn);</code></pre><p>Then can be used as any other assertion.</p>
+<pre class="prettyprint source"><code>expect(myFoo).to.have.length(3);
+expect(myFoo).to.have.length.above(3);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line5243">line 5243</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Widgets.com.mcongrove.html#.toast">toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="addChainableMethod.html">addChainableMethod</a></li><li><a href="addMethod.html">addMethod</a></li><li><a href="addProperty.html">addProperty</a></li><li><a href="Assert.html">Assert</a></li><li><a href="BDD.html">BDD</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Expect.html">Expect</a></li><li><a href="expectTypes.html">expectTypes</a></li><li><a href="flag.html">flag</a></li><li><a href="getActual.html">getActual</a></li><li><a href="getEnumerableProperties.html">getEnumerableProperties</a></li><li><a href="getMessage.html">getMessage</a></li><li><a href="getName.html">getName</a></li><li><a href="getPathInfo.html">getPathInfo</a></li><li><a href="getPathValue.html">getPathValue</a></li><li><a href="getProperties.html">getProperties</a></li><li><a href="inspect.html">inspect</a></li><li><a href="overwriteChainableMethod.html">overwriteChainableMethod</a></li><li><a href="overwriteMethod.html">overwriteMethod</a></li><li><a href="overwriteProperty.html">overwriteProperty</a></li><li><a href="Should.html">Should</a></li><li><a href="test.html">test</a></li><li><a href="transferFlags.html">transferFlags</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#assert">assert</a></li><li><a href="global.html#btnLogin_click">btnLogin_click</a></li><li><a href="global.html#canonicalize">canonicalize</a></li><li><a href="global.html#clean">clean</a></li><li><a href="global.html#escape">escape</a></li><li><a href="global.html#EventEmitter">EventEmitter</a></li><li><a href="global.html#files">files</a></li><li><a href="global.html#filter">filter</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#highlightTags">highlightTags</a></li><li><a href="global.html#indexOf">indexOf</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#lookupFiles">lookupFiles</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#parseQuery">parseQuery</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#reduce">reduce</a></li><li><a href="global.html#slug">slug</a></li><li><a href="global.html#stringify">stringify</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#unformatTime">unformatTime</a></li><li><a href="global.html#watch">watch</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 09:59:25 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

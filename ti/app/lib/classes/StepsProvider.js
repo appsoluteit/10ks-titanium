@@ -12,7 +12,7 @@ StepsProvider.prototype.getSteps = function(page) {
 	function onSuccess(e) {
 		Ti.API.info("Get steps success", JSON.stringify(e));
 		
-		//TODO: Add results to local storage
+		//TODO: Add/update results to local storage
 		//TODO: Recur while e.next is not null
 		
 		defer.resolve(e);
@@ -54,7 +54,8 @@ StepsProvider.prototype.postSteps = function() {
 		defer.reject(e.errorMessage);
 	}
 	
-	//TODO: Make these real
+	//TODO: Get all steps in local storage which have NOT been synced yet
+	//Recur until they've all been posted
 	var data = {
 		//user: Alloy.Globals.UserURL,
 		steps_date: "2016-10-12",

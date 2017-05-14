@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/classes/ReminderRepeatSetting.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/classes/ReminderRepeatSetting.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * Note: There is a 1 day difference between the dayOfWeek value saved in the ReminderRepeat
+ * property and the result of calling getDay() on a JavaScript object. This difference is due to a one day
+ * discrepency between the implementation of getDay() and Appcelerator's Calendar.
+ * 
+ * JS Dates have Sunday starting at 0, while Appcelerator has them start at 1.
+ * 
+ * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+ * http://docs.appcelerator.com/platform/latest/#!/api/daysOfTheWeekDictionary
+ */
+
+var FormatHelper = require("helpers/FormatHelper");
+
+function ReminderRepeatSetting() { 
+	this.PropertyName = 'ReminderRepeat';	
+}
+
+/**
+ * Returns an array containing the defined reminder days.
+ * @returns {Array[Object]}
+ */
+ReminderRepeatSetting.prototype.get = function() {
+	Ti.API.debug("Getting reminder days");
+	
+	var activeDays = [];
+
+	if (this.isSet()) {
+		var reminderRepeat = Ti.App.Properties.getString(this.PropertyName);
+		
+		Ti.API.debug("Repeat proprty: ", reminderRepeat);
+		
+		var objReminderRepeat = JSON.parse(reminderRepeat);
+
+		if(!objReminderRepeat) {
+			return activeDays;
+		}
+		
+		activeDays = objReminderRepeat.filter(function(e) {
+			return e.active;
+		});
+	}
+
+	return activeDays;
+};
+
+/**
+ * Sets the reminder days.
+ * @param reminderDays An array containing name/active attributes.
+ */
+ReminderRepeatSetting.prototype.set = function(reminderDays) {
+	Ti.App.Properties.setString(this.PropertyName, JSON.stringify(reminderDays));
+};
+
+/**
+ * @returns {Boolean} Indicates whether or not reminder days are already saved.
+ */
+ReminderRepeatSetting.prototype.isSet = function() {
+	return Ti.App.Properties.hasProperty(this.PropertyName);
+};
+
+/**
+ * Returns a JS DateTime for the next reminder date at the specified reminder time.
+ * @param startFrom Date The date to start calculations from. This will most likely be new Date()
+ */
+ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
+	/*	There are four different cases to handle when finding the next reminder (in order):
+	 * 
+	 * 	1. Today is the next active day and its before the cutoff time. 
+	 * 		Eg: The next reminder time is Sunday at 9pm and its currently Sunday at 8pm.
+	 * 
+	 *	2. The next active day is after today. 
+	 * 		Eg: the next reminder time is Tuesday and today is Monday.
+	 * 
+	 * 	3. The next active day is before today (next week)
+	 * 		eG: The next reminder time is Tuesday and its wednesday, so we should remind NEXT tuesday.
+	 * 
+	 * 	4. The next active day is today and its after the cutoff time.
+	 * 		Eg: The next reminder time is Sunday at 9pm and its currently Sunday at 10pm. So remind NEXT sunday.
+	 */
+	
+	if(!startFrom) {
+		throw "startFrom is a required parameter";	
+	}
+	
+	function makeDate(dayObj, timeObj) {
+		dayObj.setHours(timeObj.getHours());
+		dayObj.setMinutes(timeObj.getMinutes());
+
+		Ti.API.debug("Made date: ", dayObj.toString());
+		return dayObj;
+	}
+
+	var now = startFrom;
+	var curDayOfWeek = now.getDay() + 1;
+	
+	var activeDays = this.get();
+	var reminderTime = FormatHelper.unformatTime(Ti.App.Properties.getString("ReminderTime"));
+
+	//If checking today, make sure we haven't passed the time cutoff
+	var isBeforeCutoffTime = (now.getHours() &lt; reminderTime.getHours()) || 
+							 (now.getHours() === reminderTime.getHours() &amp;&amp; now.getMinutes() &lt; reminderTime.getMinutes());
+
+	Ti.API.debug("Now", now.toString());
+	Ti.API.debug("Current day of week: " + curDayOfWeek);
+	Ti.API.debug("Reminder time: ", reminderTime.toString());
+	Ti.API.debug("Is before cutoff time today: " + isBeforeCutoffTime);
+	Ti.API.debug("Active days: ", activeDays);
+
+	var activeDayForToday = activeDays.filter(function(ele) {
+		return ele.dayOfWeek === curDayOfWeek;	
+	})[0];
+	
+	var activeDaysAfterToday = activeDays.filter(function(ele) {
+		return ele.dayOfWeek > curDayOfWeek;
+	})[0];
+	
+	var activeDaysBeforeToday = activeDays.filter(function(ele) {
+		return ele.dayOfWeek &lt; curDayOfWeek;
+	})[0];
+	
+	if(activeDayForToday &amp;&amp; isBeforeCutoffTime) {
+		Ti.API.debug("Today is the next active reminder day and we are before the cutoff time");
+		return makeDate(now, reminderTime);		
+	}
+	else if(activeDaysAfterToday) {
+		var ele = activeDaysAfterToday;
+		
+		Ti.API.debug("The next active reminder today is after today:", ele);
+		
+		var nextDay = now;
+		
+		//Add days to the date object based on the difference between today and the day in settings
+		nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek));
+		return makeDate(nextDay, reminderTime);		
+	}
+	else if(activeDaysBeforeToday) {
+		var ele = activeDaysBeforeToday;
+		
+		Ti.API.debug("The next active reminder today is before today, next week:", ele);
+		
+		var nextDay = now;
+		
+		//Add days to the date object based on the difference between today and the day in settings plus one week
+		nextDay.setDate(now.getDate() + (ele.dayOfWeek - curDayOfWeek) + 7);
+		return makeDate(nextDay, reminderTime);	
+	}
+	else if(activeDayForToday &amp;&amp; !isBeforeCutoffTime) {
+		var ele = activeDayForToday;
+		
+		Ti.API.debug("The next active reminder day is today, next week:", ele);
+		
+		var nextDay = now;
+		
+		//Add days to the date object for today, next week
+		nextDay.setDate(now.getDate() + 7);
+		return makeDate(nextDay, reminderTime);	
+	}
+	else {
+		Ti.API.error("Couldn't find active days");
+		throw "Couldn't find active days";
+	}
+};
+
+/**
+ * Returns an array of scheduled reminders from now until the endDate.
+ */
+ReminderRepeatSetting.prototype.getScheduledRemindersBetween = function(startDate, endDate) {
+	Ti.API.debug("Getting reminders between " + startDate.toString() + " and " + endDate.toString());
+	
+	function isReminderDay(needle, haystack) {
+		return haystack.filter(function(e) { return e.dayOfWeek === needle; }).length > 0;
+	}
+	
+	function isBeforeCutoffTime(time, cutoff) {
+		//If checking today, make sure we haven't passed the time cutoff
+		var isBeforeCutoffTime = (time.getHours() &lt; cutoff.getHours()) || 
+								 (time.getHours() === cutoff.getHours() &amp;&amp; time.getMinutes() &lt; cutoff.getMinutes());	
+								 
+		return isBeforeCutoffTime;		
+	}
+	
+	function makeScheduledTime(day, reminderTime) {
+		var reminder = new Date(day.getTime());
+		
+		reminder.setHours(reminderTime.getHours());
+		reminder.setMinutes(reminderTime.getMinutes());
+		
+		return reminder;
+	}
+	
+	var now = startDate;
+	var currentDay = new Date(now.getTime());
+	var reminders = [];
+	var activeDays = this.get();
+	var reminderTime = FormatHelper.unformatTime(Ti.App.Properties.getString("ReminderTime"));
+	//Ti.API.debug("Reminder time: ", reminderTime.toString());	
+	
+	do {
+		//Ti.API.debug("Checking " + now.toString());
+		var curDayOfWeek = now.getDay() + 1;
+			
+		if(currentDay.getTime() === now.getTime() &amp;&amp; isBeforeCutoffTime(now, reminderTime)) {
+			if(isReminderDay(curDayOfWeek, activeDays)) {
+				Ti.API.debug("Today (" + now.toString() + ") is a reminder day and its before the cutoff");
+				reminders.push(makeScheduledTime(now, reminderTime));
+			}
+		}
+		else if(isReminderDay(curDayOfWeek, activeDays)) {
+			Ti.API.debug(now.toString() + " is a reminder day");
+			reminders.push(makeScheduledTime(now, reminderTime));
+		}
+		
+		now.setDate(now.getDate() + 1); //add a day
+	}
+	while(now &lt;= endDate);
+	
+	return reminders;
+};
+
+/**
+ * Returns true if the reminders are due to expire before the cutoff. Only applicable on Android, since 
+ * the reminders don't recur indefinitely.
+ */
+ReminderRepeatSetting.prototype.willExpire = function(now) {
+	if(!Ti.App.Properties.hasProperty("ReminderExpiryDate")) {
+		return false;	
+	}
+	
+	var reminderExpiry = Ti.App.Properties.getString("ReminderExpiryDate");
+		
+	if(reminderExpiry) {
+		Ti.API.debug("Reminder expiry: " + reminderExpiry);
+		
+		reminderExpiry = new Date(reminderExpiry); //yyyy-mm-dd should work in the constructor
+		var today = new Date(now.getTime());
+		today.setDate(Alloy.Globals.ReminderExpiryBufferDays); //Add days to today based on the config setting
+		
+		Ti.API.debug("Buffer days: " + Alloy.Globals.ReminderExpiryBufferDays);
+		Ti.API.debug("Today plus buffer days: " + today.toString());
+		
+		return today.getTime() >= reminderExpiry.getTime();
+	}
+	else {
+		return false;
+	}
+};
+
+module.exports = ReminderRepeatSetting;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

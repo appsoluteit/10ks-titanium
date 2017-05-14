@@ -1,17 +1,34 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+/**
+ * @file Register Controller
+ * @requires classes/AuthProvider
+ * @description The controller for the register view containing a link to the login view. Closes itself after a successful register.
+ * @namespace Controllers.Auth.Register
+ */
+
 var args = $.args;
 var AuthProvider = require('classes/AuthProvider');
 
-/*********************************** EVENT HANDLERS     ***********************************/
+/**
+ * @description Event handler for the window's `open` event. Adds `click` event listeners for `btnLogin` and `btnRegister` in the view.
+ * @memberOf Controllers.Auth.Register
+ */
 function window_open() {
 	$.registerView.btnLogin.addEventListener('click', btnLogin_click);
 	$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
 }
 
+/**
+ * @description Event handler for `btnLogin`. Closes this window, showing the login window behind it.
+ * @memberOf Controllers.Auth.Register
+ */
 function btnLogin_click() {
 	$.register.close();
 }
 
+/**
+ * @description Calls `register` on the `AuthProvider`, which closes this window on success.
+ * @memberOf Controllers.Auth.Register
+ */
 function btnRegister_click() {
 	var authProvider = new AuthProvider($.register, $.registerView.lblError);
 	

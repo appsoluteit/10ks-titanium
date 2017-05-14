@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Namespace: Should</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Namespace: Should</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.not.exist</h3><p>Asserts that the target is neither <code>null</code> nor <code>undefined</code>.</p>
+<pre class="prettyprint source"><code>var bar = null;
+
+should.not.exist(bar, 'bar does not exist');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line4009">line 4009</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.equal(actual, expected, [message])</h3><p>Asserts non-strict equality (<code>==</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>should.equal(3, '3', '== coerces values to strings');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3898">line 3898</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.not.equal(actual, expected, [message])</h3><p>Asserts non-strict inequality (<code>!=</code>) of <code>actual</code> and <code>expected</code>.</p>
+<pre class="prettyprint source"><code>should.not.equal(3, 4, 'these numbers are not equal');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3966">line 3966</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.throw(function, [constructor/string/regexp], [string/regexp], [message])</h3><p>Asserts that <code>function</code> will throw an error that is an instance of
+<code>constructor</code>, or alternately that it will throw an error with message
+matching <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>should.throw(fn, 'function throws a reference error');
+should.throw(fn, /function throws a reference error/);
+should.throw(fn, ReferenceError);
+should.throw(fn, ReferenceError, 'function throws a reference error');
+should.throw(fn, ReferenceError, /function throws a reference error/);</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3917">line 3917</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types">https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.exist</h3><p>Asserts that the target is neither <code>null</code> nor <code>undefined</code>.</p>
+<pre class="prettyprint source"><code>var foo = 'hi';
+
+should.exist(foo, 'foo exists');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3945">line 3945</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.throw(function, [constructor/regexp], [message])</h3><p>Asserts that <code>function</code> will <em>not</em> throw an error that is an instance of
+<code>constructor</code>, or alternately that it will not throw an error with message
+matching <code>regexp</code>.</p>
+<pre class="prettyprint source"><code>should.not.throw(fn, Error, 'function does not throw');</code></pre></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3985">line 3985</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types">https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>Should</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3>.fail(actual, expected, [message], [operator])</h3><p>Throw a failure.</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_chai.js.html">lib/chai.js</a>, <a href="lib_chai.js.html#line3875">line 3875</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Widgets.com.mcongrove.html#.toast">toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="addChainableMethod.html">addChainableMethod</a></li><li><a href="addMethod.html">addMethod</a></li><li><a href="addProperty.html">addProperty</a></li><li><a href="Assert.html">Assert</a></li><li><a href="BDD.html">BDD</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Expect.html">Expect</a></li><li><a href="expectTypes.html">expectTypes</a></li><li><a href="flag.html">flag</a></li><li><a href="getActual.html">getActual</a></li><li><a href="getEnumerableProperties.html">getEnumerableProperties</a></li><li><a href="getMessage.html">getMessage</a></li><li><a href="getName.html">getName</a></li><li><a href="getPathInfo.html">getPathInfo</a></li><li><a href="getPathValue.html">getPathValue</a></li><li><a href="getProperties.html">getProperties</a></li><li><a href="inspect.html">inspect</a></li><li><a href="overwriteChainableMethod.html">overwriteChainableMethod</a></li><li><a href="overwriteMethod.html">overwriteMethod</a></li><li><a href="overwriteProperty.html">overwriteProperty</a></li><li><a href="Should.html">Should</a></li><li><a href="test.html">test</a></li><li><a href="transferFlags.html">transferFlags</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#assert">assert</a></li><li><a href="global.html#btnLogin_click">btnLogin_click</a></li><li><a href="global.html#canonicalize">canonicalize</a></li><li><a href="global.html#clean">clean</a></li><li><a href="global.html#escape">escape</a></li><li><a href="global.html#EventEmitter">EventEmitter</a></li><li><a href="global.html#files">files</a></li><li><a href="global.html#filter">filter</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#highlightTags">highlightTags</a></li><li><a href="global.html#indexOf">indexOf</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#lookupFiles">lookupFiles</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#parseQuery">parseQuery</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#reduce">reduce</a></li><li><a href="global.html#slug">slug</a></li><li><a href="global.html#stringify">stringify</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#unformatTime">unformatTime</a></li><li><a href="global.html#watch">watch</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 09:59:25 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

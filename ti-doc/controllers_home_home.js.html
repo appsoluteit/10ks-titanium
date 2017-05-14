@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/home/home.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/home/home.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Home Controller
+ * @requires classes/CalendarFactory
+ * @requires classes/ReminderRepeatSetting
+ * @description The controller for the home view. This is the first view shown to the user.
+ * @namespace Controllers.Home
+ */
+
+var CalendarFactory = require('classes/CalendarFactory');
+var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
+
+/**
+ * @description If the user is not logged in (based off the last known state, stored locally) then the login window is shown. Otherwise, on Android, this function
+ * also checks whether or not the reminders are about to expire and prompts the user to renew them.
+ * @memberOf Controllers.Home
+ */
+function loginIfNeeded() {
+	if(!Alloy.Globals.IsLoggedIn) {
+		win = Alloy.createController('auth/login').getView();
+		win.open();
+	}	
+	else if(Ti.Platform.osname === "android") {		
+		var repeatSetting = new ReminderRepeatSetting();
+		if(repeatSetting.willExpire(new Date())) {
+			var confirmDialog = Ti.UI.createAlertDialog({
+				cancel: 0,
+				buttonNames: ['Cancel', 'OK'],
+				message: 'The reminders on your phone will expire on ' + reminderExpiry.toString() + '. Do you want to update them?',
+				title: 'Update reminders?'
+			});
+			
+			confirmDialog.addEventListener('click', function(e) {
+				if(e.index !== e.source.cancel) {
+					var reminderProvider = CalendarFactory.create();
+					
+					reminderProvider.requestPermission()
+									.then(function success() {
+										return reminderProvider.getCalendar();
+									}, function fail(reason) {
+										alert("Permission denied for calendar. Reason = " + reason);
+									})
+									.then(function success(selectedCalendar) {
+										return reminderProvider.add(selectedCalendar);
+									}, function fail(reason) {
+										alert("Couldn't select calendar. Reason = " + reason);
+									})
+									.then(function success() {
+										Alloy.createWidget("com.mcongrove.toast", null, {
+											text: "Reminder saved",
+											duration: 2000,
+											view: $.home,
+											theme: "success"
+										});
+									}, function fail(reason) {
+										alert("Couldn't save reminders. Reason = " + reason);
+									});
+				}	
+			});
+			
+			confirmDialog.show();	
+		}
+	}
+}
+
+/**
+ * @description Event handler for the `btnStepLog` button. Opens the steps view.
+ * @memberOf Controllers.Home
+ */
+function btnStepLog_click() {
+	var win = Alloy.createController('steps/steps').getView();
+	win.open();
+}
+
+/**
+ * @description Event handler for the `btnStatistics` button. Opens the stats view.
+ * @memberOf Controllers.Home
+ */
+function btnStatistics_click() {
+	var win = Alloy.createController('stats/stats').getView();
+	win.open();
+}
+
+/**
+ * @description Event handler for the `btnChallenges` button. Opens the challenges view.
+ * @memberOf Controllers.Home
+ */
+function btnChallenges_click() {
+	var win = Alloy.createController('challenges/challenges').getView();
+	win.open();
+}
+
+/**
+ * @description Event handler for the `btnTournaments` button. Opens the tournaments view.
+ * @memberOf Controllers.Home
+ */
+function btnTournaments_click() {
+	var win = Alloy.createController('tournaments/tournaments').getView();
+	win.open();
+}
+
+/**
+ * @description Event handler for the `btnSettings` button. Opens the settings view.
+ * After the settings view closes, `loginIfNeeded()` is called as the user may have logged out from the settings screen.
+ * @memberOf Controllers.Home
+ */
+function btnSettings_click() {
+	var win = Alloy.createController('settings/settings').getView();
+	win.open();
+	
+	win.addEventListener('close', function() {
+		loginIfNeeded();
+	});
+}
+
+/**
+ * @description Event handler for the `back` button on Android devices. Confirms with the user whether or not they want to exit the app and closes this window
+ * on confirmation.
+ * @memberOf Controllers.Home
+ */
+function androidBack_click() {
+	var confirmDialog = Ti.UI.createAlertDialog({
+		cancel: 0,
+		buttonNames: ['Cancel', 'OK'],
+		message: 'Are you sure you want to exit 10,000 steps?',
+		title: 'Exit App?'
+	});
+	
+	confirmDialog.addEventListener('click', function(e) {
+		if(e.index !== e.source.cancel) {
+			$.home.close();
+		}	
+	});
+	
+	confirmDialog.show();
+}
+
+/**
+ * @description Event handler for the window's `open` event. Adds event listeners for the buttons and calls `loginIfNeeded()`.
+ * @memberOf Controllers.Home
+ */
+function window_open() {
+	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
+	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
+	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
+	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
+	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+
+	loginIfNeeded();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

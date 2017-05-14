@@ -1,6 +1,17 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+/**
+ * @file Goal Steps Controller
+ * @description The controller for the goal steps view.
+ * @require widgets/com.mcongrove.toast
+ * @namespace Controllers.Settings.GoalSteps
+ */
+
 var args = $.args;
 
+/**
+ * @description Event handler for the Window's `open` event. Adds an event listener for `btnSave` and populates `txtGoalSteps` with the saved goal from app properties, if it 
+ * exists.
+ * @memberof Controllers.Settings.GoalSteps
+ */
 function window_open() {
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 	
@@ -11,10 +22,19 @@ function window_open() {
 	}
 }
 
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Settings.GoalSteps
+ */
 function btnBack_click() {
 	$.goalSteps.close();
 }
 
+/**
+ * @description Event handler for `btnSave`. If no goal is entered, shows an alert and returns. Otherwise, saves it to app properties, shows a success toast, 
+ * calls `args.callback()` with the newly saved value and then closes the window after 2000ms.
+ * @memberof Controllers.Settings.GoalSteps
+ */
 function btnSave_click() {
 	var goalSteps = $.goalStepsView.txtGoalSteps.value;
 	

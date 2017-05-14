@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/stats/stats.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/stats/stats.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Stats Controller
+ * @description The controller for the stats view.
+ * @require helpers/FormatHelper
+ * @require helpers/DateTimeHelper
+ * @require helpers/APIHelper
+ * @namespace Controllers.Stats
+ * @todo This controller is incomplete
+ */
+
+var FormatHelper = require('helpers/FormatHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
+var APIHelper = require('helpers/APIHelper');
+
+var args = $.args;
+
+/**
+ * @description Gets statistics from the /api/stats/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
+function calculateStatistics() {
+	function onSuccess(response) {
+		Ti.API.info("Get steps success", JSON.stringify(response));
+
+		if(response.max_month) {
+			if(response.max_month.month) {
+				var busiestMonth = new Date(response.max_month.month);
+				$.statsView.lblBusiestMonth.text = DateTimeHelper.getMonthLabel(busiestMonth);	
+			}	
+			
+			if(response.max_month.total) {
+				$.statsView.lblBusiestMonthSteps.text = "(" + FormatHelper.formatNumber(response.max_month.total) + " steps)";
+			}
+		}
+		
+		if(response.max_day) {
+			if(response.max_day.steps_date) {
+				var busiestDay = new Date(response.max_day.steps_date);
+				$.statsView.lblBusiestDay.text = DateTimeHelper.getDateLabel(busiestDay, true);	
+			}
+			
+			if(response.max_day.steps_total) {
+				$.statsView.lblBusiestDaySteps.text = "(" + FormatHelper.formatNumber(response.max_day.steps_total) + " steps)";
+			}
+		}
+		
+		if(response.average_steps) {
+			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
+		}
+	}
+	
+	function onFail(response) {
+		Ti.API.info("Get stats fail", JSON.stringify(response));
+		
+		if(response.detail) {
+			//If the token expired, open the login window to login again
+			if(response.detail === "Invalid token.") {
+				Alloy.createWidget("com.mcongrove.toast", null, {
+					text: "Session expired. Please log in again.",
+					duration: 2000,
+					view: $.stats,
+					theme: "error"
+				});
+				
+				setTimeout(function() {
+					var win = Alloy.createController("auth/login").getView();
+					win.open();
+					
+					win.addEventListener("close", function() {
+						calculateStatistics();
+					});
+				}, 2000);
+			}
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't get statistics",
+				duration: 2000,
+				view: $.stats,
+				theme: "error"
+			});	
+		}
+	}
+	
+	var data = {
+		Authorization: "Token " + Alloy.Globals.AuthKey
+	};
+	
+	APIHelper.get({
+		message:	"Calculating statistics...",
+		url:		"stats/", 
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+}
+
+//Note: graphs are temporarily disabled
+function tblRowDailyGraph_click() {
+	var data = [];
+	
+	//TODO: pass in real values
+	for(var i = 1; i &lt; 31; i++) {
+		data.push({
+			name: i + "/10/2016",
+			x: i,
+			y: Math.floor((Math.random() * 10000) + 1)
+		});
+	}
+
+	var win = Alloy.createController("stats/dailyGraph", {
+		data: data
+	}).getView();
+	win.open();
+}
+
+function tblRowMonthlyGraph_click() {
+	var data = [];
+	
+	//TODO: Pass in real values
+	for(var i = 1; i &lt; 13; i++) {
+		data.push({
+			name: DateTimeHelper.getMonthNameFromIndex(i - 1),
+			x: i,
+			y: Math.floor((Math.random() * 10000) + 1) * 30
+		});
+	}
+	
+	var win = Alloy.createController("stats/monthlyGraph", {
+		data: data
+	}).getView();
+	win.open();
+}
+
+function btnBack_click() {
+	$.stats.close();
+}
+
+function window_open() {
+	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
+	
+	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+	$.statsView.lblAvgSteps.text = 0;
+	$.statsView.lblBusiestMonth.text = 0;
+	$.statsView.lblBusiestDay.text = 0;
+	
+	//$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
+	//$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
+	
+	setTimeout(function() {
+		calculateStatistics();
+	}, 1000);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

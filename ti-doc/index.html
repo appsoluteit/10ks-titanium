@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h3>10KSteps App Docs</h3><p>This is the unofficial documentation for the 10KSteps Alloy application. As well as the source code,
+this document can be referred to for details as to how the 10K steps app functions. For API documentation,
+see the file located under <code>&lt;project_folder&gt;/api/doc/</code>.</p>
+<h4>Generating this documentation</h4><p>To generate this documentation, you will need to perform the following steps</p>
+<ol>
+<li><p>Install JSDoc.
+ <code>npm install -g jsdoc</code></p>
+</li>
+<li><p>Navigate to the app folder.
+ <code>cd &lt;project_folder&gt;/ti/app/</code></p>
+</li>
+<li><p>Run JSDoc
+ <code>jsdoc --readme ../../README.md . -r -c ../../conf.json -d ../../ti-doc</code></p>
+</li>
+</ol>
+<p>The above jsdoc command will run jsdoc in the current folder (which, if you performed step 2 correctly, will be the app folder).
+It runs recursively and will use the config file (conf.json) in the project root folder. The output destination is the ti-doc folder
+also in the project root folder.</p>
+<h4>Dependencies</h4><p>Below are all of the dependencies of the app project which are not included (or expected) by Appcelerator Studio by default.</p>
+<ol>
+<li>Chai. Assertion library.</li>
+<li>Ti-Mocha. Unit testing framework.</li>
+<li>Q. JavaScript Promise polyfill library for backwards compatibility.</li>
+<li>(Widget) Highcharts. Charting widget used in the statistics screen.</li>
+<li>(Widget) Toast. Toast widget for success / fail in-app notifications.</li>
+<li>(Widget) Loading. A loading spinner for asynchronous operations.</li>
+</ol>
+<h4>Configuration</h4><p>The following should be included in tiapp.xml (not tracked in source control) in order to build and run the project successfully.</p>
+<pre class="prettyprint source"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+&lt;ti:app xmlns:ti=&quot;http://ti.appcelerator.org&quot;>
+    &lt;ios>
+        &lt;plist>
+            &lt;dict>
+                &lt;key>UISupportedInterfaceOrientations~iphone&lt;/key>
+                &lt;array>
+                    &lt;string>UIInterfaceOrientationPortrait&lt;/string>
+                &lt;/array>
+                &lt;key>UISupportedInterfaceOrientations~ipad&lt;/key>
+                &lt;array>
+                    &lt;string>UIInterfaceOrientationPortrait&lt;/string>
+                    &lt;string>UIInterfaceOrientationPortraitUpsideDown&lt;/string>
+                    &lt;string>UIInterfaceOrientationLandscapeLeft&lt;/string>
+                    &lt;string>UIInterfaceOrientationLandscapeRight&lt;/string>
+                &lt;/array>
+                &lt;key>UIRequiresPersistentWiFi&lt;/key>
+                &lt;false/>
+                &lt;key>UIPrerenderedIcon&lt;/key>
+                &lt;false/>
+                &lt;key>UIStatusBarHidden&lt;/key>
+                &lt;false/>
+                &lt;key>UIStatusBarStyle&lt;/key>
+                &lt;string>UIStatusBarStyleDefault&lt;/string>
+                &lt;key>NSCalendarsUsageDescription&lt;/key>
+                &lt;string>Setting reminders to log your steps&lt;/string>
+            &lt;/dict>
+        &lt;/plist>
+    &lt;/ios>
+    &lt;android xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>
+        &lt;manifest>
+            &lt;application android:theme=&quot;@style/Theme.AppCompat.Light&quot;/>
+            &lt;uses-permission android:name=&quot;android.permission.READ_CALENDAR&quot;/>
+            &lt;uses-permission android:name=&quot;android.permission.WRITE_CALENDAR&quot;/>
+        &lt;/manifest>
+    &lt;/android>
+    &lt;mobileweb>
+        &lt;precache/>
+        &lt;splash>
+            &lt;enabled>true&lt;/enabled>
+            &lt;inline-css-images>true&lt;/inline-css-images>
+        &lt;/splash>
+        &lt;theme>default&lt;/theme>
+    &lt;/mobileweb>
+&lt;/ti:app></code></pre><p><em>This document is a work in progress</em></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

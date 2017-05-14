@@ -1,15 +1,22 @@
 //Globals
+//Authentication
 Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
-Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
-Alloy.Globals.IsDebug = true;
 
+//URLs
+Alloy.Globals.WebURL = 'https://www.10000steps.org.au/';
+Alloy.Globals.FeedbackURL = "http://10000steps.org.au/help/contact-us/";
+Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
+
+//Reminders
 Alloy.Globals.ReminderEndDate = new Date();
 Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
 Alloy.Globals.ReminderExpiryBufferDays = 7; //how many days before the expiry should we ask the user to save reminders again
 Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 
+//Misc
+Alloy.Globals.IsDebug = true;
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
 // added during app creation. this will automatically login to

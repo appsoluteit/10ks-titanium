@@ -1,7 +1,20 @@
+/**
+ * @file Reminder Repeat Controller
+ * @requires classes/ReminderRepeatSetting
+ * @description The controller for the reminder repeat view.
+ * @namespace Controllers.Settings.ReminderRepeat
+ */
+
 var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
 var setting = new ReminderRepeatSetting();
+
 var args = $.args;
 
+/**
+ * @description Event handler for the Window's `open` event. If on iOS, adds event listeners to the rows to toggle the radio buttons (on Android this is buggy so we 
+ * don't do it). Also presets the switch values based on saved app properties.
+ * @memberof Controllers.Settings.ReminderRepeat
+ */
 function window_open() {
 	//This causes a bug on Android where switch values are always off by 1
 	if(Ti.Platform.osname != "android") {
@@ -52,6 +65,12 @@ function window_open() {
 	}
 }
 
+/**
+ * @description Event handler for each `tblRow` containing a switch. This only runs on iOS.
+ * @see window_open()
+ * @memberof Controllers.Settings.ReminderRepeat
+ * @param {Object} e The `click` event.
+ */
 function tblRow_click(e) {	
 	switch(e.row.id) {
 		case 'tblRowSunday':
@@ -84,6 +103,10 @@ function tblRow_click(e) {
 	}
 }
 
+/**
+ * @description Event handler for `btnBack`. Saves the settings to app properties and then closes the window.
+ * @memberof Controllers.Settings.ReminderRepeat
+ */
 function btnBack_click() {
 	var obj = [
 		{ name: 'Sunday', active: $.reminderRepeatView.swSunday.value, dayOfWeek: 1 },

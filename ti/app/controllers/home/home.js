@@ -1,8 +1,19 @@
-var args = $.args;
+/**
+ * @file Home Controller
+ * @requires classes/CalendarFactory
+ * @requires classes/ReminderRepeatSetting
+ * @description The controller for the home view. This is the first view shown to the user.
+ * @namespace Controllers.Home
+ */
 
 var CalendarFactory = require('classes/CalendarFactory');
 var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
 
+/**
+ * @description If the user is not logged in (based off the last known state, stored locally) then the login window is shown. Otherwise, on Android, this function
+ * also checks whether or not the reminders are about to expire and prompts the user to renew them.
+ * @memberOf Controllers.Home
+ */
 function loginIfNeeded() {
 	if(!Alloy.Globals.IsLoggedIn) {
 		win = Alloy.createController('auth/login').getView();
@@ -51,27 +62,48 @@ function loginIfNeeded() {
 	}
 }
 
-function btnStepLog_click(e) {
+/**
+ * @description Event handler for the `btnStepLog` button. Opens the steps view.
+ * @memberOf Controllers.Home
+ */
+function btnStepLog_click() {
 	var win = Alloy.createController('steps/steps').getView();
 	win.open();
 }
 
-function btnStatistics_click(e) {
+/**
+ * @description Event handler for the `btnStatistics` button. Opens the stats view.
+ * @memberOf Controllers.Home
+ */
+function btnStatistics_click() {
 	var win = Alloy.createController('stats/stats').getView();
 	win.open();
 }
 
-function btnChallenges_click(e) {
+/**
+ * @description Event handler for the `btnChallenges` button. Opens the challenges view.
+ * @memberOf Controllers.Home
+ */
+function btnChallenges_click() {
 	var win = Alloy.createController('challenges/challenges').getView();
 	win.open();
 }
 
-function btnTournaments_click(e) {
+/**
+ * @description Event handler for the `btnTournaments` button. Opens the tournaments view.
+ * @memberOf Controllers.Home
+ */
+function btnTournaments_click() {
 	var win = Alloy.createController('tournaments/tournaments').getView();
 	win.open();
 }
 
-function btnSettings_click(e) {
+/**
+ * @description Event handler for the `btnSettings` button. Opens the settings view.
+ * After the settings view closes, `loginIfNeeded()` is called as the user may have logged out from the settings screen.
+ * @memberOf Controllers.Home
+ */
+function btnSettings_click() {
 	var win = Alloy.createController('settings/settings').getView();
 	win.open();
 	
@@ -79,7 +111,12 @@ function btnSettings_click(e) {
 		loginIfNeeded();
 	});
 }
- 
+
+/**
+ * @description Event handler for the `back` button on Android devices. Confirms with the user whether or not they want to exit the app and closes this window
+ * on confirmation.
+ * @memberOf Controllers.Home
+ */
 function androidBack_click() {
 	var confirmDialog = Ti.UI.createAlertDialog({
 		cancel: 0,
@@ -91,13 +128,16 @@ function androidBack_click() {
 	confirmDialog.addEventListener('click', function(e) {
 		if(e.index !== e.source.cancel) {
 			$.home.close();
-			args.quit();
 		}	
 	});
 	
 	confirmDialog.show();
 }
 
+/**
+ * @description Event handler for the window's `open` event. Adds event listeners for the buttons and calls `loginIfNeeded()`.
+ * @memberOf Controllers.Home
+ */
 function window_open() {
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);

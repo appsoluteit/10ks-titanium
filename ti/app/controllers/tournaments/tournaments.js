@@ -1,6 +1,15 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+/**
+ * @file Tournaments Controller
+ * @description The controller for the tournaments view.
+ * @namespace Controllers.Tournaments
+ * @todo This controller is a stub
+ */
+
 var args = $.args;
 
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ */
 function btnBack_click() {
 	$.tournaments.close();
 }

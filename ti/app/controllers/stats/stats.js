@@ -1,9 +1,23 @@
+/**
+ * @file Stats Controller
+ * @description The controller for the stats view.
+ * @require helpers/FormatHelper
+ * @require helpers/DateTimeHelper
+ * @require helpers/APIHelper
+ * @namespace Controllers.Stats
+ * @todo This controller is incomplete
+ */
+
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
 
 var args = $.args;
 
+/**
+ * @description Gets statistics from the /api/stats/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
 function calculateStatistics() {
 	function onSuccess(response) {
 		Ti.API.info("Get steps success", JSON.stringify(response));
