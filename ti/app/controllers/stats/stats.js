@@ -97,7 +97,11 @@ function calculateStatistics() {
 	});
 }
 
-//Note: graphs are temporarily disabled
+/**
+ * @description Event handler for `tblRowDailyGraph`. Opens the daily graph window.
+ * @memberof Controllers.Stats
+ * @todo `tblRowDailyGraph` is currently hidden from the view pending aggregation logic to generate the graph.
+ */
 function tblRowDailyGraph_click() {
 	var data = [];
 	
@@ -116,6 +120,11 @@ function tblRowDailyGraph_click() {
 	win.open();
 }
 
+/**
+ * @description Event handler for `tblRowMonthlyGraph`. Opens the monthly graph window.
+ * @memberof Controllers.Stats
+ * @todo `tblRowMonthlyGraph` is currently hidden from the view pending aggregation logic to generate the graph.
+ */
 function tblRowMonthlyGraph_click() {
 	var data = [];
 	
@@ -134,10 +143,19 @@ function tblRowMonthlyGraph_click() {
 	win.open();
 }
 
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Stats
+ */
 function btnBack_click() {
 	$.stats.close();
 }
 
+/**
+ * @description Event handler for the Window's `open` event. Presets the row values and calls `calculateStatistics()` after a 1000ms timeout.
+ * @memberof Controllers.Stats
+ * @todo Enable click events for `tblRowDailyGraph` and `tblRowMonthlyGraph` after the necessary aggregation logic is done.
+ */
 function window_open() {
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
 	

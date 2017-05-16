@@ -1,3 +1,11 @@
+/**
+ * @file Steps Form Controller
+ * @description The controller for the form to enter steps
+ * @require helpers/FormatHelper
+ * @namespace Controllers.Steps.Form
+ * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy models
+ */
+
 var FormatHelper = require("helpers/FormatHelper");
 
 var args = $.args;
@@ -7,6 +15,10 @@ var moderateMins = 0;
 var vigorousMins = 0;
 var total = 0;
 
+/**
+ * @description Event handler for `btnDone`. Adds the entered data to the Alloy `log` models, calls `args.callback(total)` and closes the window.
+ * @memberof Controllers.Steps.Form
+ */
 function btnDone_click() {
 	//Save value in local storage until Sync
 	Ti.API.info("Date object: " + args.date);
@@ -18,7 +30,7 @@ function btnDone_click() {
 		    steps_date: 	 dateStr, 
 		    steps_total: 	 total,
 		    steps_walked:  	 stepsWalked,
-		    activity_part: 	 1,					//what is this?
+		    activity_part: 	 total - stepsWalked,
 		    moderate:      	 moderateMins,
 		    vigorous:     	 vigorousMins,
 		    synced:			 false
@@ -40,6 +52,10 @@ function btnDone_click() {
 	$.logEntry.close();
 }
 
+/**
+ * @description Event handler for the Window's `open` event. Sets the value of the title bar to reflect the date and adds event listeners to the text fields.
+ * @memberof Controllers.Steps.Form
+ */
 function window_open() {
 	if(Ti.Platform.osname === "android") {
 		$.logEntry.activity.actionBar.title = args.title;
@@ -56,38 +72,63 @@ function window_open() {
 	$.logEntryView.txtVigorousMins.addEventListener('change', txtVigorousMins_change);
 }
 
+/**
+ * @description Event handler for `txtStepsWalked`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
 function txtStepsWalked_change() {
 	calculateTotal();
 }
 
+/**
+ * @description Event handler for `txtModerateMins`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
 function txtModerateMins_change() {
 	calculateTotal();
 }
 
+/**
+ * @description Event handler for `txtVigorousMins`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
 function txtVigorousMins_change() {
 	calculateTotal();
 }
 
+/**
+ * @description Calculates the total steps value and inserts it into `lblDailyTotal`. 
+ * @memberof Controllers.Steps.Form
+ */
 function calculateTotal() {
 	//total = steps walked + (moderate x 100) + (vigorous x 200)
 	stepsWalked = $.logEntryView.txtStepsWalked.value;
 	moderateMins = $.logEntryView.txtModerateMins.value;
 	vigorousMins = $.logEntryView.txtVigorousMins.value;
 	
-	if(stepsWalked == '')
+	if(stepsWalked == '') {
 		stepsWalked = 0;
-	else
+	}
+	else {
 		stepsWalked = parseInt(stepsWalked, 10);
-		
-	if(moderateMins == '')
+	}
+	
+	if(moderateMins == '') {
 		moderateMins = 0;
-	else
+	}
+	else {
 		moderateMins = parseInt(moderateMins, 10);
+	}
 		
-	if(vigorousMins == '')
+	if(vigorousMins == '') {
 		vigorousMins = 0;
-	else
+	}
+	else {
 		vigorousMins = parseInt(vigorousMins, 10);
+	}
 	
 	total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
 	

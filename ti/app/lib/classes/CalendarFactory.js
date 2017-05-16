@@ -1,8 +1,13 @@
 /**
- * Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
+ * @file Calendar Factory
+ * @description Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
  * module.
- * 
- * You should request permission before adding / removing a reminder, like:
+ * @summary A factory for creating different instances of a calendar object depending on the running OS.
+ * @require classes/ReminderRepeatSetting
+ * @require q
+ * @module CalendarFactory
+ * @exports create
+ * @example You should request permission before adding / removing a reminder, like:
  * 
  * reminderInstance.requestPermission()
  * 				   .then(function success() {
@@ -11,13 +16,17 @@
  * 						//error handling
  * 					})
  * 					.then(...)
- * 		
  */
 
 var q = require('q');
 var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
 var reminderRepeatSetting = new ReminderRepeatSetting();
 
+/**
+ * @description Throws an exception if there isn't a reminder repeat setting or reminder label saved to App Properties.
+ * @memberof AndroidReminder
+ * @memberof AppleReminder
+ */
 function validate() {
 	if(!reminderRepeatSetting.isSet()) {
 		throw "Reminder Repeat Setting not set. Cannot add reminder.";	
@@ -57,12 +66,13 @@ function removeReminderData() {
 	}
 }
 
-/*	Until Titanium implements the setRecurrence method of Android's Calendar.Event object 
- * (https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html)
- * http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
- * we will need to create multiple events; one for each reminder.
- * 
- * We also can't remove created events until the event.remove() method is supported.
+/**
+ * @class AndroidReminder
+ * @summary The Android Reminder 
+ * @description Until Titanium implements the setRecurrence method of Android's Calendar.Event object, we will need to create multiple events; one for each reminder.
+ * We also can't remove created events until the `event.remove()` method is supported.
+ * @see https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
  */
 function AndroidReminder() { }
 
@@ -168,6 +178,10 @@ AndroidReminder.prototype.requestPermission = function() {
 	return requestPermission();	
 };
 
+/**
+ * @class AppleReminder
+ * @summary The Apple (iOS) Reminder
+ */
 function AppleReminder() { }
 
 AppleReminder.prototype.add = function(calendar) {

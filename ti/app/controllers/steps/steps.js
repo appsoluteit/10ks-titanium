@@ -1,3 +1,14 @@
+/**
+ * @file Steps Controller
+ * @description The controller for the steps view.
+ * @require helpers/FormatHelper
+ * @require helpers/DateTimeHelper
+ * @require classes/StepsProvider
+ * @require widgets/com.mcongrove.toast
+ * @namespace Controllers.Steps
+ * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy model
+ */
+
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
@@ -6,9 +17,9 @@ var stepsProvider = new StepsProvider($.log);
 var logCollection = Alloy.createCollection('log');
 logCollection.fetch();
 
-/*********************************** LOGIC ***********************************/
 /**
- * Adds a row to the dates table
+ * @description Adds a row to the dates table
+ * @memberof Controllers.Steps
  * @param {String} strLabel The label to add
  * @param {Date} dateObj The date that this record represents.
  * @param {Boolean} isLoadMoreButton A boolean to indicate whether this is the 'Load More' button
@@ -77,7 +88,8 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 }
 
 /**
- * Adds 30 days to tblDays (the dates table) starting from dateObj, then adds another row that says 'Load More'
+ * @description Adds 30 days to tblDays (the dates table) starting from dateObj, then adds another row that says 'Load More'
+ * @memberof Controllers.Steps
  * @param {Date} dateObj The date to start from
  */
 function loadDatesFrom(dateObj) {
@@ -93,6 +105,10 @@ function loadDatesFrom(dateObj) {
 	addDateRow("Load More", dateObj, true);
 }
 
+/**
+ * @description Interacts with the `StepsProvider`. Calls `getSteps()`, then `postSteps()`. 
+ * @memberof Controllers.Steps
+ */
 function sync() {
 	stepsProvider.getSteps()
 			     .then(function success(steps) {
@@ -146,7 +162,10 @@ function sync() {
 	
 }
 
-/*********************************** EVENT HANDLERS ***********************************/
+/**
+ * @description Event handler for the Window's `open` event. Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
+ * @memberof Controllers.Steps
+ */
 function window_open() {
 	var today = new Date();
 	addDateRow("Today", today);
@@ -157,6 +176,12 @@ function window_open() {
 	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
 }
 
+/**
+ * @description Event handler for `tblRow`. If e is a 'Load More' button, it gets deleted and another month of dates are loaded. Otherwise, the form controller is shown.
+ * @listens click
+ * @param {Object} e The event source
+ * @memberof Controllers.Steps
+ */
 function tblRow_click(e) {
 	//Due to the child view in the TableViewRow, e.source doesn't
 	//contain custom properties. Using e.row instead.
@@ -181,10 +206,18 @@ function tblRow_click(e) {
 	}
 }
 
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Steps
+ */
 function btnBack_click() {
 	$.log.close();
 }
 
+/**
+ * @description Event handler for `btnSync`. Calls `sync`.
+ * @memberof Controllers.Steps
+ */
 function btnSync_click() {
 	sync();
 }
