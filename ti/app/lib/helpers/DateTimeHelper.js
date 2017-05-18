@@ -1,4 +1,10 @@
 /**
+ * @file DateTimeHelper
+ * @description Provides static helper functions for performing Date/Time operations
+ * @module
+ */
+
+/**
  * Returns a month name from January - December based on the provided index.
  * @param {Integer} index A number 0-11 that indicates the month.
  * @returns {String}
@@ -24,6 +30,7 @@ function getMonthNameFromIndex(index) {
 
 /**
  * Returns the name of the current month.
+ * @returns {String}
  */
 function getCurrentMonthName() {
 	var m = new Date().getMonth();
@@ -57,7 +64,11 @@ function getDateLabel(dateObj, includeYear) {
 	return str;
 }
 
-//Return August 2017 (eg)
+/**
+ * Computes and returns a label that represents the month for the given date. Eg: January 2017
+ * @param {Date} dateObj A date to operate on
+ * @returns {String} The month/year label
+ */
 function getMonthLabel(dateObj) {	
 	var month = getMonthNameFromIndex(dateObj.getMonth());
 	var year = dateObj.getFullYear();

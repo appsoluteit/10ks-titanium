@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ReminderRepeatSetting</title>
+    <title>JSDoc: Module: lib/helpers/DateTimeHelper.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ReminderRepeatSetting</h1>
+    <h1 class="page-title">Module: lib/helpers/DateTimeHelper.js</h1>
 
     
 
@@ -28,39 +28,16 @@
 
 <header>
     
-        <h2>
-            <span class="ancestors"><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a>~</span>ReminderRepeatSetting</h2>
-        
-    
 </header>
 
 <article>
     <div class="container-overview">
     
         
+            <div class="description"><p>Provides static helper functions for performing Date/Time operations</p></div>
+        
 
-    
-
-    <h4 class="name" id="ReminderRepeatSetting"><span class="type-signature"></span>new ReminderRepeatSetting<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Creates an instance of ReminderRepeatSetting and sets the App Property that it will use.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -92,7 +69,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line25">line 25</a>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -104,20 +81,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -141,14 +105,14 @@
 
     
 
-    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    <h4 class="name" id="~getCurrentMonthName"><span class="type-signature">(inner) </span>getCurrentMonthName<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Returns an array containing the defined reminder days.</p>
+    <p>Returns the name of the current month.</p>
 </div>
 
 
@@ -192,7 +156,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line33">line 33</a>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -226,7 +190,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">String</span>
 
 
     </dd>
@@ -241,14 +205,14 @@
 
     
 
-    <h4 class="name" id="getNextReminderDateTime"><span class="type-signature"></span>getNextReminderDateTime<span class="signature">(startFrom)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~getDateLabel"><span class="type-signature">(inner) </span>getDateLabel<span class="signature">(dateObj, includeYear)</span><span class="type-signature"> &rarr; {String}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Returns a JS DateTime for the next reminder date at the specified reminder time.</p>
+    <p>Computes and returns a label that represents the given date. Eg: Mon Feb 24.</p>
 </div>
 
 
@@ -284,10 +248,15 @@
 
         <tr>
             
-                <td class="name"><code>startFrom</code></td>
+                <td class="name"><code>dateObj</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
             
             </td>
 
@@ -295,7 +264,30 @@
 
             
 
-            <td class="description last"><p>Date The date to start calculations from. This will most likely be new Date()</p></td>
+            <td class="description last"><p>A date object for the date to process</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>includeYear</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether or not this function should include the year at the end of the string</p></td>
         </tr>
 
     
@@ -336,167 +328,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line76">line 76</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="getScheduledRemindersBetween"><span class="type-signature"></span>getScheduledRemindersBetween<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Returns an array of scheduled reminders from now until the endDate.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line178">line 178</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="isSet"><span class="type-signature"></span>isSet<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line68">line 68</a>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -523,7 +355,7 @@
 
         
 <div class="param-desc">
-    <p>Indicates whether or not reminder days are already saved.</p>
+    <p>The date label</p>
 </div>
 
 
@@ -534,7 +366,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">String</span>
 
 
     </dd>
@@ -549,14 +381,14 @@
 
     
 
-    <h4 class="name" id="set"><span class="type-signature"></span>set<span class="signature">(reminderDays)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~getDayBefore"><span class="type-signature">(inner) </span>getDayBefore<span class="signature">(dateObj)</span><span class="type-signature"> &rarr; {Date}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Sets the reminder days.</p>
+    <p>Gets a Date Object for the day before dateObj</p>
 </div>
 
 
@@ -592,10 +424,15 @@
 
         <tr>
             
-                <td class="name"><code>reminderDays</code></td>
+                <td class="name"><code>dateObj</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
             
             </td>
 
@@ -603,7 +440,7 @@
 
             
 
-            <td class="description last"><p>An array containing name/active attributes.</p></td>
+            <td class="description last"><p>The input date</p></td>
         </tr>
 
     
@@ -644,7 +481,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line61">line 61</a>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -667,6 +504,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>A date object set 1 day before dateObj</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -675,15 +534,14 @@
 
     
 
-    <h4 class="name" id="willExpire"><span class="type-signature"></span>willExpire<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~getMonthLabel"><span class="type-signature">(inner) </span>getMonthLabel<span class="signature">(dateObj)</span><span class="type-signature"> &rarr; {String}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Returns true if the reminders are due to expire before the cutoff. Only applicable on Android, since 
-the reminders don't recur indefinitely.</p>
+    <p>Computes and returns a label that represents the month for the given date. Eg: January 2017</p>
 </div>
 
 
@@ -692,6 +550,55 @@ the reminders don't recur indefinitely.</p>
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A date to operate on</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -727,7 +634,7 @@ the reminders don't recur indefinitely.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_classes_ReminderRepeatSetting.js.html">lib/classes/ReminderRepeatSetting.js</a>, <a href="lib_classes_ReminderRepeatSetting.js.html#line235">line 235</a>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -750,6 +657,177 @@ the reminders don't recur indefinitely.</p>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The month/year label</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getMonthNameFromIndex"><span class="type-signature">(inner) </span>getMonthNameFromIndex<span class="signature">(index)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returns a month name from January - December based on the provided index.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A number 0-11 that indicates the month.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_helpers_DateTimeHelper.js.html">lib/helpers/DateTimeHelper.js</a>, <a href="lib_helpers_DateTimeHelper.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 

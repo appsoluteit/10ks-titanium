@@ -1,4 +1,10 @@
 /**
+ * @file FormatHelper
+ * @description Provides static helper methods for common formatting operations.
+ * @module
+ */
+
+/**
  * Accepts a Date object and returns a formatted string in y-m-d. Used for storing dates consistently internally.
  */
 function formatDate(dateObj) {

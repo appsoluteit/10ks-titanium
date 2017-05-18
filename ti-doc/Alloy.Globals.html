@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: Controllers.Home</title>
+    <title>JSDoc: Namespace: Alloy.Globals</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: Controllers.Home</h1>
+    <h1 class="page-title">Namespace: Alloy.Globals</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>Controllers.Home</h2>
+        <h2>Alloy.Globals</h2>
         
     
 </header>
@@ -37,7 +37,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The controller for the home view. This is the first view shown to the user.</p></div>
+            <div class="description"><p>Container for application-wide constants and globals</p></div>
         
 
         
@@ -72,7 +72,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line1">line 1</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -91,14 +91,6 @@
     
 
     
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:classes/CalendarFactory</li>
-        
-            <li>module:classes/ReminderRepeatSetting</li>
-        </ul>
-    
 
     
 
@@ -107,33 +99,30 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id=".AlarmDescription"><span class="type-signature">(static) </span>AlarmDescription<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id=".androidBack_click"><span class="type-signature">(static) </span>androidBack_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>back</code> button on Android devices. Confirms with the user whether or not they want to exit the app and closes this window
-on confirmation.</p>
+    <p>Stores a constant string used as a description for reminders (in addition to the label, which is set by the user)</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -168,7 +157,7 @@ on confirmation.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line120">line 120</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -184,38 +173,28 @@ on confirmation.</p>
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".AuthKey"><span class="type-signature">(static) </span>AuthKey<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id=".btnChallenges_click"><span class="type-signature">(static) </span>btnChallenges_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>btnChallenges</code> button. Opens the challenges view.</p>
+    <p>Stores the authentication token for the current user for use in future API requests. Set by the <code>AuthKey</code> property in App Properties.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -250,7 +229,7 @@ on confirmation.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line87">line 87</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -266,39 +245,28 @@ on confirmation.</p>
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".BaseURL"><span class="type-signature">(static) </span>BaseURL<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id=".btnSettings_click"><span class="type-signature">(static) </span>btnSettings_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>btnSettings</code> button. Opens the settings view.
-After the settings view closes, <code>loginIfNeeded()</code> is called as the user may have logged out from the settings screen.</p>
+    <p>Stores the base URL for all API requests</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -333,7 +301,7 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line106">line 106</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -349,38 +317,28 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".FeedbackURL"><span class="type-signature">(static) </span>FeedbackURL<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id=".btnStatistics_click"><span class="type-signature">(static) </span>btnStatistics_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>btnStatistics</code> button. Opens the stats view.</p>
+    <p>Stores the URL to the feedback form on the 10000 steps website.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -415,7 +373,7 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line78">line 78</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -431,38 +389,29 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".IsDebug"><span class="type-signature">(static) </span>IsDebug<span class="type-signature"> :Boolean</span></h4>
 
-    
-
-    <h4 class="name" id=".btnStepLog_click"><span class="type-signature">(static) </span>btnStepLog_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>btnStepLog</code> button. Opens the steps view.</p>
+    <p>Stores whether or not the app should run in 'debug mode'. If on, the user is able to automatically log into the debug account by clicking login on the 
+auth/login controller. In addition, when visiting settings, there is an additional row for running app unit tests.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Boolean</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -497,7 +446,7 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line69">line 69</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line90">line 90</a>
     </li></ul></dd>
     
 
@@ -513,38 +462,29 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".IsLoggedIn"><span class="type-signature">(static) </span>IsLoggedIn<span class="type-signature"> :Boolean</span></h4>
 
-    
-
-    <h4 class="name" id=".btnTournaments_click"><span class="type-signature">(static) </span>btnTournaments_click<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the <code>btnTournaments</code> button. Opens the tournaments view.</p>
+    <p>Indicates whether or not the user is logged in, according to local data. The API may respond with 'Invalid token.' at any time, indicating that
+the user is not logged in (anymore). This setting is set by the existence of an <code>AuthKey</code> property in App Properties.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Boolean</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -579,7 +519,7 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line96">line 96</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -595,39 +535,29 @@ After the settings view closes, <code>loginIfNeeded()</code> is called as the us
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".ReminderEndDate"><span class="type-signature">(static) </span>ReminderEndDate<span class="type-signature"> :Date</span></h4>
 
-    
-
-    <h4 class="name" id=".loginIfNeeded"><span class="type-signature">(static) </span>loginIfNeeded<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>If the user is not logged in (based off the last known state, stored locally) then the login window is shown. Otherwise, on Android, this function
-also checks whether or not the reminders are about to expire and prompts the user to renew them.</p>
+    <p>Stores the reminder end date which indicates how far in advance reminders should be saved on Android, since due to Titanium SDK restrictions,
+we are unable to save them indefinitely.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Date</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -662,7 +592,7 @@ also checks whether or not the reminders are about to expire and prompts the use
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line17">line 17</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -678,38 +608,28 @@ also checks whether or not the reminders are about to expire and prompts the use
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id=".ReminderExpiryBufferDays"><span class="type-signature">(static) </span>ReminderExpiryBufferDays<span class="type-signature"> :Number</span></h4>
 
-    
-
-    <h4 class="name" id=".window_open"><span class="type-signature">(static) </span>window_open<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Event handler for the window's <code>open</code> event. Adds event listeners for the buttons and calls <code>loginIfNeeded()</code>.</p>
+    <p>Stores how many days before a reminder expiry the user should be prompted to save their reminders again (Android)</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -744,7 +664,7 @@ also checks whether or not the reminders are about to expire and prompts the use
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_home_home.js.html">controllers/home/home.js</a>, <a href="controllers_home_home.js.html#line141">line 141</a>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -760,10 +680,79 @@ also checks whether or not the reminders are about to expire and prompts the use
 
 
 
+        
+            
+<h4 class="name" id=".UserURL"><span class="type-signature">(static) </span>UserURL<span class="type-signature"> :String</span></h4>
 
 
 
 
+<div class="description">
+    <p>Stores the user URL unique to the current user.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Is this field still neccesary?</li>
+        </ul>
+    </dd>
+    
+</dl>
 
 
 
@@ -771,6 +760,80 @@ also checks whether or not the reminders are about to expire and prompts the use
 
 
         
+            
+<h4 class="name" id=".WebURL"><span class="type-signature">(static) </span>WebURL<span class="type-signature"> :String</span></h4>
+
+
+
+
+<div class="description">
+    <p>Stores the URL to the 10000 steps website.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="alloy.js.html">alloy.js</a>, <a href="alloy.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
     
 
     

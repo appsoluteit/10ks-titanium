@@ -1,3 +1,22 @@
+/**
+ * @file APIHelper
+ * @description Provides static helper functions for interacting with the 10000steps REST API.
+ * @require widgets/nl.fokkezb.loading
+ * @exports post
+ * @exports get
+ * @example 
+ * 
+ * APIHelper.post({
+ * 		message: 'Hello, World',			//This will show next to the spinner or 'Loading...' will be shown if not provided
+ * 		success: function(response) { },
+ * 		fail: function(response) { },
+ * 		url: '/steps/,
+ * 		headers: [
+ * 			{ key: 'something', value: 'somethingElse' }
+ * 		]
+ * });
+ */
+
 var spinner = Alloy.createWidget("nl.fokkezb.loading");
 
 function makeResponse(responseText) {
@@ -72,12 +91,20 @@ function send(options) {
 	
 	req.send(options.data);
 }
-	
+
+/**
+ * Initiates a GET request via the 10000steps REST API.
+ * @param {Object} options A config object for the request
+ */
 function get(options) {
 	options.method = "GET";
 	return send(options);
 }
 
+/**
+ * Initiates a POST request via the 10000steps REST API
+ * @param {Object} options A config object for the request
+ */
 function post(options) {
 	options.method = "POST";
 	return send(options);
