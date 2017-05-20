@@ -85,8 +85,27 @@ function getDayBefore(dateObj) {
 	return new Date(dateObj.getTime() - (24*60*60*1000));
 }
 
+/**
+ * Determines whether or not dateObj is a valid date
+ * @param {Object} dateObj A date to examine
+ */
+function isValidDate(dateObj) {
+	if ( Object.prototype.toString.call(dateObj) === "[object Date]" ) {
+		if ( isNaN( dateObj.getTime() ) ) {
+			return false;
+  		}
+  		else {
+  			return true;
+  		}
+	}
+	else {
+		return false;
+	}
+}
+
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getCurrentMonthName = getCurrentMonthName;
 module.exports.getDateLabel = getDateLabel;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
+module.exports.isValidDate = isValidDate;

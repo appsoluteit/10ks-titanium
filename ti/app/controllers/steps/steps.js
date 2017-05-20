@@ -4,6 +4,7 @@
  * @require helpers/FormatHelper
  * @require helpers/DateTimeHelper
  * @require classes/StepsProvider
+ * @require classes/StepsDataProvider
  * @require widgets/com.mcongrove.toast
  * @namespace Controllers.Steps
  * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy model
@@ -12,10 +13,10 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
+var StepsDataProvider = require('classes/StepsDataProvider');
 
 var stepsProvider = new StepsProvider($.log);
-var logCollection = Alloy.createCollection('log');
-logCollection.fetch();
+var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @description Adds a row to the dates table
@@ -27,6 +28,16 @@ logCollection.fetch();
  * @param {String} numSteps (Optional) The text to add to the right of the row, in red
  */
 function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
+	/*
+	Ti.API.info("Adding date row. Params:", 
+		"strLabel=", strLabel,
+		"dateObj=", dateObj,
+		"isLoadMoreButton=", isLoadMoreButton,
+		"index", index,
+		"numSteps", numSteps
+	);
+	*/
+	
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
 		//title: strLabel,
@@ -56,21 +67,38 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	});
 	
 	var dateString = FormatHelper.formatDate(dateObj);
+	//Ti.API.info("Looking for dateString: " + dateString);
 	
-	//findWhere seems to be unsupported??
+	if(numSteps === undefined) {
+		Ti.API.info("Num steps not provided. Reading...");
+		
+		var item = stepsDataProvider.readSingle(dateObj);
+		
+		Ti.API.info("Result: ", item);
+		
+		if(item) {
+			numSteps = item.stepsTotal;
+		}	
+	}
+	
+	/*
 	var item = logCollection.where({
 		'steps_date': dateString
 	});
-	
 	if(item.length > 0) {
 		numSteps = item[0].get('steps_total');
 	}
+	*/
+	
+	var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
+	
+	Ti.API.info("Steps string: " + numStepsStr);
 	
 	var labelRight = Ti.UI.createLabel({
 		right: "10dp",
 		textAlign: "right",
 		color: "red",
-		text: numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "",
+		text: numStepsStr,
 		width: Ti.UI.SIZE
 	});
 	
@@ -79,10 +107,12 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
 						//to become inaccessible by the logEntry controller...need to fix.
 	
-	if(index == undefined) {
+	if(index === undefined) {
+		Ti.API.info("Appending row");
 		$.tblDays.appendRow(row);
 	}
 	else {
+		Ti.API.info("Inserting row. Index = " + index);
 		$.tblDays.insertRowAfter(index, row);	
 	}
 }
@@ -195,10 +225,15 @@ function tblRow_click(e) {
 			date:  e.row.date,
 			obj: e.row,
 			callback: function(stepsLogged) {
-				//Ti.API.info("Callback for: " + e.row.title);
-				
-				addDateRow(e.row.label, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
-				$.tblDays.deleteRow(e.row);
+				if(stepsLogged > 0) {
+					addDateRow(e.row.label, e.row.date, false, e.index, stepsLogged);
+					
+					Ti.API.info("Deleting row:", e.row);
+					
+					//$.tblDays.deleteRow(e.row);
+					$.tblDays.deleteRow(e.index);	//Note: on iOS, it was observed that this line would randomly cause a crash when passing the Ti.UI.TableViewRow.
+													//pass an index instead.	
+				}
 			}
 		}).getView();
 		

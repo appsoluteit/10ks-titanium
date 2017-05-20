@@ -7,7 +7,8 @@ exports.definition = {
 		    "activity_part": "INTEGER",
 		    "moderate":      "INTEGER",
 		    "vigorous":      "INTEGER",
-		    "synced":        "INTEGER"		//no bool in sqlite.
+		    "last_synced_on": "TEXT",
+		    "last_updated_on": "TEXT"
 		},
 		adapter: {
 			type: "sql",

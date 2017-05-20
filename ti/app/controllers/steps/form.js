@@ -2,12 +2,12 @@
  * @file Steps Form Controller
  * @description The controller for the form to enter steps
  * @require helpers/FormatHelper
+ * @require classes/StepsDataProvider
  * @namespace Controllers.Steps.Form
- * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy models
  */
 
-var FormatHelper = require("helpers/FormatHelper");
-
+var FormatHelper = require('helpers/FormatHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 var args = $.args;
 
 var stepsWalked = 0;
@@ -20,20 +20,20 @@ var total = 0;
  * @memberof Controllers.Steps.Form
  */
 function btnDone_click() {
-	//Save value in local storage until Sync
-	Ti.API.info("Date object: " + args.date);
+	var dataProvider = new StepsDataProvider();
 	
-	if(total > 0) {
-		var dateStr = FormatHelper.formatDate(args.date);
+	if(total > 0) {	
+		var stepsStr = FormatHelper.formatDate(args.date);
 		
 		var logInstance = Alloy.createModel('log', {
-		    steps_date: 	 dateStr, 
+			steps_date: 	 stepsStr, 
 		    steps_total: 	 total,
 		    steps_walked:  	 stepsWalked,
 		    activity_part: 	 total - stepsWalked,
 		    moderate:      	 moderateMins,
 		    vigorous:     	 vigorousMins,
-		    synced:			 false
+		    last_synced_on: '',
+		    last_updated_on: ''
 		});
 		
 		if(logInstance.isValid()) {
@@ -43,7 +43,20 @@ function btnDone_click() {
 		else {
 			Ti.API.error("Model not valid. Destroying");
 			logInstance.destroy();
-		}	
+		}
+		
+		/*
+		dataProvider.writeSingle({
+		    steps_date: 	 args.date, 
+		    steps_total: 	 total,
+		    steps_walked:  	 stepsWalked,
+		    activity_part: 	 total - stepsWalked,
+		    moderate:      	 moderateMins,
+		    vigorous:     	 vigorousMins,
+		    last_synced_on: '',
+		    last_updated_on: ''
+		});
+		*/
 	}
 	
 	//Pass the formatted string back to the parent to display it in the table	
