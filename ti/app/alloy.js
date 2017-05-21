@@ -16,8 +16,8 @@ Alloy.Globals.ReminderExpiryBufferDays = 7; //how many days before the expiry sh
 Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 
 //Misc
-Alloy.Globals.IsDebug = true;
-//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
+//Alloy.Globals.IsDebug = true;
+Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)
