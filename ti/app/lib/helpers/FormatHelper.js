@@ -1,13 +1,21 @@
 /**
  * @file FormatHelper
  * @description Provides static helper methods for common formatting operations.
+ * @requires helpers/DateTimeHelper
  * @module
  */
 
+var DateTimeHelper = require('helpers/DateTimeHelper');
+
 /**
  * Accepts a Date object and returns a formatted string in y-m-d. Used for storing dates consistently internally.
+ * Returns an empty string if dateObj is not a valid date object.
  */
 function formatDate(dateObj) {
+	if(!DateTimeHelper.isValidDate(dateObj)) {
+		return '';
+	}
+	
 	var y = dateObj.getFullYear();
 	var m = dateObj.getMonth() + 1;
 	var d = dateObj.getDate();
@@ -23,8 +31,13 @@ function formatDate(dateObj) {
 
 /**
  * Accepts a Date object and returns a formatted string in H:m. Includes am/pm postfix.
+ * Returns an empty string if dateObj is not a valid date object.
  */
 function formatTime(dateObj) {
+	if(!DateTimeHelper.isValidDate(dateObj)) {
+		return '';
+	}
+	
 	var h = dateObj.getHours();
 	var m = dateObj.getMinutes();
 	var postfix = h < 12 ? "am" : "pm";

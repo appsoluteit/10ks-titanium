@@ -11,8 +11,10 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 
 var args = $.args;
+var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @description Gets statistics from the /api/stats/ and populates the table with the results.
@@ -126,19 +128,22 @@ function tblRowDailyGraph_click() {
  * @todo `tblRowMonthlyGraph` is currently hidden from the view pending aggregation logic to generate the graph.
  */
 function tblRowMonthlyGraph_click() {
-	var data = [];
+	var monthData = stepsDataProvider.readByMonthForYear(new Date().getFullYear());
+	var chartData = [];
+	var monthIndex = 1;
 	
-	//TODO: Pass in real values
-	for(var i = 1; i < 13; i++) {
-		data.push({
-			name: DateTimeHelper.getMonthNameFromIndex(i - 1),
-			x: i,
-			y: Math.floor((Math.random() * 10000) + 1) * 30
+	monthData.forEach(function(monthSteps) {
+		chartData.push({
+			name: DateTimeHelper.getMonthNameFromIndex(monthIndex - 1),
+			x: monthIndex,
+			y: monthSteps
 		});
-	}
+		
+		monthIndex++;
+	});
 	
 	var win = Alloy.createController("stats/monthlyGraph", {
-		data: data
+		data: chartData
 	}).getView();
 	win.open();
 }
@@ -165,7 +170,7 @@ function window_open() {
 	$.statsView.lblBusiestDay.text = 0;
 	
 	//$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
-	//$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
+	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
 	setTimeout(function() {
 		calculateStatistics();

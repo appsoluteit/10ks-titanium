@@ -3,12 +3,14 @@
  * @description The controller for the settings view.
  * @require helpers/FormatHelper
  * @require classes/AuthProvider
+ * @require classes/StepsDataProvider
  * @require tests/bootstrap
  * @namespace Controllers.Settings
  */
 
-var FormatHelper = require("helpers/FormatHelper");
+var FormatHelper = require('helpers/FormatHelper');
 var AuthProvider = require('classes/AuthProvider');
+var StepsDataProvider = require('classes/StepsDataProvider');
 var Tests = require('tests/bootstrap');
 
 var args = $.args;
@@ -37,9 +39,11 @@ function window_open() {
 	
 	if(Alloy.Globals.IsDebug) {
 		$.settingsView.tblRowRunTests.addEventListener('click', tblRowTests_click);
+		$.settingsView.tblRowReset.addEventListener('click', tblRowReset_click);
 	}
 	else {
 		$.settingsView.tblContainer.deleteRow($.settingsView.tblRowRunTests);
+		$.settingsView.tblContainer.deleteRow($.settingsView.tblRowReset);
 	}
 	
 	//Set child view event handlers
@@ -112,4 +116,16 @@ function tblRowLogout_click() {
  */
 function tblRowTests_click() {
 	Tests.run();
+}
+
+/**
+ * @description Event handler for `tblRowReset`. This will only appear if `Alloy.Globals.IsDebug` is turned on. It removes all logged
+ * steps from local storage.
+ * @memberof Controllers.Settings
+ */
+function tblRowReset_click() {
+	var stepsDataProvider = new StepsDataProvider();
+	stepsDataProvider.removeAll();
+	
+	alert("Steps data removed");
 }

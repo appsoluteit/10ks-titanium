@@ -59,6 +59,28 @@ function test() {
 				expect(yesterday.getFullYear()).to.equal(2017);
 			});
 		});
+	
+		describe("Is valid date", function() {
+			it("Should return true", function() {
+				var date1 = new Date();
+				var date2 = new Date(2012, 1, 2);
+				
+				expect(DateTimeHelper.isValidDate(date1)).to.equal(true);
+				expect(DateTimeHelper.isValidDate(date2)).to.equal(true);
+			});
+			
+			it("Should return false", function() {
+				var test1 = undefined;
+				var test2 = null;
+				var test3 = '';
+				var test4 = 0;
+				
+				expect(DateTimeHelper.isValidDate(test1)).to.equal(false);
+				expect(DateTimeHelper.isValidDate(test2)).to.equal(false);
+				expect(DateTimeHelper.isValidDate(test3)).to.equal(false);
+				expect(DateTimeHelper.isValidDate(test4)).to.equal(false);
+			});
+		});
 	});
 }
 

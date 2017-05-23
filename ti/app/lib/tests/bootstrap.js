@@ -16,8 +16,8 @@ function run() {
 		//apiHelperTester,
 		//authProviderTester,
 		//calendarFactoryTester,
-		//dateTimeHelperTester,
-		//formatHelperTester,
+		dateTimeHelperTester,
+		formatHelperTester,
 		//reminderRepeatSettingTester,
 		stepsDataProviderTester
 	];

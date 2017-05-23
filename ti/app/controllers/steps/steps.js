@@ -7,7 +7,6 @@
  * @require classes/StepsDataProvider
  * @require widgets/com.mcongrove.toast
  * @namespace Controllers.Steps
- * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy model
  */
 
 var FormatHelper = require('helpers/FormatHelper');
@@ -16,7 +15,7 @@ var StepsProvider = require('classes/StepsProvider');
 var StepsDataProvider = require('classes/StepsDataProvider');
 
 var stepsProvider = new StepsProvider($.log);
-var stepsDataProvider = new StepsDataProvider();
+var stepsDataProvider;	//Initialised on window load
 
 /**
  * @description Adds a row to the dates table
@@ -141,10 +140,25 @@ function loadDatesFrom(dateObj) {
  */
 function sync() {
 	stepsProvider.getSteps()
-			     .then(function success(steps) {
-			     	//TODO: write steps to local storage
-			     	
-			     	return stepsProvider.postSteps();
+			     .then(function success(steps) {		
+			     	steps.forEach(function(item) {
+			     		var json = {
+			     			stepsWalked: item.steps_walked,
+			     			stepsTotal: item.steps_total,
+			     			activityPart: item.activity_part,
+			     			vigorousMins: item.vigorous,
+			     			moderateMins: item.moderate,
+			     			stepsDate: new Date(item.steps_date),
+			     			lastSyncedOn: new Date(),
+			     			lastUpdatedOn: new Date()
+			     		};
+			     		
+			     		stepsDataProvider.writeSingle(json);
+			     	});
+			     	   
+			     	var toPost = stepsDataProvider.readWhereNeedsSyncing();
+			     	  	
+			     	return stepsProvider.postSteps(toPost);
 			     }, function fail(reason) {
 			     	if(reason.detail) {
 			     		if(reason.detail === 'Invalid token.') {
@@ -197,6 +211,9 @@ function sync() {
  * @memberof Controllers.Steps
  */
 function window_open() {
+	//Initialise here to refresh the collection
+	stepsDataProvider = new StepsDataProvider();
+
 	var today = new Date();
 	addDateRow("Today", today);
 	

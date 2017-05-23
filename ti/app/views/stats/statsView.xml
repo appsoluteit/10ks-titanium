@@ -62,10 +62,8 @@
 		-->
 		
 		<!-- Monthly Graph Button -->
-		<!--
 		<TableViewRow id="tblRowMonthlyGraph">
 			<Label class="row-label">Monthly Graph</Label>
 		</TableViewRow>
-		-->
 	</TableView>
 </Alloy>

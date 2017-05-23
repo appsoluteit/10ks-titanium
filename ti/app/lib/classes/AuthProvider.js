@@ -2,12 +2,14 @@
  * @file Authentication Provider
  * @description Provides access to the authentication API
  * @require helpers/APIHelper
+ * @require classes/StepsDataProvider
  * @require q
  * @require widgets/com.mcongrove.toast
  * @exports AuthProvider
  */
 
 var APIHelper = require('helpers/APIHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
 
 /**
@@ -151,16 +153,19 @@ AuthProvider.prototype.getUser = function() {
 };
 
 /**
- * @description Call logout on the API, causing the access token to invalidate.
+ * @description Call logout on the API, causing the access token to invalidate. This also removes all app properties, sets `Alloy.Globals` to an
+ * empty object and removes all steps data stored locally.
  */
 AuthProvider.prototype.logout = function() {
 	var self = this;
 	var defer = q.defer();
 	
+	var stepsDataProvider = new StepsDataProvider();
+	
 	function onSuccess(response) {
-		Ti.App.Properties.removeProperty("AuthKey");
-		Alloy.Globals.IsLoggedIn = false;
-		Alloy.Globals.AuthKey = "";
+		Ti.App.Properties.removeAllProperties();
+		Alloy.Globals = {};
+		stepsDataProvider.removeAll();
 		
 		setTimeout(function() {
 			if(self.container) {
