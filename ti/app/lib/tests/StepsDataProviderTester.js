@@ -46,7 +46,6 @@ function test() {
 		
 		describe("Write Single (UPDATE)", function() {
 			//TODO
-			
 		});
 		
 		describe("Read single", function() {
@@ -54,6 +53,8 @@ function test() {
 			var objIn = getDummy();
 			
 			before(function(done) {
+				dataProvider.removeAll();
+				
 				objIn.stepsDate = new Date(2017, 1, 1);		
 				dataProvider.writeSingle(objIn);
 				done();
@@ -128,6 +129,103 @@ function test() {
 				expect(arrSteps.length).to.equal(2);
 				expect(arrSteps[0].stepsTotal).to.equal(objIn1.stepsTotal);
 				expect(arrSteps[1].stepsTotal).to.equal(objIn2.stepsTotal);
+			});
+		});
+		
+		describe("Read by month for year", function() {			
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 0, 1)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2017, 1, 1)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(2017, 2, 1)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(2017, 2, 1)
+				});
+				
+				done();
+			});
+			
+			it("Should return 10 for January, 20 for February and 30 for March", function() {
+				dataProvider.load();
+				var data = dataProvider.readByMonthForYear(2017);
+				
+				expect(data).to.be.an('array');
+				expect(data.length).to.equal(12);
+				expect(data[0]).to.equal(10);
+				expect(data[1]).to.equal(20);
+				expect(data[2]).to.equal(30);
+				
+				expect(data[3]).to.equal(0);
+				expect(data[4]).to.equal(0);
+				expect(data[5]).to.equal(0);
+				expect(data[6]).to.equal(0);
+				expect(data[7]).to.equal(0);
+				expect(data[8]).to.equal(0);
+				expect(data[9]).to.equal(0);
+				expect(data[10]).to.equal(0);
+				expect(data[11]).to.equal(0);
+			});
+		});
+		
+		describe("Read by day for month", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1)
+				});
+						
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2017, 4, 2)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(2017, 4, 3)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(2017, 4, 3)
+				});
+				
+				done();
+			});
+			
+			it("Should return 10 on 1/05, 20 on 2/05 and 30 on 3/05", function() {
+				dataProvider.load();
+				var data = dataProvider.readByDayForMonth(5, 2017);
+				//Ti.API.info(data);
+				
+				expect(data).to.be.an('array');
+				expect(data.length).to.equal(31);
+				expect(data[0]).to.equal(10);
+				expect(data[1]).to.equal(20);
+				expect(data[2]).to.equal(30);
+				
+				for(var i = 3; i < 30; i++) {
+					expect(data[i]).to.equal(0);
+				}
 			});
 		});
 	});

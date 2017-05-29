@@ -154,15 +154,41 @@ StepsDataProvider.prototype.readWhereNeedsSyncing = function() {
 
 /**
  * @description Returns an array of step records aggregated for the provided year. The array will have 12 elements, one for each month, from January to December.
- * @param {Number} year The year to get the data for
+ * @param {Number} year The year to get the data for. Eg: 2017
  * @returns {Array.<Number>} An array of step records for the each month of the provided year
  */
 StepsDataProvider.prototype.readByMonthForYear = function(year) {	
-	var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+	var data = new Array(12);
+	for(var i = 0; i < data.length; i++) {
+		data[i] = 0;
+	}
+	
+	//Ti.API.info("Months data", data);
 	
 	this.models.forEach(function(item) {
 		if(item.stepsDate.getFullYear() === year) {
 			data[item.stepsDate.getMonth()] += item.stepsTotal;	
+		}
+	});
+	
+	return data;
+};
+
+/**
+ * @description Returns an array of step records aggregated for the provided month and year. The array will have 31 elements, one for each possible day of a month.
+ * @param {Number} month The month to get the data for. Eg: 1 for January, 12 for December.
+ * @param {Number} year The year to get the data for. Eg: 2017
+ * @returns {Array.<Number>} An array of steps records for each day of the provided month/year.
+ */
+StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
+	var data = new Array(31);
+	for(var i = 0; i < data.length; i++) {
+		data[i] = 0;
+	}
+	
+	this.models.forEach(function(item) {
+		if(item.stepsDate.getFullYear() === year && item.stepsDate.getMonth() === month - 1) {
+			data[item.stepsDate.getDate() - 1] += item.stepsTotal;
 		}
 	});
 	
@@ -200,19 +226,5 @@ StepsDataProvider.prototype.removeAll = function() {
 	Ti.API.debug("Removing all models");
 	collection.deleteAll();
 };
-
-//1. readForDate(DateTime) : StepLog
-//2. readUpdatedSince(DateTime) : StepLog[]
-//3. readByMonth(...)
-
-/*
- * StepsDataProvider.where(function(item) {
- * 	   DateTimeHelper.isSameDay(item.StepsDate, someDay);
- * });
- * 
- * StepsDataProvider.where(function(item) {
- * 	   item.LastUpdatedOn.getTime() >= item.LastSyncedOn.getTime()
- * });
- */
 
 module.exports = StepsDataProvider;
