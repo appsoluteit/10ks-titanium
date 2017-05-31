@@ -1,5 +1,27 @@
 <Alloy>
-	<View class="container">
-		<Label>Challenges</Label>
-	</View>
+	<TableView id="tblChallenges">
+		<TableViewRow height="Ti.UI.SIZE">
+			<View layout="vertical">
+				<View class="challengeBody">
+					<View layout="vertical" backgroundColor="orange" width="25%" height="100dp">
+						<ImageView
+							top="5dp"
+							bottom="5dp"
+							image="/common/challenge_badge_small.png">
+						</ImageView>
+					</View>
+					
+					<View layout="vertical" backgroundColor="yellow" width="74%">
+						<Label class="taskName">My cool task</Label>
+						<Label class="taskDescription">My cool task description</Label>
+					</View>
+				</View>
+				
+				<View class="challengeFooter">
+					<Label class="footerSteps">10,000 Steps</Label>
+					<Label class="footerPercentComplete">10% Complete</Label>
+				</View>
+			</View>
+		</TableViewRow>
+	</TableView>
 </Alloy>

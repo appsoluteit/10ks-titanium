@@ -1,4 +1,36 @@
+".challengeBody": {
+	backgroundColor: "red",
+	layout: "horizontal",	
+	width: "100%"
+}
 
-".container" : {
-  
+".challengeFooter": {
+	backgroundColor: "blue",
+	layout: "horizontal",
+	width: "100%"
+}
+
+".footerSteps": {
+	textAlign: "left",
+	width: "49%",
+	left: "1%",
+	backgroundColor: "pink"
+}
+
+".footerPercentComplete": {
+	textAlign: "right",
+	width: "49%",
+	right: "1%",
+	backgroundColor: "green"
+}
+
+".taskName": {
+	font: {
+		fontWeight: "bold"
+	},
+	
+}
+
+".taskDescription": {
+
 }
