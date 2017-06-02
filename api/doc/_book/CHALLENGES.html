@@ -307,14 +307,16 @@
 </tr>
 <tr>
 <td><code>results</code></td>
-<td><code>ChallengeContainer[]</code></td>
+<td><code>UserChallenge[]</code></td>
 <td></td>
 <td>A list of challenges records for this user</td>
 </tr>
 </tbody>
 </table>
-<h5 id="challengecontainer">ChallengeContainer</h5>
-<p>The ChallengeContainer is the top level object definition for challenges, the schema of which runs three levels deep.</p>
+<h5 id="userchallenge">UserChallenge</h5>
+<p>The UserChallenge is the top level object definition for challenges, the schema of which runs three levels deep. This level contains information
+about the challenge <em>relative to the currently logged in user</em>. Challenges may be joined by multiple users, though it this is only doable via the website
+at this stage.</p>
 <table>
 <thead>
 <tr>
@@ -329,7 +331,7 @@
 <td><code>start_date</code></td>
 <td><code>string</code></td>
 <td><code>2017-06-01</code></td>
-<td>The start date of the challenge</td>
+<td>The date on which the user joined this challenge.</td>
 </tr>
 <tr>
 <td><code>steps_goal</code></td>
@@ -341,13 +343,13 @@
 <td><code>steps_total</code></td>
 <td><code>int</code></td>
 <td><code>99</code></td>
-<td>The total number of steps so far</td>
+<td>The total number of steps the user has logged so far for this challenge</td>
 </tr>
 <tr>
 <td><code>is_active</code></td>
 <td><code>bool</code></td>
 <td><code>true</code></td>
-<td>Whether or not the challenge is active (What&apos;s the difference between active or inactive??)</td>
+<td>Whether or not the challenge is active for the user (What&apos;s the difference between active or inactive??)</td>
 </tr>
 <tr>
 <td><code>percentage_complete</code></td>
@@ -359,14 +361,13 @@
 <td><code>task</code></td>
 <td><code>Task</code></td>
 <td><code>see Task below</code></td>
-<td>A Task object</td>
+<td>A Task object representing the &apos;Task&apos; (sub-challenge) that the user has joined</td>
 </tr>
 </tbody>
 </table>
 <h5 id="task">Task</h5>
 <p>A Task contains a little more information about the challenge. A challenge can theoretically contain a number of &apos;tasks&apos;
-(which could be variations of the challenge for different fitness levels, etc) but since you can only join one task per challenge
-(or so it seems), I&apos;m not sure why the nesting is needed.</p>
+(which could be variations of the challenge for different fitness levels, etc).</p>
 <table>
 <thead>
 <tr>
@@ -381,25 +382,25 @@
 <td><code>name</code></td>
 <td><code>string</code></td>
 <td><code>Some Challenge</code></td>
-<td>The name of the challenge</td>
+<td>The name of the task. This will typically differ from the name of the challenge.</td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td><code>string</code></td>
-<td><code>More information about the challenge.</code></td>
+<td><code>More information about the task.</code></td>
 <td>More details about the challenge. It appears as though HTML formatting is supported</td>
 </tr>
 <tr>
 <td><code>steps_goal</code></td>
 <td><code>int</code></td>
 <td><code>99</code></td>
-<td>Not sure how this differs from <code>steps_goal</code> in ChallengeContainer</td>
+<td>This seems to be the same as <code>steps_goal</code> in UserChallenge</td>
 </tr>
 <tr>
 <td><code>challenge</code></td>
 <td><code>Challenge</code></td>
 <td><code>See Challenge below</code></td>
-<td>A Challenge object.</td>
+<td>A Challenge object, which may contain multiple tasks, though only one will be returned.</td>
 </tr>
 </tbody>
 </table>
@@ -436,7 +437,7 @@
 <td><code>is_active</code></td>
 <td><code>bool</code></td>
 <td><code>false</code></td>
-<td>Whats the difference between this and what&apos;s in ChallengeContainer?</td>
+<td>Whether or not the challenge is active for all users</td>
 </tr>
 </tbody>
 </table>
@@ -474,7 +475,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Challenges","level":"1.8","depth":1,"next":{"title":"Tournaments (coming soon)","level":"1.9","depth":1,"ref":"","articles":[]},"previous":{"title":"Stats","level":"1.7","depth":1,"path":"STATS.md","ref":"STATS.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"CHALLENGES.md","mtime":"2017-05-30T09:47:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T09:35:59.609Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Challenges","level":"1.8","depth":1,"next":{"title":"Tournaments (coming soon)","level":"1.9","depth":1,"ref":"","articles":[]},"previous":{"title":"Stats","level":"1.7","depth":1,"path":"STATS.md","ref":"STATS.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"CHALLENGES.md","mtime":"2017-05-31T09:13:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-02T10:54:58.114Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -1,0 +1,52 @@
+".challengeBody": {
+	layout: "horizontal",	
+	width: "100%"
+}
+
+".challengeFooter": {
+	layout: "horizontal",
+	width: "100%"
+}
+
+".footerSteps": {
+	textAlign: "left",
+	width: "49%",
+	left: "1%"
+}
+
+".footerPercentComplete": {
+	textAlign: "right",
+	width: "49%",
+	right: "1%"
+}
+
+".taskName": {
+	font: {
+		fontWeight: "bold"
+	},
+	
+}
+
+".taskDescription": { }
+
+".labelContainer": {
+	layout: "vertical", 
+	width: "74%"
+}
+
+".imageContainer": {
+	layout: "vertical", 
+	width: "25%", 
+	height: "100dp"
+}
+
+"ImageView": {
+	top: "5dp",
+	bottom: "5dp",
+	left: "5dp",
+	image: "/common/challenge_badge_small.png"
+}
+
+"TableViewRow": {
+	height: Ti.UI.SIZE
+}

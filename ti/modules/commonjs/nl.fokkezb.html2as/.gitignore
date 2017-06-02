@@ -1,0 +1,7 @@
+/coverage
+/node_modules
+/spec
+/test
+.DS_Store
+/*.zip
+/npm-debug.log

@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="challenges" platform="ios">
-		<Window title="Challenges">
+		<Window title="Challenges" onOpen="window_open">
 			<LeftNavButton>
 				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
 			</LeftNavButton>
@@ -11,7 +11,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="challenges" platform="android">
+	<Window id="challenges" platform="android" onOpen="window_open">
 		<ActionBar 
 			title="Challenges" 
 			displayHomeAsUp="true" 

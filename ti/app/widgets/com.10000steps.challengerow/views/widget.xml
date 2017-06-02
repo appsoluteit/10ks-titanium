@@ -1,0 +1,20 @@
+<Alloy>
+	<View id="view" layout="vertical">
+		<View class="challengeBody">
+			<View class="imageContainer">
+				<ImageView>
+				</ImageView>
+			</View>
+			
+			<View id="labelContainer" class="labelContainer">
+				<Label id="taskName" class="taskName"></Label>
+				<Label module="xp.ui" id="taskDescription" class="taskDescription" html="<b>Hello, </b> World!"></Label>
+			</View>
+		</View>
+		
+		<View class="challengeFooter">
+			<Label id="stepsWalked" class="footerSteps"></Label>
+			<Label id="percentComplete" class="footerPercentComplete"></Label>
+		</View>
+	</View>
+</Alloy>
