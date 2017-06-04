@@ -65,6 +65,25 @@ function getDateLabel(dateObj, includeYear) {
 }
 
 /**
+ * Computes and returns a label that represents the date in dd/MM/yyyy format. Eg: 01/02/2013
+ * @param {Date} dateobj A date object
+ * @returns {String} The date label
+ */
+function getShortDateLabel(dateObj) {
+	if(isValidDate(dateObj)) {
+		return ("0" + dateObj.getDate()).slice(-2) 
+		     + "/"
+		     + ("0" + (dateObj.getMonth()+1)).slice(-2)
+		     + "/"
+		     + dateObj.getFullYear();
+	}
+	else {
+		Ti.API.error("Invalid date supplied to getShortDateLabel: ", dateObj);
+		return "";
+	}
+}
+
+/**
  * Computes and returns a label that represents the month for the given date. Eg: January 2017
  * @param {Date} dateObj A date to operate on
  * @returns {String} The month/year label
@@ -105,6 +124,7 @@ function isValidDate(dateObj) {
 
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getCurrentMonthName = getCurrentMonthName;
+module.exports.getShortDateLabel = getShortDateLabel;
 module.exports.getDateLabel = getDateLabel;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;

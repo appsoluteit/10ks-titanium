@@ -16,13 +16,8 @@
 		
 		<View class="line"></View>
 		
-		<View class="challengeFooter">
-			<Label id="challengeDate"></Label>
-			<Label id="startedOn"></Label>	
-			<Label id="goalSteps"></Label>			
-			<Label id="stepsWalked"></Label>
-			<Label id="percentComplete"></Label>
-		</View>
+		<TableView id="tblMetrics" class="challengeFooter">
+		</TableView>
 		
 		<View class="bar">
 		</View>

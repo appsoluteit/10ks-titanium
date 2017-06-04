@@ -4,7 +4,6 @@
 }
 
 ".challengeFooter": {
-	layout: "vertical",
 	width: "100%",
 	top: "5dp",
 	left: "5dp",
