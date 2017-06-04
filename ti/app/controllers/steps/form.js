@@ -40,8 +40,6 @@ function window_open() {
 	
 	if(Ti.Platform.osname === "android") {
 		$.logEntry.activity.actionBar.title = args.title;
-		
-		Ti.API.info("Setting action bar title: " + args.title);
 	}
 	else {
 		$.window.title = args.title;

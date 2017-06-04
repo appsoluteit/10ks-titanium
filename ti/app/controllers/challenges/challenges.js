@@ -8,6 +8,7 @@
 
 var args = $.args;
 var APIHelper = require('helpers/APIHelper');
+var FormatHelper = require('helpers/FormatHelper');
 
 /**
  * @description Event handler for `btnBack` which closes the window.
@@ -27,13 +28,34 @@ function fetchChallenges() {
 			Alloy.createWidget("com.10000steps.challengerow", null, {
 				taskName: result.task.name,
 				taskDescription: result.task.description,
-				stepsWalked: result.steps_goal,
+				goalSteps: FormatHelper.formatNumber(result.steps_goal),
 				percentComplete: result.percentage_complete,
 				view: row
 			});
 			
+			row.addEventListener('click', function() {
+				var detailWindow = Alloy.createController('challenges/challengesDetail', result).getView();
+				detailWindow.open();
+			});
+			
 			$.challengesView.tblChallenges.appendRow(row);				
 		});
+		
+		var webLink = Ti.UI.createLabel({
+			text: "To view a list of all available challenges or to join a challenge, please visit the 10,000 steps website",
+			color: "#0645AD",
+			font: {
+				fontSize: 9
+			},
+			textAlign: "center"
+		});
+		webLink.addEventListener('click', function() {
+			Ti.Platform.openURL('https://www.10000steps.org.au/dashboard/challenges/');
+		});
+		var linkRow = Ti.UI.createTableViewRow();
+		linkRow.add(webLink);
+		
+		$.challengesView.tblChallenges.appendRow(linkRow);
 	}
 	
 	function onFail(reason) {

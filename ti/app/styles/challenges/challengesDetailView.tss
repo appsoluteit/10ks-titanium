@@ -1,0 +1,50 @@
+".challengeBody": {
+	layout: "horizontal",	
+	width: "100%"
+}
+
+".challengeFooter": {
+	layout: "vertical",
+	width: "100%",
+	top: "5dp",
+	left: "5dp",
+	right: "5dp"
+}
+
+".challengeFooter Label": {
+	width: "100%"
+}
+
+".line": {
+    height: '2dp',
+    bottom: '2dp',
+    left: '0dp',
+    right: '0dp',
+    borderWidth: '1',
+    borderColor:'#aaa',
+}
+
+".labelContainer": {
+	layout: "vertical", 
+	width: "90%",
+	left: "5%",
+	right: "5%",
+	bottom: "5%"
+}
+
+".imageContainer": {
+	layout: "vertical", 
+	width: "100%", 
+	height: "100dp"
+}
+
+"ImageView": {
+	top: "5dp",
+	bottom: "5dp",
+	left: "5dp",
+	image: "/common/challenge_badge_small.png"
+}
+
+".bar": {
+	
+}

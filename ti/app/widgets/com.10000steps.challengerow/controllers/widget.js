@@ -8,12 +8,23 @@
  * percentComplete - (integer) the percentage complete so far
  */
 
+var ui = require('xp.ui');
 var CONFIG = arguments[0] || {};
 
+console.log("Adding row", CONFIG);
+
 $.taskName.text = CONFIG.taskName;
-$.stepsWalked.text = CONFIG.stepsWalked + " Steps";
+$.goalSteps.text = CONFIG.goalSteps + " Steps";
 $.percentComplete.text = CONFIG.percentComplete + "%";
 
-//$.taskDescription.text = CONFIG.taskDescription.substring(0, 50);	
+var taskDescription = ui.createLabel({
+	left: "5dp",
+	html: CONFIG.taskDescription.substring(0, 100) + "...",
+	font: {
+		fontSize: 10
+	}
+});
+
+$.labelContainer.add(taskDescription);
 
 CONFIG.view.add($.view);

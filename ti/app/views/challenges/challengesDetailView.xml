@@ -1,5 +1,5 @@
 <Alloy>
-	<View id="view" layout="vertical">
+	<ScrollView id="view" layout="vertical" scrollType="vertical">
 		<View class="challengeBody">
 			<View class="imageContainer">
 				<ImageView>
@@ -7,7 +7,6 @@
 			</View>
 			
 			<View id="labelContainer" class="labelContainer">
-				<Label id="taskName" class="taskName"></Label>
 				<!-- 
 					The task description gets dynamically generated and added to this container, since the html is only
 					'settable' during construction
@@ -15,9 +14,17 @@
 			</View>
 		</View>
 		
+		<View class="line"></View>
+		
 		<View class="challengeFooter">
-			<Label id="goalSteps" class="footerSteps"></Label>
-			<Label id="percentComplete" class="footerPercentComplete"></Label>
+			<Label id="challengeDate"></Label>
+			<Label id="startedOn"></Label>	
+			<Label id="goalSteps"></Label>			
+			<Label id="stepsWalked"></Label>
+			<Label id="percentComplete"></Label>
 		</View>
-	</View>
+		
+		<View class="bar">
+		</View>
+	</ScrollView>
 </Alloy>
