@@ -55,17 +55,13 @@
 		</TableViewRow>
 		
 		<!-- Daily Graph Button -->
-		<!--
 		<TableViewRow id="tblRowDailyGraph">
 			<Label class="row-label">Daily Graph</Label>
 		</TableViewRow>
-		-->
 		
 		<!-- Monthly Graph Button -->
-		<!--
 		<TableViewRow id="tblRowMonthlyGraph">
 			<Label class="row-label">Monthly Graph</Label>
 		</TableViewRow>
-		-->
 	</TableView>
 </Alloy>

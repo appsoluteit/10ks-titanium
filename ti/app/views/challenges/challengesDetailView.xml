@@ -1,0 +1,25 @@
+<Alloy>
+	<ScrollView id="view" layout="vertical" scrollType="vertical">
+		<View class="challengeBody">
+			<View class="imageContainer">
+				<ImageView>
+				</ImageView>
+			</View>
+			
+			<View id="labelContainer" class="labelContainer">
+				<!-- 
+					The task description gets dynamically generated and added to this container, since the html is only
+					'settable' during construction
+				-->
+			</View>
+		</View>
+		
+		<View class="line"></View>
+		
+		<TableView id="tblMetrics" class="challengeFooter">
+		</TableView>
+		
+		<View class="bar">
+		</View>
+	</ScrollView>
+</Alloy>

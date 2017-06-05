@@ -1,3 +1,10 @@
+/**
+ * @file Reminder Repeat Setting
+ * @description Abstracts logic related to the reminder repeat setting. Use this class instead of manipulating the App Property directly.
+ * @require helpers/FormatHelper
+ * @exports ReminderRepeatSetting
+ */
+
 /*
  * Note: There is a 1 day difference between the dayOfWeek value saved in the ReminderRepeat
  * property and the result of calling getDay() on a JavaScript object. This difference is due to a one day
@@ -11,13 +18,17 @@
 
 var FormatHelper = require("helpers/FormatHelper");
 
+/**
+ * @description Creates an instance of ReminderRepeatSetting and sets the App Property that it will use.
+ * @class
+ */
 function ReminderRepeatSetting() { 
 	this.PropertyName = 'ReminderRepeat';	
 }
 
 /**
  * Returns an array containing the defined reminder days.
- * @returns {Array[Object]}
+ * @returns {Array.<Object>}
  */
 ReminderRepeatSetting.prototype.get = function() {
 	Ti.API.debug("Getting reminder days");

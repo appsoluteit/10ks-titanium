@@ -7,7 +7,8 @@ exports.definition = {
 		    "activity_part": "INTEGER",
 		    "moderate":      "INTEGER",
 		    "vigorous":      "INTEGER",
-		    "synced":        "INTEGER"		//no bool in sqlite.
+		    "last_synced_on": "TEXT",
+		    "last_updated_on": "TEXT"
 		},
 		adapter: {
 			type: "sql",
@@ -26,17 +27,17 @@ exports.definition = {
 	},
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
-			// extended functions and properties go here
-
-			// For Backbone v1.1.2, uncomment the following to override the
-			// fetch method to account for a breaking change in Backbone.
-			/*
-			fetch: function(options) {
-				options = options ? _.clone(options) : {};
-				options.reset = true;
-				return Backbone.Collection.prototype.fetch.call(this, options);
-			}
-			*/
+			//https://gist.github.com/aaronksaunders/5066608
+			deleteAll : function() {
+				var collection = this;
+				
+				var sql = "DELETE FROM " + collection.config.adapter.collection_name;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				db.execute(sql);
+				db.close();
+				
+				collection.trigger('sync');
+			},
 		});
 
 		return Collection;

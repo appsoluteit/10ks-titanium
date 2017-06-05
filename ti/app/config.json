@@ -9,8 +9,9 @@
     "os:mobileweb": {},
     "os:windows": {},
     "dependencies": {
-    	"nl.fokkezb.loading": "*",
-    	"com.mcongrove.toast": "*",
-    	"com.alco.highcharts": "*"
+        "nl.fokkezb.loading": "*",
+        "com.mcongrove.toast": "*",
+        "com.alco.highcharts": "*",
+        "com.10000steps.challengerow": "1.0"
     }
 }

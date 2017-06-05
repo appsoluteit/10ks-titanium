@@ -14,6 +14,20 @@ function test() {
 				
 				expect(dateStr).to.equal('1990-05-27');
 			});
+			
+			it("Should not throw", function() {
+				var date = undefined;
+				var dateStr = FormatHelper.formatDate(date);
+				
+				expect(dateStr).to.equal('');
+			});
+			
+			it("Should not throw", function() {
+				var date = new Date();
+				var dateStr = FormatHelper.formatDate(date);
+				
+				expect(dateStr).to.not.be.undefined;
+			});
 		});	
 		
 		describe("Format Time", function() {

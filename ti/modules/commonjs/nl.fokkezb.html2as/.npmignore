@@ -1,0 +1,12 @@
+/.git
+/coverage
+/example
+/node_modules
+/spec
+/test
+.DS_Store
+/.editorconfig
+/.gitignore
+/.travis.yml
+/*.zip
+/npm-debug.log

@@ -27,10 +27,14 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
+ * @file Calendar Factory
+ * @description Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
  * module.
- * 
- * You should request permission before adding / removing a reminder, like:
+ * @summary A factory for creating different instances of a calendar object depending on the running OS.
+ * @require classes/ReminderRepeatSetting
+ * @require q
+ * @exports create
+ * @example You should request permission before adding / removing a reminder, like:
  * 
  * reminderInstance.requestPermission()
  * 				   .then(function success() {
@@ -39,7 +43,6 @@
  * 						//error handling
  * 					})
  * 					.then(...)
- * 		
  */
 
 var q = require('q');
@@ -85,15 +88,23 @@ function removeReminderData() {
 	}
 }
 
-/*	Until Titanium implements the setRecurrence method of Android's Calendar.Event object 
- * (https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html)
- * http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
- * we will need to create multiple events; one for each reminder.
- * 
- * We also can't remove created events until the event.remove() method is supported.
+/**
+ * @class AndroidReminder
+ * @summary The Android Reminder 
+ * @description Until Titanium implements the setRecurrence method of Android's Calendar.Event object, we will need to create multiple events; one for each reminder.
+ * We also can't remove created events until the `event.remove()` method is supported.
+ * @see https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event-method-remove
  */
 function AndroidReminder() { }
 
+/**
+ * @description Adds reminders to the calendar from now until one month in the future. When approaching this time, the app will prompt the user to re-save 
+ * their reminders from the home controller. 
+ * @param {Ti.Calendar} calendar The calendar to add the event to. Call `getCalendar()` to obtain this.
+ * @returns Promise
+ */
 AndroidReminder.prototype.add = function(calendar) {
 	function createEvent(calendar, time) {
 		Ti.API.debug("Creating event. Calender:", calendar, "Time:", time);
@@ -150,6 +161,13 @@ AndroidReminder.prototype.add = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Removes reminder data from App Properties. This does not actually remove any reminders from the Calendar, since `event.remove()` is not yet supported on 
+ * Android. 
+ * @param {Ti.Calendar} calendar The calendar to remove the event from. Call `getCalendar()` to obtain this.
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
+ * @returns Promise
+ */
 AndroidReminder.prototype.remove = function(calendar) {
 	//Note: Titanium currently does not support removing / updating events in Android. So the best we can do right now is clear our data.
 	var defer = q.defer();
@@ -159,6 +177,11 @@ AndroidReminder.prototype.remove = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Gets a list of selectable calendars and shows them in an option dialog. Once the user has selected one, the promise is resolved and the selected calendar
+ * is passed as an argument.
+ * @returns Promise
+ */
 AndroidReminder.prototype.getCalendar = function() {
 	Ti.API.debug("Getting calendar for Android");
 	
@@ -192,12 +215,25 @@ AndroidReminder.prototype.getCalendar = function() {
     return defer.promise;
 };
 
+/**
+ * @description Requests calendar permissions from the OS. This should be called before anything else.
+ * @returns Promise
+ */
 AndroidReminder.prototype.requestPermission = function() {
 	return requestPermission();	
 };
 
+/**
+ * @class AppleReminder
+ * @summary The Apple (iOS) Reminder
+ */
 function AppleReminder() { }
 
+/**
+ * @description Adds reminders to the calendar. This should be `Ti.Calendar.defaultCalendar`.
+ * @param {Object} calendar
+ * @return Promise
+ */
 AppleReminder.prototype.add = function(calendar) {
 	Ti.API.debug("Adding reminder on iOS");
 	
@@ -269,6 +305,11 @@ AppleReminder.prototype.add = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Removes reminders from the calendar and removes the reminder data from App Properties.
+ * @param {Object} calendar The calendar to remove the events from. This should be `Ti.Calendar.defaultCalendar`.
+ * @returns Promise
+ */
 AppleReminder.prototype.remove = function(calendar) {
 	var defer = q.defer();
 	
@@ -301,6 +342,11 @@ AppleReminder.prototype.remove = function(calendar) {
 	}	
 };
 
+/**
+ * @descripton On iOS, passing a `Ti.Calendar` via promise arguments was buggy. This function simply returns a promise to allow the calling code to 
+ * pass `Ti.Calendar.defaultCalendar` to `AppleReminderInstance.add(...)`.
+ * @returns Promise
+ */
 AppleReminder.prototype.getCalendar = function() {
 	//Note: For some reason, the iOS engine doesn't like passing the default calendar as an argument to resolve. 
 	//We handle it via the caller.	
@@ -309,6 +355,10 @@ AppleReminder.prototype.getCalendar = function() {
 	return defer.promise;
 };
 
+/**
+ * @description Requests calendar permissions from the OS. This should be called before anything else.
+ * @returns Promise
+ */
 AppleReminder.prototype.requestPermission = function() {
 	return requestPermission();
 };
@@ -332,13 +382,13 @@ module.exports.create = create;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addDateRow">addDateRow</a></li><li><a href="global.html#btnBack_click">btnBack_click</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatNumber">formatNumber</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getCurrentMonthName">getCurrentMonthName</a></li><li><a href="global.html#getDateLabel">getDateLabel</a></li><li><a href="global.html#getDayBefore">getDayBefore</a></li><li><a href="global.html#getMonthNameFromIndex">getMonthNameFromIndex</a></li><li><a href="global.html#loadDatesFrom">loadDatesFrom</a></li><li><a href="global.html#q">q</a></li><li><a href="global.html#unformatTime">unformatTime</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun May 14 2017 13:46:42 GMT+1000 (AEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
 </footer>
 
 <script> prettyPrint(); </script>

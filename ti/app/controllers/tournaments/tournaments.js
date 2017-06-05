@@ -9,6 +9,7 @@ var args = $.args;
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Tournaments
  */
 function btnBack_click() {
 	$.tournaments.close();

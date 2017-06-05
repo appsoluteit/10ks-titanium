@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/steps/form.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/steps/form.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Steps Form Controller
+ * @description The controller for the form to enter steps
+ * @require helpers/FormatHelper
+ * @namespace Controllers.Steps.Form
+ * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy models
+ */
+
+var FormatHelper = require("helpers/FormatHelper");
+
+var args = $.args;
+
+var stepsWalked = 0;
+var moderateMins = 0;
+var vigorousMins = 0;
+var total = 0;
+
+/**
+ * @description Event handler for `btnDone`. Adds the entered data to the Alloy `log` models, calls `args.callback(total)` and closes the window.
+ * @memberof Controllers.Steps.Form
+ */
+function btnDone_click() {
+	//Save value in local storage until Sync
+	Ti.API.info("Date object: " + args.date);
+	
+	if(total > 0) {
+		var dateStr = FormatHelper.formatDate(args.date);
+		
+		var logInstance = Alloy.createModel('log', {
+		    steps_date: 	 dateStr, 
+		    steps_total: 	 total,
+		    steps_walked:  	 stepsWalked,
+		    activity_part: 	 total - stepsWalked,
+		    moderate:      	 moderateMins,
+		    vigorous:     	 vigorousMins,
+		    synced:			 false
+		});
+		
+		if(logInstance.isValid()) {
+			Ti.API.info("Model valid. Saving");
+			logInstance.save();
+		}
+		else {
+			Ti.API.error("Model not valid. Destroying");
+			logInstance.destroy();
+		}	
+	}
+	
+	//Pass the formatted string back to the parent to display it in the table	
+	args.callback(total);
+	
+	$.logEntry.close();
+}
+
+/**
+ * @description Event handler for the Window's `open` event. Sets the value of the title bar to reflect the date and adds event listeners to the text fields.
+ * @memberof Controllers.Steps.Form
+ */
+function window_open() {
+	if(Ti.Platform.osname === "android") {
+		$.logEntry.activity.actionBar.title = args.title;
+		
+		Ti.API.info("Setting action bar title: " + args.title);
+	}
+	else {
+		$.window.title = args.title;
+	}	
+	
+	//Custom event listeners for nested view elements
+	$.logEntryView.txtStepsWalked.addEventListener('change', txtStepsWalked_change);
+	$.logEntryView.txtModerateMins.addEventListener('change', txtModerateMins_change);
+	$.logEntryView.txtVigorousMins.addEventListener('change', txtVigorousMins_change);
+}
+
+/**
+ * @description Event handler for `txtStepsWalked`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
+function txtStepsWalked_change() {
+	calculateTotal();
+}
+
+/**
+ * @description Event handler for `txtModerateMins`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
+function txtModerateMins_change() {
+	calculateTotal();
+}
+
+/**
+ * @description Event handler for `txtVigorousMins`. Calls `calculateTotal()`.
+ * @listens change
+ * @memberof Controllers.Steps.Form
+ */
+function txtVigorousMins_change() {
+	calculateTotal();
+}
+
+/**
+ * @description Calculates the total steps value and inserts it into `lblDailyTotal`. 
+ * @memberof Controllers.Steps.Form
+ */
+function calculateTotal() {
+	//total = steps walked + (moderate x 100) + (vigorous x 200)
+	stepsWalked = $.logEntryView.txtStepsWalked.value;
+	moderateMins = $.logEntryView.txtModerateMins.value;
+	vigorousMins = $.logEntryView.txtVigorousMins.value;
+	
+	if(stepsWalked == '') {
+		stepsWalked = 0;
+	}
+	else {
+		stepsWalked = parseInt(stepsWalked, 10);
+	}
+	
+	if(moderateMins == '') {
+		moderateMins = 0;
+	}
+	else {
+		moderateMins = parseInt(moderateMins, 10);
+	}
+		
+	if(vigorousMins == '') {
+		vigorousMins = 0;
+	}
+	else {
+		vigorousMins = parseInt(vigorousMins, 10);
+	}
+	
+	total = stepsWalked + (moderateMins * 100) + (vigorousMins * 200);
+	
+	$.logEntryView.lblDailyTotal.text = FormatHelper.formatNumber(total);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

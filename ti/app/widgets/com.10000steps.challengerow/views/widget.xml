@@ -1,0 +1,23 @@
+<Alloy>
+	<View id="view" layout="vertical">
+		<View class="challengeBody">
+			<View class="imageContainer">
+				<ImageView>
+				</ImageView>
+			</View>
+			
+			<View id="labelContainer" class="labelContainer">
+				<Label id="taskName" class="taskName"></Label>
+				<!-- 
+					The task description gets dynamically generated and added to this container, since the html is only
+					'settable' during construction
+				-->
+			</View>
+		</View>
+		
+		<View class="challengeFooter">
+			<Label id="goalSteps" class="footerSteps"></Label>
+			<Label id="percentComplete" class="footerPercentComplete"></Label>
+		</View>
+	</View>
+</Alloy>

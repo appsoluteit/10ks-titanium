@@ -1,11 +1,34 @@
+/**
+ * @file Authentication Provider
+ * @description Provides access to the authentication API
+ * @require helpers/APIHelper
+ * @require classes/StepsDataProvider
+ * @require q
+ * @require widgets/com.mcongrove.toast
+ * @exports AuthProvider
+ */
+
 var APIHelper = require('helpers/APIHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
 
+/**
+ * @description Creates a new instance of AuthProvider
+ * @class
+ * @param {Ti.View} container The containing view. This will be closed on a successful login / register.
+ * @param {Ti.Label} errorContainer A label to contain error text. 
+ */
 function AuthProvider(container, errorContainer) {
 	this.container = container;
 	this.errorContainer = errorContainer;
 }
 
+/**
+ * @description Attempt to login with the provided credentials.
+ * @param {String} username 
+ * @param {String} password
+ * @param {Boolean} closeOnComplete Whether or not the container should be closed on successful login.
+ */
 AuthProvider.prototype.login = function(username, password, closeOnComplete) {	
 	var self = this;
 	var defer = q.defer();
@@ -74,7 +97,10 @@ AuthProvider.prototype.login = function(username, password, closeOnComplete) {
 	return defer.promise;
 };
 
-//TODO: Is this function still necessary?
+/**
+ * @description Get the user object
+ * @todo Is this still necessary?
+ */
 AuthProvider.prototype.getUser = function() {
 	var self = this;
 	var defer = q.defer();
@@ -126,14 +152,20 @@ AuthProvider.prototype.getUser = function() {
 	return defer.promise;
 };
 
+/**
+ * @description Call logout on the API, causing the access token to invalidate. This also removes all app properties, sets `Alloy.Globals` to an
+ * empty object and removes all steps data stored locally.
+ */
 AuthProvider.prototype.logout = function() {
 	var self = this;
 	var defer = q.defer();
 	
+	var stepsDataProvider = new StepsDataProvider();
+	
 	function onSuccess(response) {
-		Ti.App.Properties.removeProperty("AuthKey");
-		Alloy.Globals.IsLoggedIn = false;
-		Alloy.Globals.AuthKey = "";
+		Ti.App.Properties.removeAllProperties();
+		Alloy.Globals = {};
+		stepsDataProvider.removeAll();
 		
 		setTimeout(function() {
 			if(self.container) {
@@ -171,6 +203,13 @@ AuthProvider.prototype.logout = function() {
 	return defer.promise;
 };
 
+/**
+ * @description Call register on the API, closing the container on success.
+ * @param {String} username 
+ * @param {String} email
+ * @param {String} password
+ * @param {String} password2
+ */
 AuthProvider.prototype.register = function(username, email, password, password2) {
 	var self = this;
 	var defer = q.defer();

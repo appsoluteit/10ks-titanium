@@ -5,14 +5,16 @@
  * @require helpers/DateTimeHelper
  * @require helpers/APIHelper
  * @namespace Controllers.Stats
- * @todo This controller is incomplete
+ * @todo Possibly let the user choose for which month / year they want to run the graphs? Popup dialog?
  */
 
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 
 var args = $.args;
+var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @description Gets statistics from the /api/stats/ and populates the table with the results.
@@ -97,47 +99,68 @@ function calculateStatistics() {
 	});
 }
 
-//Note: graphs are temporarily disabled
+/**
+ * @description Event handler for `tblRowDailyGraph`. Opens the daily graph window.
+ * @memberof Controllers.Stats
+ */
 function tblRowDailyGraph_click() {
-	var data = [];
+	var dailyData = stepsDataProvider.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
+	var chartData = [];
+	var dayIndex = 1;
 	
-	//TODO: pass in real values
-	for(var i = 1; i < 31; i++) {
-		data.push({
-			name: i + "/10/2016",
-			x: i,
-			y: Math.floor((Math.random() * 10000) + 1)
+	dailyData.forEach(function(steps) {
+		chartData.push({
+			name: dayIndex + "/" + new Date().getMonth() + 1,
+			x: dayIndex,
+			y: steps
 		});
-	}
+		
+		dayIndex++;
+	});
 
 	var win = Alloy.createController("stats/dailyGraph", {
-		data: data
+		data: chartData
 	}).getView();
 	win.open();
 }
 
+/**
+ * @description Event handler for `tblRowMonthlyGraph`. Opens the monthly graph window.
+ * @memberof Controllers.Stats
+ */
 function tblRowMonthlyGraph_click() {
-	var data = [];
+	var monthData = stepsDataProvider.readByMonthForYear(new Date().getFullYear());
+	var chartData = [];
+	var monthIndex = 1;
 	
-	//TODO: Pass in real values
-	for(var i = 1; i < 13; i++) {
-		data.push({
-			name: DateTimeHelper.getMonthNameFromIndex(i - 1),
-			x: i,
-			y: Math.floor((Math.random() * 10000) + 1) * 30
+	monthData.forEach(function(monthSteps) {
+		chartData.push({
+			name: DateTimeHelper.getMonthNameFromIndex(monthIndex - 1),
+			x: monthIndex,
+			y: monthSteps
 		});
-	}
+		
+		monthIndex++;
+	});
 	
 	var win = Alloy.createController("stats/monthlyGraph", {
-		data: data
+		data: chartData
 	}).getView();
 	win.open();
 }
 
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Stats
+ */
 function btnBack_click() {
 	$.stats.close();
 }
 
+/**
+ * @description Event handler for the Window's `open` event. Presets the row values and calls `calculateStatistics()` after a 1000ms timeout.
+ * @memberof Controllers.Stats
+ */
 function window_open() {
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
 	
@@ -146,8 +169,8 @@ function window_open() {
 	$.statsView.lblBusiestMonth.text = 0;
 	$.statsView.lblBusiestDay.text = 0;
 	
-	//$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
-	//$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
+	$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
+	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
 	setTimeout(function() {
 		calculateStatistics();

@@ -1,5 +1,4 @@
 <Alloy>
-	<View class="container">
-		<Label>Challenges</Label>
-	</View>
+	<TableView id="tblChallenges">
+	</TableView>
 </Alloy>

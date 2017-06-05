@@ -1,8 +1,12 @@
 /**
- * Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
+ * @file Calendar Factory
+ * @description Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
  * module.
- * 
- * You should request permission before adding / removing a reminder, like:
+ * @summary A factory for creating different instances of a calendar object depending on the running OS.
+ * @require classes/ReminderRepeatSetting
+ * @require q
+ * @exports create
+ * @example You should request permission before adding / removing a reminder, like:
  * 
  * reminderInstance.requestPermission()
  * 				   .then(function success() {
@@ -11,7 +15,6 @@
  * 						//error handling
  * 					})
  * 					.then(...)
- * 		
  */
 
 var q = require('q');
@@ -57,15 +60,23 @@ function removeReminderData() {
 	}
 }
 
-/*	Until Titanium implements the setRecurrence method of Android's Calendar.Event object 
- * (https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html)
- * http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
- * we will need to create multiple events; one for each reminder.
- * 
- * We also can't remove created events until the event.remove() method is supported.
+/**
+ * @class AndroidReminder
+ * @summary The Android Reminder 
+ * @description Until Titanium implements the setRecurrence method of Android's Calendar.Event object, we will need to create multiple events; one for each reminder.
+ * We also can't remove created events until the `event.remove()` method is supported.
+ * @see https://developers.google.com/resources/api-libraries/documentation/calendar/v3/java/latest/com/google/api/services/calendar/model/Event.html
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event-method-remove
  */
 function AndroidReminder() { }
 
+/**
+ * @description Adds reminders to the calendar from now until one month in the future. When approaching this time, the app will prompt the user to re-save 
+ * their reminders from the home controller. 
+ * @param {Ti.Calendar} calendar The calendar to add the event to. Call `getCalendar()` to obtain this.
+ * @returns Promise
+ */
 AndroidReminder.prototype.add = function(calendar) {
 	function createEvent(calendar, time) {
 		Ti.API.debug("Creating event. Calender:", calendar, "Time:", time);
@@ -122,6 +133,13 @@ AndroidReminder.prototype.add = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Removes reminder data from App Properties. This does not actually remove any reminders from the Calendar, since `event.remove()` is not yet supported on 
+ * Android. 
+ * @param {Ti.Calendar} calendar The calendar to remove the event from. Call `getCalendar()` to obtain this.
+ * @see http://docs.appcelerator.com/platform/latest/#!/api/Titanium.Calendar.Event
+ * @returns Promise
+ */
 AndroidReminder.prototype.remove = function(calendar) {
 	//Note: Titanium currently does not support removing / updating events in Android. So the best we can do right now is clear our data.
 	var defer = q.defer();
@@ -131,6 +149,11 @@ AndroidReminder.prototype.remove = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Gets a list of selectable calendars and shows them in an option dialog. Once the user has selected one, the promise is resolved and the selected calendar
+ * is passed as an argument.
+ * @returns Promise
+ */
 AndroidReminder.prototype.getCalendar = function() {
 	Ti.API.debug("Getting calendar for Android");
 	
@@ -164,12 +187,25 @@ AndroidReminder.prototype.getCalendar = function() {
     return defer.promise;
 };
 
+/**
+ * @description Requests calendar permissions from the OS. This should be called before anything else.
+ * @returns Promise
+ */
 AndroidReminder.prototype.requestPermission = function() {
 	return requestPermission();	
 };
 
+/**
+ * @class AppleReminder
+ * @summary The Apple (iOS) Reminder
+ */
 function AppleReminder() { }
 
+/**
+ * @description Adds reminders to the calendar. This should be `Ti.Calendar.defaultCalendar`.
+ * @param {Object} calendar
+ * @return Promise
+ */
 AppleReminder.prototype.add = function(calendar) {
 	Ti.API.debug("Adding reminder on iOS");
 	
@@ -241,6 +277,11 @@ AppleReminder.prototype.add = function(calendar) {
 	return defer.promise;
 };
 
+/**
+ * @description Removes reminders from the calendar and removes the reminder data from App Properties.
+ * @param {Object} calendar The calendar to remove the events from. This should be `Ti.Calendar.defaultCalendar`.
+ * @returns Promise
+ */
 AppleReminder.prototype.remove = function(calendar) {
 	var defer = q.defer();
 	
@@ -273,6 +314,11 @@ AppleReminder.prototype.remove = function(calendar) {
 	}	
 };
 
+/**
+ * @descripton On iOS, passing a `Ti.Calendar` via promise arguments was buggy. This function simply returns a promise to allow the calling code to 
+ * pass `Ti.Calendar.defaultCalendar` to `AppleReminderInstance.add(...)`.
+ * @returns Promise
+ */
 AppleReminder.prototype.getCalendar = function() {
 	//Note: For some reason, the iOS engine doesn't like passing the default calendar as an argument to resolve. 
 	//We handle it via the caller.	
@@ -281,6 +327,10 @@ AppleReminder.prototype.getCalendar = function() {
 	return defer.promise;
 };
 
+/**
+ * @description Requests calendar permissions from the OS. This should be called before anything else.
+ * @returns Promise
+ */
 AppleReminder.prototype.requestPermission = function() {
 	return requestPermission();
 };

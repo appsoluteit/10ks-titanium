@@ -1,4 +1,10 @@
 /**
+ * @file DateTimeHelper
+ * @description Provides static helper functions for performing Date/Time operations
+ * @module
+ */
+
+/**
  * Returns a month name from January - December based on the provided index.
  * @param {Integer} index A number 0-11 that indicates the month.
  * @returns {String}
@@ -24,6 +30,7 @@ function getMonthNameFromIndex(index) {
 
 /**
  * Returns the name of the current month.
+ * @returns {String}
  */
 function getCurrentMonthName() {
 	var m = new Date().getMonth();
@@ -57,7 +64,30 @@ function getDateLabel(dateObj, includeYear) {
 	return str;
 }
 
-//Return August 2017 (eg)
+/**
+ * Computes and returns a label that represents the date in dd/MM/yyyy format. Eg: 01/02/2013
+ * @param {Date} dateobj A date object
+ * @returns {String} The date label
+ */
+function getShortDateLabel(dateObj) {
+	if(isValidDate(dateObj)) {
+		return ("0" + dateObj.getDate()).slice(-2) 
+		     + "/"
+		     + ("0" + (dateObj.getMonth()+1)).slice(-2)
+		     + "/"
+		     + dateObj.getFullYear();
+	}
+	else {
+		Ti.API.error("Invalid date supplied to getShortDateLabel: ", dateObj);
+		return "";
+	}
+}
+
+/**
+ * Computes and returns a label that represents the month for the given date. Eg: January 2017
+ * @param {Date} dateObj A date to operate on
+ * @returns {String} The month/year label
+ */
 function getMonthLabel(dateObj) {	
 	var month = getMonthNameFromIndex(dateObj.getMonth());
 	var year = dateObj.getFullYear();
@@ -74,8 +104,28 @@ function getDayBefore(dateObj) {
 	return new Date(dateObj.getTime() - (24*60*60*1000));
 }
 
+/**
+ * Determines whether or not dateObj is a valid date
+ * @param {Object} dateObj A date to examine
+ */
+function isValidDate(dateObj) {
+	if ( Object.prototype.toString.call(dateObj) === "[object Date]" ) {
+		if ( isNaN( dateObj.getTime() ) ) {
+			return false;
+  		}
+  		else {
+  			return true;
+  		}
+	}
+	else {
+		return false;
+	}
+}
+
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getCurrentMonthName = getCurrentMonthName;
+module.exports.getShortDateLabel = getShortDateLabel;
 module.exports.getDateLabel = getDateLabel;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
+module.exports.isValidDate = isValidDate;
