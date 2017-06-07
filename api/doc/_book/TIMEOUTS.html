@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Stats · GitBook</title>
+        <title>Tournament Timeouts · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="CHALLENGES.html" />
     
-    
-    <link rel="prev" href="STEPS.html" />
+    <link rel="prev" href="RACES.html" />
     
 
     </head>
@@ -171,7 +169,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.7" data-path="STATS.html">
+        <li class="chapter " data-level="1.7" data-path="STATS.html">
             
                 <a href="STATS.html">
             
@@ -224,7 +222,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.2" data-path="TIMEOUTS.html">
+        <li class="chapter active" data-level="1.9.2" data-path="TIMEOUTS.html">
             
                 <a href="TIMEOUTS.html">
             
@@ -272,7 +270,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Stats</a>
+        <a href="." >Tournament Timeouts</a>
     </h1>
 </div>
 
@@ -287,141 +285,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="stats">Stats </h2>
-<p>Call this to get statistics about logged steps for the logged in user.</p>
-<pre><code>https://www.10000steps.org.au/api/stats/
-</code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
-<h4 id="headers">Headers</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Sample</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Authorization</code></td>
-<td><code>string</code></td>
-<td><code>true</code></td>
-<td><code>Token 6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9</code></td>
-</tr>
-</tbody>
-</table>
-<h4 id="returns">Returns</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>max_month</code></td>
-<td><code>object</code></td>
-<td>See below</td>
-<td>Statistics about the highest recorded month</td>
-</tr>
-<tr>
-<td><code>max_day</code></td>
-<td><code>object</code></td>
-<td>See below</td>
-<td>Statistics about the highest recorded day</td>
-</tr>
-<tr>
-<td><code>average_steps</code></td>
-<td><code>int</code></td>
-<td><code>9999</code></td>
-<td>Average daily steps</td>
-</tr>
-</tbody>
-</table>
-<h5 id="max-month">Max Month</h5>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>total</code></td>
-<td><code>int</code></td>
-<td><code>32767</code></td>
-<td>The total of steps recorded in that month</td>
-</tr>
-<tr>
-<td><code>month</code></td>
-<td><code>string</code></td>
-<td><code>2016-10-01</code></td>
-<td>The timestamp for the month with the highest logged steps</td>
-</tr>
-</tbody>
-</table>
-<h5 id="max-day">Max Day</h5>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>user</code></td>
-<td><code>string</code></td>
-<td><code>https://www.10000steps.org.au/api/users/346623/</code></td>
-<td>The user URL</td>
-</tr>
-<tr>
-<td><code>steps_total</code></td>
-<td><code>int</code></td>
-<td><code>65535</code></td>
-<td>The total steps logged for the highest day</td>
-</tr>
-<tr>
-<td><code>steps_walked</code></td>
-<td><code>int</code></td>
-<td><code>9999</code></td>
-<td>The number of steps walked for the highest day</td>
-</tr>
-<tr>
-<td><code>steps_date</code></td>
-<td><code>string</code></td>
-<td><code>2016-10-12</code></td>
-<td>The date of the highest recorded steps</td>
-</tr>
-<tr>
-<td><code>activity_part</code></td>
-<td><code>int</code></td>
-<td><code>500</code></td>
-<td>The equivalent number of steps based on the moderate and vigorous exercise. Equal to moderate x 100 plus vigorous x 200</td>
-</tr>
-<tr>
-<td><code>moderate</code></td>
-<td><code>int</code></td>
-<td><code>1</code></td>
-<td>The number of minutes of moderate exercise performed on the day</td>
-</tr>
-<tr>
-<td><code>vigorous</code></td>
-<td><code>int</code></td>
-<td><code>2</code></td>
-<td>The number of minutes of vigorous exercise performed on the day</td>
-</tr>
-</tbody>
-</table>
-</div></div></div>
+                                <p>(Incomplete)</p>
+<p>A Time Out Tournament runs for a number of weeks (which you determine)
+and the goal is to accumulate as many steps as possible during this time
+period.</p>
 
                                 
                                 </section>
@@ -455,7 +322,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Stats","level":"1.7","depth":1,"next":{"title":"Challenges","level":"1.8","depth":1,"path":"CHALLENGES.md","ref":"CHALLENGES.md","articles":[]},"previous":{"title":"Steps","level":"1.6","depth":1,"path":"STEPS.md","ref":"STEPS.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"STATS.md","mtime":"2017-06-05T10:07:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-07T09:49:51.955Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Tournament Timeouts","level":"1.9.2","depth":2,"previous":{"title":"Tournament Races","level":"1.9.1","depth":2,"path":"RACES.md","ref":"RACES.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"TIMEOUTS.md","mtime":"2017-06-07T10:26:17.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-07T09:49:51.955Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

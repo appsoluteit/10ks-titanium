@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Stats · GitBook</title>
+        <title>Tournament Races · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="CHALLENGES.html" />
+    <link rel="next" href="TIMEOUTS.html" />
     
     
-    <link rel="prev" href="STEPS.html" />
+    <link rel="prev" href="TOURNAMENTS.html" />
     
 
     </head>
@@ -171,7 +171,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.7" data-path="STATS.html">
+        <li class="chapter " data-level="1.7" data-path="STATS.html">
             
                 <a href="STATS.html">
             
@@ -211,7 +211,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.9.1" data-path="RACES.html">
+        <li class="chapter active" data-level="1.9.1" data-path="RACES.html">
             
                 <a href="RACES.html">
             
@@ -272,7 +272,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Stats</a>
+        <a href="." >Tournament Races</a>
     </h1>
 </div>
 
@@ -287,9 +287,16 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="stats">Stats </h2>
-<p>Call this to get statistics about logged steps for the logged in user.</p>
-<pre><code>https://www.10000steps.org.au/api/stats/
+                                <div class="api-method"><div class="api-method-definition"><h2 id="tournament_races">Tournament Races </h2>
+<p>Race Tournaments are distance based journeys where the goal is to walk a
+virtual route from one location to another. Progress cards become available
+once the teams reach the checkpoints along the journey. In Race
+Tournaments, teams will finish the journey at different times depending on
+how active the members are and the number of members that are in the
+teams. The estimated length of these Tournaments available online and
+below and are based on 10 people in each team walking 10,000 steps per
+day.</p>
+<pre><code>https://www.10000steps.org.au/api/tournament_races/
 </code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
 <h4 id="headers">Headers</h4>
 <table>
@@ -322,26 +329,33 @@
 </thead>
 <tbody>
 <tr>
-<td><code>max_month</code></td>
-<td><code>object</code></td>
-<td>See below</td>
-<td>Statistics about the highest recorded month</td>
-</tr>
-<tr>
-<td><code>max_day</code></td>
-<td><code>object</code></td>
-<td>See below</td>
-<td>Statistics about the highest recorded day</td>
-</tr>
-<tr>
-<td><code>average_steps</code></td>
+<td><code>count</code></td>
 <td><code>int</code></td>
-<td><code>9999</code></td>
-<td>Average daily steps</td>
+<td><code>91</code></td>
+<td>The number of races available for this user</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td><code>string</code></td>
+<td><code>http://10000steps.org.au/api/tournament_races/?page=2</code></td>
+<td>A URL to the next page of challenges for this user</td>
+</tr>
+<tr>
+<td><code>previous</code></td>
+<td><code>string</code></td>
+<td><code>http://10000steps.org.au/api/tournament_races/?page=1</code></td>
+<td>A URL to the previous page</td>
+</tr>
+<tr>
+<td><code>results</code></td>
+<td><code>Race[]</code></td>
+<td></td>
+<td>A list of race records for this user</td>
 </tr>
 </tbody>
 </table>
-<h5 id="max-month">Max Month</h5>
+<h5 id="race">Race</h5>
+<p>A Race is the top level object returned by tournament races. It is simply a container for a Team object an array of steps.</p>
 <table>
 <thead>
 <tr>
@@ -353,20 +367,25 @@
 </thead>
 <tbody>
 <tr>
-<td><code>total</code></td>
-<td><code>int</code></td>
-<td><code>32767</code></td>
-<td>The total of steps recorded in that month</td>
+<td><code>team</code></td>
+<td><code>Team</code></td>
+<td><code>N/A</code></td>
+<td>An object representing your team.</td>
 </tr>
 <tr>
-<td><code>month</code></td>
-<td><code>string</code></td>
-<td><code>2016-10-01</code></td>
-<td>The timestamp for the month with the highest logged steps</td>
+<td><code>steps</code></td>
+<td><code>string[]</code></td>
+<td><code>N/A</code></td>
+<td>An array of URLs to step instances that made up this race so far for your team? Not sure</td>
 </tr>
 </tbody>
 </table>
-<h5 id="max-day">Max Day</h5>
+<h5 id="team">Team</h5>
+<p>A team object simply contains an instance of Tournament.</p>
+<h5 id="tournament">Tournament</h5>
+<p>A tournament object contains a single child, also called tournament, referred to as TournamentChild in this document.</p>
+<h5 id="tournamentchild">TournamentChild</h5>
+<p>This actually contains the useful information. Its schema is:</p>
 <table>
 <thead>
 <tr>
@@ -378,51 +397,32 @@
 </thead>
 <tbody>
 <tr>
-<td><code>user</code></td>
+<td><code>description</code></td>
 <td><code>string</code></td>
-<td><code>https://www.10000steps.org.au/api/users/346623/</code></td>
-<td>The user URL</td>
+<td><code>N/A</code></td>
+<td>An HTML formatted description of the tournament.</td>
 </tr>
 <tr>
-<td><code>steps_total</code></td>
-<td><code>int</code></td>
-<td><code>65535</code></td>
-<td>The total steps logged for the highest day</td>
+<td><code>default_time</code></td>
+<td><code>integer</code></td>
+<td><code>N/A</code></td>
+<td>Not sure what this is</td>
 </tr>
 <tr>
-<td><code>steps_walked</code></td>
-<td><code>int</code></td>
-<td><code>9999</code></td>
-<td>The number of steps walked for the highest day</td>
+<td><code>total_steps</code></td>
+<td><code>integer</code></td>
+<td><code>N/A</code></td>
+<td>The total number of steps walked so far?</td>
 </tr>
 <tr>
-<td><code>steps_date</code></td>
-<td><code>string</code></td>
-<td><code>2016-10-12</code></td>
-<td>The date of the highest recorded steps</td>
-</tr>
-<tr>
-<td><code>activity_part</code></td>
-<td><code>int</code></td>
-<td><code>500</code></td>
-<td>The equivalent number of steps based on the moderate and vigorous exercise. Equal to moderate x 100 plus vigorous x 200</td>
-</tr>
-<tr>
-<td><code>moderate</code></td>
-<td><code>int</code></td>
-<td><code>1</code></td>
-<td>The number of minutes of moderate exercise performed on the day</td>
-</tr>
-<tr>
-<td><code>vigorous</code></td>
-<td><code>int</code></td>
-<td><code>2</code></td>
-<td>The number of minutes of vigorous exercise performed on the day</td>
+<td><code>distance_meters</code></td>
+<td><code>integer</code></td>
+<td><code>N/A</code></td>
+<td>The total distance of the tournament in meters</td>
 </tr>
 </tbody>
 </table>
 </div></div></div>
-
                                 
                                 </section>
                             
@@ -455,7 +455,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Stats","level":"1.7","depth":1,"next":{"title":"Challenges","level":"1.8","depth":1,"path":"CHALLENGES.md","ref":"CHALLENGES.md","articles":[]},"previous":{"title":"Steps","level":"1.6","depth":1,"path":"STEPS.md","ref":"STEPS.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"STATS.md","mtime":"2017-06-05T10:07:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-07T09:49:51.955Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Tournament Races","level":"1.9.1","depth":2,"next":{"title":"Tournament Timeouts","level":"1.9.2","depth":2,"path":"TIMEOUTS.md","ref":"TIMEOUTS.md","articles":[]},"previous":{"title":"Tournaments","level":"1.9","depth":1,"path":"TOURNAMENTS.md","ref":"TOURNAMENTS.md","articles":[{"title":"Tournament Races","level":"1.9.1","depth":2,"path":"RACES.md","ref":"RACES.md","articles":[]},{"title":"Tournament Timeouts","level":"1.9.2","depth":2,"path":"TIMEOUTS.md","ref":"TIMEOUTS.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"RACES.md","mtime":"2017-06-07T10:18:19.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-07T09:49:51.955Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

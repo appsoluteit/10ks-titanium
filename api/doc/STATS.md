@@ -1,5 +1,5 @@
 {% method -%}
-## Steps {#login}
+## Stats {#stats}
 
 Call this to get statistics about logged steps for the logged in user.
 ```

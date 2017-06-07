@@ -5,8 +5,8 @@ var chai = require("chai");
 var expect = chai.expect;
 var AUTH_TOKEN = null;
 
-describe("GET /challenges/", function(url, quiet) {
-    url = 'https://www.10000steps.org.au/api/challenges/';
+describe("GET /tournament_races/", function(url, quiet) {
+    url = 'https://www.10000steps.org.au/api/tournament_races/';
 	quiet = true;
 
     before(function(done) {
@@ -31,7 +31,7 @@ describe("GET /challenges/", function(url, quiet) {
             http.get(config);
         });
 
-        it("Should return available challenges", function() {
+        it("Should return available 'race' tournaments", function() {
             expect(responseBody.results).to.be.an('array');
         });
     });

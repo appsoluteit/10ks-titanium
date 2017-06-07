@@ -1,5 +1,5 @@
 {% method -%}
-## Steps {#login}
+## Challenges {#challenges}
 
 Call this to get available challenges for the logged in user.
 ```

@@ -1,5 +1,5 @@
 {% method -%}
-## Steps {#login}
+## Steps {#steps}
 
 Call this to get a list of logged steps or to add a new step record.
 ```

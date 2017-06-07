@@ -8,4 +8,6 @@
 * [Steps](STEPS.md)
 * [Stats](STATS.md)
 * [Challenges](CHALLENGES.md)
-* Tournaments (coming soon)
+* [Tournaments](TOURNAMENTS.md)
+    * [Tournament Races](RACES.md)
+    * [Tournament Timeouts](TIMEOUTS.md)
