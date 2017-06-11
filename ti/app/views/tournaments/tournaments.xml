@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="tournaments" platform="ios">
-		<Window title="Tournaments">
+		<Window title="Tournaments" onOpen="window_open">
 			<LeftNavButton>
 				<Button id="btnBack" onClick="btnBack_click">Back</Button>
 			</LeftNavButton>
@@ -11,7 +11,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="tournaments" platform="android">
+	<Window id="tournaments" platform="android" onOpen="window_open">
 		<ActionBar 
 			title="Tournaments" 
 			displayHomeAsUp="true" 

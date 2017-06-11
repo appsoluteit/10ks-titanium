@@ -1,0 +1,39 @@
+".container" : {
+	layout: "vertical"  
+}
+
+".row": {
+	layout: "horizontal",
+	width: "100%"
+}
+
+".labelContainer": {
+	layout: "vertical", 
+	width: "74%",
+	//backgroundColor: "blue"
+}
+
+".imageContainer": {
+	layout: "vertical", 
+	width: "25%", 
+	height: "100dp"
+}
+
+"ImageView": {
+	top: "5dp",
+	bottom: "5dp",
+	left: "5dp"
+}
+
+".taskName": {
+	top: "5dp",
+	
+	font: {
+		fontWeight: "bold",
+		fontSize: "18px"
+	}
+}
+
+".taskDesc": {
+	left: "5dp"
+}
