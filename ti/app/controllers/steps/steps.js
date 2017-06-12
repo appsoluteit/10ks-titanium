@@ -140,8 +140,8 @@ function loadDatesFrom(dateObj) {
  */
 function sync() {
 	stepsProvider.getSteps()
-			     .then(function success(steps) {		
-			     	steps.forEach(function(item) {
+			     .then(function success(steps) {				     		
+			     	steps.results.forEach(function(item) {
 			     		var json = {
 			     			stepsWalked: item.steps_walked,
 			     			stepsTotal: item.steps_total,
@@ -186,6 +186,8 @@ function sync() {
 							view: $.log,
 							theme: 'error'
 						});	
+						
+						Ti.API.info("Failed to get steps. Reason: " + reason);
 			     	}
 			     })
 			     .then(function success() {
@@ -195,32 +197,46 @@ function sync() {
 						view: $.log,
 						theme: 'success'
 					});
+					
+					$.tblDays.setData([]);
+					populateRows();
+					
 			     }, function fail(reason) {
 					Alloy.createWidget('com.mcongrove.toast', null, {
 						text: 'Failed to post steps. Reason: ' + reason,
 						duration: 2000,
 						view: $.log,
 						theme: 'error'
-					});			     	
+					});			 
+					
+					Ti.API.info("Failed to post steps. " + reason);    	
 			     });
 	
 }
 
 /**
- * @description Event handler for the Window's `open` event. Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
+ * @description Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
  * @memberof Controllers.Steps
  */
-function window_open() {
+function populateRows() {
 	//Initialise here to refresh the collection
 	stepsDataProvider = new StepsDataProvider();
-
+	
 	var today = new Date();
 	addDateRow("Today", today);
 	
 	var yesterday = DateTimeHelper.getDayBefore(today);
 	addDateRow("Yesterday", yesterday);
 	
-	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
+	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));
+}
+
+/**
+ * @description Event handler for the Window's `open` event. Calls 'populateRows'.
+ * @memberof Controllers.Steps
+ */
+function window_open() {
+	populateRows();
 }
 
 /**
@@ -246,8 +262,6 @@ function tblRow_click(e) {
 					addDateRow(e.row.label, e.row.date, false, e.index, stepsLogged);
 					
 					Ti.API.info("Deleting row:", e.row);
-					
-					//$.tblDays.deleteRow(e.row);
 					$.tblDays.deleteRow(e.index);	//Note: on iOS, it was observed that this line would randomly cause a crash when passing the Ti.UI.TableViewRow.
 													//pass an index instead.	
 				}

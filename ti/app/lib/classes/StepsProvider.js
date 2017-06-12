@@ -27,7 +27,7 @@ StepsProvider.prototype.getSteps = function(page) {
 	var defer = q.defer();
 	
 	function onSuccess(e) {
-		Ti.API.info("Get steps success", JSON.stringify(e));
+		Ti.API.info("Get steps success", e);
 		
 		//TODO: Add/update results to local storage
 		//TODO: Recur while e.next is not null

@@ -177,6 +177,6 @@ function window_open() {
 	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
 	setTimeout(function() {
-		//calculateStatistics();
+		calculateStatistics();
 	}, 1000);
 }
