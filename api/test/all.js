@@ -14,4 +14,5 @@ require('./register.js');
 require('./user.js');
 require('./stats.js');
 require('./challenges.js');
+require('./tournamentRaces.js');
 require('./steps.js'); //this can only be run once per day atm without the server complaining...
