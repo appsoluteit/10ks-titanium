@@ -105,12 +105,16 @@ function calculateStatistics() {
  */
 function tblRowDailyGraph_click() {
 	var dailyData = stepsDataProvider.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
+
+	Ti.API.info("Daily data:");
+	Ti.API.info(dailyData);
+
 	var chartData = [];
 	var dayIndex = 1;
 	
 	dailyData.forEach(function(steps) {
 		chartData.push({
-			name: dayIndex + "/" + new Date().getMonth() + 1,
+			name: dayIndex + "/" + (new Date().getMonth() + 1),
 			x: dayIndex,
 			y: steps
 		});
@@ -173,6 +177,6 @@ function window_open() {
 	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
 	setTimeout(function() {
-		calculateStatistics();
+		//calculateStatistics();
 	}, 1000);
 }

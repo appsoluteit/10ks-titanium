@@ -5,10 +5,22 @@ function btnBack_click() {
 	$.monthlyGraph.close();
 }
 
+
+function hasSteps() {
+	return args.data.filter(function(item) {
+		return item.y > 0;
+	}).length > 0;
+}
+
 function window_open() {
-	$.monthlyGraphView.monthlyGraphChart.loadChart({
-		type: "column",
-		name: "Monthly Steps for " + new Date().getFullYear(),
-		data: args.data
-	});
+	if(hasSteps()) {
+		$.monthlyGraphView.monthlyGraphChart.loadChart({
+			type: "column",
+			name: "Monthly Steps for " + new Date().getFullYear(),
+			data: args.data
+		});	
+	}
+	else {
+		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for this year");
+	}
 }
