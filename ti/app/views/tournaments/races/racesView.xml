@@ -1,5 +1,4 @@
 <Alloy>
-	<View>
-		<Label>Races</Label>
-	</View>
+	<TableView id="tblRaces">
+	</TableView>
 </Alloy>

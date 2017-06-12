@@ -1,22 +1,17 @@
-".container" : {
-	layout: "vertical"  
-}
-
 ".row": {
-	layout: "horizontal",
-	width: "100%"
+	layout: "horizontal", 
+	width: "100%"	
 }
 
 ".labelContainer": {
 	layout: "vertical", 
 	width: "74%",
-	//backgroundColor: "blue"
 }
 
 ".imageContainer": {
 	layout: "vertical", 
 	width: "25%", 
-	height: "100dp"
+	height: "100dp",
 }
 
 "ImageView": {

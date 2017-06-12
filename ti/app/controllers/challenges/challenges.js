@@ -1,9 +1,8 @@
 /**
  * @file Challenges Controller
- * @description The controller for the challenges view.
+ * @description The controller for the challenges view. Note: only the first page of results is displayed.
  * @namespace Controllers.Challenges
  * @require helpers/APIHelper
- * @todo This controller is a stub
  */
 
 var args = $.args;
@@ -28,8 +27,8 @@ function fetchChallenges() {
 			Alloy.createWidget("com.10000steps.challengerow", null, {
 				taskName: result.task.name,
 				taskDescription: result.task.description,
-				goalSteps: FormatHelper.formatNumber(result.steps_goal),
-				percentComplete: result.percentage_complete,
+				goalSteps: FormatHelper.formatNumber(result.steps_goal) + ' steps',
+				percentComplete: result.percentage_complete + '%',
 				view: row
 			});
 			

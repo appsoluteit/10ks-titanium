@@ -1,28 +1,31 @@
 <Alloy>
-	<!-- Todo: this should be a TableView after all -->
-	<View class="container">
-		<View class="row" id="vwRaceTournaments">
-			<View class="imageContainer">
-				<ImageView image="/common/race_badge_small.png">
-				</ImageView>
-			</View>
-			
-			<View id="labelContainer" class="labelContainer">
-				<Label id="taskName" class="taskName">Race Tournaments</Label>
-				<Label class="taskDesc">Race Tournaments are distance based journeys where the goal is to walk a virtual route from one location to another.</Label>
-			</View>			
-		</View>
+	<TableView height="Ti.UI.SIZE">
+		<TableViewRow id="vwRaceTournaments" height="Ti.UI.SIZE">
+			<View class="row">
+				<View class="imageContainer">
+					<ImageView image="/common/race_badge_small.png">
+					</ImageView>
+				</View>
+				
+				<View id="labelContainer" class="labelContainer">
+					<Label id="taskName" class="taskName">Race Tournaments</Label>
+					<Label class="taskDesc">Race Tournaments are distance based journeys where the goal is to walk a virtual route from one location to another.</Label>
+				</View>		
+			</View>	
+		</TableViewRow>
 		
-		<View class="row" id="vwTimeoutTournaments">
-			<View class="imageContainer">
-				<ImageView image="/common/timeout_badge_small.png">
-				</ImageView>
-			</View>
-			
-			<View id="labelContainer" class="labelContainer">
-				<Label id="taskName" class="taskName">Timeout Tournaments</Label>
-				<Label class="taskDesc">A Time Out Tournament runs for a number of weeks and the goal is to accumulate as many steps as possible during this time period.</Label>
-			</View>			
-		</View>
-	</View>
+		<TableViewRow id="vwTimeoutTournaments" height="Ti.UI.SIZE">
+			<View class="row">
+				<View class="imageContainer">
+					<ImageView image="/common/timeout_badge_small.png">
+					</ImageView>
+				</View>
+				
+				<View id="labelContainer" class="labelContainer">
+					<Label id="taskName" class="taskName">Timeout Tournaments</Label>
+					<Label class="taskDesc">A Time Out Tournament runs for a number of weeks and the goal is to accumulate as many steps as possible during this time period.</Label>
+				</View>	
+			</View>		
+		</TableViewRow>
+	</TableView>
 </Alloy>
