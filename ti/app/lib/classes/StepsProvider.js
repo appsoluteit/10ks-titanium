@@ -8,7 +8,8 @@
  * @todo This class is incomplete. It needs to read from and write from local storage (waiting for a StepsDataProvider to do this) instead of sending dummy data.
  */
 
-var APIHelper = require("helpers/APIHelper");
+var APIHelper = require('helpers/APIHelper');
+var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
 
 /**
@@ -27,7 +28,7 @@ StepsProvider.prototype.getSteps = function(page) {
 	var defer = q.defer();
 	
 	function onSuccess(e) {
-		Ti.API.info("Get steps success", JSON.stringify(e));
+		Ti.API.info("Get steps success", e);
 		
 		//TODO: Add/update results to local storage
 		//TODO: Recur while e.next is not null
@@ -104,6 +105,100 @@ StepsProvider.prototype.postSteps = function() {
 	});	
 	
 	return defer.promise;
+};
+
+StepsProvider.prototype.sync = function(rootView, callback) {
+    stepsDataProvider = new StepsDataProvider();
+    var me = this;
+    
+    function getStepsSuccess(steps) {
+    	Ti.API.info("Get steps success");
+    	
+     	steps.results.forEach(function(item) {
+     		var json = {
+     			stepsWalked: item.steps_walked,
+     			stepsTotal: item.steps_total,
+     			activityPart: item.activity_part,
+     			vigorousMins: item.vigorous,
+     			moderateMins: item.moderate,
+     			stepsDate: new Date(item.steps_date),
+     			lastSyncedOn: new Date(),
+     			lastUpdatedOn: new Date()
+     		};
+     		
+     		stepsDataProvider.writeSingle(json);
+     	});
+     	   
+     	var toPost = stepsDataProvider.readWhereNeedsSyncing();
+     	  	
+     	return me.postSteps(toPost);    	
+    }
+    
+    function getStepsFail(reason) {
+    	Ti.API.info("Get steps fail");
+    	
+     	if(reason.detail) {
+     		if(reason.detail === 'Invalid token.') {
+				Alloy.createWidget('com.mcongrove.toast', null, {
+					text: 'Sesson expired. Please log in again.',
+					duration: 2000,
+					view: rootView,
+					theme: 'error'
+				});	
+				
+				throw "InvalidToken";
+				
+				Ti.API.info("Unable to sync. Invalid token");
+     		}
+     		else {
+     			Ti.API.info("Unable to sync. Unknown reason");
+     		}	
+     	}
+     	else {
+			Alloy.createWidget('com.mcongrove.toast', null, {
+				text: 'Failed to get steps. Reason: ' + reason,
+				duration: 2000,
+				view: rootView,
+				theme: 'error'
+			});	
+			
+			Ti.API.info("Failed to get steps. Reason: " + reason);
+     	}   	
+    }
+    
+    function postStepsSuccess() {
+    	Ti.API.info("Post steps success");
+    	
+    	setTimeout(function() {
+    		//If we stack these widgets too fast, things can break.
+			//Alloy.createWidget('com.mcongrove.toast', null, {
+			//	text: 'Steps synced successfully!',
+			//	duration: 2000,
+			//	view: rootView,
+			//	theme: 'success'
+			//});
+			
+			Ti.API.info("Sync success. Invoking callback.");
+			callback();    
+    	}, 1000);	
+    }
+    
+    function postStepsFail(reason) {
+    	Ti.API.info("Post steps fail");
+    	
+		Alloy.createWidget('com.mcongrove.toast', null, {
+			text: 'Failed to post steps. Reason: ' + reason,
+			duration: 2000,
+			view: rootView,
+			theme: 'error'
+		});			 
+		
+		Ti.API.info("Failed to post steps. " + reason);    	
+    }
+    
+	this.getSteps()
+	    .then(getStepsSuccess, getStepsFail)
+	    .then(postStepsSuccess, postStepsFail);
 };
 
 module.exports = StepsProvider;

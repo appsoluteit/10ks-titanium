@@ -56,6 +56,6 @@ This actually contains the useful information. Its schema is:
 | `description` | `string` | `N/A` | An HTML formatted description of the tournament. |
 | `default_time` | `integer` | `N/A` | Not sure what this is |
 | `total_steps` | `integer` | `N/A` | The total number of steps walked so far? |
-| `distance_meters` | `integer` | `N/A` | The total distance of the tournament in meters |
+| `distance_metres` | `integer` | `N/A` | The total distance of the tournament in meters |
 
 {% endmethod -%}

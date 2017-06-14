@@ -164,8 +164,12 @@ AuthProvider.prototype.logout = function() {
 	
 	function onSuccess(response) {
 		Ti.App.Properties.removeAllProperties();
-		Alloy.Globals = {};
 		stepsDataProvider.removeAll();
+		
+		//Only unset the alloy globals related to authentication.
+		Alloy.Globals.IsLoggedIn = false;
+		Alloy.Globals.UserURL = "";
+		Alloy.Globals.AuthKey = "";
 		
 		setTimeout(function() {
 			if(self.container) {

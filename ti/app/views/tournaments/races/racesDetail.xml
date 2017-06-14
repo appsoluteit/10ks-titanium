@@ -1,0 +1,23 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="racesDetail" platform="ios">
+		<Window id="window" title="" onOpen="window_open">
+			<LeftNavButton>
+				<Button id="btnBack" onClick="btnBack_click">Back</Button>	
+			</LeftNavButton>
+			
+			<Require id="racesDetailView" src="tournaments/races/racesDetailView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="challengesDetail" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="racesDetailView" src="tournaments/races/racesDetailView" type="view"/>
+	</Window>
+</Alloy>

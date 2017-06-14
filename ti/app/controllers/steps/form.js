@@ -19,14 +19,13 @@ var args = $.args;
  * @memberof Controllers.Steps.Form
  */
 function btnDone_click() {
-	if(total > 0) {			
+	if(item.stepsTotal > 0) {			
 		item.lastUpdatedOn = new Date();
 		stepsDataProvider.writeSingle(item);
 	}
 	
 	//Pass the formatted string back to the parent to display it in the table	
-	args.callback(total);
-	
+	args.callback(item.stepsTotal);
 	$.logEntry.close();
 }
 

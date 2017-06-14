@@ -14,7 +14,7 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
 var StepsDataProvider = require('classes/StepsDataProvider');
 
-var stepsProvider = new StepsProvider($.log);
+var stepsProvider = new StepsProvider();
 var stepsDataProvider;	//Initialised on window load
 
 /**
@@ -139,88 +139,49 @@ function loadDatesFrom(dateObj) {
  * @memberof Controllers.Steps
  */
 function sync() {
-	stepsProvider.getSteps()
-			     .then(function success(steps) {		
-			     	steps.forEach(function(item) {
-			     		var json = {
-			     			stepsWalked: item.steps_walked,
-			     			stepsTotal: item.steps_total,
-			     			activityPart: item.activity_part,
-			     			vigorousMins: item.vigorous,
-			     			moderateMins: item.moderate,
-			     			stepsDate: new Date(item.steps_date),
-			     			lastSyncedOn: new Date(),
-			     			lastUpdatedOn: new Date()
-			     		};
-			     		
-			     		stepsDataProvider.writeSingle(json);
-			     	});
-			     	   
-			     	var toPost = stepsDataProvider.readWhereNeedsSyncing();
-			     	  	
-			     	return stepsProvider.postSteps(toPost);
-			     }, function fail(reason) {
-			     	if(reason.detail) {
-			     		if(reason.detail === 'Invalid token.') {
-							Alloy.createWidget('com.mcongrove.toast', null, {
-								text: 'Sesson expired. Please log in again.',
-								duration: 2000,
-								view: $.log,
-								theme: 'error'
-							});	
-							
-							setTimeout(function() {
-								var win = Alloy.createController("auth/login").getView();
-								win.open();
-								
-								win.addEventListener("close", function() {
-									sync();
-								});
-							}, 2000);
-			     		}	
-			     	}
-			     	else {
-						Alloy.createWidget('com.mcongrove.toast', null, {
-							text: 'Failed to get steps. Reason: ' + reason,
-							duration: 2000,
-							view: $.log,
-							theme: 'error'
-						});	
-			     	}
-			     })
-			     .then(function success() {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Steps synced successfully!',
-						duration: 2000,
-						view: $.log,
-						theme: 'success'
-					});
-			     }, function fail(reason) {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Failed to post steps. Reason: ' + reason,
-						duration: 2000,
-						view: $.log,
-						theme: 'error'
-					});			     	
-			     });
-	
+	try {
+		stepsProvider.sync($.log, function() {
+			$.tblDays.setData([]);
+			populateRows();
+		});	
+	}
+	catch(e) {
+		if(e === "InvalidToken") {
+			setTimeout(function() {
+				var win = Alloy.createController("auth/login").getView();
+				win.open();
+				
+				win.addEventListener("close", function() {
+					sync();
+				});
+			}, 2000);
+		}
+	}
 }
 
 /**
- * @description Event handler for the Window's `open` event. Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
+ * @description Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
  * @memberof Controllers.Steps
  */
-function window_open() {
+function populateRows() {
 	//Initialise here to refresh the collection
 	stepsDataProvider = new StepsDataProvider();
-
+	
 	var today = new Date();
 	addDateRow("Today", today);
 	
 	var yesterday = DateTimeHelper.getDayBefore(today);
 	addDateRow("Yesterday", yesterday);
 	
-	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
+	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));
+}
+
+/**
+ * @description Event handler for the Window's `open` event. Calls 'populateRows'.
+ * @memberof Controllers.Steps
+ */
+function window_open() {
+	populateRows();
 }
 
 /**
@@ -246,8 +207,6 @@ function tblRow_click(e) {
 					addDateRow(e.row.label, e.row.date, false, e.index, stepsLogged);
 					
 					Ti.API.info("Deleting row:", e.row);
-					
-					//$.tblDays.deleteRow(e.row);
 					$.tblDays.deleteRow(e.index);	//Note: on iOS, it was observed that this line would randomly cause a crash when passing the Ti.UI.TableViewRow.
 													//pass an index instead.	
 				}

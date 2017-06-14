@@ -11,4 +11,9 @@ function loadChart(options){ // data argument must be properly designed so it ca
 	});
 }
 
-exports.loadChart=loadChart;
+function showMessage(message) {
+	$.chartWebView.html = "<p style='text-align: center; font-weight: bold; font-family: \"Arial\", Arial;'>" + message + "</p>";
+}
+
+exports.loadChart = loadChart;
+exports.showMessage = showMessage;

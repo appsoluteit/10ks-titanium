@@ -12,9 +12,11 @@ var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
 var StepsDataProvider = require('classes/StepsDataProvider');
+var StepsProvider = require('classes/StepsProvider');
 
 var args = $.args;
 var stepsDataProvider = new StepsDataProvider();
+var stepsProvider = new StepsProvider();
 
 /**
  * @description Gets statistics from the /api/stats/ and populates the table with the results.
@@ -105,12 +107,16 @@ function calculateStatistics() {
  */
 function tblRowDailyGraph_click() {
 	var dailyData = stepsDataProvider.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
+
+	Ti.API.info("Daily data:");
+	Ti.API.info(dailyData);
+
 	var chartData = [];
 	var dayIndex = 1;
 	
 	dailyData.forEach(function(steps) {
 		chartData.push({
-			name: dayIndex + "/" + new Date().getMonth() + 1,
+			name: dayIndex + "/" + (new Date().getMonth() + 1),
 			x: dayIndex,
 			y: steps
 		});
@@ -157,6 +163,53 @@ function btnBack_click() {
 	$.stats.close();
 }
 
+function load() {
+	if(stepsDataProvider.models.length === 0) {
+		var confirmDialog = Ti.UI.createAlertDialog({
+			cancel: 0,
+			buttonNames: ['Cancel', 'OK'],
+			message: 'There are no saved steps on your device. You may need to perform a sync if you already have existing data. Do you want to sync now?',
+			title: 'No saved steps'
+		});
+		
+		confirmDialog.addEventListener('click', function(e) {
+			if(e.index !== e.source.cancel) {
+				try {
+					stepsProvider.sync($.statsView, function() {
+						Ti.API.info("sync complete. Calculating stats");
+						stepsDataProvider.load();
+						calculateStatistics();
+					});						
+				}
+				catch(e) {
+					if(e==="InvalidToken") {
+						setTimeout(function() {
+							var win = Alloy.createController("auth/login").getView();
+							win.open();
+						
+							win.addEventListener("close", function() {
+								load();
+							});
+						}, 2000);
+					}
+				}
+			}
+			else {
+				setTimeout(function() {
+					calculateStatistics();
+				}, 1000);				
+			}
+		});
+		
+		confirmDialog.show();
+	}
+	else {
+		setTimeout(function() {
+			calculateStatistics();
+		}, 1000);	
+	}
+}
+
 /**
  * @description Event handler for the Window's `open` event. Presets the row values and calls `calculateStatistics()` after a 1000ms timeout.
  * @memberof Controllers.Stats
@@ -172,7 +225,5 @@ function window_open() {
 	$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
 	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
 	
-	setTimeout(function() {
-		calculateStatistics();
-	}, 1000);
+	load();
 }

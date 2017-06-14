@@ -1,5 +1,5 @@
 <Alloy>
 	<View>
-		<Label>Timeouts</Label>
+		<Label font="{ fontWeight: 'bold', fontSize: '18px' }">Coming soon!</Label>
 	</View>
 </Alloy>
