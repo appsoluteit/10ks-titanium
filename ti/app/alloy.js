@@ -87,7 +87,7 @@ Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
  * @type {Boolean}
  * @memberof Alloy.Globals
  */
-Alloy.Globals.IsDebug = true;
+Alloy.Globals.IsDebug = false;
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
 // added during app creation. this will automatically login to
