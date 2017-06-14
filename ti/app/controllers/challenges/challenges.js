@@ -29,6 +29,7 @@ function fetchChallenges() {
 				taskDescription: result.task.description,
 				goalSteps: FormatHelper.formatNumber(result.steps_goal) + ' steps',
 				percentComplete: result.percentage_complete + '%',
+				image:  "/common/challenge_badge_small.png",
 				view: row
 			});
 			

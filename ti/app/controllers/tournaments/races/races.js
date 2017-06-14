@@ -18,7 +18,7 @@ function btnBack_click() {
 
 function fetchRaces() {
 	function onSuccess(response) {
-		Ti.API.info("Success handler. Response: ", response);
+		Ti.API.info("Races success handler. Response: ", response);
 		
 		response.results.forEach(function(result) {
 			Ti.API.info(JSON.stringify(result));
@@ -30,12 +30,13 @@ function fetchRaces() {
 				taskDescription: result.team.tournament.tournament.description,
 				goalSteps: FormatHelper.formatNumber(result.team.tournament.tournament.total_steps) + ' steps',
 				percentComplete: FormatHelper.formatNumber(result.team.tournament.tournament.distance_metres) + 'm',
+				image:  "/common/race_badge_small.png",
 				view: row
 			});
 			
 			row.addEventListener('click', function() {
-				//var detailWindow = Alloy.createController('challenges/challengesDetail', result).getView();
-				//detailWindow.open();
+				var detailWindow = Alloy.createController('tournaments/races/racesDetail', result).getView();
+				detailWindow.open();
 			});
 			
 			$.racesView.tblRaces.appendRow(row);				

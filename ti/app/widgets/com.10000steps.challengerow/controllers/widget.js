@@ -16,6 +16,7 @@ console.log("Adding row", CONFIG);
 $.taskName.text = CONFIG.taskName;
 $.goalSteps.text = CONFIG.goalSteps;
 $.percentComplete.text = CONFIG.percentComplete;
+$.rowImage.image = CONFIG.image;
 
 var taskDescription = ui.createLabel({
 	left: "5dp",
