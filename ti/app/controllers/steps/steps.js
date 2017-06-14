@@ -14,7 +14,7 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
 var StepsDataProvider = require('classes/StepsDataProvider');
 
-var stepsProvider = new StepsProvider($.log);
+var stepsProvider = new StepsProvider();
 var stepsDataProvider;	//Initialised on window load
 
 /**
@@ -139,79 +139,24 @@ function loadDatesFrom(dateObj) {
  * @memberof Controllers.Steps
  */
 function sync() {
-	stepsProvider.getSteps()
-			     .then(function success(steps) {				     		
-			     	steps.results.forEach(function(item) {
-			     		var json = {
-			     			stepsWalked: item.steps_walked,
-			     			stepsTotal: item.steps_total,
-			     			activityPart: item.activity_part,
-			     			vigorousMins: item.vigorous,
-			     			moderateMins: item.moderate,
-			     			stepsDate: new Date(item.steps_date),
-			     			lastSyncedOn: new Date(),
-			     			lastUpdatedOn: new Date()
-			     		};
-			     		
-			     		stepsDataProvider.writeSingle(json);
-			     	});
-			     	   
-			     	var toPost = stepsDataProvider.readWhereNeedsSyncing();
-			     	  	
-			     	return stepsProvider.postSteps(toPost);
-			     }, function fail(reason) {
-			     	if(reason.detail) {
-			     		if(reason.detail === 'Invalid token.') {
-							Alloy.createWidget('com.mcongrove.toast', null, {
-								text: 'Sesson expired. Please log in again.',
-								duration: 2000,
-								view: $.log,
-								theme: 'error'
-							});	
-							
-							setTimeout(function() {
-								var win = Alloy.createController("auth/login").getView();
-								win.open();
-								
-								win.addEventListener("close", function() {
-									sync();
-								});
-							}, 2000);
-			     		}	
-			     	}
-			     	else {
-						Alloy.createWidget('com.mcongrove.toast', null, {
-							text: 'Failed to get steps. Reason: ' + reason,
-							duration: 2000,
-							view: $.log,
-							theme: 'error'
-						});	
-						
-						Ti.API.info("Failed to get steps. Reason: " + reason);
-			     	}
-			     })
-			     .then(function success() {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Steps synced successfully!',
-						duration: 2000,
-						view: $.log,
-						theme: 'success'
-					});
-					
-					$.tblDays.setData([]);
-					populateRows();
-					
-			     }, function fail(reason) {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Failed to post steps. Reason: ' + reason,
-						duration: 2000,
-						view: $.log,
-						theme: 'error'
-					});			 
-					
-					Ti.API.info("Failed to post steps. " + reason);    	
-			     });
-	
+	try {
+		stepsProvider.sync($.log, function() {
+			$.tblDays.setData([]);
+			populateRows();
+		});	
+	}
+	catch(e) {
+		if(e === "InvalidToken") {
+			setTimeout(function() {
+				var win = Alloy.createController("auth/login").getView();
+				win.open();
+				
+				win.addEventListener("close", function() {
+					sync();
+				});
+			}, 2000);
+		}
+	}
 }
 
 /**
