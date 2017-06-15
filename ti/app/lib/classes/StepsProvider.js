@@ -26,14 +26,32 @@ function StepsProvider() { }
  */
 StepsProvider.prototype.getSteps = function(page) {
 	var defer = q.defer();
+	var me = this;
+	
+	if(page === undefined) {
+		page = 1;
+	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get steps success", e);
+		Ti.API.info("Get steps success. Page = ", page);
+		//Ti.API.info("Response", e);
 		
-		//TODO: Add/update results to local storage
-		//TODO: Recur while e.next is not null
-		
-		defer.resolve(e);
+		if(e.next) {
+			setTimeout(function() {
+				//Sleep a little so we don't flood the network
+				
+				me.getSteps(page + 1).then(function(nextResponse) {
+					e.results = e.results.concat(nextResponse.results);
+					//Note: The JS engine here doesn't support Array.push.apply.
+					
+					Ti.API.info("Page " + page + " resolving. Records: " + e.results.length);
+					defer.resolve(e);
+				});
+			}, 200);
+		}
+		else {
+			defer.resolve(e);
+		}
 	}
 	
 	function onFail(e) {
@@ -45,8 +63,8 @@ StepsProvider.prototype.getSteps = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching steps...",
-		url:		"steps/",
+		message:	"Fetching steps. Page " + page,
+		url:		"steps/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -63,7 +81,7 @@ StepsProvider.prototype.getSteps = function(page) {
  * @todo incomplete
  * @returns Promise
  */
-StepsProvider.prototype.postSteps = function() {
+StepsProvider.prototype.postSteps = function(models) {
 	var defer = q.defer();
 	
 	function onSuccess(e) {
@@ -112,7 +130,7 @@ StepsProvider.prototype.sync = function(rootView, callback) {
     var me = this;
     
     function getStepsSuccess(steps) {
-    	Ti.API.info("Get steps success");
+    	Ti.API.info("Get steps success. Count = " + steps.count + ", Total = " + steps.results.length);
     	
      	steps.results.forEach(function(item) {
      		var json = {
@@ -130,8 +148,11 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      	});
      	   
      	var toPost = stepsDataProvider.readWhereNeedsSyncing();
-     	  	
-     	return me.postSteps(toPost);    	
+     	 
+     	//Sleep for a little so we don't flood the network 	
+     	setTimeout(function() {
+     		return me.postSteps(toPost);  
+     	}, 200);  	
     }
     
     function getStepsFail(reason) {

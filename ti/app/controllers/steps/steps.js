@@ -26,20 +26,9 @@ var stepsDataProvider;	//Initialised on window load
  * @param {Integer} index (Optional) The index to add the new row at. If omitted, it will be appended to the end.
  * @param {String} numSteps (Optional) The text to add to the right of the row, in red
  */
-function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
-	/*
-	Ti.API.info("Adding date row. Params:", 
-		"strLabel=", strLabel,
-		"dateObj=", dateObj,
-		"isLoadMoreButton=", isLoadMoreButton,
-		"index", index,
-		"numSteps", numSteps
-	);
-	*/
-	
+function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {			
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
-		//title: strLabel,
 		color: 'black',
 		height: '50dp',
 		
@@ -50,9 +39,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	});
 	row.addEventListener('click', tblRow_click);
 	
-	var view = Ti.UI.createView({
-		//backgroundColor: 'blue'	
-	});
+	var view = Ti.UI.createView({});
 	
 	var labelLeft = Ti.UI.createLabel({
 		left: '10dp',
@@ -64,54 +51,40 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		text: strLabel,
 		width: Ti.UI.SIZE
 	});
-	
-	var dateString = FormatHelper.formatDate(dateObj);
-	//Ti.API.info("Looking for dateString: " + dateString);
-	
-	if(numSteps === undefined) {
-		Ti.API.info("Num steps not provided. Reading...");
-		
-		var item = stepsDataProvider.readSingle(dateObj);
-		
-		Ti.API.info("Result: ", item);
-		
-		if(item) {
-			numSteps = item.stepsTotal;
-		}	
-	}
-	
-	/*
-	var item = logCollection.where({
-		'steps_date': dateString
-	});
-	if(item.length > 0) {
-		numSteps = item[0].get('steps_total');
-	}
-	*/
-	
-	var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
-	
-	Ti.API.info("Steps string: " + numStepsStr);
-	
-	var labelRight = Ti.UI.createLabel({
-		right: "10dp",
-		textAlign: "right",
-		color: "red",
-		text: numStepsStr,
-		width: Ti.UI.SIZE
-	});
-	
 	view.add(labelLeft);
-	view.add(labelRight);
+	
+	//Don't add the # of steps if its a 'Load More' button
+	if(!isLoadMoreButton) {
+		if(numSteps === undefined) {		
+			var item = stepsDataProvider.readSingle(dateObj);
+			
+			if(item) {
+				numSteps = item.stepsTotal;
+			}	
+		}
+		
+		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
+		
+		var labelRight = Ti.UI.createLabel({
+			right: "10dp",
+			textAlign: "right",
+			color: "red",
+			text: numStepsStr,
+			width: Ti.UI.SIZE
+		});
+		
+		view.add(labelRight);		
+	}
+
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
 						//to become inaccessible by the logEntry controller...need to fix.
 	
 	if(index === undefined) {
-		Ti.API.info("Appending row");
+		//Ti.API.info("Appending row");
 		$.tblDays.appendRow(row);
 	}
 	else {
-		Ti.API.info("Inserting row. Index = " + index);
+		//Ti.API.info("Inserting row. Index = " + index);
 		$.tblDays.insertRowAfter(index, row);	
 	}
 }
@@ -191,6 +164,8 @@ function window_open() {
  * @memberof Controllers.Steps
  */
 function tblRow_click(e) {
+	Ti.API.info("Row clicked.", e);
+	
 	//Due to the child view in the TableViewRow, e.source doesn't
 	//contain custom properties. Using e.row instead.
 	if(e.row.isLoadMoreButton) {
