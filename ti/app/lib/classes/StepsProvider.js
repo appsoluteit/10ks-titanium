@@ -1,6 +1,6 @@
 /**
  * @file Steps Provider
- * @description Provides an abstraction of the steps endpoint interactions via the API helper
+ * @description Provides an abstraction of the steps endpoint interactions via the API helper. Also handles paging.
  * @summary Use this provider class to interact with the steps API endpoint instead of communicating with it manually.
  * @require helpers/APIHelper
  * @require q
