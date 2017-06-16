@@ -1,10 +1,10 @@
 /**
- * @file Challenges Provider
- * @description Provides an abstraction of the challenges endpoint interactions via the API helper. Also handles paging.
- * @summary Use this provider class to interact with the challenges API endpoint instead of communicating with it manually.
+ * @file Race Tournaments Provider
+ * @description Provides an abstraction of the race tournaments endpoint interactions via the API helper. Also handles paging.
+ * @summary Use this provider class to interact with the race tournaments API endpoint instead of communicating with it manually.
  * @require helpers/APIHelper
  * @require q
- * @exports ChallengesProvider
+ * @exports RaceTournamentsProvider
  */
 
 var APIHelper = require('helpers/APIHelper');
@@ -12,16 +12,16 @@ var q = require('q');
 
 /**
  * @class
- * @description Creates a new instance of the Challenges Provider
+ * @description Creates a new instance of the Race Tournaments Provider
  */
-function ChallengesProvider() { }
+function RaceTournamentsProvider() { }
 
 /**
- * @description Gets the challenges from the challenges API endpoint. This will recur so long as there are additional pages in the API response.
+ * @description Gets the races from the race tournaments API endpoint. This will recur so long as there are additional pages in the API response.
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
-ChallengesProvider.prototype.getChallenges = function(page) {
+RaceTournamentsProvider.prototype.getRaces = function(page) {
 	var defer = q.defer();
 	var me = this;
 	
@@ -36,7 +36,7 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 			setTimeout(function() {
 				//Sleep a little so we don't flood the network
 				
-				me.getChallenges(page + 1).then(function(nextResponse) {
+				me.getRaces(page + 1).then(function(nextResponse) {
 					e.results = e.results.concat(nextResponse.results);
 					//Note: The JS engine here doesn't support Array.push.apply.
 					
@@ -59,8 +59,8 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching challenges. Page " + page,
-		url:		"challenges/?page=" + page,
+		message:	"Fetching races. Page " + page,
+		url:		"tournament_races/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -71,10 +71,10 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	return defer.promise;
 };
 
-ChallengesProvider.prototype.fetch = function(callback) {
-	this.getChallenges().then(function(results) {
+RaceTournamentsProvider.prototype.fetch = function(callback) {
+	this.getRaces().then(function(results) {
 		callback(results);
 	});
 };
 
-module.exports = ChallengesProvider;
+module.exports = RaceTournamentsProvider;

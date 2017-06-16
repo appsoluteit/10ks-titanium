@@ -20,7 +20,6 @@ function StepsProvider() { }
 
 /**
  * @description Gets the steps from the steps API endpoint. This will recur so long as there are additional pages in the API response.
- * @todo incomplete
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
