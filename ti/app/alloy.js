@@ -87,10 +87,10 @@ Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
  * @type {Boolean}
  * @memberof Alloy.Globals
  */
-Alloy.Globals.IsDebug = true;
+Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
-var GoogleAnalyticsTrackerID = "UA-101176022-1";
+var GoogleAnalyticsTrackerID = Ti.App.Properties.getString("google-analytics-id");
 var GA = require("analytics.google");
 if(Ti.Platform.osname == 'android') {
     GA.dispatchInterval = 2; // in minutes

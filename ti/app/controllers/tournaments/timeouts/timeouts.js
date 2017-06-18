@@ -14,6 +14,10 @@ function btnBack_click() {
 	$.timeouts.close();
 }
 
+function fetchTimeouts() {
+	//TODO
+}
+
 /**
  * @description Event handler for the Window's open event.
  * @memberof Controllers.Tournaments.Timeouts
@@ -22,4 +26,6 @@ function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Timeout Tournaments"
 	});
+	
+	fetchTimeouts();
 }
