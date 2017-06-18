@@ -156,6 +156,10 @@ function populateRows() {
  * @memberof Controllers.Steps
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Steps"
+	});
+	
 	populateRows();
 }
 

@@ -13,6 +13,10 @@ var args = $.args;
  * @memberof Controllers.Settings.ReminderTime
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Reminder Time"
+	});
+	
 	var reminderTime = Ti.App.Properties.getString('ReminderTime', '');
 	
 	if(reminderTime) {

@@ -6,6 +6,10 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 console.log("Opening details window", args);
 
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Race Tournament Details"
+	});
+	
 	if(Ti.Platform.osname === "android") {
 		$.racesDetail.activity.actionBar.title = "Race";
 	}

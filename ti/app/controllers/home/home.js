@@ -2,6 +2,7 @@
  * @file Home Controller
  * @requires classes/CalendarFactory
  * @requires classes/ReminderRepeatSetting
+ * @requires analytics.google
  * @description The controller for the home view. This is the first view shown to the user.
  * @namespace Controllers.Home
  */
@@ -136,9 +137,14 @@ function androidBack_click() {
 
 /**
  * @description Event handler for the window's `open` event. Adds event listeners for the buttons and calls `loginIfNeeded()`.
+ * Also tracks the screen in Google Analytics.
  * @memberOf Controllers.Home
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Home"
+	});
+	
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);

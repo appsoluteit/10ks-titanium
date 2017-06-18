@@ -65,5 +65,9 @@ function fetchRaces() {
  * @memberof Controllers.Tournaments.Races
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Race Tournaments"
+	});
+	
 	fetchRaces();
 }

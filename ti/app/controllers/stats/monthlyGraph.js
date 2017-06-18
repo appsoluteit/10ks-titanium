@@ -13,6 +13,10 @@ function hasSteps() {
 }
 
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Monthly Graph"
+	});
+	
 	if(hasSteps()) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",

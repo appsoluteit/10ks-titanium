@@ -80,5 +80,9 @@ function fetchChallenges() {
  * @memberOf Controllers.Challenges
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Challenges"
+	});
+	
 	fetchChallenges();
 }

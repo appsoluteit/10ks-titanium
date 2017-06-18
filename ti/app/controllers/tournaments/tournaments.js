@@ -19,6 +19,10 @@ function btnBack_click() {
  * @memberof Controllers.Tournaments
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Tournaments"
+	});
+	
 	$.tournamentsView.vwRaceTournaments.addEventListener('click', raceTournaments_click);
 	$.tournamentsView.vwTimeoutTournaments.addEventListener('click', timeoutTournaments_click);
 }

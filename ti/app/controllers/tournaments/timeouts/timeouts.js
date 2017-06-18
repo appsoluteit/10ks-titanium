@@ -19,5 +19,7 @@ function btnBack_click() {
  * @memberof Controllers.Tournaments.Timeouts
  */
 function window_open() {
-
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Timeout Tournaments"
+	});
 }

@@ -13,6 +13,10 @@ var args = $.args;
  * @memberof Controllers.Settings.ReminderLabel
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Reminder Label"
+	});
+	
 	$.reminderLabelView.btnSave.addEventListener('click', btnSave_click);
 	
 	var strReminderLabel = Ti.App.Properties.getString("ReminderLabel", "");

@@ -13,6 +13,10 @@ var AuthProvider = require('classes/AuthProvider');
  * @memberOf Controllers.Auth.Login
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Login"
+	});
+	
 	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
 	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
 }

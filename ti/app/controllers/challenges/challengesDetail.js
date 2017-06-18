@@ -7,6 +7,10 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 console.log("Opening details window", args);
 
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Challenge Detail"
+	});
+	
 	if(Ti.Platform.osname === "android") {
 		$.challengesDetail.activity.actionBar.title = args.task.name;
 	}

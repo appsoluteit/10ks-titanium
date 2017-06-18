@@ -12,6 +12,10 @@ function hasSteps() {
 }
 
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Daily Graph"
+	});
+	
 	var currentMonthLabel = DateTimeHelper.getCurrentMonthName();
 		
 	if(hasSteps()) {
