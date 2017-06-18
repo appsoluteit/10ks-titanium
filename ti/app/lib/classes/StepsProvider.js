@@ -11,6 +11,8 @@
 var APIHelper = require('helpers/APIHelper');
 var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
+	
+var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @class
@@ -82,32 +84,42 @@ StepsProvider.prototype.getSteps = function(page) {
  */
 StepsProvider.prototype.postSteps = function(models) {
 	var defer = q.defer();
+	var me = this;
+	
+	if(models === undefined) {
+		models = stepsDataProvider.readWhereNeedsSyncing();
+		Ti.API.info("Read models: " + models.length);
+	}
 	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));
 		
-		defer.resolve();
+		if(models.length === 0) {
+			Ti.API.info("All models posted. Resolving");
+			defer.resolve();			
+		}
+		else {
+			me.postSteps(models).then(function() {
+				Ti.Api.info("Resolving instance: " + models.length);
+				defer.resolve();
+			});
+		}
 	}
 	
 	function onFail(e) {
 		Ti.API.info("Post steps fail", JSON.stringify(e));
-		
 		defer.reject(e.errorMessage);
 	}
 	
-	//TODO: Get all steps in local storage which have NOT been synced yet
-	//Recur until they've all been posted
-	var data = {
-		//user: Alloy.Globals.UserURL,
-		steps_date: "2016-10-12",
-		steps_total: "9999",
-		//steps_walked: "9999",
-		//moderate: "9999",
-		//vigorous: "9999",
-		activity_part: "9999"
-	};
+	var jsonModel = models[models.length - 1];
+	Ti.API.info("JSON model: ", jsonModel);
 	
-	Ti.API.info("Posting", data);
+	var data = stepsDataProvider.toBackboneModel(jsonModel);
+	Ti.API.info("Backbone Model:", data);
+	
+	models.pop();
+	
+	Ti.API.info("Posting model. # remaining: " + models.length);
 	
 	APIHelper.post({
 		message:	"Sending steps...",
@@ -125,7 +137,6 @@ StepsProvider.prototype.postSteps = function(models) {
 };
 
 StepsProvider.prototype.sync = function(rootView, callback) {
-    stepsDataProvider = new StepsDataProvider();
     var me = this;
     
     function getStepsSuccess(steps) {
@@ -147,7 +158,9 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      	});
      	   
      	var toPost = stepsDataProvider.readWhereNeedsSyncing();
-     	 
+     	Ti.API.info("Models to post: " + toPost.length);
+     	//Ti.API.info(toPost);
+     	
      	//Sleep for a little so we don't flood the network 	
      	setTimeout(function() {
      		return me.postSteps(toPost);  

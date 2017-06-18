@@ -40,6 +40,8 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	row.addEventListener('click', tblRow_click);
 	
 	var view = Ti.UI.createView({});
+	view.addEventListener('click', function(e) { }); //adding this event handler to the view seems to fix a bug where the event handler
+													 //for the row wouldn't fire
 	
 	var labelLeft = Ti.UI.createLabel({
 		left: '10dp',

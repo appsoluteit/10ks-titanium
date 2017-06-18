@@ -84,6 +84,13 @@ function StepsDataProvider() {
 }
 
 /**
+ * @description Converts a JSON model to a backbone model. Useful for sending data to the Api endpoint.
+ */
+StepsDataProvider.prototype.toBackboneModel = function(jsonModel) {
+	return new BackboneModel(jsonModel);
+};
+
+/**
  * @description Performs a full load of local data. Call this to get changes after saving. It is the equivalent of calling the constructor a 
  * second time.
  */
