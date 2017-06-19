@@ -18,14 +18,16 @@ $.goalSteps.text = CONFIG.goalSteps;
 $.percentComplete.text = CONFIG.percentComplete;
 $.rowImage.image = CONFIG.image;
 
-var taskDescription = ui.createLabel({
-	left: "5dp",
-	html: CONFIG.taskDescription.substring(0, 100) + "...",
-	font: {
-		fontSize: 10
-	}
-});
-
-$.labelContainer.add(taskDescription);
+if(CONFIG.taskDescription) {
+	var taskDescription = ui.createLabel({
+		left: "5dp",
+		html: CONFIG.taskDescription.substring(0, 100) + "...",
+		font: {
+			fontSize: 10
+		}
+	});
+	
+	$.labelContainer.add(taskDescription);
+}
 
 CONFIG.view.add($.view);

@@ -22,7 +22,7 @@ function TimeoutTournamentsProvider() { }
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
-TimeoutTournamentsProvider.prototype.getRaces = function(page) {
+TimeoutTournamentsProvider.prototype.getTimeouts = function(page) {
 	var defer = q.defer();
 	var me = this;
 	
@@ -31,13 +31,13 @@ TimeoutTournamentsProvider.prototype.getRaces = function(page) {
 	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get challenges success. Page = ", page);
+		Ti.API.info("Get tournaments success. Page = ", page);
 		
 		if(e.next) {
 			setTimeout(function() {
 				//Sleep a little so we don't flood the network
 				
-				me.getRaces(page + 1).then(function(nextResponse) {
+				me.getTimeouts(page + 1).then(function(nextResponse) {
 					e.results = e.results.concat(nextResponse.results);
 					//Note: The JS engine here doesn't support Array.push.apply.
 					
@@ -73,7 +73,7 @@ TimeoutTournamentsProvider.prototype.getRaces = function(page) {
 };
 
 TimeoutTournamentsProvider.prototype.fetch = function(callback) {
-	this.getRaces().then(function(results) {
+	this.getTimeouts().then(function(results) {
 		callback(results);
 	});
 };

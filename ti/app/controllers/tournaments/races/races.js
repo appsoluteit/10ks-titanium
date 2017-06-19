@@ -19,7 +19,11 @@ function btnBack_click() {
 }
 
 function fetchRaces() {
+	Ti.API.info("Fetching races");
+	
 	racesProvider.fetch(function(response) {
+		Ti.API.info("Races response: ", response);
+		
 		response.results.forEach(function(result) {
 			Ti.API.info(JSON.stringify(result));
 			

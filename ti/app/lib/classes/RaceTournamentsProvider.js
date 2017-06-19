@@ -9,6 +9,7 @@
 
 var APIHelper = require('helpers/APIHelper');
 var q = require('q');
+var spinner = Alloy.createWidget("nl.fokkezb.loading");
 
 /**
  * @class
@@ -30,7 +31,7 @@ RaceTournamentsProvider.prototype.getRaces = function(page) {
 	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get challenges success. Page = ", page);
+		Ti.API.info("Get races success. Page = ", page);
 		
 		if(e.next) {
 			setTimeout(function() {
@@ -59,7 +60,6 @@ RaceTournamentsProvider.prototype.getRaces = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching races. Page " + page,
 		url:		"tournament_races/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -72,9 +72,14 @@ RaceTournamentsProvider.prototype.getRaces = function(page) {
 };
 
 RaceTournamentsProvider.prototype.fetch = function(callback) {
+	//Does this need to be a global? Is the APIHelper instance overriding this?
+	spinner.show("Fetching races...", false);
+	
 	this.getRaces().then(function(results) {
 		callback(results);
 	});
+	
+	spinner.hide();
 };
 
 module.exports = RaceTournamentsProvider;
