@@ -23,6 +23,31 @@ function btnBack_click() {
 	$.settings.close();
 }
 
+//We need the ability to dynamically add a row to cater for non-debug cases. Sadly though, dynamically created UI objects don't have the alloy styles
+//applied, so we have to manually add them here.
+function makeRow(title) {
+	var row = Ti.UI.createTableViewRow({
+		height: "50dp"
+	});
+	
+	row.add(Ti.UI.createLabel({
+		text: title,
+		left: "10dp",
+		textAlign: "left",
+		width: Ti.UI.SIZE,
+		height: Ti.UI.SIZE,
+		color: '#000',
+		
+		font: {
+			fontFamily: 'Arial',
+			fontSize: '10',
+			fontWeight: "bold"
+		}
+	}));
+	
+	return row;
+}
+
 /**
  * @description Event handler for the Window's `open` event. Sets the goal steps row label to the saved property, if it exists.
  * Adds event listeners for the table rows and, if if `Alloy.Globals.IsDebug` is on, adds an event listener for the 'run tests' row, otherwise
@@ -42,12 +67,13 @@ function window_open() {
 	}
 	
 	if(Alloy.Globals.IsDebug) {
-		$.settingsView.tblRowRunTests.addEventListener('click', tblRowTests_click);
-		$.settingsView.tblRowReset.addEventListener('click', tblRowReset_click);
-	}
-	else {
-		$.settingsView.tblContainer.deleteRow($.settingsView.tblRowRunTests);
-		$.settingsView.tblContainer.deleteRow($.settingsView.tblRowReset);
+		var tblRowTests = makeRow("Run Tests");
+		$.settingsView.tblContainer.appendRow(tblRowTests);
+		tblRowTests.addEventListener('click', tblRowTests_click);
+		
+		var tblRowReset = makeRow("Reset");
+		$.settingsView.tblContainer.appendRow(tblRowReset);
+		tblRowReset.addEventListener('click', tblRowReset_click);
 	}
 	
 	//Set child view event handlers

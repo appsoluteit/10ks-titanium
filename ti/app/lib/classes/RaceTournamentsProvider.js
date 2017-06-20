@@ -9,7 +9,6 @@
 
 var APIHelper = require('helpers/APIHelper');
 var q = require('q');
-var spinner = Alloy.createWidget("nl.fokkezb.loading");
 
 /**
  * @class
@@ -71,15 +70,10 @@ RaceTournamentsProvider.prototype.getRaces = function(page) {
 	return defer.promise;
 };
 
-RaceTournamentsProvider.prototype.fetch = function(callback) {
-	//Does this need to be a global? Is the APIHelper instance overriding this?
-	spinner.show("Fetching races...", false);
-	
+RaceTournamentsProvider.prototype.fetch = function(callback) {	
 	this.getRaces().then(function(results) {
 		callback(results);
 	});
-	
-	spinner.hide();
 };
 
 module.exports = RaceTournamentsProvider;

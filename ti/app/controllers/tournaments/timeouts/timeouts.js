@@ -18,6 +18,9 @@ function btnBack_click() {
 }
 
 function fetchTimeouts() {
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Fetching timeouts...");
+	
 	timeoutsProvider.fetch(function(response) {
 		
 		Ti.API.info("Timeouts: ", response);
@@ -54,6 +57,8 @@ function fetchTimeouts() {
 		linkRow.add(webLink);
 		
 		$.timeoutsView.tblTimeouts.appendRow(linkRow);
+		
+		spinner.hide();
 	});
 }
 

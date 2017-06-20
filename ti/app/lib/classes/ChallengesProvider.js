@@ -59,7 +59,6 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching challenges. Page " + page,
 		url:		"challenges/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey

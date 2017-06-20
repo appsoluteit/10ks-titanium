@@ -27,15 +27,5 @@
 		<TableViewRow id="tblRowLogout">
 			<Label class="row-label">Logout</Label>
 		</TableViewRow>
-		
-		<!-- Run Tests -->
-		<TableViewRow id="tblRowRunTests">
-			<Label class="row-label">Run Tests</Label>
-		</TableViewRow>		
-		
-		<!-- Reset -->
-		<TableViewRow id="tblRowReset">
-			<Label class="row-label">Reset steps</Label>
-		</TableViewRow>
 	</TableView>
 </Alloy>
