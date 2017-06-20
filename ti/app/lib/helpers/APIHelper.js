@@ -17,8 +17,8 @@
  * });
  */
 
-var spinner = Alloy.createWidget("nl.fokkezb.loading");
-
+var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	
 function makeResponse(responseText) {
 	var response = {};
 	
@@ -34,7 +34,7 @@ function makeResponse(responseText) {
 
 function send(options) {
 	if(options.message) {
-		spinner.show(options.message, false);
+		spinner.show(options.message);	
 	}
 	
 	var req = Ti.Network.createHTTPClient();
@@ -47,7 +47,6 @@ function send(options) {
 				
 				if(this.status == 200 || this.status == 201) {
 					Ti.API.debug("API success response: " + this.responseText);
-					spinner.hide();
 					
 					if(typeof(options.success === "function")) {
 						options.success(makeResponse(this.responseText));
@@ -61,19 +60,25 @@ function send(options) {
 		catch(err) {
 			Ti.API.error('API Caught error: ' + err);
 		}
+		
+		if(options.message) {
+			spinner.hide();
+		}
 	};
 	
 	req.onerror = function(e) {
 		Ti.API.debug('API Request error. ' + JSON.stringify(e));
 		Ti.API.debug('Response object: ' + this.responseText);
 		
-		spinner.hide();
-		
 		if(typeof(options.fail) === "function") {
 			options.fail(makeResponse(this.responseText));
 		}
 		else {
 			Ti.API.warn("No fail handler defined for API call. Is this intended?");
+		}
+		
+		if(options.message) {
+			spinner.hide();
 		}
 	};
 	

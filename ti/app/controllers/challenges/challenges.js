@@ -20,6 +20,9 @@ function btnBack_click() {
 }
 
 function fetchChallenges() {
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Fetching challenges...");
+	
 	try {
 		challengesProvider.fetch(function(response) {
 			response.results.forEach(function(result) {
@@ -59,6 +62,8 @@ function fetchChallenges() {
 			linkRow.add(webLink);
 			
 			$.challengesView.tblChallenges.appendRow(linkRow);
+			
+			spinner.hide();
 		});	
 	}
 	catch(e) {

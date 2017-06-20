@@ -64,7 +64,6 @@ StepsProvider.prototype.getSteps = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching steps. Page " + page,
 		url:		"steps/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -122,7 +121,6 @@ StepsProvider.prototype.postSteps = function(models) {
 	Ti.API.info("Posting model. # remaining: " + models.length);
 	
 	APIHelper.post({
-		message:	"Sending steps...",
 		url: 		"steps/",
 		headers: [{
 			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -161,10 +159,12 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      	Ti.API.info("Models to post: " + toPost.length);
      	//Ti.API.info(toPost);
      	
-     	//Sleep for a little so we don't flood the network 	
-     	setTimeout(function() {
-     		return me.postSteps(toPost);  
-     	}, 200);  	
+     	if(toPost.length > 0) {
+	     	//Sleep for a little so we don't flood the network 	
+	     	setTimeout(function() {
+	     		return me.postSteps(toPost);  
+	     	}, 200);  		
+     	}
     }
     
     function getStepsFail(reason) {

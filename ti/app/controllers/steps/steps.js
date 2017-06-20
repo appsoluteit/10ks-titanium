@@ -114,10 +114,15 @@ function loadDatesFrom(dateObj) {
  * @memberof Controllers.Steps
  */
 function sync() {
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Syncing...");
+	
 	try {
 		stepsProvider.sync($.log, function() {
 			$.tblDays.setData([]);
 			populateRows();
+			
+			spinner.hide();
 		});	
 	}
 	catch(e) {
@@ -130,6 +135,8 @@ function sync() {
 					sync();
 				});
 			}, 2000);
+			
+			spinner.hide();
 		}
 	}
 }

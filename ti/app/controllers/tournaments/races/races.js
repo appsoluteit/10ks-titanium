@@ -7,8 +7,8 @@
 var args = $.args;
 var RaceTournamentsProvider = require('classes/RaceTournamentsProvider');
 var FormatHelper = require('helpers/FormatHelper');
-
 var racesProvider = new RaceTournamentsProvider();
+
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -20,6 +20,9 @@ function btnBack_click() {
 
 function fetchRaces() {
 	Ti.API.info("Fetching races");
+	
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Fetching races...");
 	
 	racesProvider.fetch(function(response) {
 		Ti.API.info("Races response: ", response);
@@ -61,6 +64,8 @@ function fetchRaces() {
 		linkRow.add(webLink);
 		
 		$.racesView.tblRaces.appendRow(linkRow);
+		
+		spinner.hide();
 	});
 }
 
