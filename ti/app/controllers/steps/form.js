@@ -35,6 +35,10 @@ function btnDone_click() {
  * @memberof Controllers.Steps.Form
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Steps Form"
+	});
+	
 	stepsDataProvider = new StepsDataProvider();
 	
 	if(Ti.Platform.osname === "android") {

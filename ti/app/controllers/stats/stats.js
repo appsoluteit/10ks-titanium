@@ -215,6 +215,10 @@ function load() {
  * @memberof Controllers.Stats
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Statistics"
+	});
+	
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
 	
 	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);

@@ -36,9 +36,6 @@ function send(options) {
 	if(options.message) {
 		spinner.show(options.message, false);
 	}
-	else {
-		spinner.show("Loading...", false);
-	}
 	
 	var req = Ti.Network.createHTTPClient();
 	req.onload = function() {

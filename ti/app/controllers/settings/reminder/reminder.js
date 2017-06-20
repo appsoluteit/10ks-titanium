@@ -222,6 +222,10 @@ function btnBack_click() {
  * @memberof Controllers.Settings.Reminder
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Reminder"
+	});
+	
 	$.reminderView.tblRowRepeat.addEventListener('click', tblRowRepeat_click);
 	$.reminderView.tblRowLabel.addEventListener('click', tblRowLabel_click);
 	$.reminderView.tblRowTime.addEventListener('click', tblRowTime_click);

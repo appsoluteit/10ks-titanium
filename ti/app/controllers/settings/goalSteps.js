@@ -13,6 +13,10 @@ var args = $.args;
  * @memberof Controllers.Settings.GoalSteps
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Goal Steps"
+	});
+	
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 	
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);

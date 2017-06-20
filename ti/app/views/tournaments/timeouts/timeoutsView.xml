@@ -1,5 +1,4 @@
 <Alloy>
-	<View>
-		<Label font="{ fontWeight: 'bold', fontSize: '18px' }">Coming soon!</Label>
-	</View>
+	<TableView id="tblTimeouts">
+	</TableView>
 </Alloy>

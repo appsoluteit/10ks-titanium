@@ -87,8 +87,20 @@ Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
  * @type {Boolean}
  * @memberof Alloy.Globals
  */
-Alloy.Globals.IsDebug = false;
+Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
+
+var GoogleAnalyticsTrackerID = Ti.App.Properties.getString("google-analytics-id");
+var GA = require("analytics.google");
+if(Ti.Platform.osname == 'android') {
+    GA.dispatchInterval = 2; // in minutes
+}
+else if(Ti.Platform.name == 'iPhone OS') {
+    GA.dispatchInterval = 120; // in seconds
+}
+Alloy.Globals.tracker = GA.getTracker(GoogleAnalyticsTrackerID);
+
+
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)

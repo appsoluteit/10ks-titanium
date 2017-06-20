@@ -30,6 +30,10 @@ function btnBack_click() {
  * @memberof Controllers.Settings
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Settings"
+	});
+	
 	//Pre-load the goal steps
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
 	

@@ -16,6 +16,10 @@ var args = $.args;
  * @memberof Controllers.Settings.ReminderRepeat
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Reminder Repeat"
+	});
+	
 	//This causes a bug on Android where switch values are always off by 1
 	if(Ti.Platform.osname != "android") {
 		$.reminderRepeatView.tblRowSunday.addEventListener('click', tblRow_click);

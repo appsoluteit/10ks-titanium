@@ -5,8 +5,10 @@
  */
 
 var args = $.args;
-var APIHelper = require('helpers/APIHelper');
+var RaceTournamentsProvider = require('classes/RaceTournamentsProvider');
 var FormatHelper = require('helpers/FormatHelper');
+
+var racesProvider = new RaceTournamentsProvider();
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -17,8 +19,10 @@ function btnBack_click() {
 }
 
 function fetchRaces() {
-	function onSuccess(response) {
-		Ti.API.info("Races success handler. Response: ", response);
+	Ti.API.info("Fetching races");
+	
+	racesProvider.fetch(function(response) {
+		Ti.API.info("Races response: ", response);
 		
 		response.results.forEach(function(result) {
 			Ti.API.info(JSON.stringify(result));
@@ -57,52 +61,7 @@ function fetchRaces() {
 		linkRow.add(webLink);
 		
 		$.racesView.tblRaces.appendRow(linkRow);
-	}
-	
-	function onFail(reason) {
-		if(response.detail) {
-			//If the token expired, open the login window to login again
-			if(response.detail === "Invalid token.") {
-				Alloy.createWidget("com.mcongrove.toast", null, {
-					text: "Session expired. Please log in again.",
-					duration: 2000,
-					view: $.challenges,
-					theme: "error"
-				});
-				
-				setTimeout(function() {
-					var win = Alloy.createController("auth/login").getView();
-					win.open();
-					
-					win.addEventListener("close", function() {
-						fetchRaces();
-					});
-				}, 2000);
-			}
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't get races",
-				duration: 2000,
-				view: $.challenges,
-				theme: "error"
-			});	
-		}
-	}
-	
-	var data = {
-		Authorization: "Token " + Alloy.Globals.AuthKey
-	};
-	
-	APIHelper.get({
-		message:	"Fetching Races...",
-		url:		"tournament_races/", 
-		headers: [{
-				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
-		}],
-		success: 	onSuccess,
-		fail: 		onFail
-	});	
+	});
 }
 
 /**
@@ -110,5 +69,9 @@ function fetchRaces() {
  * @memberof Controllers.Tournaments.Races
  */
 function window_open() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Race Tournaments"
+	});
+	
 	fetchRaces();
 }

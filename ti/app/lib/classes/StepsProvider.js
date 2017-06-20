@@ -1,6 +1,6 @@
 /**
  * @file Steps Provider
- * @description Provides an abstraction of the steps endpoint interactions via the API helper
+ * @description Provides an abstraction of the steps endpoint interactions via the API helper. Also handles paging.
  * @summary Use this provider class to interact with the steps API endpoint instead of communicating with it manually.
  * @require helpers/APIHelper
  * @require q
@@ -11,6 +11,8 @@
 var APIHelper = require('helpers/APIHelper');
 var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
+	
+var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @class
@@ -20,20 +22,37 @@ function StepsProvider() { }
 
 /**
  * @description Gets the steps from the steps API endpoint. This will recur so long as there are additional pages in the API response.
- * @todo incomplete
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
 StepsProvider.prototype.getSteps = function(page) {
 	var defer = q.defer();
+	var me = this;
+	
+	if(page === undefined) {
+		page = 1;
+	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get steps success", e);
+		Ti.API.info("Get steps success. Page = ", page);
+		//Ti.API.info("Response", e);
 		
-		//TODO: Add/update results to local storage
-		//TODO: Recur while e.next is not null
-		
-		defer.resolve(e);
+		if(e.next) {
+			setTimeout(function() {
+				//Sleep a little so we don't flood the network
+				
+				me.getSteps(page + 1).then(function(nextResponse) {
+					e.results = e.results.concat(nextResponse.results);
+					//Note: The JS engine here doesn't support Array.push.apply.
+					
+					Ti.API.info("Page " + page + " resolving. Records: " + e.results.length);
+					defer.resolve(e);
+				});
+			}, 200);
+		}
+		else {
+			defer.resolve(e);
+		}
 	}
 	
 	function onFail(e) {
@@ -45,8 +64,8 @@ StepsProvider.prototype.getSteps = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching steps...",
-		url:		"steps/",
+		message:	"Fetching steps. Page " + page,
+		url:		"steps/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -63,34 +82,44 @@ StepsProvider.prototype.getSteps = function(page) {
  * @todo incomplete
  * @returns Promise
  */
-StepsProvider.prototype.postSteps = function() {
+StepsProvider.prototype.postSteps = function(models) {
 	var defer = q.defer();
+	var me = this;
+	
+	if(models === undefined) {
+		models = stepsDataProvider.readWhereNeedsSyncing();
+		Ti.API.info("Read models: " + models.length);
+	}
 	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));
 		
-		defer.resolve();
+		if(models.length === 0) {
+			Ti.API.info("All models posted. Resolving");
+			defer.resolve();			
+		}
+		else {
+			me.postSteps(models).then(function() {
+				Ti.Api.info("Resolving instance: " + models.length);
+				defer.resolve();
+			});
+		}
 	}
 	
 	function onFail(e) {
 		Ti.API.info("Post steps fail", JSON.stringify(e));
-		
 		defer.reject(e.errorMessage);
 	}
 	
-	//TODO: Get all steps in local storage which have NOT been synced yet
-	//Recur until they've all been posted
-	var data = {
-		//user: Alloy.Globals.UserURL,
-		steps_date: "2016-10-12",
-		steps_total: "9999",
-		//steps_walked: "9999",
-		//moderate: "9999",
-		//vigorous: "9999",
-		activity_part: "9999"
-	};
+	var jsonModel = models[models.length - 1];
+	Ti.API.info("JSON model: ", jsonModel);
 	
-	Ti.API.info("Posting", data);
+	var data = stepsDataProvider.toBackboneModel(jsonModel);
+	Ti.API.info("Backbone Model:", data);
+	
+	models.pop();
+	
+	Ti.API.info("Posting model. # remaining: " + models.length);
 	
 	APIHelper.post({
 		message:	"Sending steps...",
@@ -108,11 +137,10 @@ StepsProvider.prototype.postSteps = function() {
 };
 
 StepsProvider.prototype.sync = function(rootView, callback) {
-    stepsDataProvider = new StepsDataProvider();
     var me = this;
     
     function getStepsSuccess(steps) {
-    	Ti.API.info("Get steps success");
+    	Ti.API.info("Get steps success. Count = " + steps.count + ", Total = " + steps.results.length);
     	
      	steps.results.forEach(function(item) {
      		var json = {
@@ -130,8 +158,13 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      	});
      	   
      	var toPost = stepsDataProvider.readWhereNeedsSyncing();
-     	  	
-     	return me.postSteps(toPost);    	
+     	Ti.API.info("Models to post: " + toPost.length);
+     	//Ti.API.info(toPost);
+     	
+     	//Sleep for a little so we don't flood the network 	
+     	setTimeout(function() {
+     		return me.postSteps(toPost);  
+     	}, 200);  	
     }
     
     function getStepsFail(reason) {

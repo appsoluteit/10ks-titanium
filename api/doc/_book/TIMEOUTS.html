@@ -285,11 +285,129 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p>(Incomplete)</p>
+                                <div class="api-method"><div class="api-method-definition"><h2 id="tournament_timeouts">Tournament Timeouts </h2>
 <p>A Time Out Tournament runs for a number of weeks (which you determine)
 and the goal is to accumulate as many steps as possible during this time
 period.</p>
-
+<pre><code>https://www.10000steps.org.au/api/tournament_timeouts/
+</code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
+<h4 id="headers">Headers</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Authorization</code></td>
+<td><code>string</code></td>
+<td><code>true</code></td>
+<td><code>Token 6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="returns">Returns</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td><code>int</code></td>
+<td><code>91</code></td>
+<td>The number of timeouts available for this user</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td><code>string</code></td>
+<td><code>http://10000steps.org.au/api/tournament_tmeouts/?page=2</code></td>
+<td>A URL to the next page of challenges for this user</td>
+</tr>
+<tr>
+<td><code>previous</code></td>
+<td><code>string</code></td>
+<td><code>http://10000steps.org.au/api/tournament_timeouts/?page=1</code></td>
+<td>A URL to the previous page</td>
+</tr>
+<tr>
+<td><code>results</code></td>
+<td><code>Timeout[]</code></td>
+<td></td>
+<td>A list of race records for this user</td>
+</tr>
+</tbody>
+</table>
+<h5 id="timeout">Timeout</h5>
+<p>A Timeout is the top level object returned by tournament timeouts. It is simply a container for a Team object, an array of steps and the date the tournament started.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>team</code></td>
+<td><code>Team</code></td>
+<td><code>N/A</code></td>
+<td>An object representing your team.</td>
+</tr>
+<tr>
+<td><code>steps</code></td>
+<td><code>string[]</code></td>
+<td><code>N/A</code></td>
+<td>An array of URLs to step instances that made up this race so far for your team? Not sure</td>
+</tr>
+<tr>
+<td><code>date_started</code></td>
+<td><code>string</code></td>
+<td>``</td>
+<td>The date the tournament was accepted by the user?</td>
+</tr>
+</tbody>
+</table>
+<h5 id="team">Team</h5>
+<p>A team object simply contains an instance of Tournament.</p>
+<h5 id="tournament">Tournament</h5>
+<p>This actually contains the useful information. Its schema is:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>weeks</code></td>
+<td><code>integer</code></td>
+<td><code>3</code></td>
+<td>How many weeks the tournament runs for</td>
+</tr>
+<tr>
+<td><code>date_started</code></td>
+<td><code>string</code></td>
+<td><code>N/A</code></td>
+<td>The date the tournament was created</td>
+</tr>
+</tbody>
+</table>
+</div></div></div>
                                 
                                 </section>
                             
@@ -322,7 +440,7 @@ period.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Tournament Timeouts","level":"1.9.2","depth":2,"previous":{"title":"Tournament Races","level":"1.9.1","depth":2,"path":"RACES.md","ref":"RACES.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"TIMEOUTS.md","mtime":"2017-06-07T10:26:17.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-12T04:14:20.107Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Tournament Timeouts","level":"1.9.2","depth":2,"previous":{"title":"Tournament Races","level":"1.9.1","depth":2,"path":"RACES.md","ref":"RACES.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"TIMEOUTS.md","mtime":"2017-06-19T10:10:56.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-19T09:58:40.335Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
