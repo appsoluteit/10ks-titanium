@@ -21,6 +21,8 @@ var args = $.args;
 function btnDone_click() {
 	if(item.stepsTotal > 0) {			
 		item.lastUpdatedOn = new Date();
+		item.stepsDate = args.date;
+		
 		stepsDataProvider.writeSingle(item);
 	}
 	

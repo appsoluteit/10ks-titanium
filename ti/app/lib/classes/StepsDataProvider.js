@@ -34,6 +34,7 @@ function JsonModel(model) {
 		this.lastSyncedOn = new Date(model.get('last_synced_on'));
 		
 		if(!DateTimeHelper.isValidDate(this.stepsDate)) {
+			Ti.API.debug(this.stepsDate + " is not a valid date. Setting to undefined");
 			this.stepsDate = undefined;
 		}
 		
@@ -104,11 +105,9 @@ StepsDataProvider.prototype.load = function() {
 	//Ti.API.info("Collecton", JSON.stringify(data));
 	
 	data.forEach(function(item) {
-		//Ti.API.info("Item in collection:", JSON.stringify(item));
-		
+		Ti.API.debug("Item in collection:", JSON.stringify(item));
 		var jsonItem = new JsonModel(item);
-		
-		//Ti.API.info("Converted item: ", JSON.stringify(jsonItem));
+		Ti.API.debug("Converted item: ", JSON.stringify(jsonItem));
 		
 		me.models.push(jsonItem);
 	});
@@ -121,8 +120,8 @@ StepsDataProvider.prototype.load = function() {
  */
 StepsDataProvider.prototype.readSingle = function(dateObj) {	
 	return this.models.filter(function(item) {
-		if(!item.stepsDate) {
-			Ti.API.warn("Steps date not set");
+		if(item.stepsDate === undefined) {
+			Ti.API.warn("Reading single record from local storage: Steps date not set", item);
 			return false;
 		}
 		
@@ -212,6 +211,7 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 		
 	Ti.API.debug("Writing model", JSON.stringify(backboneModel));
 	
+	//TODO: If the model already exists, will this create it again? If so, I need to call 'update' somehow
 	var logInstance = Alloy.createModel('log', backboneModel);
 	
 	if(logInstance.isValid()) {

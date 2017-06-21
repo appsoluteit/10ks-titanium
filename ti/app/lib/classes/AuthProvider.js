@@ -163,13 +163,19 @@ AuthProvider.prototype.logout = function() {
 	var stepsDataProvider = new StepsDataProvider();
 	
 	function onSuccess(response) {
-		Ti.App.Properties.removeAllProperties();
+		Ti.API.debug("Logout success. Removing data...");
+		
 		stepsDataProvider.removeAll();
 		
 		//Only unset the alloy globals related to authentication.
 		Alloy.Globals.IsLoggedIn = false;
 		Alloy.Globals.UserURL = "";
 		Alloy.Globals.AuthKey = "";
+		
+		Ti.App.Properties.removeProperty("AuthKey");
+		Ti.App.Properties.removeProperty("UserURL");
+		
+		Ti.API.debug("Data removed. Closing window");
 		
 		setTimeout(function() {
 			if(self.container) {
@@ -180,19 +186,6 @@ AuthProvider.prototype.logout = function() {
 		defer.resolve();
 	}
 	
-	function onFail(response) {
-		if(self.container) {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Unable to logout",
-				duration: 2000,
-				view: self.container,
-				theme: "error"
-			});		
-		}	
-		
-		defer.reject();
-	}
-	
 	APIHelper.post({
 		message: 'Logging out...',
 		url:	 'auth/logout/',
@@ -201,7 +194,7 @@ AuthProvider.prototype.logout = function() {
 					value: "Token " + Alloy.Globals.AuthKey
 		}],
 		success: onSuccess,
-		fail:	 onFail
+		fail:	 onSuccess	//even if the request failed for whatever reason, still logout client side
 	});
 	
 	return defer.promise;
