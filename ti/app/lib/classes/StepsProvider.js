@@ -5,20 +5,20 @@
  * @require helpers/APIHelper
  * @require q
  * @exports StepsProvider
- * @todo This class is incomplete. It needs to read from and write from local storage (waiting for a StepsDataProvider to do this) instead of sending dummy data.
  */
 
 var APIHelper = require('helpers/APIHelper');
 var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
-	
-var stepsDataProvider = new StepsDataProvider();
 
 /**
  * @class
  * @description Creates a new instance of the Steps Provider
  */
-function StepsProvider() { }
+function StepsProvider() { 
+	this.stepsDataProvider = new StepsDataProvider();	
+	Ti.API.debug("StepsProvider created new StepsDataProvider. Models = " + this.stepsDataProvider.models.length);
+}
 
 /**
  * @description Gets the steps from the steps API endpoint. This will recur so long as there are additional pages in the API response.
@@ -85,11 +85,6 @@ StepsProvider.prototype.postSteps = function(models) {
 	var defer = q.defer();
 	var me = this;
 	
-	if(models === undefined) {
-		models = stepsDataProvider.readWhereNeedsSyncing();
-		Ti.API.info("Read models: " + models.length);
-	}
-	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));
 		
@@ -111,10 +106,10 @@ StepsProvider.prototype.postSteps = function(models) {
 	}
 	
 	var jsonModel = models[models.length - 1];
-	Ti.API.info("JSON model: ", jsonModel);
+	Ti.API.info("Posting JSON model: ", jsonModel);
 	
-	var data = stepsDataProvider.toBackboneModel(jsonModel);
-	Ti.API.info("Backbone Model:", data);
+	var data = this.stepsDataProvider.toBackboneModel(jsonModel);
+	Ti.API.info("Posting backbone Model:", data);
 	
 	models.pop();
 	
@@ -152,10 +147,12 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      			lastUpdatedOn: new Date()
      		};
      		
-     		stepsDataProvider.writeSingle(json);
+     		Ti.API.info("Writing:", json);
+     		
+     		me.stepsDataProvider.writeSingle(json);
      	});
      	   
-     	var toPost = stepsDataProvider.readWhereNeedsSyncing();
+     	var toPost = me.stepsDataProvider.readWhereNeedsSyncing();
      	Ti.API.info("Models to post: " + toPost.length);
      	//Ti.API.info(toPost);
      	

@@ -14,7 +14,6 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
 var StepsDataProvider = require('classes/StepsDataProvider');
 
-var stepsProvider = new StepsProvider();
 var stepsDataProvider;	//Initialised on window load
 
 /**
@@ -118,6 +117,7 @@ function sync() {
 	spinner.show("Syncing...");
 	
 	try {
+		var stepsProvider = new StepsProvider();
 		stepsProvider.sync($.log, function() {
 			$.tblDays.setData([]);
 			populateRows();
