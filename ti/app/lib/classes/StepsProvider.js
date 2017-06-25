@@ -8,17 +8,13 @@
  */
 
 var APIHelper = require('helpers/APIHelper');
-var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
 
 /**
  * @class
  * @description Creates a new instance of the Steps Provider
  */
-function StepsProvider() { 
-	this.stepsDataProvider = new StepsDataProvider();	
-	Ti.API.debug("StepsProvider created new StepsDataProvider. Models = " + this.stepsDataProvider.models.length);
-}
+function StepsProvider() { }
 
 /**
  * @description Gets the steps from the steps API endpoint. This will recur so long as there are additional pages in the API response.
@@ -108,7 +104,7 @@ StepsProvider.prototype.postSteps = function(models) {
 	var jsonModel = models[models.length - 1];
 	Ti.API.info("Posting JSON model: ", jsonModel);
 	
-	var data = this.stepsDataProvider.toBackboneModel(jsonModel);
+	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
 	Ti.API.info("Posting backbone Model:", data);
 	
 	models.pop();
@@ -149,10 +145,10 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      		
      		Ti.API.info("Writing:", json);
      		
-     		me.stepsDataProvider.writeSingle(json);
+     		Alloy.Globals.Steps.writeSingle(json);
      	});
      	   
-     	var toPost = me.stepsDataProvider.readWhereNeedsSyncing();
+     	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
      	Ti.API.info("Models to post: " + toPost.length);
      	//Ti.API.info(toPost);
      	

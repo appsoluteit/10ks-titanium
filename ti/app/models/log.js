@@ -1,6 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
+			"id" : "INTEGER PRIMARY KEY",
 		    "steps_date": 	 "TEXT",		//no native datetime support in sqlite. Store as text and parse. yyyy-mm-dd
 		    "steps_total": 	 "INTEGER",
 		    "steps_walked":  "INTEGER",

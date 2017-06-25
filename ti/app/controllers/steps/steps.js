@@ -4,7 +4,6 @@
  * @require helpers/FormatHelper
  * @require helpers/DateTimeHelper
  * @require classes/StepsProvider
- * @require classes/StepsDataProvider
  * @require widgets/com.mcongrove.toast
  * @namespace Controllers.Steps
  */
@@ -12,9 +11,6 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
-var StepsDataProvider = require('classes/StepsDataProvider');
-
-var stepsDataProvider;	//Initialised on window load
 
 /**
  * @description Adds a row to the dates table
@@ -57,7 +53,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	//Don't add the # of steps if its a 'Load More' button
 	if(!isLoadMoreButton) {
 		if(numSteps === undefined) {		
-			var item = stepsDataProvider.readSingle(dateObj);
+			var item = Alloy.Globals.Steps.readByDate(dateObj);
 			
 			if(item) {
 				numSteps = item.stepsTotal;
@@ -145,10 +141,7 @@ function sync() {
  * @description Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
  * @memberof Controllers.Steps
  */
-function populateRows() {
-	//Initialise here to refresh the collection
-	stepsDataProvider = new StepsDataProvider();
-	
+function populateRows() {	
 	var today = new Date();
 	addDateRow("Today", today);
 	

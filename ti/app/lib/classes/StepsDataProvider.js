@@ -1,10 +1,14 @@
 /**
  * @file Steps Data Provider
- * @description Provides an abstraction of the Alloy model for simplifying handling of the local steps data
- * @summary Use this provider class to interact with the steps Alloy model
+ * @description Provides an abstraction of the local steps data by providing a global in-memory data store (this reads all data from
+ * 	the backbone collection on load). When items are added via this model, they are added to both the in-memory data store as well as the
+ *  local SQlite persistent storage.
+ *
+ * @summary Use this provider class to interact with the steps Alloy model. This should be treated as a singleton - only one global
+ * instance should ever exist for performance reasons.
+ *
  * @requires helpers/FormatHelper
  * @requires helpers/DateTimeHelper
- * 
  */
 
 var FormatHelper = require('helpers/FormatHelper');
@@ -14,15 +18,15 @@ var collection = Alloy.createCollection('log');
 
 /**
  * @class
- * @description Represents a JSON model with attributes in camelCase and dates represented by JS Date objects. 
+ * @description Represents a JSON model with attributes in camelCase and dates represented by JS Date objects.
  * @param {BackboneModel} model An instance of `BackboneModel` loaded from local storage (Optional)
  * @see http://backbonejs.org/#Model-get
  */
 function JsonModel(model) {
-	//As far as I can tell, `get` isn't a data-bound operation so it shouldn't 
+	//As far as I can tell, `get` isn't a data-bound operation so it shouldn't
 	//carry much of a performance overhead. It seems as though all of the data is "fetched" from the local DB
 	//via Collecton::fetch. See: http://backbonejs.org/#Collection-fetch.
-	if(model) {
+	if (model) {
 		this.alloyId = model.get('alloy_id');
 		this.activityPart = model.get('activity_part');
 		this.moderateMins = model.get('moderate');
@@ -32,21 +36,20 @@ function JsonModel(model) {
 		this.stepsDate = new Date(model.get('steps_date'));
 		this.lastUpdatedOn = new Date(model.get('last_updated_on'));
 		this.lastSyncedOn = new Date(model.get('last_synced_on'));
-		
-		if(!DateTimeHelper.isValidDate(this.stepsDate)) {
+
+		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
 			Ti.API.debug(this.stepsDate + " is not a valid date. Setting to undefined");
 			this.stepsDate = undefined;
 		}
-		
-		if(!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
+
+		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
 			this.lastUpdatedOn = undefined;
 		}
-		
-		if(!DateTimeHelper.isValidDate(this.lastSyncedOn)) {
+
+		if (!DateTimeHelper.isValidDate(this.lastSyncedOn)) {
 			this.lastSyncedOn = undefined;
-		}	
-	}
-	else {
+		}
+	} else {
 		this.activityPart = 0;
 		this.moderateMins = 0;
 		this.vigorousMins = 0;
@@ -61,17 +64,17 @@ function JsonModel(model) {
  * @param {JsonModel} An instance of JsonModel (Optional)
  */
 function BackboneModel(json) {
-	if(json) {
+	if (json) {
 		this.alloy_id = json.alloyId;
 		this.activity_part = json.activityPart;
 		this.moderate = json.moderateMins;
 		this.vigorous = json.vigorousMins;
 		this.steps_walked = json.stepsWalked;
 		this.steps_total = json.stepsTotal;
-			
+
 		this.steps_date = FormatHelper.formatDate(json.stepsDate);
 		this.last_updated_on = FormatHelper.formatDate(json.lastUpdatedOn);
-		this.last_synced_on = FormatHelper.formatDate(json.lastSyncedOn);	
+		this.last_synced_on = FormatHelper.formatDate(json.lastSyncedOn);
 	}
 }
 
@@ -92,23 +95,24 @@ StepsDataProvider.prototype.toBackboneModel = function(jsonModel) {
 };
 
 /**
- * @description Performs a full load of local data. Call this to get changes after saving. It is the equivalent of calling the constructor a 
+ * @description Performs a full load of local data. Call this to get changes after saving. It is the equivalent of calling the constructor a
  * second time.
  */
 StepsDataProvider.prototype.load = function() {
-	collection.fetch();	//Call fetch here so the collection doesn't get cached by module caching
-	
+	collection.fetch();
+	//Call fetch here so the collection doesn't get cached by module caching
+
 	this.models = [];
 	var me = this;
-	
+
 	var data = collection.toArray();
 	//Ti.API.info("Collecton", JSON.stringify(data));
-	
+
 	data.forEach(function(item) {
 		Ti.API.debug("Item in collection:", JSON.stringify(item));
 		var jsonItem = new JsonModel(item);
-		Ti.API.debug("Converted item: ", JSON.stringify(jsonItem));
-		
+		//Ti.API.debug("Converted item: ", JSON.stringify(jsonItem));
+
 		me.models.push(jsonItem);
 	});
 };
@@ -118,23 +122,17 @@ StepsDataProvider.prototype.load = function() {
  * @param {Date} dateObj The date to search for
  * @returns {Object} A steps object logged for the supplied date or null if it wasn't found.
  */
-StepsDataProvider.prototype.readSingle = function(dateObj) {	
+StepsDataProvider.prototype.readByDate = function(dateObj) {
 	return this.models.filter(function(item) {
-		if(item.stepsDate === undefined) {
-			Ti.API.warn("Reading single record from local storage: Steps date not set", item);
-			return false;
-		}
-		
-		//Ti.API.info("Current item:", item.stepsDate.getDate(), item.stepsDate.getMonth(), item.stepsDate.getFullYear());
-		//Ti.API.info("Looking for:", dateObj.getDate(), dateObj.getMonth(), dateObj.getFullYear());
-		
-		var match = item.stepsDate.getDate() === dateObj.getDate() &&
-			   		item.stepsDate.getMonth() === dateObj.getMonth() &&
-			   		item.stepsDate.getFullYear() === dateObj.getFullYear();
-			   		
-		//Ti.API.info("Match:", match);
-		
-		return match;
+	if(item.stepsDate === undefined) {
+	Ti.API.warn("Reading single record from local storage: Steps date not set", item);
+	return false;
+	}
+
+	//Ti.API.info("Current item:", item.stepsDate.getDate(), item.stepsDate.getMonth(), item.stepsDate.getFullYear());
+	//Ti.API.info("Looking for:", dateObj.getDate(), dateObj.getMonth(), dateObj.getFullYear());
+
+	return DateTimeHelper.areDatesEqual(item.stepsDate, dateObj);
 	})[0];
 };
 
@@ -144,15 +142,13 @@ StepsDataProvider.prototype.readSingle = function(dateObj) {
  */
 StepsDataProvider.prototype.readWhereNeedsSyncing = function() {
 	return this.models.filter(function(item) {
-		if(!item.lastUpdatedOn || !item.lastSyncedOn) {
+		if (!item.lastUpdatedOn || !item.lastSyncedOn) {
 			//lastUpdatedOn or lastSyncedOn are undefined. We need to sync this item.
-			return true;	
-		}
-		else if(item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
+			return true;
+		} else if (item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
 			//The item has been updated since it was last synced. Sync it again.
-			return true;	
-		}
-		else {
+			return true;
+		} else {
 			return false;
 		}
 	});
@@ -163,20 +159,20 @@ StepsDataProvider.prototype.readWhereNeedsSyncing = function() {
  * @param {Number} year The year to get the data for. Eg: 2017
  * @returns {Array.<Number>} An array of step records for the each month of the provided year
  */
-StepsDataProvider.prototype.readByMonthForYear = function(year) {	
+StepsDataProvider.prototype.readByMonthForYear = function(year) {
 	var data = new Array(12);
-	for(var i = 0; i < data.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		data[i] = 0;
 	}
-	
+
 	//Ti.API.info("Months data", data);
-	
+
 	this.models.forEach(function(item) {
-		if(item.stepsDate.getFullYear() === year) {
-			data[item.stepsDate.getMonth()] += item.stepsTotal;	
+		if (item.stepsDate.getFullYear() === year) {
+			data[item.stepsDate.getMonth()] += item.stepsTotal;
 		}
 	});
-	
+
 	return data;
 };
 
@@ -188,16 +184,16 @@ StepsDataProvider.prototype.readByMonthForYear = function(year) {
  */
 StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
 	var data = new Array(31);
-	for(var i = 0; i < data.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		data[i] = 0;
 	}
-	
+
 	this.models.forEach(function(item) {
-		if(item.stepsDate.getFullYear() === year && item.stepsDate.getMonth() === month - 1) {
+		if (item.stepsDate.getFullYear() === year && item.stepsDate.getMonth() === month - 1) {
 			data[item.stepsDate.getDate() - 1] += item.stepsTotal;
 		}
 	});
-	
+
 	return data;
 };
 
@@ -208,21 +204,23 @@ StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
  */
 StepsDataProvider.prototype.writeSingle = function(model) {
 	var backboneModel = new BackboneModel(model);
-		
+
 	Ti.API.debug("Writing model", JSON.stringify(backboneModel));
-	
-	//TODO: If the model already exists, will this create it again? If so, I need to call 'update' somehow
-	var logInstance = Alloy.createModel('log', backboneModel);
-	
-	if(logInstance.isValid()) {
+
+	var instance;
+
+	instance = Alloy.createModel('log', backboneModel);
+	Ti.API.info("Is new: ", instance.isNew());
+
+	if (instance.isValid()) {
 		Ti.API.debug("Model valid. Saving");
-		logInstance.save();
-	}
-	else {
+		this.models.push(model);
+		instance.save();
+	} else {
 		Ti.API.error("Model not valid. Destroying");
-		logInstance.destroy();
-	}	
-	
+		instance.destroy();
+	}
+
 	return backboneModel;
 };
 
@@ -232,6 +230,7 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 StepsDataProvider.prototype.removeAll = function() {
 	Ti.API.debug("Removing all models");
 	collection.deleteAll();
+	this.models = [];
 };
 
 module.exports = StepsDataProvider;

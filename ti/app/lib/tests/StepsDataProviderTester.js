@@ -62,7 +62,7 @@ function test() {
 			
 			it("Should retrieve a date saved on 1/02/2017", function() {
 				dataProvider.load();
-				var objOut = dataProvider.readSingle(new Date(2017, 1, 1));
+				var objOut = dataProvider.readByDate(new Date(2017, 1, 1));
 				
 				expect(objOut.stepsWalked).to.equal(objIn.stepsWalked);
 				expect(objOut.stepsTotal).to.equal(objIn.stepsTotal);

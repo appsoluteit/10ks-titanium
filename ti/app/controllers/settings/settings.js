@@ -3,14 +3,12 @@
  * @description The controller for the settings view.
  * @require helpers/FormatHelper
  * @require classes/AuthProvider
- * @require classes/StepsDataProvider
  * @require tests/bootstrap
  * @namespace Controllers.Settings
  */
 
 var FormatHelper = require('helpers/FormatHelper');
 var AuthProvider = require('classes/AuthProvider');
-var StepsDataProvider = require('classes/StepsDataProvider');
 var Tests = require('tests/bootstrap');
 
 var args = $.args;
@@ -154,8 +152,6 @@ function tblRowTests_click() {
  * @memberof Controllers.Settings
  */
 function tblRowReset_click() {
-	var stepsDataProvider = new StepsDataProvider();
-	stepsDataProvider.removeAll();
-	
+	Alloy.Globals.steps.removeAll();
 	alert("Steps data removed");
 }

@@ -100,7 +100,8 @@ else if(Ti.Platform.name == 'iPhone OS') {
 }
 Alloy.Globals.tracker = GA.getTracker(GoogleAnalyticsTrackerID);
 
-
+var StepsDataProvider = require('classes/StepsDataProvider');
+Alloy.Globals.Steps = new StepsDataProvider();	//this global instance should be used application-wide
 
 // added during app creation. this will automatically login to
 // ACS for your application and then fire an event (see below)
