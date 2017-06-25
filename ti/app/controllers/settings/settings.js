@@ -152,6 +152,6 @@ function tblRowTests_click() {
  * @memberof Controllers.Settings
  */
 function tblRowReset_click() {
-	Alloy.Globals.steps.removeAll();
+	Alloy.Globals.Steps.removeAll();
 	alert("Steps data removed");
 }

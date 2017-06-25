@@ -112,29 +112,27 @@ function sync() {
 	var spinner = Alloy.createWidget('nl.fokkezb.loading');
 	spinner.show("Syncing...");
 	
-	try {
-		var stepsProvider = new StepsProvider();
-		stepsProvider.sync($.log, function() {
-			$.tblDays.setData([]);
-			populateRows();
-			
-			spinner.hide();
-		});	
-	}
-	catch(e) {
-		if(e === "InvalidToken") {
-			setTimeout(function() {
-				var win = Alloy.createController("auth/login").getView();
-				win.open();
-				
-				win.addEventListener("close", function() {
-					sync();
-				});
-			}, 2000);
-			
-			spinner.hide();
+	var stepsProvider = new StepsProvider();
+	stepsProvider.sync($.log, function(failReason) {
+		if(failReason) {
+			if(failReason === "InvalidToken") {
+				setTimeout(function() {
+					var win = Alloy.createController("auth/login").getView();
+					win.open();
+					
+					win.addEventListener("close", function() {
+						sync();
+					});
+				}, 2000);					
+			}
 		}
-	}
+		else {
+			$.tblDays.setData([]);
+			populateRows();	
+		}
+		
+		spinner.hide();
+	});	
 }
 
 /**

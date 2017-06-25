@@ -27,7 +27,7 @@ function JsonModel(model) {
 	//carry much of a performance overhead. It seems as though all of the data is "fetched" from the local DB
 	//via Collecton::fetch. See: http://backbonejs.org/#Collection-fetch.
 	if (model) {
-		this.alloyId = model.get('alloy_id');
+		this.id = model.get('id');
 		this.activityPart = model.get('activity_part');
 		this.moderateMins = model.get('moderate');
 		this.vigorousMins = model.get('vigorous');
@@ -65,7 +65,7 @@ function JsonModel(model) {
  */
 function BackboneModel(json) {
 	if (json) {
-		this.alloy_id = json.alloyId;
+		this.id = json.id;
 		this.activity_part = json.activityPart;
 		this.moderate = json.moderateMins;
 		this.vigorous = json.vigorousMins;
@@ -124,15 +124,12 @@ StepsDataProvider.prototype.load = function() {
  */
 StepsDataProvider.prototype.readByDate = function(dateObj) {
 	return this.models.filter(function(item) {
-	if(item.stepsDate === undefined) {
-	Ti.API.warn("Reading single record from local storage: Steps date not set", item);
-	return false;
-	}
+		if(item.stepsDate === undefined) {
+			Ti.API.warn("Reading single record from local storage: Steps date not set", item);
+			return false;
+		}
 
-	//Ti.API.info("Current item:", item.stepsDate.getDate(), item.stepsDate.getMonth(), item.stepsDate.getFullYear());
-	//Ti.API.info("Looking for:", dateObj.getDate(), dateObj.getMonth(), dateObj.getFullYear());
-
-	return DateTimeHelper.areDatesEqual(item.stepsDate, dateObj);
+		return DateTimeHelper.areDatesEqual(item.stepsDate, dateObj);
 	})[0];
 };
 
@@ -210,18 +207,52 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 	var instance;
 
 	instance = Alloy.createModel('log', backboneModel);
-	Ti.API.info("Is new: ", instance.isNew());
 
 	if (instance.isValid()) {
 		Ti.API.debug("Model valid. Saving");
-		this.models.push(model);
-		instance.save();
+		
+		if(instance.isNew()) {
+			Ti.API.debug("Model new. Inserting...");
+			
+			instance.save();
+			Ti.API.debug("Saved model to local storage. Id = " + instance.id);
+			
+			model.id = instance.id;
+			this.models.push(model);	
+		}
+		else {
+			Ti.API.debug("Model exists. Updating...");
+			instance.save();
+			
+			var match = this.models.filter(function(item) {
+				return DateTimeHelper.areDatesEqual(item.stepsDate, model.stepsDate);
+			})[0];
+			
+			if(match) {
+				var existingId = match.id;
+				match = model;
+				match.id = existingId; //keep the PK in tact
+			}
+			else {
+				Ti.API.error("Instance already exists, but couldn't find it in memory storage");
+			}
+		}
 	} else {
 		Ti.API.error("Model not valid. Destroying");
 		instance.destroy();
 	}
 
 	return backboneModel;
+};
+
+StepsDataProvider.prototype.saveAsSynced = function(modelId) {
+	var record = this.models.filter(function(item) {
+		return item.id == modelId;
+	})[0];
+	
+	record.lastSyncedOn = new Date(); //now 
+	
+	this.writeSingle(record); //save the record
 };
 
 /**

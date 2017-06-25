@@ -81,8 +81,20 @@ StepsProvider.prototype.postSteps = function(models) {
 	var defer = q.defer();
 	var me = this;
 	
+	var jsonModel = models[models.length - 1];
+	Ti.API.info("Posting JSON model: ", jsonModel);
+	
+	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
+	Ti.API.info("Posting backbone Model:", data);
+	
+	models.pop();
+	
+	Ti.API.info("Posting model. # remaining: " + models.length);
+	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));
+		
+		Alloy.Globals.Steps.saveAsSynced(jsonModel.id);
 		
 		if(models.length === 0) {
 			Ti.API.info("All models posted. Resolving");
@@ -100,16 +112,6 @@ StepsProvider.prototype.postSteps = function(models) {
 		Ti.API.info("Post steps fail", JSON.stringify(e));
 		defer.reject(e.errorMessage);
 	}
-	
-	var jsonModel = models[models.length - 1];
-	Ti.API.info("Posting JSON model: ", jsonModel);
-	
-	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
-	Ti.API.info("Posting backbone Model:", data);
-	
-	models.pop();
-	
-	Ti.API.info("Posting model. # remaining: " + models.length);
 	
 	APIHelper.post({
 		url: 		"steps/",
@@ -142,10 +144,11 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      			lastSyncedOn: new Date(),
      			lastUpdatedOn: new Date()
      		};
-     		
-     		Ti.API.info("Writing:", json);
-     		
-     		Alloy.Globals.Steps.writeSingle(json);
+
+     		if(!Alloy.Globals.Steps.readByDate(json.stepsDate)) {
+     			Ti.API.debug(item.steps_date + " does not exist yet. Writing to local storage.");
+     			Alloy.Globals.Steps.writeSingle(json);	
+     		}
      	});
      	   
      	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
@@ -220,6 +223,8 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 		});			 
 		
 		Ti.API.info("Failed to post steps. " + reason);    	
+		
+		callback(reason);
     }
     
 	this.getSteps()

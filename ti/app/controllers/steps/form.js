@@ -47,7 +47,7 @@ function window_open() {
 	
 	item = Alloy.Globals.Steps.readByDate(args.date);
 	
-	Ti.API.info("Found match:", JSON.stringify(item));
+	Ti.API.info("Found match:", item);
 	
 	if(item) {
 		$.logEntryView.txtStepsWalked.value = item.stepsWalked;

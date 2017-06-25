@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-			"id" : "INTEGER PRIMARY KEY",
+			"id" : "INTEGER PRIMARY KEY AUTOINCREMENT",
 		    "steps_date": 	 "TEXT",		//no native datetime support in sqlite. Store as text and parse. yyyy-mm-dd
 		    "steps_total": 	 "INTEGER",
 		    "steps_walked":  "INTEGER",
@@ -13,7 +13,8 @@ exports.definition = {
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "log"
+			collection_name: "log",
+			idAttribute: "id"
 		}
 	},
 	extendModel: function(Model) {
@@ -39,6 +40,12 @@ exports.definition = {
 				
 				collection.trigger('sync');
 			},
+			
+			lastInsertId: function() {
+				var collection = this;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+			}
 		});
 
 		return Collection;
