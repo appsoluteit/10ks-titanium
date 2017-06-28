@@ -34,6 +34,10 @@
 	width: '50%'
 }
 
+'.three-quarters': {
+	width: '75%'	
+}
+
 '.whole': {
 	width: '100%'
 }
@@ -52,6 +56,13 @@
 	font: {
 		fontFamily: 'Arial',
 		fontSize: '10'
+	}
+}
+
+'.big-label': {
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '16'
 	}
 }
 
