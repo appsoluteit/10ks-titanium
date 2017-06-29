@@ -106,13 +106,9 @@ StepsDataProvider.prototype.load = function() {
 	var me = this;
 
 	var data = collection.toArray();
-	//Ti.API.info("Collecton", JSON.stringify(data));
 
 	data.forEach(function(item) {
-		Ti.API.debug("Item in collection:", JSON.stringify(item));
 		var jsonItem = new JsonModel(item);
-		//Ti.API.debug("Converted item: ", JSON.stringify(jsonItem));
-
 		me.models.push(jsonItem);
 	});
 };
@@ -162,8 +158,6 @@ StepsDataProvider.prototype.readByMonthForYear = function(year) {
 		data[i] = 0;
 	}
 
-	//Ti.API.info("Months data", data);
-
 	this.models.forEach(function(item) {
 		if (item.stepsDate.getFullYear() === year) {
 			data[item.stepsDate.getMonth()] += item.stepsTotal;
@@ -202,26 +196,20 @@ StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
 StepsDataProvider.prototype.writeSingle = function(model) {
 	var backboneModel = new BackboneModel(model);
 
-	Ti.API.debug("Writing model", JSON.stringify(backboneModel));
-
 	var instance;
 
 	instance = Alloy.createModel('log', backboneModel);
 
 	if (instance.isValid()) {
-		Ti.API.debug("Model valid. Saving");
-		
 		if(instance.isNew()) {
-			Ti.API.debug("Model new. Inserting...");
-			
 			instance.save();
-			Ti.API.debug("Saved model to local storage. Id = " + instance.id);
+			//Ti.API.debug("Saved model to local storage. Id = " + instance.id);
 			
 			model.id = instance.id;
 			this.models.push(model);	
 		}
 		else {
-			Ti.API.debug("Model exists. Updating...");
+			//Ti.API.debug("Model exists. Updating...");
 			instance.save();
 			
 			var match = this.models.filter(function(item) {

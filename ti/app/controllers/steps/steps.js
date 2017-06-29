@@ -19,9 +19,8 @@ var StepsProvider = require('classes/StepsProvider');
  * @param {Date} dateObj The date that this record represents.
  * @param {Boolean} isLoadMoreButton A boolean to indicate whether this is the 'Load More' button
  * @param {Integer} index (Optional) The index to add the new row at. If omitted, it will be appended to the end.
- * @param {String} numSteps (Optional) The text to add to the right of the row, in red
  */
-function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {			
+function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {			
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
 		color: 'black',
@@ -52,20 +51,28 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	
 	//Don't add the # of steps if its a 'Load More' button
 	if(!isLoadMoreButton) {
-		if(numSteps === undefined) {		
-			var item = Alloy.Globals.Steps.readByDate(dateObj);
+		var color = "red";
+		var numSteps = 0;
+		var item = Alloy.Globals.Steps.readByDate(dateObj);
+		
+		if(item) {
+			numSteps = item.stepsTotal;
 			
-			if(item) {
-				numSteps = item.stepsTotal;
-			}	
-		}
+			Ti.API.debug("Showing item in row: ", item);
+			
+			if(item.lastSyncedOn) {
+				if(item.lastSyncedOn.getTime() > item.lastUpdatedOn.getTime()) {
+					color = "blue";	
+				}
+			}
+		}	
 		
 		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
 		
 		var labelRight = Ti.UI.createLabel({
 			right: "10dp",
 			textAlign: "right",
-			color: "red",
+			color: color,
 			text: numStepsStr,
 			width: Ti.UI.SIZE
 		});
@@ -183,7 +190,7 @@ function tblRow_click(e) {
 			obj: e.row,
 			callback: function(stepsLogged) {
 				if(stepsLogged > 0) {
-					addDateRow(e.row.label, e.row.date, false, e.index, stepsLogged);
+					addDateRow(e.row.label, e.row.date, false, e.index);
 					
 					Ti.API.info("Deleting row:", e.row);
 					$.tblDays.deleteRow(e.index);	//Note: on iOS, it was observed that this line would randomly cause a crash when passing the Ti.UI.TableViewRow.

@@ -23,7 +23,7 @@ function btnDone_click() {
 		Alloy.Globals.Steps.writeSingle(item);
 	}
 	
-	//Pass the formatted string back to the parent to display it in the table	
+	//Initiate a callback on the parent
 	args.callback(item.stepsTotal);
 	$.logEntry.close();
 }

@@ -82,14 +82,13 @@ StepsProvider.prototype.postSteps = function(models) {
 	var me = this;
 	
 	var jsonModel = models[models.length - 1];
-	Ti.API.info("Posting JSON model: ", jsonModel);
 	
 	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
-	Ti.API.info("Posting backbone Model:", data);
 	
 	models.pop();
 	
-	Ti.API.info("Posting model. # remaining: " + models.length);
+	Ti.API.info("Posting model:", data);
+	Ti.API.info("# remaining: " + models.length);
 	
 	function onSuccess(e) {
 		Ti.API.info("Post steps success", JSON.stringify(e));

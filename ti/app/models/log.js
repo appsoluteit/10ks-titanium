@@ -2,14 +2,14 @@ exports.definition = {
 	config: {
 		columns: {
 			"id" : "INTEGER PRIMARY KEY AUTOINCREMENT",
-		    "steps_date": 	 "TEXT",		//no native datetime support in sqlite. Store as text and parse. yyyy-mm-dd
+		    "steps_date": 	 "TEXT",		//yyyy-mm-dd
 		    "steps_total": 	 "INTEGER",
 		    "steps_walked":  "INTEGER",
 		    "activity_part": "INTEGER",
 		    "moderate":      "INTEGER",
 		    "vigorous":      "INTEGER",
-		    "last_synced_on": "TEXT",
-		    "last_updated_on": "TEXT"
+		    "last_synced_on": "TEXT",	   //TODO: Store as a timestamp? (int)?
+		    "last_updated_on": "TEXT"	   //TODO: Store as a timestamp? (int)?
 		},
 		adapter: {
 			type: "sql",
