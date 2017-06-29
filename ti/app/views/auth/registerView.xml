@@ -47,9 +47,18 @@
 			<Button 
 				id="btnRegister" 
 				title="Register" 
+				platform="android"
 				class="half big-label">
 					Register
 			</Button>
+			
+			<Widget
+				id="btnRegister"
+				src="nl.fokkezb.button"
+				title="Register"
+				style="ios"
+				platform="ios"
+			/>
 			
 			<Button 
 				id="btnLogin" 

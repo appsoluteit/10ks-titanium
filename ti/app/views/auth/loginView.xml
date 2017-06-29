@@ -29,13 +29,22 @@
 	<View 
 		class="margin-10" 
 		layout="vertical" 
-		height="Ti.UI.FILL">			
+		height="Ti.UI.FILL">		
 			<Button 
 				id="btnLogin" 
 				title="Login" 
+				platform="android"
 				class="half big-label">
 					Login
 			</Button>
+			
+			<Widget
+				id="btnLogin"
+				src="nl.fokkezb.button"
+				title="Login"
+				style="ios"
+				platform="ios"
+			/>
 			
 			<Button 
 				id="btnRegister" 
