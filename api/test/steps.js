@@ -52,7 +52,7 @@ describe("GET /steps/", function(url, quiet) {
 
 describe("POST /steps/", function(url, quiet, responseBody) {
     url = 'https://www.10000steps.org.au/api/steps/';
-	quiet = false;
+	quiet = true;
 
     describe("OK", function(requestBody, responseBody) {
         before(function(done) {
@@ -82,6 +82,65 @@ describe("POST /steps/", function(url, quiet, responseBody) {
     	it("Should send steps data", function() {
     		expect(responseBody.activity_part).to.equal(2500);
     		expect(responseBody.steps_total).to.equal(2520);
+    	});
+    });
+
+    describe("POST UPDATE OK", function(requestBody, responseBody) {
+        before(function(done) {
+    		var today = new Date();   //same date as the previous request
+
+    		requestBody = {
+    			steps_date: today.yyyymmdd(),
+    			vigorous: 1,
+    			moderate: 2,
+    			steps_walked: 3
+    		};
+
+    		var config = {
+    			authToken: AUTH_TOKEN,
+    			to: url,
+    			request: requestBody,
+    			quiet: quiet,
+    			then: function(response) {
+    				responseBody = response;
+    				done();
+    			}
+    		};
+
+    		http.post(config);
+    	});
+
+    	it("Should have updated the data from the previous day", function() {
+    		expect(responseBody.activity_part).to.equal(400);
+    		expect(responseBody.steps_total).to.equal(403);
+    	});
+    });
+
+    describe("GET UPDATE OK", function(requestBody, responseBody) {
+        before(function(done) {
+    		var config = {
+    			authToken: AUTH_TOKEN,
+    			to: url,
+    			quiet: quiet,
+    			then: function(response) {
+    				responseBody = response;
+    				done();
+    			}
+    		};
+
+    		http.get(config);
+    	});
+
+    	it("Should contain the updated data", function() {
+            var updatedRecord = responseBody.results.filter(function(item) {
+                return item.steps_date === new Date().yyyymmdd(); //get the result for today's date (which was just updated)
+            })[0];
+
+    		expect(updatedRecord.activity_part).to.equal(400);
+    		expect(updatedRecord.steps_total).to.equal(403);
+            expect(updatedRecord.vigorous).to.equal(1);
+            expect(updatedRecord.moderate).to.equal(2);
+            expect(updatedRecord.steps_walked).to.equal(3);
     	});
     });
 });

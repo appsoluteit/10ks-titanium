@@ -122,6 +122,18 @@ function isValidDate(dateObj) {
 	}
 }
 
+function areDatesEqual(date1, date2) {
+	if(!isValidDate(date1) || !isValidDate(date2)) {
+		return false;
+	}
+	
+	var match = date1.getDate() === date2.getDate() &&
+		   		date1.getMonth() === date2.getMonth() &&
+		   		date1.getFullYear() === date2.getFullYear();	
+		   		
+	return match;
+}
+
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getCurrentMonthName = getCurrentMonthName;
 module.exports.getShortDateLabel = getShortDateLabel;
@@ -129,3 +141,4 @@ module.exports.getDateLabel = getDateLabel;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
 module.exports.isValidDate = isValidDate;
+module.exports.areDatesEqual = areDatesEqual;

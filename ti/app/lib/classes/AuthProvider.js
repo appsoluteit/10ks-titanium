@@ -2,14 +2,12 @@
  * @file Authentication Provider
  * @description Provides access to the authentication API
  * @require helpers/APIHelper
- * @require classes/StepsDataProvider
  * @require q
  * @require widgets/com.mcongrove.toast
  * @exports AuthProvider
  */
 
 var APIHelper = require('helpers/APIHelper');
-var StepsDataProvider = require('classes/StepsDataProvider');
 var q = require('q');
 
 /**
@@ -160,12 +158,10 @@ AuthProvider.prototype.logout = function() {
 	var self = this;
 	var defer = q.defer();
 	
-	var stepsDataProvider = new StepsDataProvider();
-	
 	function onSuccess(response) {
 		Ti.API.debug("Logout success. Removing data...");
 		
-		stepsDataProvider.removeAll();
+		Alloy.Globals.Steps.removeAll();
 		
 		//Only unset the alloy globals related to authentication.
 		Alloy.Globals.IsLoggedIn = false;

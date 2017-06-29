@@ -2,13 +2,10 @@
  * @file Steps Form Controller
  * @description The controller for the form to enter steps
  * @require helpers/FormatHelper
- * @require classes/StepsDataProvider
  * @namespace Controllers.Steps.Form
  */
 
 var FormatHelper = require('helpers/FormatHelper');
-var StepsDataProvider = require('classes/StepsDataProvider');
-var stepsDataProvider;
 var item = {};	//a model to contain the data on the form. This gets written to local storage by the data provider.
 
 var args = $.args;
@@ -23,10 +20,10 @@ function btnDone_click() {
 		item.lastUpdatedOn = new Date();
 		item.stepsDate = args.date;
 		
-		stepsDataProvider.writeSingle(item);
+		Alloy.Globals.Steps.writeSingle(item);
 	}
 	
-	//Pass the formatted string back to the parent to display it in the table	
+	//Initiate a callback on the parent
 	args.callback(item.stepsTotal);
 	$.logEntry.close();
 }
@@ -41,8 +38,6 @@ function window_open() {
 		screenName: "Steps Form"
 	});
 	
-	stepsDataProvider = new StepsDataProvider();
-	
 	if(Ti.Platform.osname === "android") {
 		$.logEntry.activity.actionBar.title = args.title;
 	}
@@ -50,9 +45,9 @@ function window_open() {
 		$.window.title = args.title;
 	}	
 	
-	item = stepsDataProvider.readSingle(args.date);
+	item = Alloy.Globals.Steps.readByDate(args.date);
 	
-	Ti.API.info("Found match:", JSON.stringify(item));
+	Ti.API.info("Found match:", item);
 	
 	if(item) {
 		$.logEntryView.txtStepsWalked.value = item.stepsWalked;

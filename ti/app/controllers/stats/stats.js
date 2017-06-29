@@ -11,11 +11,9 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
-var StepsDataProvider = require('classes/StepsDataProvider');
 var StepsProvider = require('classes/StepsProvider');
 
 var args = $.args;
-var stepsDataProvider = new StepsDataProvider();
 var stepsProvider = new StepsProvider();
 
 /**
@@ -106,7 +104,7 @@ function calculateStatistics() {
  * @memberof Controllers.Stats
  */
 function tblRowDailyGraph_click() {
-	var dailyData = stepsDataProvider.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
+	var dailyData = Alloy.Globals.Steps.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
 
 	Ti.API.info("Daily data:");
 	Ti.API.info(dailyData);
@@ -135,7 +133,7 @@ function tblRowDailyGraph_click() {
  * @memberof Controllers.Stats
  */
 function tblRowMonthlyGraph_click() {
-	var monthData = stepsDataProvider.readByMonthForYear(new Date().getFullYear());
+	var monthData = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 	var chartData = [];
 	var monthIndex = 1;
 	
@@ -164,7 +162,7 @@ function btnBack_click() {
 }
 
 function load() {
-	if(stepsDataProvider.models.length === 0) {
+	if(Alloy.Globals.Steps.models.length === 0) {
 		var confirmDialog = Ti.UI.createAlertDialog({
 			cancel: 0,
 			buttonNames: ['Cancel', 'OK'],
@@ -177,7 +175,6 @@ function load() {
 				try {
 					stepsProvider.sync($.statsView, function() {
 						Ti.API.info("sync complete. Calculating stats");
-						stepsDataProvider.load();
 						calculateStatistics();
 					});						
 				}
