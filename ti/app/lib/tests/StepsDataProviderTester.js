@@ -120,10 +120,10 @@ function test() {
 			});
 			
 			it("Should read 2 records", function() {
-				dataProvider.load();
+				//dataProvider.load();
 				var arrSteps = dataProvider.readWhereNeedsSyncing();
 				
-				//Ti.API.info(JSON.stringify(arrSteps));
+				Ti.API.info(JSON.stringify(arrSteps));
 				
 				expect(dataProvider.models.length).to.equal(3);
 				expect(arrSteps.length).to.equal(2);

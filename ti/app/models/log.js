@@ -8,8 +8,8 @@ exports.definition = {
 		    "activity_part": "INTEGER",
 		    "moderate":      "INTEGER",
 		    "vigorous":      "INTEGER",
-		    "last_synced_on": "TEXT",	   //TODO: Store as a timestamp? (int)?
-		    "last_updated_on": "TEXT"	   //TODO: Store as a timestamp? (int)?
+		    "last_synced_on": "INTEGER", //timestamp (ticks)
+		    "last_updated_on": "INTEGER" //timestamp (ticks)	 
 		},
 		adapter: {
 			type: "sql",
@@ -40,12 +40,6 @@ exports.definition = {
 				
 				collection.trigger('sync');
 			},
-			
-			lastInsertId: function() {
-				var collection = this;
-				db = Ti.Database.open(collection.config.adapter.db_name);
-				
-			}
 		});
 
 		return Collection;
