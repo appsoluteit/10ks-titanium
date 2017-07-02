@@ -61,7 +61,8 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 			Ti.API.debug("Showing item in row: ", item);
 			
 			if(item.lastSyncedOn) {
-				if(item.lastSyncedOn.getTime() > item.lastUpdatedOn.getTime()) {
+				//After syncing for the first time, these will be equal
+				if(item.lastSyncedOn.getTime() >= item.lastUpdatedOn.getTime()) {
 					color = "blue";	
 				}
 			}

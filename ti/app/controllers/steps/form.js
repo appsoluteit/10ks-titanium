@@ -7,7 +7,7 @@
 
 var FormatHelper = require('helpers/FormatHelper');
 var item = {};	//a model to contain the data on the form. This gets written to local storage by the data provider.
-
+var isDirty = false;
 var args = $.args;
 
 /**
@@ -16,7 +16,10 @@ var args = $.args;
  * @memberof Controllers.Steps.Form
  */
 function btnDone_click() {
-	if(item.stepsTotal > 0) {			
+	//Only write to local storage if changes were made
+	if(isDirty) {			
+		isDirty = false;
+		
 		item.lastUpdatedOn = new Date();
 		item.stepsDate = args.date;
 		
@@ -72,6 +75,7 @@ function window_open() {
  * @memberof Controllers.Steps.Form
  */
 function txtStepsWalked_change() {
+	isDirty = true;
 	calculateTotal();
 }
 
@@ -81,6 +85,7 @@ function txtStepsWalked_change() {
  * @memberof Controllers.Steps.Form
  */
 function txtModerateMins_change() {
+	isDirty = true;
 	calculateTotal();
 }
 
@@ -90,6 +95,7 @@ function txtModerateMins_change() {
  * @memberof Controllers.Steps.Form
  */
 function txtVigorousMins_change() {
+	isDirty = true;
 	calculateTotal();
 }
 

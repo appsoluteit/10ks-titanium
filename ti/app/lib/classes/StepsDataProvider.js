@@ -33,20 +33,30 @@ function JsonModel(model) {
 		this.vigorousMins = model.get('vigorous');
 		this.stepsWalked = model.get('steps_walked');
 		this.stepsTotal = model.get('steps_total');
+		
 		this.stepsDate = new Date(model.get('steps_date'));
-		this.lastUpdatedOn = new Date(model.get('last_updated_on'));
-		this.lastSyncedOn = new Date(model.get('last_synced_on'));
+		
+		//the engine doesn't like creating a date via ticks
+		//passed to the constructor. Do it this way.
+		
+		this.lastUpdatedOn = new Date();
+		this.lastUpdatedOn.setTime(model.get('last_updated_on'));
+		
+		this.lastSyncedOn = new Date();
+		this.lastSyncedOn.setTime(model.get('last_synced_on'));
 
 		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
-			Ti.API.debug(this.stepsDate + " is not a valid date. Setting to undefined");
+			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
 			this.stepsDate = undefined;
 		}
 
 		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
+			Ti.API.error(this.lastUpdatedOn + " is not a lastUpdatedOn date. Setting to undefined. Source = " + model.get('last_updated_on'));
 			this.lastUpdatedOn = undefined;
 		}
 
 		if (!DateTimeHelper.isValidDate(this.lastSyncedOn)) {
+			Ti.API.error(this.lastSyncedOn + " is not a valid lastSyncedOn date. Setting to undefined. Source = " + model.get('last_synced_on'));
 			this.lastSyncedOn = undefined;
 		}
 	} else {
@@ -73,8 +83,16 @@ function BackboneModel(json) {
 		this.steps_total = json.stepsTotal;
 
 		this.steps_date = FormatHelper.formatDate(json.stepsDate);
-		this.last_updated_on = FormatHelper.formatDate(json.lastUpdatedOn);
-		this.last_synced_on = FormatHelper.formatDate(json.lastSyncedOn);
+		
+		//Store ticks for lastUpdatedOn and lastSyncedOn, to catch the time
+		//component
+		if(DateTimeHelper.isValidDate(json.lastUpdatedOn)) {
+			this.last_updated_on = json.lastUpdatedOn.getTime();			
+		}
+		
+		if(DateTimeHelper.isValidDate(json.lastSyncedOn)) {
+			this.last_synced_on = json.lastSyncedOn.getTime();	
+		}
 	}
 }
 
