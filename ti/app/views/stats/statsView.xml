@@ -4,7 +4,7 @@
 		<TableViewRow>
 			<View layout="horizontal">
 				<View class="half">
-					<Label class="row-label">Current Goal Steps:</Label>
+					<Label class="row-label">Current goal steps:</Label>
 				</View>
 				
 				<View class="half">
@@ -13,11 +13,37 @@
 			</View>
 		</TableViewRow>
 		
+		<!-- Lifetime steps  -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label class="row-label">Lifetime steps:</Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblLifeTimeSteps" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+		
+		<!-- Yearly steps  -->
+		<TableViewRow>
+			<View layout="horizontal">
+				<View class="half">
+					<Label id="lblYearlyStepsTitle" class="row-label"></Label>
+				</View>
+				
+				<View class="half">
+					<Label id="lblYearlySteps" class="row-value"></Label>
+				</View>
+			</View>
+		</TableViewRow>
+			
 		<!-- Avg Steps per day -->
 		<TableViewRow>
 			<View layout="horizontal">
 				<View class="half">
-					<Label class="row-label">Avg Steps / Day:</Label>
+					<Label class="row-label">Overall daily average:</Label>
 				</View>
 				
 				<View class="half">
