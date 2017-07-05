@@ -1,11 +1,9 @@
 <Alloy>
 	<!-- iOS -->
-	<NavigationWindow id="home" platform="ios">
-		<Window title="Home" onOpen="window_open">
-			<Require id="homeView" src="home/homeView" type="view"/>
-		</Window>
-	</NavigationWindow>
-	
+	<Window title="Home" onOpen="window_open" platform="ios">
+		<Require id="homeView" src="home/homeView" type="view"/>
+	</Window>
+		
 	<!-- Android -->
 	<Window id="home" platform="android" onAndroid:back="androidBack_click" onOpen="window_open">
 		<ActionBar 
