@@ -17,7 +17,8 @@ var args = $.args;
 var stepsProvider = new StepsProvider();
 
 /**
- * @description Gets statistics from the /api/stats/ and populates the table with the results.
+ * @description Gets statistics from the /api/stats/ and populates the table with the results. Some statistics may come
+ * from local storage as well.
  * @memberof Controllers.Stats
  */
 function calculateStatistics() {
@@ -49,6 +50,17 @@ function calculateStatistics() {
 		if(response.average_steps) {
 			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
 		}
+	
+		var lifeTimeSteps = Alloy.Globals.Steps.readLifeTimeSteps();
+		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(lifeTimeSteps);
+		
+		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
+		var yearlyTotal = 0;
+		monthlySteps.forEach(function(item) {
+			yearlyTotal += item;
+		});
+		
+		$.statsView.lblYearlySteps.text = FormatHelper.formatNumber(yearlyTotal);
 	}
 	
 	function onFail(response) {
@@ -218,10 +230,13 @@ function window_open() {
 	
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
 	
-	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
 	$.statsView.lblAvgSteps.text = 0;
+	$.statsView.lblBusiestDay.text = 0;	
 	$.statsView.lblBusiestMonth.text = 0;
-	$.statsView.lblBusiestDay.text = 0;
+	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+	$.statsView.lblLifeTimeSteps.text = 0;
+	$.statsView.lblYearlySteps.text = 0;
+	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
 	
 	$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
 	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);

@@ -113,7 +113,7 @@ StepsDataProvider.prototype.toBackboneModel = function(jsonModel) {
 };
 
 /**
- * @description Performs a full load of local data. Call this to get changes after saving. It is the equivalent of calling the constructor a
+ * @description Performs a full load of local data. This should only be called with good reason. It is the equivalent of calling the constructor a
  * second time.
  */
 StepsDataProvider.prototype.load = function() {
@@ -251,6 +251,9 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 	return backboneModel;
 };
 
+/**
+ * @description Finds the record with the modelId, sets lastSyncedOn to now and calls writeSingle.
+ */
 StepsDataProvider.prototype.saveAsSynced = function(modelId) {
 	var record = this.models.filter(function(item) {
 		return item.id == modelId;
@@ -268,6 +271,20 @@ StepsDataProvider.prototype.removeAll = function() {
 	Ti.API.debug("Removing all models");
 	collection.deleteAll();
 	this.models = [];
+};
+
+/**
+ * @description Calculates the sum of all steps synced so far and returns it.
+ * @returns {Number}
+ */
+StepsDataProvider.prototype.readLifeTimeSteps = function() {
+	var sum = 0;
+	
+	this.models.forEach(function(item) {
+		sum += item.stepsTotal;
+	});
+	
+	return sum;
 };
 
 module.exports = StepsDataProvider;
