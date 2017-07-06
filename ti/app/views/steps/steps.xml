@@ -3,7 +3,7 @@
 	<NavigationWindow platform="ios" id="log">
 		<Window title="Step Log" id="window" onOpen="window_open">
 			<LeftNavButton>
-				<Button id="btnBack" onClick="btnBack_click">Back</Button>
+				<Button id="btnBack" onClick="btnBack_click" title="Home"></Button>
 			</LeftNavButton>
 			
 			<RightNavButton>

@@ -63,7 +63,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 			if(item.lastSyncedOn) {
 				//After syncing for the first time, these will be equal
 				if(item.lastSyncedOn.getTime() >= item.lastUpdatedOn.getTime()) {
-					color = "blue";	
+					color = "#75CFFB";	
 				}
 			}
 		}	
@@ -78,7 +78,14 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 			width: Ti.UI.SIZE
 		});
 		
-		view.add(labelRight);		
+		var chevron = Ti.UI.createLabel({
+			right: "5dp",
+			color: "grey",
+			text: ">"
+		});
+		
+		view.add(labelRight);	
+		view.add(chevron);	
 	}
 
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
