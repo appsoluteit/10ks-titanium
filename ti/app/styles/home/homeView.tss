@@ -2,7 +2,7 @@
 	layout: 'vertical',
 	center: '0px',
 	width: '49%',
-	//backgroundColor: 'yellow'
+	//backgroundColor: 'yellow' //For debugging only
 }
 
 "Button": {
