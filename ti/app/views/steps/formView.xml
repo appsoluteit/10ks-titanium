@@ -29,7 +29,7 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				width="33%" 
 				right="10dp" 
 				textAlign="right">
@@ -52,7 +52,7 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				width="33%" 
 				right="10dp" 
 				textAlign="right">

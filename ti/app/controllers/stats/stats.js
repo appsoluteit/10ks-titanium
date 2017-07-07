@@ -166,6 +166,14 @@ function tblRowMonthlyGraph_click() {
 }
 
 /**
+ * @description Event handler for 'Refresh'. Calls load().
+ * @memberof Controllers.Stats
+ */
+function btnRefresh_click() {
+	load();
+}
+
+/**
  * @description Event handler for `btnBack`. Closes the window.
  * @memberof Controllers.Stats
  */

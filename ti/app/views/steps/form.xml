@@ -4,11 +4,20 @@
 		<Window title="" id="window" onOpen="window_open" layout="vertical">
 			<LeftNavButton>
 				<Button 
-					id="btnDone" 
-					image="/common/chevrons/left-16.png"
-					onClick="btnDone_click">
+					id="btnCancel" 
+					color="white"
+					onClick="btnCancel_click">
+						Cancel
 				</Button>
 			</LeftNavButton>
+			
+			<RightNavButton>
+				<Button
+					id="btnDone"
+					onClick="btnDone_click">
+						Done
+				</Button>
+			</RightNavButton>
 			
 			<Require id="logEntryView" src="steps/formView" type="view"/>
 		</Window>
@@ -20,7 +29,8 @@
 			title="" 
 			homeButtonEnabled="true" 
 			displayHomeAsUp="true" 
-			onHomeIconItemSelected="btnDone_click"></ActionBar>
+			onHomeIconItemSelected="btnDone_click">
+		</ActionBar>
 
 		<Require id="logEntryView" src="steps/formView" type="view"/>
 	</Window>

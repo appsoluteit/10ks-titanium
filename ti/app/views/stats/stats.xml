@@ -10,6 +10,14 @@
 				</Button>	
 			</LeftNavButton>
 			
+			<RightNavButton>
+				<Button
+					id="btnRefresh"
+					image="/common/icons/refresh-button.png"
+					onClick="btnRefresh_click">
+				</Button>
+			</RightNavButton>
+			
 			<Require id="statsView" src="stats/statsView" type="view"/>
 		</Window>
 	</NavigationWindow>
