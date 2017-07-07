@@ -3,7 +3,11 @@
 	<NavigationWindow platform="ios" id="logEntry">
 		<Window title="" id="window" onOpen="window_open" layout="vertical">
 			<LeftNavButton>
-				<Button id="btnDone" onClick="btnDone_click">Done</Button>
+				<Button 
+					id="btnDone" 
+					image="/common/chevrons/left-16.png"
+					onClick="btnDone_click">
+				</Button>
 			</LeftNavButton>
 			
 			<Require id="logEntryView" src="steps/formView" type="view"/>

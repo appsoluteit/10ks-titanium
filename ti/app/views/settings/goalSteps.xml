@@ -3,7 +3,11 @@
 	<NavigationWindow id="goalSteps" platform="ios">
 		<Window title="Goal Steps" onOpen="window_open">
 			<LeftNavButton>
-				<Button id="btnBack" onClick="btnBack_click">Settings</Button>	
+				<Button 
+					id="btnBack" 
+					image="/common/chevrons/left-16.png"
+					onClick="btnBack_click">
+				</Button>	
 			</LeftNavButton>
 			
 			<Require id="goalStepsView" src="settings/goalStepsView" type="view"/>

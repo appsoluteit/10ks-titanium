@@ -71,17 +71,18 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
 		
 		var labelRight = Ti.UI.createLabel({
-			right: "10dp",
+			right: "30dp",
 			textAlign: "right",
 			color: color,
 			text: numStepsStr,
 			width: Ti.UI.SIZE
 		});
 		
-		var chevron = Ti.UI.createLabel({
+		var chevron = Ti.UI.createButton({
 			right: "5dp",
+			image: "/common/chevrons/right-16.png",
 			color: "grey",
-			text: ">"
+			style: Ti.UI.iOS.SystemButtonStyle.PLAIN
 		});
 		
 		view.add(labelRight);	
