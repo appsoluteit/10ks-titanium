@@ -1,0 +1,6 @@
+"TextField" : {
+	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
+	width: "125dp",
+	height: "30dp",
+	borderColor: "gray",
+}
