@@ -4,3 +4,13 @@
 	height: "30dp",
 	borderColor: "gray",
 }
+
+"TextField[platform=android]" : {
+	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
+	width: "125dp",
+	height: "50dp",
+	borderColor: "gray",
+	font: {
+		fontSize: 12
+	}
+}

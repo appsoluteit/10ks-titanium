@@ -2,6 +2,7 @@
 	layout: 'vertical',
 	center: '0px',
 	width: '49%',
+	top: 0,
 	//backgroundColor: 'yellow' //For debugging only
 }
 

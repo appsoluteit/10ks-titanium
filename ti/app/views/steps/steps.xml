@@ -19,17 +19,24 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window platform="android" id="log" title="Step Log" onOpen="window_open">
+	<Window platform="android" id="log" title="Step Log" onOpen="window_open" fullscreen="true">
 		<ActionBar 
 			title="Step Log" 
 			displayHomeAsUp="true" 
 			homeButtonEnabled="true" 
-			onHomeIconItemSelected="btnBack_click">
-	
-			<!-- TODO: Review this post -->			
-			<!-- http://www.appcelerator.com/blog/2014/07/android-tabs-and-actionbar-menu-items/ -->
-			<Button>Sync</Button>	
+			onHomeIconItemSelected="btnBack_click">	
 		</ActionBar>
+		
+        <!-- The Menu tag adds the Android menu. -->
+        <Menu id="menu" platform="android">
+            <MenuItem 
+            	id="menuItem" 
+            	title="Item 1" 
+            	icon="/common/icons/refresh-button.png" 
+            	onClick="btnSync_click" 
+            	showAsAction="Ti.Android.SHOW_AS_ACTION_IF_ROOM" 
+            />
+        </Menu>
 			
 		<TableView id = "tblDays" />
 	</Window>

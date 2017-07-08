@@ -6,7 +6,6 @@
 	
 	<!-- Android -->
 	<Window id="register" title="register" platform="android" onOpen="window_open">
-		<ActionBar title="Register"></ActionBar>
 		<Require id="registerView" src="auth/registerView" type="view"/>
 	</Window>	
 </Alloy>
