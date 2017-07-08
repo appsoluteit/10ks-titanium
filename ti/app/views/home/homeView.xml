@@ -1,6 +1,36 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
-	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true">
+
+	<!-- iOS -->
+	<DashboardView editable="false" columnCount="2">
+		<DashboardItem 
+			id="btnStepLog"
+			image="/common/homepage_button_step-log@2x">
+		</DashboardItem>
+		
+		<DashboardItem
+			id="btnChallenges"
+			image="/common/homepage_button_ichallenges@2x.png">
+		</DashboardItem>
+		
+		<DashboardItem
+			id="btnStatistics"
+			image="/common/homepage_button_progress@2x.png">
+		</DashboardItem>
+		
+		<DashboardItem
+			id="btnTournaments"
+			image="/common/homepage_button_friend-challenges@2x.png">
+		</DashboardItem>
+		
+		<DashboardItem
+			id="btnSettings"
+			image="/common/homepage_button_profile-&-settings@2x.png">
+		</DashboardItem>
+	</DashboardView>
+	
+	<!-- Android -->
+	<ScrollView platform="android" scrollType="vertical" showVerticalScrollIndicator="true">
 		<View layout="vertical">
 			<View layout="horizontal">
 				<View class="column" left="1%">

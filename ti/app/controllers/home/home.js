@@ -70,6 +70,10 @@ function loginIfNeeded() {
 function btnStepLog_click() {
 	var win = Alloy.createController('steps/steps').getView();
 	win.open();
+	
+	win.addEventListener('close', function() {
+		window_load();		
+	});
 }
 
 /**
@@ -79,6 +83,10 @@ function btnStepLog_click() {
 function btnStatistics_click() {
 	var win = Alloy.createController('stats/stats').getView();
 	win.open();
+	
+	win.addEventListener('close', function() {
+		window_load();		
+	});
 }
 
 /**
@@ -88,6 +96,10 @@ function btnStatistics_click() {
 function btnChallenges_click() {
 	var win = Alloy.createController('challenges/challenges').getView();
 	win.open();
+	
+	win.addEventListener('close', function() {
+		window_load();		
+	});
 }
 
 /**
@@ -97,6 +109,10 @@ function btnChallenges_click() {
 function btnTournaments_click() {
 	var win = Alloy.createController('tournaments/tournaments').getView();
 	win.open();
+	
+	win.addEventListener('close', function() {
+		window_load();		
+	});
 }
 
 /**
@@ -109,7 +125,7 @@ function btnSettings_click() {
 	win.open();
 	
 	win.addEventListener('close', function() {
-		loginIfNeeded();
+		window_load();
 	});
 }
 
@@ -140,16 +156,30 @@ function androidBack_click() {
  * Also tracks the screen in Google Analytics.
  * @memberOf Controllers.Home
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Home"
-	});
-	
+function window_open() {	
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+	
+	window_load();
+}
 
+/**
+ * description 'loads' the window. Tracks the screen, calls login if necessary and refreshes the 
+ * steps log badge.
+ */
+function window_load() {
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Home"
+	});
+	
 	loginIfNeeded();
+	
+	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
+	
+	if(Ti.Platform.osname != "android") {
+		$.homeView.btnStepLog.badge = numSteps;
+	}
 }
