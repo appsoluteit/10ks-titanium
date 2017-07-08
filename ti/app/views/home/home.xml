@@ -5,11 +5,7 @@
 	</Window>
 		
 	<!-- Android -->
-	<Window id="home" platform="android" onAndroid:back="androidBack_click" onOpen="window_open">
-		<ActionBar 
-			title="Home" 
-			homeButtonEnabled="false"></ActionBar>
-			
+	<Window id="home" platform="android" onAndroid:back="androidBack_click" onOpen="window_open">			
 		<Require id="homeView" src="home/homeView" type="view"/>
 	</Window>
 </Alloy>

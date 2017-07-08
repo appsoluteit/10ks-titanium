@@ -2,7 +2,7 @@
 	<Require src="header" type="view"></Require>
 
 	<!-- iOS -->
-	<DashboardView editable="false" columnCount="2">
+	<DashboardView editable="false" columnCount="2" platform="ios">
 		<DashboardItem 
 			id="btnStepLog"
 			image="/common/homepage_button_step-log@2x">
@@ -45,6 +45,12 @@
 						style="PLAIN"
 						image="/common/homepage_button_ichallenges@2x.png">
 					</Button>
+					
+					<Button
+						id="btnSettings"
+						style="PLAIN"
+						image="/common/homepage_button_profile-&-settings@2x.png">
+					</Button>
 				</View>
 				
 				<View class="column" right="1%">
@@ -61,14 +67,6 @@
 					</Button>
 				</View>
 			</View>
-			
-			<Button
-				id="btnSettings"
-				style="PLAIN"
-				left="25%"
-				width="49%"
-				image="/common/homepage_button_profile-&-settings@2x.png">
-			</Button>
 		</View>
 	</ScrollView>
 </Alloy>

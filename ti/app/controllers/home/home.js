@@ -22,6 +22,8 @@ function loginIfNeeded() {
 	}	
 	else if(Ti.Platform.osname === "android") {		
 		var repeatSetting = new ReminderRepeatSetting();
+		var reminderExpiry = Ti.App.Properties.getString("ReminderExpiryDate");
+		
 		if(repeatSetting.willExpire(new Date())) {
 			var confirmDialog = Ti.UI.createAlertDialog({
 				cancel: 0,
