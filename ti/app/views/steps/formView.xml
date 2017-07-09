@@ -3,16 +3,15 @@
 		<View layout="horizontal" class="margin-10 whole" textAlign="right">
 				<Label 
 					class="bold big-label" 
-					width="40%" 
+					width="33%" 
 					right="10dp" 
-					textAlign="right">
+					textAlign="left">
 						Steps Walked
 				</Label>
 				
 				<TextField 
-					id="txtStepsWalked" 
-					width="40%"
-					keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" 
+					id="txtStepsWalked"
+					keyboardType="Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD"
 					maxLength="5">
 				</TextField>
 		</View>
@@ -21,30 +20,28 @@
 			<Label 
 				left="0" 
 				class="bold big-label" 
-				width="40%" 
-				textAlign="right">
+				textAlign="left">
 					Extra Activities
 			</Label>
 		</View>
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				width="33%" 
 				right="10dp" 
-				textAlign="right">
+				textAlign="left">
 					Moderate
 			</Label>
 			
 			<TextField 
 				id="txtModerateMins"
-				width="40%"
-				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+				keyboardType="Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD"
 				maxLength="5">
 			</TextField>
 			
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				left="10dp">
 					mins
 			</Label>
@@ -52,22 +49,21 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				width="33%" 
 				right="10dp" 
-				textAlign="right">
+				textAlign="left">
 					Vigorous
 			</Label>
 			
 			<TextField
 				id="txtVigorousMins"
-				width="40%"
-				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD"
+				keyboardType="Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD"
 				maxLength="5">
 			</TextField>
 			
 			<Label 
-				class="italic big-label" 
+				class="big-label" 
 				left="10dp">
 					mins
 			</Label>
@@ -76,9 +72,9 @@
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
 				class="bold big-label" 
-				width="40%" 
+				width="33%" 
 				right="10dp" 
-				textAlign="right">
+				textAlign="left">
 					Daily Total
 			</Label>
 			

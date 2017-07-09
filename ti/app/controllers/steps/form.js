@@ -11,7 +11,15 @@ var isDirty = false;
 var args = $.args;
 
 /**
- * @description Event handler for `btnDone`. Writes the entered data via the steps data provider, 
+ * @description Event handler for 'Cancel' button. Just invokes the callback function on the parent and closes the window.
+ * @memberof Controllers.Steps.Form
+ */
+function btnCancel_click() {
+	args.callback();
+	$.logEntry.close();
+}
+/**
+ * @description Event handler for `Done` button. Writes the entered data via the steps data provider, 
  * calls `args.callback(total)` and closes the window.
  * @memberof Controllers.Steps.Form
  */

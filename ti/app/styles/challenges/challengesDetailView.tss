@@ -43,7 +43,3 @@
 	left: "5dp",
 	image: "/common/challenge_badge_small.png"
 }
-
-".bar": {
-	
-}

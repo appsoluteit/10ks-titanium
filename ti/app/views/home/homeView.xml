@@ -1,42 +1,72 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
-	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true">
-	<View id="homeContainer" class="container">
-		<Button
+
+	<!-- iOS -->
+	<DashboardView editable="false" columnCount="2" platform="ios">
+		<DashboardItem 
 			id="btnStepLog"
-			style="PLAIN"
-			width="50%"
-			image="/common/homepage_button_step-log@2x.png">
-		</Button>
+			image="/common/homepage_button_step-log@2x">
+		</DashboardItem>
 		
-		<Button
-			id="btnStatistics"
-			style="PLAIN"
-			width="50%"
-			image="/common/homepage_button_progress@2x.png">
-		</Button>
-	
-		<Button
+		<DashboardItem
 			id="btnChallenges"
-			style="PLAIN"
-			width="50%"
 			image="/common/homepage_button_ichallenges@2x.png">
-		</Button>
+		</DashboardItem>
 		
-		<Button
+		<DashboardItem
+			id="btnStatistics"
+			image="/common/homepage_button_progress@2x.png">
+		</DashboardItem>
+		
+		<DashboardItem
 			id="btnTournaments"
-			style="PLAIN"
-			width="50%"
 			image="/common/homepage_button_friend-challenges@2x.png">
-		</Button>
-	
-		<Button
+		</DashboardItem>
+		
+		<DashboardItem
 			id="btnSettings"
-			style="PLAIN"
-			left="25%"
-			width="50%"
 			image="/common/homepage_button_profile-&-settings@2x.png">
-		</Button>
-	</View>
+		</DashboardItem>
+	</DashboardView>
+	
+	<!-- Android -->
+	<ScrollView platform="android" scrollType="vertical" showVerticalScrollIndicator="true">
+		<View layout="vertical">
+			<View layout="horizontal">
+				<View class="column" left="1%">
+					<Button
+						id="btnStepLog"
+						style="PLAIN"
+						image="/common/homepage_button_step-log@2x.png">
+					</Button>
+					
+					<Button
+						id="btnChallenges"
+						style="PLAIN"
+						image="/common/homepage_button_ichallenges@2x.png">
+					</Button>
+					
+					<Button
+						id="btnSettings"
+						style="PLAIN"
+						image="/common/homepage_button_profile-&-settings@2x.png">
+					</Button>
+				</View>
+				
+				<View class="column" right="1%">
+					<Button
+						id="btnStatistics"
+						style="PLAIN"
+						image="/common/homepage_button_progress@2x.png">
+					</Button>
+					
+					<Button
+						id="btnTournaments"
+						style="PLAIN"
+						image="/common/homepage_button_friend-challenges@2x.png">
+					</Button>
+				</View>
+			</View>
+		</View>
 	</ScrollView>
 </Alloy>

@@ -63,7 +63,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 			if(item.lastSyncedOn) {
 				//After syncing for the first time, these will be equal
 				if(item.lastSyncedOn.getTime() >= item.lastUpdatedOn.getTime()) {
-					color = "blue";	
+					color = "#75CFFB";	
 				}
 			}
 		}	
@@ -71,14 +71,33 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
 		
 		var labelRight = Ti.UI.createLabel({
-			right: "10dp",
+			right: "30dp",
 			textAlign: "right",
 			color: color,
 			text: numStepsStr,
 			width: Ti.UI.SIZE
 		});
 		
-		view.add(labelRight);		
+		var chevron = null;
+		
+		if(Ti.Platform.osname === "android") {
+			//On Android, create an ImageView instead of a button
+			chevron = Ti.UI.createImageView({
+				right: "5dp",
+				image: "/common/chevrons/right-16.png"
+			});
+		}
+		else {
+			chevron = Ti.UI.createButton({
+				right: "5dp",
+				image: "/common/chevrons/right-16.png",
+				color: "grey",
+				style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+			});
+		}
+		
+		view.add(labelRight);	
+		view.add(chevron);	
 	}
 
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
@@ -161,12 +180,17 @@ function populateRows() {
  * @description Event handler for the Window's `open` event. Calls 'populateRows'.
  * @memberof Controllers.Steps
  */
-function window_open() {
+function window_open(evt) {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Steps"
 	});
 	
 	populateRows();
+	
+	if(Ti.Platform.osname === "android") {
+		//On Android, call this to ensure the correct actionbar menu is displayed
+		$.log.activity.invalidateOptionsMenu();	
+	}
 }
 
 /**

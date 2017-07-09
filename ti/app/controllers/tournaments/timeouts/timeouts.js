@@ -43,7 +43,7 @@ function fetchTimeouts() {
 		});
 		
 		var webLink = Ti.UI.createLabel({
-			text: "To view a list of all available tournaments or to join a tournament, please visit the 10,000 steps website",
+			text: "To join, create or view past Tournaments, go to your Dashboard on the 10,000 Steps website",
 			color: "#0645AD",
 			font: {
 				fontSize: 9

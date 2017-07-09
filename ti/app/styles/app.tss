@@ -1,3 +1,17 @@
+/*********************************** iOS Windows ********************************/
+'Window[platform=ios]': {
+	barColor: "#575757",
+	titleAttributes: {
+		color: 'white',
+		font: {
+			fontWeight: 'bold',
+			fontFamily: 'Arial',
+			fontSize: '20pt'
+		}
+	},
+	navTintColor: "white" //NOTE: This controls the colour of the links in the navbar
+}
+
 /*********************************** GENERAL ***********************************/
 'Window': {
 	layout: 'vertical',

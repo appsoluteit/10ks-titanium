@@ -1,8 +1,9 @@
-'.container': {
-	layout: 'horizontal',
+'.column': {
+	layout: 'vertical',
 	center: '0px',
-	width: '50%',
-	//backgroundColor: 'yellow'
+	width: '49%',
+	top: 0,
+	//backgroundColor: 'yellow' //For debugging only
 }
 
 "Button": {
