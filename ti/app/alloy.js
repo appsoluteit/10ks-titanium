@@ -90,23 +90,35 @@ Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
 //Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 
-var GoogleAnalyticsTrackerID = Ti.App.Properties.getString("google-analytics-id");
-var GA = require("analytics.google");
-if(Ti.Platform.osname == 'android') {
-    GA.dispatchInterval = 2; // in minutes
-}
-else if(Ti.Platform.name == 'iPhone OS') {
-    GA.dispatchInterval = 120; // in seconds
-}
-Alloy.Globals.tracker = GA.getTracker(GoogleAnalyticsTrackerID);
+//Google Analytics Tracking
+(function() {
+	var GoogleAnalyticsTrackerID = Ti.App.Properties.getString("google-analytics-id");
+	var GA = require("analytics.google");
+	if(Ti.Platform.osname == 'android') {
+	    GA.dispatchInterval = 2; // in minutes
+	}
+	else if(Ti.Platform.name == 'iPhone OS') {
+	    GA.dispatchInterval = 120; // in seconds
+	}
+	Alloy.Globals.tracker = GA.getTracker(GoogleAnalyticsTrackerID);
+})();
 
-var StepsDataProvider = require('classes/StepsDataProvider');
-Alloy.Globals.Steps = new StepsDataProvider();	//this global instance should be used application-wide
+//Steps Singleton
+(function() {
+	var StepsDataProvider = require('classes/StepsDataProvider');
+	Alloy.Globals.Steps = new StepsDataProvider();	//this global instance should be used application-wide	
+})();
 
-// added during app creation. this will automatically login to
-// ACS for your application and then fire an event (see below)
-// when connected or errored. if you do not use ACS in your
-// application as a client, you should remove this block
+//Facebook SDK Integration
+(function() {
+	//https://github.com/appcelerator-modules/ti.facebook
+    //var fb = require('facebook');
+    //fb.initialize(); 
+    //fb.permissions = ['email'];
+    //facebook.authorize();	
+})();
+
+//ACS
 (function() {
 	var ACS = require('ti.cloud'),
 	    env = Ti.App.deployType.toLowerCase() === 'production' ? 'production' : 'development',

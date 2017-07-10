@@ -30,8 +30,8 @@
         <!-- The Menu tag adds the Android menu. -->
         <Menu id="menu" platform="android">
             <MenuItem 
-            	id="menuItem" 
-            	title="Item 1" 
+            	id="btnSync" 
+            	title="Sync" 
             	icon="/common/icons/refresh-button.png" 
             	onClick="btnSync_click" 
             	showAsAction="Ti.Android.SHOW_AS_ACTION_IF_ROOM" 
