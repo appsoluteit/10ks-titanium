@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.jasonsultana.steps</id>
-    <name>10000 Steps</name>
-    <version>1.0</version>
-    <publisher>jasonsultana</publisher>
-    <url>http://www.10000steps.org.au</url>
+    <id>au.org.steps10000.app</id>
+    <name>Steps 10000</name>
+    <version>3.1.0</version>
+    <publisher>Appsolute IT Pty Ltd</publisher>
+    <url>https://www.10000steps.org.au</url>
     <description>10K steps</description>
-    <copyright>2017 by jasonsultana</copyright>
-    <icon>appicon.png</icon>
+    <copyright>2017 10000 Steps</copyright>
+    <icon>DefaultIcon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>e2438a4f-befc-4097-9fff-6c3738a3a22b</guid>
+    <guid>773adbcd-a3f9-40ca-9bbb-6a622ad2259c</guid>
     <ios>
         <plist>
             <dict>
@@ -36,51 +36,12 @@
                 <string>UIStatusBarStyleDefault</string>
                 <key>NSCalendarsUsageDescription</key>
                 <string>Setting reminders to log your steps</string>
-                
-                <!-- Facebook SDK -->
-				<key>FacebookAppID</key>
-				<string>1234567890123456</string>
-				<key>FacebookDisplayName</key>
-				<string>SomeName</string>
-				
-				<key>CFBundleURLTypes</key>
-				<array>
-				    <dict>
-				        <key>CFBundleURLName</key>
-				        <string>com.jasonsultana.steps</string>
-				        <key>CFBundleURLSchemes</key>
-				        <array>
-				            <string>10ksteps</string>
-				            <string>fb1234567890123456</string>
-				        </array>
-				    </dict>
-				</array>
-				
-				<key>LSApplicationQueriesSchemes</key>
-			    <array>
-			        <string>fbapi</string>
-			        <string>fb-messenger-api</string>
-			        <string>fbauth2</string>
-			        <string>fbshareextension</string>
-			    </array>
             </dict>
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
             <application android:theme="@style/Theme.AppCompat.Light"/>
-
-            <uses-permission android:name="android.permission.READ_CALENDAR"/>
-            <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-            
-            <!-- Facebook SDK -->
-			<activity 
-				android:name="com.jasonsultana.StepsActivity" 
-				android:theme="@android:style/Theme.Translucent.NoTitleBar" 
-				android:label="10,000 Steps" 
-				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
-				
-			<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
         </manifest>
     </android>
     <mobileweb>
@@ -94,10 +55,7 @@
     <modules>
         <module platform="commonjs">ti.cloud</module>
         <module platform="commonjs">nl.fokkezb.html2as</module>
-        <module platform="iphone" version="3.1.0">analytics.google</module>
-        <module platform="android" version="3.1.0">analytics.google</module>
-        <module platform="android">facebook</module>
-        <!--<module platform="iphone">facebook</module>-->
+        <module platform="iphone">analytics.google</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
@@ -105,29 +63,28 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>6.1.0.GA</sdk-version>
+    <sdk-version>6.1.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
-    <property name="appc-app-id" type="string">589055b797fe5aa859ffaddc</property>
+    <property name="appc-app-id" type="string">58dc94cfb06506514cb3dc52</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
-    <property name="acs-oauth-secret-development" type="string">lzHJrgjPBbioet6b5BOO1kBkjSbU6kYO</property>
-    <property name="acs-oauth-key-development" type="string">uTmMxHDE8YnkY8KxI60g6fYGLRL8GQiV</property>
-    <property name="acs-api-key-development" type="string">Mo1EmPHhLVroaFokPtsE2arZcX92SDmC</property>
+    <property name="acs-oauth-secret-development" type="string">8our6lFXcQAytKRrFmVUbZ9CuUElMhZR</property>
+    <property name="acs-oauth-key-development" type="string">rxVm7qwYnxMOcmzSpmkjCxjcxgh7eOqP</property>
+    <property name="acs-api-key-development" type="string">MFg90EPdeBNP6RcGAPKl2wzRDI48S1bN</property>
     <property name="acs-username-development" type="string">appc_app_user_dev</property>
-    <property name="acs-password-development" type="string">iOyZIfhRrtADd3e8PK</property>
+    <property name="acs-password-development" type="string">CH7j0xNCtIRzY77Dlx</property>
     <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
-    <property name="acs-oauth-secret-production" type="string">zjmlfu7KnpdueTeoG4yvcHUMnLTP3gSm</property>
-    <property name="acs-oauth-key-production" type="string">qbmuIMWOrWZbtFfVaI1uwMQLphawkbmT</property>
-    <property name="acs-api-key-production" type="string">oBv6ouO3IGezuV5ELMSMHAHvkyWbsan0</property>
+    <property name="acs-oauth-secret-production" type="string">56NfO9okfdHB35xN8rJUlgzO7qK0Tzwm</property>
+    <property name="acs-oauth-key-production" type="string">MHgWXrccObCM3I2uagZvzhnSXA8buKYe</property>
+    <property name="acs-api-key-production" type="string">iZLrdcZZWTSB12DtrlnptEZ1dJHcyJqt</property>
     <property name="acs-username-production" type="string">appc_app_user</property>
-    <property name="acs-password-production" type="string">yKnjeekecptyVSejxs</property>
-    <property name="appc-org-id" type="string">100030337</property>
-    <property name="appc-creator-user-id" type="string">9844e344-b67c-4cae-9c0c-297593c53cf6</property>
+    <property name="acs-password-production" type="string">FyaubWnL7FymZQIETL</property>
+    <property name="appc-org-id" type="string">100025334</property>
+    <property name="appc-creator-user-id" type="string">1d7601ce-3a74-4808-ac11-63a8871742b9</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
-    
     <!-- Custom Properties -->
     <property name="google-analytics-id" type="string">UA-101176022-1</property>
     <property name="is-debug" type="bool">true</property>
