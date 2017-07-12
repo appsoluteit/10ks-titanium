@@ -17,8 +17,9 @@ function window_open() {
 		screenName: "Login"
 	});
 	
-	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
-	$.loginView.btnRegister.addEventListener('click', btnRegister_click);	
+	$.loginView.lblForgotPassword.addEventListener('click', lblForgotPassword_click);
+	$.loginView.lblSignUp.addEventListener('click', lblSignUp_click);
+	$.loginView.btnLogin.addEventListener('click', btnLogin_click);	
 }
 
 /**
@@ -48,12 +49,16 @@ function btnLogin_click() {
 }
 
 /**
- * @description Event handler for `btnRegister` on the view. Opens the register window on top of this window.
+ * @description Event handler for `lblSignUp` on the view. Opens the register window on top of this window.
  * @memberOf Controllers.Auth.Login
  */
-function btnRegister_click() {
+function lblSignUp_click() {
 	var win = Alloy.createController('auth/register').getView();
 	win.open();
+}
+
+function lblForgotPassword_click() {
+	Ti.Platform.openURL('https://www.10000steps.org.au/accounts/password/reset/');
 }
 
 /**

@@ -1,23 +1,38 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
 	
-	<View layout="vertical" class="margin-10">
-		<Label class='big-label'>Username</Label>
-		<TextField 
-			id="txtUsername" 
-			class="three-quarters"
-			autocorrect="false" 
-			autocapitalization="false" 
-			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-		</TextField>			
-		
-		<Label class='big-label'>Password</Label>
-		<TextField 
-			id="txtPassword" 
-			class="three-quarters"
-			passwordMask="true">
-		</TextField>
-	</View>
+	<Label 
+		class='big-label three-quarters bold'
+		textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+		text="Login">
+	</Label>
+	
+	<TextField 
+		id="txtUsername" 
+		class="three-quarters"
+		top="10dp"
+		autocorrect="false" 
+		paddingLeft="2"
+		hintText="Username or email"
+		autocapitalization="false" 
+		keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
+	</TextField>			
+	
+	<Label 
+		top = "10dp" 
+		class='big-label three-quarters bold'
+		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+		text="Password">
+	</Label>
+	
+	<TextField 
+		id="txtPassword" 
+		class="three-quarters"
+		top="10dp"
+		paddingLeft="2"
+		hintText="Password"
+		passwordMask="true">
+	</TextField>
 	
 	<Label 
 		id="lblError" 
@@ -26,31 +41,40 @@
 		class="whole error big-label">
 	</Label>
 
-	<View 
-		class="margin-10" 
-		layout="vertical" 
-		height="Ti.UI.FILL">		
-			<Button 
-				id="btnLogin" 
-				title="Login" 
-				platform="android"
-				class="half big-label">
-					Login
-			</Button>
-			
-			<Widget
-				id="btnLogin"
-				src="nl.fokkezb.button"
-				title="Login"
-				style="ios"
-				platform="ios"
-			/>
-			
-			<Button 
-				id="btnRegister" 
-				title="Register" 
-				class="half secondary big-label">
-					Register
-			</Button>
-	</View>
+	<Label
+		id="lblForgotPassword"
+		top="10dp"
+		class="big-label three-quarters"
+		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+		color="#02B5FF">
+			Forgot Password?
+	</Label>
+	
+	<Label
+		id="lblSignUp"
+		top="10dp"
+		class="big-label three-quarters"
+		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+		color="#02B5FF">
+			Sign Up
+	</Label>
+	
+	<Button 
+		id="btnLogin" 
+		title="Login" 
+		top="10dp"
+		left="12.5%"
+		platform="android"
+		class="half big-label">
+	</Button>
+		
+	<Widget
+		id="btnLogin"
+		top="10dp"
+		left="12.5%"
+		src="nl.fokkezb.button"
+		title="Login"
+		style="ios"
+		platform="ios"
+	/>	
 </Alloy>

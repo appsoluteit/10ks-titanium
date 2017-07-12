@@ -94,25 +94,25 @@
 'TextField': {
 	backgroundColor: 'white',
 	color: 'black',
+	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
 	borderRadius: '5dp',
-	borderStyle: 'solid',
-	borderWidth: '1dp',
-	borderColor: 'black'
+	height:"30dp",
+	borderColor: 'gray'
 }
 
 'TextField[platform=android]': {
 	softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_SHOW_ON_FOCUS,
-	color: 'blue'
+	color: 'blue',
+	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
+	height: "50dp",
+	borderColor: "gray",
+	font: {
+		fontSize: 12
+	}
 }
 
 '.error': {
 	color: 'red'
-}
-
-'.italic': {
-	font: {
-		fontStyle: 'italic'
-	}	
 }
 
 '.bold': {
