@@ -109,7 +109,7 @@ Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
 	Alloy.Globals.Steps = new StepsDataProvider();	//this global instance should be used application-wide	
 })();
 
-//Facebook SDK Integration
+//Facebook SDK Integration (todo)
 (function() {
 	//https://github.com/appcelerator-modules/ti.facebook
     //var fb = require('facebook');
