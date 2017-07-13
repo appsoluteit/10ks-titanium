@@ -17,15 +17,15 @@ function window_open() {
 		screenName: "Register"
 	});
 	
-	$.registerView.btnLogin.addEventListener('click', btnLogin_click);
+	$.registerView.lblLogin.addEventListener('click', lblLogin_click);
 	$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
 }
 
 /**
- * @description Event handler for `btnLogin`. Closes this window, showing the login window behind it.
+ * @description Event handler for `lblLogin`. Closes this window, showing the login window behind it.
  * @memberOf Controllers.Auth.Register
  */
-function btnLogin_click() {
+function lblLogin_click() {
 	$.register.close();
 }
 

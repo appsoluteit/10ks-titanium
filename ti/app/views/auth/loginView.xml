@@ -41,6 +41,13 @@
 		class="whole error big-label">
 	</Label>
 
+	<View layout="horizontal" left="12.5%">
+		<Switch id="swRememberMe" value="false" top="10dp">
+		</Switch>
+		
+		<Label text="Remember me?" class="big-label" left="10dp" bottom="0dp"></Label>
+	</View>
+	
 	<Label
 		id="lblForgotPassword"
 		top="10dp"

@@ -20,6 +20,13 @@ function window_open() {
 	$.loginView.lblForgotPassword.addEventListener('click', lblForgotPassword_click);
 	$.loginView.lblSignUp.addEventListener('click', lblSignUp_click);
 	$.loginView.btnLogin.addEventListener('click', btnLogin_click);	
+	
+	var email = Ti.App.Properties.getString("email", "");
+	
+	if(email.length > 0) {
+		$.loginView.swRememberMe.value = true;
+		$.loginView.txtUsername.value = email;
+	}
 }
 
 /**
@@ -44,6 +51,14 @@ function btnLogin_click() {
 		$.loginView.txtUsername.value, 
 		$.loginView.txtPassword.value
 	).then(function() {
+		//If remember me is checked, save the username
+		if($.loginView.swRememberMe.value) {
+			Ti.App.Properties.setString("email", $.loginView.txtUsername.value);	
+		}
+		else {
+			Ti.App.Properties.removeProperty("email");
+		}
+		
 		authProvider.getUser();
 	});
 }
