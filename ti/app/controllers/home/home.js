@@ -182,6 +182,7 @@ function window_load() {
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 	
 	if(Ti.Platform.osname != "android") {
+		Ti.API.info("Number of unsynced steps: " + numSteps);
 		$.homeView.btnStepLog.badge = numSteps;
 	}
 }

@@ -4,6 +4,7 @@
 	<!-- iOS -->
 	<DashboardView editable="false" columnCount="2" platform="ios">
 		<DashboardItem 
+			badge="1"
 			id="btnStepLog"
 			image="/common/homepage_button_step-log@2x">
 		</DashboardItem>

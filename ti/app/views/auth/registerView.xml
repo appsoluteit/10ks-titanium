@@ -2,39 +2,68 @@
 	<Require src="header" type="view"></Require>
 	
 	<ScrollView scrollType="vertical" layout="vertical">
-		<View layout="vertical" class="margin-10">
-			<Label class="big-label">Username</Label>
-			<TextField 
-				id="txtUsername" 
-				class="three-quarters"
-				autocorrect="false" 
-				autocapitalization="false" 
-				keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-			</TextField>	
-			
-			<Label class="big-label">Email</Label>		
-			<TextField
-				id="txtEmail"
-				class="three-quarters"
-				autocorrect="false"
-				autocapitalization="false"
-				keyboardType="TYPE_EMAIL">
-			</TextField>
-			
-			<Label class="big-label">Password</Label>
-			<TextField 
-				id="txtPassword" 
-				class="three-quarters"
-				passwordMask="true">
-			</TextField>
-					
-			<Label class="big-label">Retype Password</Label>
-			<TextField 
-				id="txtPassword2" 
-				class="three-quarters"
-				passwordMask="true">
-			</TextField>
-		</View>
+		<Label 
+			class="big-label three-quarters bold"
+			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+			text="Username">
+		</Label>
+		
+		<TextField 
+			id="txtUsername" 
+			class="three-quarters"
+			autocorrect="false" 
+			top="10dp"
+			paddingLeft="2"
+			hintText="Username"
+			autocapitalization="false" 
+			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
+		</TextField>	
+		
+		<Label 
+			top="10dp"
+			class="big-label three-quarters bold"
+			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+			text="Email">
+		</Label>		
+		
+		<TextField
+			id="txtEmail"
+			class="three-quarters"
+			autocorrect="false"
+			autocapitalization="false"
+			top="10dp"
+			paddingLeft="2"
+			hintText="Email"
+			keyboardType="TYPE_EMAIL">
+		</TextField>
+		
+		<Label 
+			top="10dp"
+			class="big-label three-quarters bold"
+			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+			text="Password">
+		</Label>
+		
+		<TextField 
+			id="txtPassword" 
+			class="three-quarters"
+			top="10dp"
+			passwordMask="true">
+		</TextField>
+				
+		<Label 
+			class="big-label three-quarters bold"
+			top="10dp"
+			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+			text="Retype Password">
+		</Label>
+		
+		<TextField 
+			id="txtPassword2" 
+			class="three-quarters"
+			top="10dp"
+			passwordMask="true">
+		</TextField>
 			
 		<Label 
 			id="lblError" 
@@ -42,30 +71,34 @@
 			textAlign="center" 
 			class="whole error big-label">
 		</Label>
+			
+		<Label
+			id="lblLogin"
+			top="10dp"
+			class="big-label three-quarters"
+			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+			color="#02B5FF">
+				Have an account? Sign in
+		</Label>
 		
-		<View class="margin-10" layout="vertical">
-			<Button 
-				id="btnRegister" 
-				title="Register" 
-				platform="android"
-				class="half big-label">
-					Register
-			</Button>
-			
-			<Widget
-				id="btnRegister"
-				src="nl.fokkezb.button"
-				title="Register"
-				style="ios"
-				platform="ios"
-			/>
-			
-			<Button 
-				id="btnLogin" 
-				title="Login" 
-				class="half secondary big-label">
-					Login
-			</Button>
-		</View>
+		<Button 
+			id="btnRegister" 
+			top="10dp"
+			left="12.5%"
+			title="Register" 
+			platform="android"
+			class="half big-label">
+				Register
+		</Button>
+		
+		<Widget
+			id="btnRegister"
+			top="10dp"
+			left="12.5%"
+			src="nl.fokkezb.button"
+			title="Register"
+			style="ios"
+			platform="ios"
+		/>
 	</ScrollView>
 </Alloy>
