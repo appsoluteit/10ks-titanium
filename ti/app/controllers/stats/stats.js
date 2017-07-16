@@ -142,10 +142,10 @@ function loadPage() {
 }
 
 /**
- * @description Event handler for `tblRowDailyGraph`. Opens the daily graph window.
+ * @description Event handler for `btnDailyGraph`. Opens the daily graph window.
  * @memberof Controllers.Stats
  */
-function tblRowDailyGraph_click() {
+function btnDailyGraph_click() {
 	var dailyData = Alloy.Globals.Steps.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
 
 	Ti.API.info("Daily data:");
@@ -174,7 +174,7 @@ function tblRowDailyGraph_click() {
  * @description Event handler for `tblRowMonthlyGraph`. Opens the monthly graph window.
  * @memberof Controllers.Stats
  */
-function tblRowMonthlyGraph_click() {
+function btnMonthlyGraph_click() {
 	var monthData = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 	var chartData = [];
 	var monthIndex = 1;
@@ -274,8 +274,8 @@ function window_open() {
 	$.statsView.lblYearlySteps.text = 0;
 	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
 	
-	$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
-	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
+	$.statsView.btnDailyGraph.addEventListener('click', btnDailyGraph_click);
+	$.statsView.btnMonthlyGraph.addEventListener('click', btnMonthlyGraph_click);
 	
 	load();
 }

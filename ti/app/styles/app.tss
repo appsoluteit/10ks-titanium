@@ -26,6 +26,12 @@
 	height: "50dp"
 }
 
+"TableView": {
+	height: Ti.UI.SIZE,
+	borderColor: "#C8C8C8",
+	borderRadius: "5dp"
+}
+
 ".row-label": {
 	left: "10dp",
 	textAlign: "left",
@@ -62,6 +68,16 @@
 	right: '10dp'
 }
 
+"background-gradient": {
+  backgroundGradient: {
+    type: 'linear',
+    colors: ['#f0f0f0', '#e0e0e0'],
+    startPoint: { x: 0, y: 0 },
+    endPoint: { x: '100%', y: '100%' },
+    backFillStart:false
+  }
+}
+
 /*********************************** TEXT ***********************************/
 'Label': {
 	width: Ti.UI.SIZE,
@@ -85,10 +101,6 @@
 		fontFamily: 'Arial',
 		fontSize: '10'
 	}
-}
-
-'.secondary': {
-	opacity: '0.5'
 }
 
 'TextField': {

@@ -14,7 +14,7 @@
 				<Button id="btnSync" onClick="btnSync_click">Sync</Button>
 			</RightNavButton>
 			
-			<TableView id = "tblDays"/>
+			<TableView id = "tblDays" height="100%"/>
 		</Window>
 	</NavigationWindow>
 	
@@ -38,6 +38,6 @@
             />
         </Menu>
 			
-		<TableView id = "tblDays" />
+		<TableView id = "tblDays" height="100%" />
 	</Window>
 </Alloy>
