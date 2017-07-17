@@ -3,12 +3,12 @@
 	<head>
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Highstock Example</title>
+		<title></title>
 		<script src="jquery.min.js"></script>
 		<script src="highcharts.js"></script>
 		<script src="exporting.js"></script>
 		<script type="text/javascript">
-			function plotChart(options) {
+			function plotChart(options, goalSteps) {
 		        Ti.API.info('Webview: plotChart(' + JSON.stringify(options) + ')');
 		        
 		        new Highcharts.Chart({
@@ -34,32 +34,31 @@
 		            },
 		           
 		            plotOptions: {
-		                pie: {
-		                    allowPointSelect: true,
-		                    cursor: 'pointer',
-		                    dataLabels: {
-		                        enabled: false
-		                    },
-		                    showInLegend: false
-		                },
-		                
-		                line: {
-		                    allowPointSelect: true,
-		                    cursor: 'pointer',
-		                    dataLabels: {
-		                        enabled: false
-		                    },
-		                    showInLegend: false
-		                },
-		                
 		                column: {
 		                    allowPointSelect: true,
 		                    cursor: 'pointer',
 		                    dataLabels: {
 		                        enabled: false
 		                    },
-		                    showInLegend: false
+		                    showInLegend: false,
+		                    color: {
+							    linearGradient: { x1: 0, x2: 0, y1: 1, y2: 0 },
+							    stops: [
+							        [0, '#8D00FF'],
+							        [1, '#00E59D']
+							    ]		                    	
+		                    }
 		                }
+		            },
+		            
+		            yAxis: {
+		            	plotLines: [{
+		            		value: goalSteps,
+		            		color: '#ff0000',
+		            		width: 2,
+		            		zIndex: 4,
+		            		label: { text: "goal" }
+		            	}]	
 		            },
 		            
 		            series: [options]

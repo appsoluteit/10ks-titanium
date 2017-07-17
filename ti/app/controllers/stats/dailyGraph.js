@@ -12,6 +12,14 @@ function hasSteps() {
 }
 
 function window_open() {
+	if(Ti.Platform.osname !== "android") {
+		$.dailyGraphWindow.setOrientationModes([
+			Ti.UI.LANDSCAPE_LEFT
+		]);
+	}
+	
+	var goalSteps = Ti.App.Properties.getInt("goal_steps", 0);
+	
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Daily Graph"
 	});
@@ -25,7 +33,7 @@ function window_open() {
 			type: "column",
 			name: "Daily Steps for " + currentMonthLabel,
 			data: args.data
-		});	
+		}, goalSteps);	
 	}
 	else {
 		Ti.API.info("No steps");

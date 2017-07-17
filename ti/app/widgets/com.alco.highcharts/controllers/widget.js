@@ -1,4 +1,4 @@
-function loadChart(options){ // data argument must be properly designed so it can work in different situations
+function loadChart(options, goalSteps){ // data argument must be properly designed so it can work in different situations
 	var templateURL=WPATH('/html/webview.html');
 	var optionsJSON = JSON.stringify(options);
 	
@@ -7,7 +7,7 @@ function loadChart(options){ // data argument must be properly designed so it ca
 	$.chartWebView.url=templateURL;
 	$.chartWebView.addEventListener('load', function() {
 		Ti.API.info('chartWebView ready');
-		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');	 
+		$.chartWebView.evalJS('plotChart('+ optionsJSON + ',' + goalSteps + ')');	 
 	});
 }
 
