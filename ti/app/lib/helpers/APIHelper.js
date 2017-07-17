@@ -91,7 +91,8 @@ function send(options) {
 		});
 	}
 	
-	req.send(options.data);
+	Ti.API.debug("Sending", options.data);
+	req.send(options.data);	
 }
 
 /**
@@ -112,5 +113,11 @@ function post(options) {
 	return send(options);
 }
 
+function put(options) {
+	options.method = "PUT";
+	return send(options);
+}
+
+module.exports.put = put;
 module.exports.post = post;
 module.exports.get = get;

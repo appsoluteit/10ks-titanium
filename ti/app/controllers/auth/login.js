@@ -22,8 +22,9 @@ function window_open() {
 	$.loginView.btnLogin.addEventListener('click', btnLogin_click);	
 	
 	var email = Ti.App.Properties.getString("email", "");
-	
-	if(email.length > 0) {
+	var rememberMe = Ti.App.Properties.getBool("rememberMe", false);
+		
+	if(rememberMe) {
 		$.loginView.swRememberMe.value = true;
 		$.loginView.txtUsername.value = email;
 	}
@@ -51,15 +52,20 @@ function btnLogin_click() {
 		$.loginView.txtUsername.value, 
 		$.loginView.txtPassword.value
 	).then(function() {
+		//Need to store the username regardless of the remember me setting
+		Ti.App.Properties.setString("email", $.loginView.txtUsername.value);
+			
 		//If remember me is checked, save the username
 		if($.loginView.swRememberMe.value) {
-			Ti.App.Properties.setString("email", $.loginView.txtUsername.value);	
+			Ti.App.Properties.setBool("rememberMe", true);
 		}
 		else {
-			Ti.App.Properties.removeProperty("email");
+			Ti.App.Properties.setBool("rememberMe", false);
 		}
 		
-		authProvider.getUser();
+		authProvider.getUser().then(function() {
+			$.login.close();
+		});
 	});
 }
 

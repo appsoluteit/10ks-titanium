@@ -1,33 +1,32 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
-
+        
 	<!-- iOS -->
-	<DashboardView editable="false" columnCount="2" platform="ios">
+	<DashboardView editable="false" id="dashboard" wobble="true" columnCount="2" platform="ios">     
+		<!-- Note: it seems as though the badges don't show up in the simulator anymore. But so long as they work on the device,>
+		I don't think it's cause for concern -->
+		   
 		<DashboardItem 
-			badge="1"
+			label="Steps"
 			id="btnStepLog"
-			image="/common/homepage_button_step-log@2x">
-		</DashboardItem>
+			image="common/homepage_button_step-log@2x.png"/>
 		
 		<DashboardItem
 			id="btnChallenges"
-			image="/common/homepage_button_ichallenges@2x.png">
-		</DashboardItem>
+			label="Challenges"
+			image="/common/homepage_button_ichallenges@2x.png"/>
 		
 		<DashboardItem
 			id="btnStatistics"
-			image="/common/homepage_button_progress@2x.png">
-		</DashboardItem>
+			image="/common/homepage_button_progress@2x.png"/>
 		
 		<DashboardItem
 			id="btnTournaments"
-			image="/common/homepage_button_friend-challenges@2x.png">
-		</DashboardItem>
+			image="/common/homepage_button_friend-challenges@2x.png"/>
 		
 		<DashboardItem
 			id="btnSettings"
-			image="/common/homepage_button_profile-&-settings@2x.png">
-		</DashboardItem>
+			image="/common/homepage_button_profile-&-settings@2x.png"/>
 	</DashboardView>
 	
 	<!-- Android -->

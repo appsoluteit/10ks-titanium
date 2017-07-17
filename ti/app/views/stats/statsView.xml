@@ -1,93 +1,127 @@
 <Alloy>
-	<TableView class="margin-10">
-		<!-- Current Goal Steps -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label class="row-label">Current goal steps:</Label>
-				</View>
-				
-				<View class="half">
-					<Label id="lblGoalSteps" class="row-value"></Label>
-				</View>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10" height="Ti.UI.FILL">
+			<!-- TableView Container -->
+			<View top="0dp">
+				<TableView>
+					<!-- Current Goal Steps -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label class="row-label">Current goal steps:</Label>
+							</View>
+							
+							<View class="half">
+								<Label id="lblGoalSteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+					
+					<!-- Lifetime steps  -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label class="row-label">Lifetime steps:</Label>
+							</View>
+							
+							<View class="half">
+								<Label id="lblLifeTimeSteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+					
+					<!-- Yearly steps  -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label id="lblYearlyStepsTitle" class="row-label"></Label>
+							</View>
+							
+							<View class="half">
+								<Label id="lblYearlySteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+						
+					<!-- Avg Steps per day -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label class="row-label">Overall daily average:</Label>
+							</View>
+							
+							<View class="half">
+								<Label id="lblAvgSteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+							
+					<!-- Busiest Month -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label id="lblBusiestMonthLabel" class="row-label">Busiest Month</Label>
+							</View>
+							
+							<View class="half" layout="vertical">
+								<Label id="lblBusiestMonth" class="row-value"></Label>
+								<Label id="lblBusiestMonthSteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+					
+					<!-- Busiest Day -->
+					<TableViewRow>
+						<View layout="horizontal">
+							<View class="half">
+								<Label id="lblBusiestDayLabel" class="row-label">Busiest Day</Label>
+							</View>
+							
+							<View class="half" layout="vertical">
+								<Label id="lblBusiestDay" class="row-value"></Label>
+								<Label id="lblBusiestDaySteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+				</TableView>
 			</View>
-		</TableViewRow>
 		
-		<!-- Lifetime steps  -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label class="row-label">Lifetime steps:</Label>
-				</View>
+			<!-- Buttons Container -->
+			<View width="100%" bottom="20dp">
+				<!-- Daily Graph -->
+				<Button 
+					id="btnDailyGraph" 
+					title="Daily Graph" 
+					left="0dp"
+					platform="android">
+				</Button>
+					
+				<Widget
+					id="btnDailyGraph"
+					left="0dp"
+					src="nl.fokkezb.button"
+					title="Daily Graph"
+					style="steps-default"
+					platform="ios"
+				/>	
 				
-				<View class="half">
-					<Label id="lblLifeTimeSteps" class="row-value"></Label>
-				</View>
+				<!-- Monthly Graph -->
+				<Button 
+					id="btnMonthlyGraph" 
+					title="Monthly Graph" 
+					right="0dp"
+					platform="android">
+				</Button>
+					
+				<Widget
+					id="btnMonthlyGraph"
+					right="0dp"
+					src="nl.fokkezb.button"
+					title="Monthly Graph"
+					style="steps-default"
+					platform="ios"
+				/>	
 			</View>
-		</TableViewRow>
-		
-		<!-- Yearly steps  -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label id="lblYearlyStepsTitle" class="row-label"></Label>
-				</View>
-				
-				<View class="half">
-					<Label id="lblYearlySteps" class="row-value"></Label>
-				</View>
-			</View>
-		</TableViewRow>
-			
-		<!-- Avg Steps per day -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label class="row-label">Overall daily average:</Label>
-				</View>
-				
-				<View class="half">
-					<Label id="lblAvgSteps" class="row-value"></Label>
-				</View>
-			</View>
-		</TableViewRow>
-				
-		<!-- Busiest Month -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label id="lblBusiestMonthLabel" class="row-label">Busiest Month</Label>
-				</View>
-				
-				<View class="half" layout="vertical">
-					<Label id="lblBusiestMonth" class="row-value"></Label>
-					<Label id="lblBusiestMonthSteps" class="row-value"></Label>
-				</View>
-			</View>
-		</TableViewRow>
-		
-		<!-- Busiest Day -->
-		<TableViewRow>
-			<View layout="horizontal">
-				<View class="half">
-					<Label id="lblBusiestDayLabel" class="row-label">Busiest Day</Label>
-				</View>
-				
-				<View class="half" layout="vertical">
-					<Label id="lblBusiestDay" class="row-value"></Label>
-					<Label id="lblBusiestDaySteps" class="row-value"></Label>
-				</View>
-			</View>
-		</TableViewRow>
-		
-		<!-- Daily Graph Button -->
-		<TableViewRow id="tblRowDailyGraph">
-			<Label class="row-label">Daily Graph</Label>
-		</TableViewRow>
-		
-		<!-- Monthly Graph Button -->
-		<TableViewRow id="tblRowMonthlyGraph">
-			<Label class="row-label">Monthly Graph</Label>
-		</TableViewRow>
-	</TableView>
+		</View>
+	</View>
 </Alloy>

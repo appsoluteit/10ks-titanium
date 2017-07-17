@@ -6,7 +6,9 @@
  */
 
 var args = $.args;
-
+var AuthProvider = require('classes/AuthProvider');
+var authProvider = new AuthProvider($.goalSteps, $.goalStepsView);
+	
 /**
  * @description Event handler for the Window's `open` event. Adds an event listener for `btnSave` and populates `txtGoalSteps` with the saved goal from app properties, if it 
  * exists.
@@ -19,11 +21,17 @@ function window_open() {
 	
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 	
-	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
-	
-	if(goalSteps > -1) {
-		$.goalStepsView.txtGoalSteps.value = goalSteps;
-	}
+	loadGoalSteps();
+}
+
+function loadGoalSteps() {
+	authProvider.getUser().then(function() {
+		var goalSteps = Ti.App.Properties.getInt("goal_steps", -1);
+		
+		if(goalSteps > -1) {
+			$.goalStepsView.txtGoalSteps.value = goalSteps;
+		}	
+	});
 }
 
 /**
@@ -55,17 +63,19 @@ function btnSave_click() {
 	
 	goalSteps = parseInt(goalSteps, 10);
 	
-	Ti.App.Properties.setInt('GoalSteps', goalSteps);
-	
-	Alloy.createWidget("com.mcongrove.toast", null, {
-		text: "Goal steps saved",
-		duration: 2000,
-		view: $.goalSteps,
-		theme: "success"
+	authProvider.setGoalSteps(goalSteps).then(function() {
+		Ti.App.Properties.setInt('goal_steps', goalSteps);
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Goal steps saved",
+			duration: 2000,
+			view: $.goalSteps,
+			theme: "success"
+		});
+		
+		setTimeout(function() {
+			args.callback(goalSteps);
+			$.goalSteps.close();
+		}, 2000);
 	});
-	
-	setTimeout(function() {
-		args.callback(goalSteps);
-		$.goalSteps.close();
-	}, 2000);
 }

@@ -81,7 +81,7 @@
 		left="12.5%"
 		src="nl.fokkezb.button"
 		title="Login"
-		style="ios"
+		style="steps-default"
 		platform="ios"
 	/>	
 </Alloy>

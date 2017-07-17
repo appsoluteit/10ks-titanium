@@ -17,12 +17,14 @@ function window_open() {
 		screenName: "Monthly Graph"
 	});
 	
+	var goalSteps = Ti.App.Properties.getInt("goal_steps", 0);
+	
 	if(hasSteps()) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",
 			name: "Monthly Steps for " + new Date().getFullYear(),
 			data: args.data
-		});	
+		}, goalSteps);	
 	}
 	else {
 		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for this year");

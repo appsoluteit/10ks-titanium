@@ -96,22 +96,24 @@ AuthProvider.prototype.login = function(username, password, closeOnComplete) {
 };
 
 /**
- * @description Get the user object
- * @todo Is this still necessary?
+ * @description Get the user object. This provides useful metrics used in both settings and statistics.
  */
 AuthProvider.prototype.getUser = function() {
 	var self = this;
 	var defer = q.defer();
 	
 	function onSuccess(response) {	
+		Ti.API.info("Got user: ", response);
+		
 		Ti.App.Properties.setString("UserURL", response.url);
 		Alloy.Globals.UserURL = response.url;
 		
-		setTimeout(function() {
-			if(self.container) {
-				self.container.close();	
-			}
-		}, 2000);
+		//Set some attributes required by settings, statistics, etc
+		if(response.walker) {
+			Ti.App.Properties.setInt("total_steps", response.walker.total_steps);	
+			Ti.App.Properties.setInt("average_daily_steps", response.walker.average_daily_steps);
+			Ti.App.Properties.setInt("goal_steps", response.walker.goal);		
+		}
 		
 		defer.resolve();
 	}
@@ -150,6 +152,42 @@ AuthProvider.prototype.getUser = function() {
 	return defer.promise;
 };
 
+AuthProvider.prototype.setGoalSteps = function(goalSteps) {
+	var defer = q.defer();
+	
+	function onSuccess(response) {
+		defer.resolve();	
+	}
+	
+	function onFail(reason) {
+		defer.reject(reason);
+	}
+	
+	var email = Ti.App.Properties.getString("email", "");
+	var data = {
+		username: email,
+		walker: {
+			goal: goalSteps
+		}
+	};
+	
+	//TODO: Rework this to use POST after Nick implements a server-side fix
+	APIHelper.put({
+		message: 	"Updating goal steps...",
+		url: 		"auth/user/",
+		headers: [{
+					key: "Authorization",
+					value: "Token " + Alloy.Globals.AuthKey
+		}],
+		data: data,
+		
+		success: 	onSuccess,
+		fail: 		onFail
+	});	
+	
+	return defer.promise;
+};
+
 /**
  * @description Call logout on the API, causing the access token to invalidate. This also removes all app properties, sets `Alloy.Globals` to an
  * empty object and removes all steps data stored locally.
@@ -170,6 +208,8 @@ AuthProvider.prototype.logout = function() {
 		
 		Ti.App.Properties.removeProperty("AuthKey");
 		Ti.App.Properties.removeProperty("UserURL");
+		Ti.App.Properties.removeProperty("rememberMe");
+		Ti.App.Properties.removeProperty("email");
 		
 		Ti.API.debug("Data removed. Closing window");
 		

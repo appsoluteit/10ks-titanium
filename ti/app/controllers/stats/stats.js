@@ -8,20 +8,25 @@
  * @todo Possibly let the user choose for which month / year they want to run the graphs? Popup dialog?
  */
 
+var q = require('q');
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
 var StepsProvider = require('classes/StepsProvider');
+var AuthProvider = require('classes/AuthProvider');
 
 var args = $.args;
 var stepsProvider = new StepsProvider();
+var authProvider = new AuthProvider($.stats, $.statsView);
 
 /**
  * @description Gets statistics from the /api/stats/ and populates the table with the results. Some statistics may come
  * from local storage as well.
  * @memberof Controllers.Stats
  */
-function calculateStatistics() {
+function loadStatistics() {
+	Ti.API.debug("loading statistics");
+	
 	function onSuccess(response) {
 		Ti.API.info("Get steps success", JSON.stringify(response));
 
@@ -50,9 +55,6 @@ function calculateStatistics() {
 		if(response.average_steps) {
 			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
 		}
-	
-		var lifeTimeSteps = Alloy.Globals.Steps.readLifeTimeSteps();
-		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(lifeTimeSteps);
 		
 		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 		var yearlyTotal = 0;
@@ -101,7 +103,7 @@ function calculateStatistics() {
 	};
 	
 	APIHelper.get({
-		message:	"Calculating statistics...",
+		message:	"Fetching statistics...",
 		url:		"stats/", 
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -111,11 +113,39 @@ function calculateStatistics() {
 	});
 }
 
+function loadUserData() {
+	var defer = q.defer();
+	
+	authProvider.getUser().then(function() {
+		Ti.API.debug("AuthProvider -> getUser resolved");
+		
+		//Lifetime steps and goal steps come from /auth/user.
+		
+		var total_steps = Ti.App.Properties.getInt("total_steps", 0);
+		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(total_steps);
+		
+		var goal_steps = Ti.App.Properties.getInt("goal_steps", 0);
+		$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goal_steps);
+		
+		defer.resolve();
+	});
+	
+	return defer.promise;
+}
+
+function loadPage() {
+	loadUserData().then(function() {
+		Ti.API.debug("loading user data finished");
+		
+		loadStatistics();
+	});
+}
+
 /**
- * @description Event handler for `tblRowDailyGraph`. Opens the daily graph window.
+ * @description Event handler for `btnDailyGraph`. Opens the daily graph window.
  * @memberof Controllers.Stats
  */
-function tblRowDailyGraph_click() {
+function btnDailyGraph_click() {
 	var dailyData = Alloy.Globals.Steps.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
 
 	Ti.API.info("Daily data:");
@@ -134,6 +164,7 @@ function tblRowDailyGraph_click() {
 		dayIndex++;
 	});
 
+	//TODO: Try creating a window the classic way here to create it with a landscape orientation, specifically
 	var win = Alloy.createController("stats/dailyGraph", {
 		data: chartData
 	}).getView();
@@ -144,7 +175,7 @@ function tblRowDailyGraph_click() {
  * @description Event handler for `tblRowMonthlyGraph`. Opens the monthly graph window.
  * @memberof Controllers.Stats
  */
-function tblRowMonthlyGraph_click() {
+function btnMonthlyGraph_click() {
 	var monthData = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 	var chartData = [];
 	var monthIndex = 1;
@@ -159,6 +190,7 @@ function tblRowMonthlyGraph_click() {
 		monthIndex++;
 	});
 	
+	//TODO: Try creating a window the classic way here to create it with a landscape orientation, specifically
 	var win = Alloy.createController("stats/monthlyGraph", {
 		data: chartData
 	}).getView();
@@ -195,7 +227,7 @@ function load() {
 				try {
 					stepsProvider.sync($.statsView, function() {
 						Ti.API.info("sync complete. Calculating stats");
-						calculateStatistics();
+						loadPage();
 					});						
 				}
 				catch(e) {
@@ -213,7 +245,7 @@ function load() {
 			}
 			else {
 				setTimeout(function() {
-					calculateStatistics();
+					loadPage();
 				}, 1000);				
 			}
 		});
@@ -222,13 +254,13 @@ function load() {
 	}
 	else {
 		setTimeout(function() {
-			calculateStatistics();
+			loadPage();
 		}, 1000);	
 	}
 }
 
 /**
- * @description Event handler for the Window's `open` event. Presets the row values and calls `calculateStatistics()` after a 1000ms timeout.
+ * @description Event handler for the Window's `open` event. Presets the row values and calls `load()`
  * @memberof Controllers.Stats
  */
 function window_open() {
@@ -236,18 +268,16 @@ function window_open() {
 		screenName: "Statistics"
 	});
 	
-	var goalSteps = Ti.App.Properties.getInt("GoalSteps", 0);
-	
 	$.statsView.lblAvgSteps.text = 0;
 	$.statsView.lblBusiestDay.text = 0;	
 	$.statsView.lblBusiestMonth.text = 0;
-	$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+	$.statsView.lblGoalSteps.text = 0;
 	$.statsView.lblLifeTimeSteps.text = 0;
 	$.statsView.lblYearlySteps.text = 0;
 	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
 	
-	$.statsView.tblRowDailyGraph.addEventListener('click', tblRowDailyGraph_click);
-	$.statsView.tblRowMonthlyGraph.addEventListener('click', tblRowMonthlyGraph_click);
+	$.statsView.btnDailyGraph.addEventListener('click', btnDailyGraph_click);
+	$.statsView.btnMonthlyGraph.addEventListener('click', btnMonthlyGraph_click);
 	
 	load();
 }
