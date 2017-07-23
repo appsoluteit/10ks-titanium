@@ -19,6 +19,7 @@ function window_open() {
 	
 	$.registerView.lblLogin.addEventListener('click', lblLogin_click);
 	$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
+	$.registerView.btnPasswordHelp.addEventListener('click', btnPasswordHelp_click);
 }
 
 /**
@@ -47,7 +48,7 @@ function btnRegister_click() {
 		
 		var dialog = Ti.UI.createAlertDialog({
 			message: 'We have sent an email to you for verification. Follow the link provided to finalse the signup process.',
-			ok: 'Okay',
+			ok: 'OK',
 			title: 'Verify your email address'
 		});
 		dialog.addEventListener('click', function() {
@@ -64,4 +65,13 @@ function btnRegister_click() {
 		
 		$.registerView.lblError.text = reason;
 	});
+}
+
+function btnPasswordHelp_click() {
+	var dialog = Ti.UI.createAlertDialog({
+		title: 'Password Help',
+		message: 'Passwords are case sensitive. Minimum 8 characters. Do not use your first name, last name or email.',
+		ok: 'OK'
+	});
+	dialog.show();
 }

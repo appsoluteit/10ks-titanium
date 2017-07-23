@@ -2,103 +2,117 @@
 	<Require src="header" type="view"></Require>
 	
 	<ScrollView scrollType="vertical" layout="vertical">
-		<Label 
-			class="big-label three-quarters bold"
-			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
-			text="Username">
-		</Label>
-		
-		<TextField 
-			id="txtUsername" 
-			class="three-quarters"
-			autocorrect="false" 
-			top="10dp"
-			paddingLeft="2"
-			hintText="Username"
-			autocapitalization="false" 
-			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-		</TextField>	
-		
-		<Label 
-			top="10dp"
-			class="big-label three-quarters bold"
-			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
-			text="Email">
-		</Label>		
-		
-		<TextField
-			id="txtEmail"
-			class="three-quarters"
-			autocorrect="false"
-			autocapitalization="false"
-			top="10dp"
-			paddingLeft="2"
-			hintText="Email"
-			keyboardType="TYPE_EMAIL">
-		</TextField>
-		
-		<Label 
-			top="10dp"
-			class="big-label three-quarters bold"
-			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
-			text="Password">
-		</Label>
-		
-		<TextField 
-			id="txtPassword" 
-			class="three-quarters"
-			top="10dp"
-			passwordMask="true">
-		</TextField>
+		<View left="12.5%" right="12.5%" height="Ti.UI.SIZE" layout="vertical">
+			<Label 
+				left="0"
+				class="big-label bold"
+				textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+				text="Username">
+			</Label>
+			
+			<TextField 
+				id="txtUsername" 
+				class="whole"
+				autocorrect="false" 
+				top="10dp"
+				paddingLeft="2"
+				hintText="Username"
+				autocapitalization="false" 
+				keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
+			</TextField>	
+			
+			<Label 
+				top="10dp"
+				left="0"
+				class="big-label bold"
+				textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+				text="Email">
+			</Label>		
+			
+			<TextField
+				id="txtEmail"
+				class="whole"
+				autocorrect="false"
+				autocapitalization="false"
+				top="10dp"
+				paddingLeft="2"
+				hintText="Email"
+				keyboardType="TYPE_EMAIL">
+			</TextField>	
+			
+			<View class='whole' layout="horizontal">
+				<Label 
+					top="10dp"
+					left="0"
+					class="big-label bold"
+					textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+					text="Password">
+				</Label>
 				
-		<Label 
-			class="big-label three-quarters bold"
-			top="10dp"
-			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
-			text="Retype Password">
-		</Label>
-		
-		<TextField 
-			id="txtPassword2" 
-			class="three-quarters"
-			top="10dp"
-			passwordMask="true">
-		</TextField>
+				<Button
+					id="btnPasswordHelp"
+					image="/common/icons/question-mark.png">
+				</Button>
+			</View>
 			
-		<Label 
-			id="lblError" 
-			top="10dp" 
-			textAlign="center" 
-			class="whole error big-label">
-		</Label>
+			<TextField 
+				id="txtPassword" 
+				class="whole"
+				top="10dp"
+				passwordMask="true">
+			</TextField>
+					
+			<Label 
+				class="big-label bold"
+				top="10dp"
+				left="0"
+				textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+				text="Retype Password">
+			</Label>
 			
-		<Label
-			id="lblLogin"
-			top="10dp"
-			class="big-label three-quarters"
-			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
-			color="#02B5FF">
-				Have an account? Sign in
-		</Label>
-		
-		<Button 
-			id="btnRegister" 
-			top="10dp"
-			left="12.5%"
-			title="Register" 
-			platform="android"
-			class="half big-label">
-				Register
-		</Button>
-		
-		<Widget
-			id="btnRegister"
-			top="10dp"
-			left="12.5%"
-			src="nl.fokkezb.button"
-			title="Register"
-			style="steps-default"
-			platform="ios"
-		/>
+			<TextField 
+				id="txtPassword2" 
+				class="whole"
+				top="10dp"
+				passwordMask="true">
+			</TextField>
+				
+			<Label 
+				id="lblError" 
+				top="10dp" 
+				textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT" 
+				class="error big-label">
+			</Label>
+				
+			<Label
+				id="lblLogin"
+				top="10dp"
+				left="0"
+				class="big-label"
+				textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+				color="#02B5FF">
+					Have an account? Sign in
+			</Label>
+			
+			<Button 
+				id="btnRegister" 
+				top="10dp"
+				left="0"
+				title="Register" 
+				platform="android"
+				class="half big-label">
+					Register
+			</Button>
+			
+			<Widget
+				id="btnRegister"
+				top="10dp"
+				left="0"
+				src="nl.fokkezb.button"
+				title="Register"
+				style="steps-default"
+				platform="ios"
+			/>
+		</View>
 	</ScrollView>
 </Alloy>
