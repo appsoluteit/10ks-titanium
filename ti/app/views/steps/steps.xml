@@ -2,17 +2,20 @@
 	<!-- iOS -->
 	<NavigationWindow platform="ios" id="log">
 		<Window title="Step Log" id="window" onOpen="window_open">
-			<LeftNavButton>
-				<Button 
-					id="btnBack" 
-					image="/common/chevrons/left-16.png"
-					onClick="btnBack_click">
-				</Button>
-			</LeftNavButton>
+			<LeftNavButtons>
+				<ImageView image="/common/chevrons/left-16.png" tintColor="white"/>
+				<Label color="white" class="big-label">Back</Label>
+			</LeftNavButtons>
 			
-			<RightNavButton>
-				<Button id="btnSync" onClick="btnSync_click">Sync</Button>
-			</RightNavButton>
+			<RightNavButtons>
+				<Label 
+					id="btnSync" 
+					class="big-label"
+					onClick="btnSync_click" 
+					color="#52B3FA">
+						Sync
+				</Label>
+			</RightNavButtons>
 			
 			<TableView id = "tblDays" height="100%"/>
 		</Window>

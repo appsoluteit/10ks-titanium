@@ -191,6 +191,9 @@ function window_open(evt) {
 		//On Android, call this to ensure the correct actionbar menu is displayed
 		$.log.activity.invalidateOptionsMenu();	
 	}
+	else {
+
+	}
 }
 
 /**
