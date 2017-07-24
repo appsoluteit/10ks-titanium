@@ -129,8 +129,20 @@ function tblRowLogout_click() {
 	
 	confirmDialog.addEventListener('click', function(e) {
 		if(e.index !== e.source.cancel) {
-			var authProvider = new AuthProvider($.settings, $.settings);
-			authProvider.logout();
+			var authProvider = new AuthProvider();
+			
+			authProvider.logout().then(function onSuccess() {
+				Alloy.createWidget("com.mcongrove.toast", null, {
+					text: "Logged out successfully",
+					duration: 2000,
+					view: $.settings,
+					theme: "success"
+				});	
+				
+				setTimeout(function() {
+					$.settings.close();
+				}, 2000);
+			});
 		}	
 	});
 	

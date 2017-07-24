@@ -19,6 +19,7 @@ function window_open() {
 	
 	$.registerView.lblLogin.addEventListener('click', lblLogin_click);
 	$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
+	$.registerView.btnPasswordHelp.addEventListener('click', btnPasswordHelp_click);
 }
 
 /**
@@ -34,12 +35,43 @@ function lblLogin_click() {
  * @memberOf Controllers.Auth.Register
  */
 function btnRegister_click() {
-	var authProvider = new AuthProvider($.register, $.registerView.lblError);
+	$.registerView.lblError.text = "";
+	var authProvider = new AuthProvider();
 	
 	authProvider.register(
 			 $.registerView.txtUsername.value, 
 			 $.registerView.txtEmail.value, 
 			 $.registerView.txtPassword.value,
 			 $.registerView.txtPassword2.value
-	);
+	).then(function onSuccess() {
+		Ti.API.log("registration success");
+		
+		var dialog = Ti.UI.createAlertDialog({
+			message: 'We have sent an email to you for verification. Follow the link provided to finalse the signup process.',
+			ok: 'OK',
+			title: 'Verify your email address'
+		});
+		dialog.addEventListener('click', function() {
+			$.register.close();	
+		});	
+		dialog.show();
+	}, function onFail(reason) {
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Registration failed",
+			duration: 2000,
+			view: $.register,
+			theme: "error"
+		});	
+		
+		$.registerView.lblError.text = reason;
+	});
+}
+
+function btnPasswordHelp_click() {
+	var dialog = Ti.UI.createAlertDialog({
+		title: 'Password Help',
+		message: 'Passwords are case sensitive. Minimum 8 characters. Do not use your first name, last name or email.',
+		ok: 'OK'
+	});
+	dialog.show();
 }

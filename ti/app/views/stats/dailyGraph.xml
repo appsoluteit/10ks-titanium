@@ -7,7 +7,7 @@
 					id="btnBack" 
 					image="/common/chevrons/left-16.png"
 					onClick="btnBack_click">
-				</Button>	
+				</Button>	q
 			</LeftNavButton>
 			
 			<Require id="dailyGraphView" src="stats/dailyGraphView" type="view"/>
