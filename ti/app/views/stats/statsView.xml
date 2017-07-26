@@ -6,80 +6,56 @@
 				<TableView>
 					<!-- Current Goal Steps -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label class="row-label">Current goal steps:</Label>
-							</View>
-							
-							<View class="half">
-								<Label id="lblGoalSteps" class="row-value"></Label>
-							</View>
+						<View class="whole">
+							<Label class="row-label">Current goal steps:</Label>
+							<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 					
 					<!-- Lifetime steps  -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label class="row-label">Lifetime steps:</Label>
-							</View>
-							
-							<View class="half">
-								<Label id="lblLifeTimeSteps" class="row-value"></Label>
-							</View>
+						<View class="whole">
+							<Label class="row-label">Lifetime steps:</Label>
+							<Label right="10dp" id="lblLifeTimeSteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 					
 					<!-- Yearly steps  -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label id="lblYearlyStepsTitle" class="row-label"></Label>
-							</View>
-							
-							<View class="half">
-								<Label id="lblYearlySteps" class="row-value"></Label>
-							</View>
+						<View class="whole">
+							<Label id="lblYearlyStepsTitle" class="row-label"></Label>
+							<Label right="10dp" id="lblYearlySteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 						
 					<!-- Avg Steps per day -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label class="row-label">Overall daily average:</Label>
-							</View>
-							
-							<View class="half">
-								<Label id="lblAvgSteps" class="row-value"></Label>
-							</View>
+						<View class="whole">
+							<Label class="row-label">Overall daily average:</Label>
+							<Label right="10dp" id="lblAvgSteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 							
 					<!-- Busiest Month -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label id="lblBusiestMonthLabel" class="row-label">Busiest Month</Label>
-							</View>
+						<View class="whole">
+							<Label id="lblBusiestMonthLabel" class="row-label">Busiest Month</Label>
 							
-							<View class="half" layout="vertical">
-								<Label id="lblBusiestMonth" class="row-value"></Label>
-								<Label id="lblBusiestMonthSteps" class="row-value"></Label>
+							<View layout="vertical">
+								<Label id="lblBusiestMonth" class="row-value" right="10dp"></Label>
+								<Label id="lblBusiestMonthSteps" class="row-value" right="10dp"></Label>
 							</View>
 						</View>
 					</TableViewRow>
 					
 					<!-- Busiest Day -->
 					<TableViewRow>
-						<View layout="horizontal">
-							<View class="half">
-								<Label id="lblBusiestDayLabel" class="row-label">Busiest Day</Label>
-							</View>
+						<View class="whole">
+							<Label id="lblBusiestDayLabel" class="row-label">Busiest Day</Label>
 							
-							<View class="half" layout="vertical">
-								<Label id="lblBusiestDay" class="row-value"></Label>
-								<Label id="lblBusiestDaySteps" class="row-value"></Label>
+							<View layout="vertical">
+								<Label id="lblBusiestDay" class="row-value" right="10dp"></Label>
+								<Label id="lblBusiestDaySteps" class="row-value" right="10dp"></Label>
 							</View>
 						</View>
 					</TableViewRow>

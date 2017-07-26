@@ -187,6 +187,10 @@ function window_open(evt) {
 	
 	populateRows();
 	
+
+}
+
+function setNavButtons() {
 	if(Ti.Platform.osname === "android") {
 		//On Android, call this to ensure the correct actionbar menu is displayed
 		$.log.activity.invalidateOptionsMenu();	
@@ -222,7 +226,7 @@ function window_open(evt) {
 		rightBtn.addEventListener('click', btnSync_click);
 		rightWrapper.add(rightBtn);
 		
-		$.window.rightNavButton = rightWrapper;
+		$.window.rightNavButton = rightWrapper;	
 	}
 }
 

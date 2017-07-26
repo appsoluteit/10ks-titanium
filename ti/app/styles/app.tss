@@ -68,10 +68,11 @@
 	right: '10dp'
 }
 
-"background-gradient": {
+".background-gradient": {
   backgroundGradient: {
     type: 'linear',
     colors: ['#f0f0f0', '#e0e0e0'],
+    //colors: ['#ffffff', '#000000'],
     startPoint: { x: 0, y: 0 },
     endPoint: { x: '100%', y: '100%' },
     backFillStart:false
