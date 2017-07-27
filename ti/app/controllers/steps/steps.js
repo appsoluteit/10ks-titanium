@@ -201,7 +201,7 @@ function window_open(evt) {
 		 
 		var backBtn = Ti.UI.createButton({
 		    image: "/common/chevrons/left-16-w.png",
-		    title: "Back",
+		    title: "Home",
 		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
 		});
 		backBtn.addEventListener('click', btnBack_click);
