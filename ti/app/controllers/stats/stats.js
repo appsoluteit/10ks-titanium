@@ -19,6 +19,24 @@ var args = $.args;
 var stepsProvider = new StepsProvider();
 var authProvider = new AuthProvider($.stats, $.statsView);
 
+function showLogin() {
+	Alloy.createWidget("com.mcongrove.toast", null, {
+		text: "Session expired. Please log in again.",
+		duration: 2000,
+		view: $.stats,
+		theme: "error"
+	});
+	
+	setTimeout(function() {
+		var win = Alloy.createController("auth/login").getView();
+		win.open();
+		
+		win.addEventListener("close", function() {
+			loadStatistics();
+		});
+	}, 2000);
+}
+
 /**
  * @description Gets statistics from the /api/stats/ and populates the table with the results. Some statistics may come
  * from local storage as well.
@@ -68,25 +86,9 @@ function loadStatistics() {
 	function onFail(response) {
 		Ti.API.info("Get stats fail", JSON.stringify(response));
 		
-		if(response.detail) {
+		if(response.detail && response.detail === "Invalid token.") {
 			//If the token expired, open the login window to login again
-			if(response.detail === "Invalid token.") {
-				Alloy.createWidget("com.mcongrove.toast", null, {
-					text: "Session expired. Please log in again.",
-					duration: 2000,
-					view: $.stats,
-					theme: "error"
-				});
-				
-				setTimeout(function() {
-					var win = Alloy.createController("auth/login").getView();
-					win.open();
-					
-					win.addEventListener("close", function() {
-						calculateStatistics();
-					});
-				}, 2000);
-			}
+			showLogin();
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
@@ -116,11 +118,10 @@ function loadStatistics() {
 function loadUserData() {
 	var defer = q.defer();
 	
-	authProvider.getUser().then(function() {
+	authProvider.getUser().then(function onSuccess() {
 		Ti.API.debug("AuthProvider -> getUser resolved");
 		
 		//Lifetime steps and goal steps come from /auth/user.
-		
 		var total_steps = Ti.App.Properties.getInt("total_steps", 0);
 		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(total_steps);
 		
@@ -128,6 +129,22 @@ function loadUserData() {
 		$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goal_steps);
 		
 		defer.resolve();
+	}, function onFail(reason) {
+		Ti.API.info("Loading user failed. Reason: ", reason);
+		
+		if(reason === "Invalid token.") {
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't fetch account",
+				duration: 2000,
+				view: $.stats,
+				theme: "error"
+			});	
+		}
+		
+		defer.reject();
 	});
 	
 	return defer.promise;
@@ -135,8 +152,7 @@ function loadUserData() {
 
 function loadPage() {
 	loadUserData().then(function() {
-		Ti.API.debug("loading user data finished");
-		
+		Ti.API.debug("loading user data finished");		
 		loadStatistics();
 	});
 }
@@ -259,6 +275,47 @@ function load() {
 	}
 }
 
+function setNavButtons() {
+	if(Ti.Platform.osname === "android") {
+		//On Android, call this to ensure the correct actionbar menu is displayed
+		$.stats.activity.invalidateOptionsMenu();	
+	}
+	else {
+		//We need to manually generate the navigation buttons for custom appearances
+		//https://jira.appcelerator.org/browse/TIMOB-15381
+		var wrapper = Ti.UI.createView({
+		    width:Ti.UI.SIZE,
+		    height:30 //Fits nicely in portrait and landscape
+		});
+		 
+		var backBtn = Ti.UI.createButton({
+		    image: "/common/chevrons/left-16-w.png",
+		    title: "Back",
+		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
+		});
+		backBtn.addEventListener('click', btnBack_click);
+		wrapper.add(backBtn);
+		
+		$.window.leftNavButton = wrapper;
+		
+		var rightWrapper = Ti.UI.createView({
+			width: Ti.UI.SIZE,
+			height: 30
+		});
+		
+		var rightBtn = Ti.UI.createButton({
+			image: "/common/icons/refresh-button.png",
+			color: "#52B3FA",
+			style: Ti.UI.iOS.SystemButtonStyle.PLAIN,
+			tintColor: "#52B3FA"
+		});
+		rightBtn.addEventListener('click', btnRefresh_click);
+		rightWrapper.add(rightBtn);
+		
+		$.window.rightNavButton = rightWrapper;	
+	}
+}
+
 /**
  * @description Event handler for the Window's `open` event. Presets the row values and calls `load()`
  * @memberof Controllers.Stats
@@ -267,6 +324,8 @@ function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Statistics"
 	});
+	
+	setNavButtons();
 	
 	$.statsView.lblAvgSteps.text = 0;
 	$.statsView.lblBusiestDay.text = 0;	
