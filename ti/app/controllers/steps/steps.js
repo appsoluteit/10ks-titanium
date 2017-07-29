@@ -11,6 +11,7 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Adds a row to the dates table
@@ -196,7 +197,38 @@ function setNavButtons() {
 		$.log.activity.invalidateOptionsMenu();	
 	}
 	else {
-	
+		
+		//We need to manually generate the navigation buttons for custom appearances
+		//https://jira.appcelerator.org/browse/TIMOB-15381
+		var wrapper = Ti.UI.createView({
+		    width:Ti.UI.SIZE,
+		    height:30 //Fits nicely in portrait and landscape
+		});
+		 
+		var backBtn = Ti.UI.createButton({
+		    image: "/common/chevrons/left-16-w.png",
+		    title: "Back",
+		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
+		});
+		backBtn.addEventListener('click', btnBack_click);
+		wrapper.add(backBtn);
+		
+		$.window.leftNavButton = wrapper;
+		
+		var rightWrapper = Ti.UI.createView({
+			width: Ti.UI.SIZE,
+			height: 30
+		});
+		
+		var rightBtn = Ti.UI.createButton({
+			title: "Sync",
+			color: "#52B3FA",
+			style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+		});
+		rightBtn.addEventListener('click', btnSync_click);
+		rightWrapper.add(rightBtn);
+		
+		$.window.rightNavButton = rightWrapper;	
 	}
 }
 

@@ -7,6 +7,7 @@
 
 var args = $.args;
 var AuthProvider = require('classes/AuthProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Event handler for the window's `open` event. Adds `click` event listeners for `btnLogin` and `btnRegister` in the view.
@@ -23,7 +24,7 @@ function window_open() {
 	
 	//Add a 'back' navigation button
 	if(Ti.Platform.osname !== "android") {
-		$.window.leftNavButton = Alloy.Globals.createLeftNavButton({
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
 			text: "Login",
 			onClick: function() {
 				$.register.close();
