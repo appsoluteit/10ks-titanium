@@ -14,6 +14,7 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
 var StepsProvider = require('classes/StepsProvider');
 var AuthProvider = require('classes/AuthProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 var args = $.args;
 var stepsProvider = new StepsProvider();
@@ -281,38 +282,15 @@ function setNavButtons() {
 		$.stats.activity.invalidateOptionsMenu();	
 	}
 	else {
-		//We need to manually generate the navigation buttons for custom appearances
-		//https://jira.appcelerator.org/browse/TIMOB-15381
-		var wrapper = Ti.UI.createView({
-		    width:Ti.UI.SIZE,
-		    height:30 //Fits nicely in portrait and landscape
-		});
-		 
-		var backBtn = Ti.UI.createButton({
-		    image: "/common/chevrons/left-16-w.png",
-		    title: "Back",
-		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
-		});
-		backBtn.addEventListener('click', btnBack_click);
-		wrapper.add(backBtn);
-		
-		$.window.leftNavButton = wrapper;
-		
-		var rightWrapper = Ti.UI.createView({
-			width: Ti.UI.SIZE,
-			height: 30
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click	
 		});
 		
-		var rightBtn = Ti.UI.createButton({
-			image: "/common/icons/refresh-button.png",
-			color: "#52B3FA",
-			style: Ti.UI.iOS.SystemButtonStyle.PLAIN,
-			tintColor: "#52B3FA"
+		$.window.rightNavButton = NavBarButton.createRightNavButton({
+			image: '/common/icons/refresh-button.png',
+			onClick: btnRefresh_click
 		});
-		rightBtn.addEventListener('click', btnRefresh_click);
-		rightWrapper.add(rightBtn);
-		
-		$.window.rightNavButton = rightWrapper;	
 	}
 }
 

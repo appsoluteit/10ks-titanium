@@ -9,6 +9,7 @@
 
 var FormatHelper = require('helpers/FormatHelper');
 var AuthProvider = require('classes/AuthProvider');
+var NavBarButton = require('classes/NavBarButton');
 var Tests = require('tests/bootstrap');
 
 var args = $.args;
@@ -56,6 +57,13 @@ function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Settings"
 	});
+	
+	if(Ti.Platform.osname !== "android") {
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click
+		});
+	}
 	
 	//Pre-load the goal steps
 	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);

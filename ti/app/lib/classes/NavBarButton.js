@@ -28,14 +28,27 @@ function createRightNavButton(options) {
 		height: 30
 	});
 	
-	var rightBtn = Ti.UI.createButton({
-		title: options.text,
-		color: "#52B3FA",
-		style: Ti.UI.iOS.SystemButtonStyle.PLAIN
-	});
+	var rightBtn = null;
+	
+	if(options.image) {
+		rightBtn = Ti.UI.createButton({
+			image: options.image,
+			style: Ti.UI.iOS.SystemButtonStyle.PLAIN,
+			tintColor: '#52B3FA',
+			color: '#52B3FA'
+		});
+	}
+	else {
+		rightBtn = Ti.UI.createButton({
+			title: options.text,
+			color: "#52B3FA",
+			style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+		});
+	}
+	
 	rightBtn.addEventListener('click', options.onClick);
 	rightWrapper.add(rightBtn);
-	
+		
 	return rightWrapper;
 }
 

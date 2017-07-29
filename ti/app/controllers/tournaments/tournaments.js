@@ -4,7 +4,7 @@
  * @namespace Controllers.Tournaments
  */
 
-var args = $.args;
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -22,6 +22,13 @@ function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Tournaments"
 	});
+	
+	if(Ti.Platform.osname !== "android") {
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click
+		});
+	}
 	
 	$.tournamentsView.vwRaceTournaments.addEventListener('click', raceTournaments_click);
 	$.tournamentsView.vwTimeoutTournaments.addEventListener('click', timeoutTournaments_click);

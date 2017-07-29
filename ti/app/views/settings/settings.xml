@@ -1,15 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="settings" platform="ios">
-		<Window title="Settings" onOpen="window_open">
-			<LeftNavButton>
-				<Button 
-					id="btnBack" 
-					image="/common/chevrons/left-16.png"
-					onClick="btnBack_click">
-				</Button>	
-			</LeftNavButton>
-			
+		<Window title="Settings" onOpen="window_open" id="window">			
 			<Require id="settingsView" src="settings/settingsView" type="view"/>
 		</Window>
 	</NavigationWindow>
