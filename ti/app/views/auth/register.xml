@@ -1,11 +1,21 @@
 <Alloy>
 	<!-- iOS -->
-	<Window id="register" title="Register" onOpen="window_open" platform="ios">
-		<Require id="registerView" src="auth/registerView" type="view"/>
-	</Window>
+	<NavigationWindow platform="ios" id="register">
+		<Window id="window" title="Register" onOpen="window_open" platform="ios">
+			<!-- Back nav button set programatically -->
+			<Require id="registerView" src="auth/registerWebView" type="view"/>
+		</Window>
+	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="register" title="register" platform="android" onOpen="window_open">
-		<Require id="registerView" src="auth/registerView" type="view"/>
-	</Window>	
+	<Window platform="android" id="register" title="Register" onOpen="window_open" fullscreen="true">
+		<ActionBar 
+			title="Register" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click">	
+		</ActionBar>
+		
+		<Require id="registerView" src="auth/registerWebView" type="view"/>
+	</Window>
 </Alloy>

@@ -1,0 +1,10 @@
+<Alloy>
+	<Require src="header" type="view"></Require>
+	
+	<WebView 
+		id="webView"
+		url="https://www.10000steps.org.au/accounts/signup/" 
+		scalesPageToFit="true"
+		width="Ti.UI.FILL">
+	</WebView>
+</Alloy>
