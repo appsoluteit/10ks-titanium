@@ -11,6 +11,7 @@
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Adds a row to the dates table
@@ -180,14 +181,13 @@ function populateRows() {
  * @description Event handler for the Window's `open` event. Calls 'populateRows'.
  * @memberof Controllers.Steps
  */
-function window_open(evt) {
+function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Steps"
 	});
 	
+	setNavButtons();
 	populateRows();
-	
-
 }
 
 function setNavButtons() {
@@ -196,37 +196,15 @@ function setNavButtons() {
 		$.log.activity.invalidateOptionsMenu();	
 	}
 	else {
-		//We need to manually generate the navigation buttons for custom appearances
-		//https://jira.appcelerator.org/browse/TIMOB-15381
-		var wrapper = Ti.UI.createView({
-		    width:Ti.UI.SIZE,
-		    height:30 //Fits nicely in portrait and landscape
-		});
-		 
-		var backBtn = Ti.UI.createButton({
-		    image: "/common/chevrons/left-16-w.png",
-		    title: "Home",
-		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
-		});
-		backBtn.addEventListener('click', btnBack_click);
-		wrapper.add(backBtn);
-		
-		$.window.leftNavButton = wrapper;
-		
-		var rightWrapper = Ti.UI.createView({
-			width: Ti.UI.SIZE,
-			height: 30
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: "Home",
+			onClick: btnBack_click
 		});
 		
-		var rightBtn = Ti.UI.createButton({
-			title: "Sync",
-			color: "#52B3FA",
-			style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+		$.window.rightNavButton = NavBarButton.createRightNavButton({
+			text: "Sync",
+			onClick: btnSync_click
 		});
-		rightBtn.addEventListener('click', btnSync_click);
-		rightWrapper.add(rightBtn);
-		
-		$.window.rightNavButton = rightWrapper;	
 	}
 }
 

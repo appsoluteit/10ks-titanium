@@ -5,9 +5,9 @@
  * @require helpers/APIHelper
  */
 
-var args = $.args;
 var ChallengesProvider = require('classes/ChallengesProvider');
 var FormatHelper = require('helpers/FormatHelper');
+var NavBarButton = require('classes/NavBarButton');
 
 var challengesProvider = new ChallengesProvider();
 
@@ -88,6 +88,13 @@ function window_open() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Challenges"
 	});
+	
+	if(Ti.Platform.osname !== "android") {
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: "Home",
+			onClick: btnBack_click
+		});
+	}
 	
 	fetchChallenges();
 }

@@ -1,15 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="challenges" platform="ios">
-		<Window title="Challenges" onOpen="window_open">
-			<LeftNavButton>
-				<Button 
-					id="btnBack" 
-					image="/common/chevrons/left-16.png"
-					onClick="btnBack_click">
-				</Button>	
-			</LeftNavButton>
-			
+		<Window id="window" title="Challenges" onOpen="window_open">
 			<Require id="challengesView" src="challenges/challengesView" type="view"/>
 		</Window>
 	</NavigationWindow>

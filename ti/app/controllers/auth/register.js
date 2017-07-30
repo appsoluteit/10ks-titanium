@@ -7,6 +7,7 @@
 
 var args = $.args;
 var AuthProvider = require('classes/AuthProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Event handler for the window's `open` event. Adds `click` event listeners for `btnLogin` and `btnRegister` in the view.
@@ -17,9 +18,34 @@ function window_open() {
 		screenName: "Register"
 	});
 	
-	$.registerView.lblLogin.addEventListener('click', lblLogin_click);
-	$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
-	$.registerView.btnPasswordHelp.addEventListener('click', btnPasswordHelp_click);
+	//$.registerView.lblLogin.addEventListener('click', lblLogin_click);
+	//$.registerView.btnRegister.addEventListener('click', btnRegister_click);	
+	//$.registerView.btnPasswordHelp.addEventListener('click', btnPasswordHelp_click);
+	
+	//Add a 'back' navigation button
+	if(Ti.Platform.osname !== "android") {
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: "Login",
+			onClick: function() {
+				$.register.close();
+			}
+		});	
+	}
+	
+	$.registerView.webView.addEventListener('load', function(e) {
+		//If the url changes to the confirm email url, show a toast and close the window
+		if(e.url === "https://www.10000steps.org.au/accounts/confirm-email/") {
+			var dialog = Ti.UI.createAlertDialog({
+				message: 'We have sent an email to you for verification. Follow the link provided to finalise the signup process.',
+				ok: 'OK',
+				title: 'Verify your email address'
+			});
+			dialog.addEventListener('click', function() {
+				$.register.close();	
+			});	
+			dialog.show();			
+		}
+	});
 }
 
 /**

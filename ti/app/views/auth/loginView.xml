@@ -2,7 +2,7 @@
 	<Require src="header" type="view"></Require>
 	
 	<Label 
-		class='big-label three-quarters bold'
+		class='three-quarters bold'
 		textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
 		text="Login">
 	</Label>
@@ -12,7 +12,6 @@
 		class="three-quarters"
 		top="10dp"
 		autocorrect="false" 
-		paddingLeft="2"
 		hintText="Username or email"
 		autocapitalization="false" 
 		keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
@@ -20,7 +19,7 @@
 	
 	<Label 
 		top = "10dp" 
-		class='big-label three-quarters bold'
+		class='three-quarters bold'
 		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
 		text="Password">
 	</Label>
@@ -29,7 +28,6 @@
 		id="txtPassword" 
 		class="three-quarters"
 		top="10dp"
-		paddingLeft="2"
 		hintText="Password"
 		passwordMask="true">
 	</TextField>
@@ -38,20 +36,20 @@
 		id="lblError" 
 		top="10dp" 
 		textAlign="center" 
-		class="whole error big-label">
+		class="whole error">
 	</Label>
 
 	<View layout="horizontal" left="12.5%">
 		<Switch id="swRememberMe" value="false" top="10dp">
 		</Switch>
 		
-		<Label text="Remember Me" class="big-label" left="10dp" bottom="0dp"></Label>
+		<Label text="Remember Me" left="10dp" bottom="0dp"></Label>
 	</View>
 	
 	<Label
 		id="lblForgotPassword"
 		top="10dp"
-		class="big-label three-quarters"
+		class="three-quarters"
 		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
 		color="#02B5FF">
 			Forgot Password?
@@ -60,7 +58,7 @@
 	<Label
 		id="lblSignUp"
 		top="10dp"
-		class="big-label three-quarters"
+		class="three-quarters"
 		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
 		color="#02B5FF">
 			Sign Up
@@ -72,7 +70,7 @@
 		top="10dp"
 		left="12.5%"
 		platform="android"
-		class="half big-label">
+		class="half">
 	</Button>
 		
 	<Widget

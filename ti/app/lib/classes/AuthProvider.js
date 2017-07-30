@@ -95,7 +95,8 @@ AuthProvider.prototype.getUser = function() {
 	}
 	
 	APIHelper.get({
-		message: 	"Fetching your account...",
+		//Don't show a spinner message for this operation. If required, its up to the calling code
+		//to show it
 		url: 		"auth/user/",
 		headers: [{
 					key: "Authorization",

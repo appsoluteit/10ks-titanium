@@ -2,15 +2,24 @@
 	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
 	width: "125dp",
 	height: "30dp",
-	borderColor: "gray",
+	borderColor: "#C8C8C8",
+	font: {
+		fontSize: "18sp"
+	}
 }
 
 "TextField[platform=android]" : {
 	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
 	width: "125dp",
 	height: "50dp",
-	borderColor: "gray",
+	borderColor: "#C8C8C8",
 	font: {
-		fontSize: 12
+		fontSize: "18sp"
+	}
+}
+
+"Label": {
+	font: {
+		fontSize: "18sp"
 	}
 }

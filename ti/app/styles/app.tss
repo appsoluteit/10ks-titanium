@@ -6,7 +6,7 @@
 		font: {
 			fontWeight: 'bold',
 			fontFamily: 'Arial',
-			fontSize: '20pt'
+			fontSize: '20sp'
 		}
 	},
 	navTintColor: "white" //NOTE: This controls the colour of the links in the navbar
@@ -36,7 +36,8 @@
 	left: "10dp",
 	textAlign: "left",
 	font: {
-		fontWeight: "bold"
+		fontWeight: "bold",
+		fontSize: '18sp'
 	}
 }
 
@@ -46,7 +47,8 @@
 	right: "10dp",
 	
 	font: {
-		fontWeight: 'normal'
+		fontWeight: 'normal',
+		fontSize: '18sp'
 	}
 }
 
@@ -86,21 +88,21 @@
 	color: '#000',
 	font: {
 		fontFamily: 'Arial',
-		fontSize: '10'
+		fontSize: '20sp'
 	}
 }
 
 '.big-label': {
 	font: {
 		fontFamily: 'Arial',
-		fontSize: '16'
+		fontSize: '32sp'
 	}
 }
 
 'Button': {
 	font: {
 		fontFamily: 'Arial',
-		fontSize: '10'
+		fontSize: '20sp'
 	}
 }
 
@@ -110,7 +112,11 @@
 	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
 	borderRadius: '5dp',
 	height:"30dp",
-	borderColor: 'gray'
+	borderColor: '#C8C8C8',
+	paddingLeft: '5',
+	font: {
+		fontSize: '20sp'
+	}
 }
 
 'TextField[platform=android]': {
@@ -118,9 +124,9 @@
 	color: 'blue',
 	borderStyle: "INPUT_BORDERSTYLE_ROUNDED",
 	height: "50dp",
-	borderColor: "gray",
+	borderColor: "#C8C8C8",
 	font: {
-		fontSize: 12
+		fontSize: '20sp'
 	}
 }
 

@@ -14,10 +14,12 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
 var StepsProvider = require('classes/StepsProvider');
 var AuthProvider = require('classes/AuthProvider');
+var NavBarButton = require('classes/NavBarButton');
 
 var args = $.args;
 var stepsProvider = new StepsProvider();
 var authProvider = new AuthProvider($.stats, $.statsView);
+var spinner = Alloy.createWidget('nl.fokkezb.loading');
 
 function showLogin() {
 	Alloy.createWidget("com.mcongrove.toast", null, {
@@ -44,9 +46,10 @@ function showLogin() {
  */
 function loadStatistics() {
 	Ti.API.debug("loading statistics");
+	var defer = q.defer();
 	
 	function onSuccess(response) {
-		Ti.API.info("Get steps success", JSON.stringify(response));
+		Ti.API.info("Get stats success", JSON.stringify(response));
 
 		if(response.max_month) {
 			if(response.max_month.month) {
@@ -81,6 +84,8 @@ function loadStatistics() {
 		});
 		
 		$.statsView.lblYearlySteps.text = FormatHelper.formatNumber(yearlyTotal);
+		
+		defer.resolve();
 	}
 	
 	function onFail(response) {
@@ -98,6 +103,8 @@ function loadStatistics() {
 				theme: "error"
 			});	
 		}
+		
+		defer.resolve();
 	}
 	
 	var data = {
@@ -105,7 +112,6 @@ function loadStatistics() {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching statistics...",
 		url:		"stats/", 
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -113,6 +119,8 @@ function loadStatistics() {
 		success: 	onSuccess,
 		fail: 		onFail
 	});
+	
+	return defer.promise;
 }
 
 function loadUserData() {
@@ -144,16 +152,21 @@ function loadUserData() {
 			});	
 		}
 		
-		defer.reject();
+		defer.resolve();
 	});
 	
 	return defer.promise;
 }
 
 function loadPage() {
+	//Show a single spinner for the both GET operations
+	spinner.show("Loading statistics...");
+	
 	loadUserData().then(function() {
 		Ti.API.debug("loading user data finished");		
-		loadStatistics();
+		loadStatistics().then(function() {
+			spinner.hide();
+		});
 	});
 }
 
@@ -281,38 +294,15 @@ function setNavButtons() {
 		$.stats.activity.invalidateOptionsMenu();	
 	}
 	else {
-		//We need to manually generate the navigation buttons for custom appearances
-		//https://jira.appcelerator.org/browse/TIMOB-15381
-		var wrapper = Ti.UI.createView({
-		    width:Ti.UI.SIZE,
-		    height:30 //Fits nicely in portrait and landscape
-		});
-		 
-		var backBtn = Ti.UI.createButton({
-		    image: "/common/chevrons/left-16-w.png",
-		    title: "Back",
-		    style:Ti.UI.iOS.SystemButtonStyle.PLAIN //For good behavior on iOS6
-		});
-		backBtn.addEventListener('click', btnBack_click);
-		wrapper.add(backBtn);
-		
-		$.window.leftNavButton = wrapper;
-		
-		var rightWrapper = Ti.UI.createView({
-			width: Ti.UI.SIZE,
-			height: 30
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click	
 		});
 		
-		var rightBtn = Ti.UI.createButton({
-			image: "/common/icons/refresh-button.png",
-			color: "#52B3FA",
-			style: Ti.UI.iOS.SystemButtonStyle.PLAIN,
-			tintColor: "#52B3FA"
+		$.window.rightNavButton = NavBarButton.createRightNavButton({
+			image: '/common/icons/refresh-button.png',
+			onClick: btnRefresh_click
 		});
-		rightBtn.addEventListener('click', btnRefresh_click);
-		rightWrapper.add(rightBtn);
-		
-		$.window.rightNavButton = rightWrapper;	
 	}
 }
 

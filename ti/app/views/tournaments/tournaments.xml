@@ -1,15 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="tournaments" platform="ios">
-		<Window title="Tournaments" onOpen="window_open">
-			<LeftNavButton>
-				<Button 
-					id="btnBack" 
-					image="/common/chevrons/left-16.png"
-					onClick="btnBack_click">
-				</Button>
-			</LeftNavButton>
-			
+		<Window title="Tournaments" onOpen="window_open" id="window">
 			<Require id="tournamentsView" src="tournaments/tournamentsView" type="view"/>
 		</Window>
 	</NavigationWindow>
