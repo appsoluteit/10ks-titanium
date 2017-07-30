@@ -75,6 +75,9 @@ function window_open() {
 	$.logEntryView.txtStepsWalked.addEventListener('change', txtStepsWalked_change);
 	$.logEntryView.txtModerateMins.addEventListener('change', txtModerateMins_change);
 	$.logEntryView.txtVigorousMins.addEventListener('change', txtVigorousMins_change);
+	
+	//Try to auto-open the keyboard
+	$.logEntryView.txtStepsWalked.focus();
 }
 
 /**

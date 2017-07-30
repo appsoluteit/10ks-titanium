@@ -102,11 +102,20 @@
 		borderRadius: "5dp",
 		font: {
 			fontFamily: 'Arial',
-			fontSize: '12pt',
+			fontSize: '18sp',
 			fontWeight: 'bold'
 		},
-		height: "30dp",
-		width: "125dp"
+		activeStyle: {
+			backgroundColor: '#397CAD',
+			color: 'white'
+		},
+		//height: "30dp",
+		//width: "125dp"
+		
+		//These are the highest values usable on an iPhone 5 that will allow two buttons to be 
+		//stacked horizontally without any overlap
+		height: "50dp",
+		width: "140dp"
 	});
 })();
 

@@ -2,7 +2,7 @@
 	<View layout="vertical" left="0" top="0">
 		<View layout="horizontal" class="margin-10 whole" textAlign="right">
 				<Label 
-					class="bold big-label" 
+					class="bold" 
 					width="33%" 
 					right="10dp" 
 					textAlign="left">
@@ -19,7 +19,8 @@
 		<View class="whole margin-10">
 			<Label 
 				left="0" 
-				class="bold big-label" 
+				top="10dp"
+				class="bold" 
 				textAlign="left">
 					Extra Activities
 			</Label>
@@ -27,7 +28,6 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="big-label" 
 				width="33%" 
 				right="10dp" 
 				textAlign="left">
@@ -36,12 +36,11 @@
 			
 			<TextField 
 				id="txtModerateMins"
-				keyboardType="Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD"
+				keyboardType="Titanium.UI.KEYBOARD_TYPE_NUMBER_PAD" 
 				maxLength="5">
 			</TextField>
 			
 			<Label 
-				class="big-label" 
 				left="10dp">
 					mins
 			</Label>
@@ -49,7 +48,6 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="big-label" 
 				width="33%" 
 				right="10dp" 
 				textAlign="left">
@@ -63,7 +61,6 @@
 			</TextField>
 			
 			<Label 
-				class="big-label" 
 				left="10dp">
 					mins
 			</Label>
@@ -71,9 +68,10 @@
 		
 		<View layout="horizontal" class="margin-10 whole">
 			<Label 
-				class="bold big-label" 
+				class="bold" 
 				width="33%" 
 				right="10dp" 
+				top="10dp"
 				textAlign="left">
 					Daily Total
 			</Label>
@@ -81,7 +79,7 @@
 			<Label 
 				id="lblDailyTotal" 
 				color="red" 
-				class="big-label">
+				top="10dp">
 					0
 			</Label>
 		</View>

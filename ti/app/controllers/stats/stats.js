@@ -19,6 +19,7 @@ var NavBarButton = require('classes/NavBarButton');
 var args = $.args;
 var stepsProvider = new StepsProvider();
 var authProvider = new AuthProvider($.stats, $.statsView);
+var spinner = Alloy.createWidget('nl.fokkezb.loading');
 
 function showLogin() {
 	Alloy.createWidget("com.mcongrove.toast", null, {
@@ -45,9 +46,10 @@ function showLogin() {
  */
 function loadStatistics() {
 	Ti.API.debug("loading statistics");
+	var defer = q.defer();
 	
 	function onSuccess(response) {
-		Ti.API.info("Get steps success", JSON.stringify(response));
+		Ti.API.info("Get stats success", JSON.stringify(response));
 
 		if(response.max_month) {
 			if(response.max_month.month) {
@@ -82,6 +84,8 @@ function loadStatistics() {
 		});
 		
 		$.statsView.lblYearlySteps.text = FormatHelper.formatNumber(yearlyTotal);
+		
+		defer.resolve();
 	}
 	
 	function onFail(response) {
@@ -99,6 +103,8 @@ function loadStatistics() {
 				theme: "error"
 			});	
 		}
+		
+		defer.resolve();
 	}
 	
 	var data = {
@@ -106,7 +112,6 @@ function loadStatistics() {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching statistics...",
 		url:		"stats/", 
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -114,6 +119,8 @@ function loadStatistics() {
 		success: 	onSuccess,
 		fail: 		onFail
 	});
+	
+	return defer.promise;
 }
 
 function loadUserData() {
@@ -145,16 +152,21 @@ function loadUserData() {
 			});	
 		}
 		
-		defer.reject();
+		defer.resolve();
 	});
 	
 	return defer.promise;
 }
 
 function loadPage() {
+	//Show a single spinner for the both GET operations
+	spinner.show("Loading statistics...");
+	
 	loadUserData().then(function() {
 		Ti.API.debug("loading user data finished");		
-		loadStatistics();
+		loadStatistics().then(function() {
+			spinner.hide();
+		});
 	});
 }
 
