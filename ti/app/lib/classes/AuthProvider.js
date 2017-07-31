@@ -110,42 +110,6 @@ AuthProvider.prototype.getUser = function() {
 	return defer.promise;
 };
 
-AuthProvider.prototype.setGoalSteps = function(goalSteps) {
-	var defer = q.defer();
-	
-	function onSuccess(response) {
-		defer.resolve();	
-	}
-	
-	function onFail(reason) {
-		defer.reject(reason);
-	}
-	
-	var email = Ti.App.Properties.getString("email", "");
-	var data = {
-		username: email,
-		walker: {
-			goal: goalSteps
-		}
-	};
-	
-	//TODO: Rework this to use POST after Nick implements a server-side fix
-	APIHelper.put({
-		message: 	"Updating goal steps...",
-		url: 		"auth/user/",
-		headers: [{
-					key: "Authorization",
-					value: "Token " + Alloy.Globals.AuthKey
-		}],
-		data: data,
-		
-		success: 	onSuccess,
-		fail: 		onFail
-	});	
-	
-	return defer.promise;
-};
-
 /**
  * @description Call logout on the API, causing the access token to invalidate. This also removes all app properties, sets `Alloy.Globals` to an
  * empty object and removes all steps data stored locally.

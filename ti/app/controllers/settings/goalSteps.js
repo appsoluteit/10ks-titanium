@@ -6,8 +6,7 @@
  */
 
 var args = $.args;
-var AuthProvider = require('classes/AuthProvider');
-var authProvider = new AuthProvider($.goalSteps, $.goalStepsView);
+var APIHelper = require('helpers/APIHelper');
 	
 /**
  * @description Event handler for the Window's `open` event. Adds an event listener for `btnSave` and populates `txtGoalSteps` with the saved goal from app properties, if it 
@@ -25,12 +24,37 @@ function window_open() {
 }
 
 function loadGoalSteps() {
-	authProvider.getUser().then(function() {
-		var goalSteps = Ti.App.Properties.getInt("goal_steps", -1);
+	function onSuccess(response) {
+		if(response.results && response.results.length) {
+			//There may be multiple goals in the response. Just take the first (most recent)
+			var goalSteps = response.results[0].goal;
+			
+			if(goalSteps) {
+				$.goalStepsView.txtGoalSteps.value = goalSteps;
+				Ti.App.Properties.setInt("goal_steps", goalSteps);
+			}
+		}
+	}
+	
+	function onFail(response) {
+		Ti.API.error(response);
 		
-		if(goalSteps > -1) {
-			$.goalStepsView.txtGoalSteps.value = goalSteps;
-		}	
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Unable to fetch your goal setting",
+			duration: 2000,
+			view: $.goalSteps,
+			theme: "error"
+		});	
+	}
+	
+	APIHelper.get({
+		message: "Fetching your goal setting",
+		url:		"goals/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
 	});
 }
 
@@ -63,7 +87,7 @@ function btnSave_click() {
 	
 	goalSteps = parseInt(goalSteps, 10);
 	
-	authProvider.setGoalSteps(goalSteps).then(function() {
+	function onSuccess(response) {
 		Ti.App.Properties.setInt('goal_steps', goalSteps);
 		
 		Alloy.createWidget("com.mcongrove.toast", null, {
@@ -76,6 +100,30 @@ function btnSave_click() {
 		setTimeout(function() {
 			args.callback(goalSteps);
 			$.goalSteps.close();
-		}, 2000);
+		}, 2000);		
+	}
+	
+	function onFail(response) {
+		Ti.API.error(response);
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Unable save your goal setting",
+			duration: 2000,
+			view: $.goalSteps,
+			theme: "error"
+		});	
+	}
+	
+	APIHelper.post({
+		message: "Saving goal",
+		url:		"goals/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		data: {
+			goal: goalSteps
+		},
+		success: 	onSuccess,
+		fail: 		onFail		
 	});
 }

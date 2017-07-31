@@ -5,6 +5,7 @@
 * [Login](LOGIN.md)
 * [Logout](LOGOUT.md)
 * [User](USER.md)
+* [Goals](GOALS.md)
 * [Steps](STEPS.md)
 * [Stats](STATS.md)
 * [Challenges](CHALLENGES.md)

@@ -14,7 +14,7 @@ https://www.10000steps.org.au/api/challenges/
 | -- | -- | -- | -- |
 | `Authorization` | `string` | `true` | `Token 6a80f3bdb886f15225e99d1cee2c0bce4a6d60d9` |
 
-#### Returns ####
+#### Response Body ####
 | Name | Type | Sample | Description |
 | --   | --   | --     | --          |
 | `count` | `int` | `91` | The number of challenges available for this user |
