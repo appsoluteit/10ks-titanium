@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>User · GitBook</title>
+        <title>Goals · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="GOALS.html" />
+    <link rel="next" href="STEPS.html" />
     
     
-    <link rel="prev" href="LOGOUT.html" />
+    <link rel="prev" href="USER.html" />
     
 
     </head>
@@ -145,7 +145,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="USER.html">
+        <li class="chapter " data-level="1.5" data-path="USER.html">
             
                 <a href="USER.html">
             
@@ -158,7 +158,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="GOALS.html">
+        <li class="chapter active" data-level="1.6" data-path="GOALS.html">
             
                 <a href="GOALS.html">
             
@@ -285,7 +285,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >User</a>
+        <a href="." >Goals</a>
     </h1>
 </div>
 
@@ -300,10 +300,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="api-method"><div class="api-method-definition"><h2 id="user">User </h2>
-<p>Call this to get user information. We call this mainly to get the user URL which is required for some other API calls</p>
-<pre><code>https://www.10000steps.org.au/api/auth/user/
-</code></pre></div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="get">GET</h3>
+                                <div class="api-method"><div class="api-method-definition"><h2 id="goals">Goals </h2>
+<p>Call this to get or set user goals.</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="javascript"><h3 id="getpost">GET/POST</h3>
 <h4 id="headers">Headers</h4>
 <table>
 <thead>
@@ -323,7 +322,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="returns-object">Returns {Object}</h4>
+<h4 id="body">Body</h4>
 <table>
 <thead>
 <tr>
@@ -335,65 +334,10 @@
 </thead>
 <tbody>
 <tr>
-<td><code>url</code></td>
-<td><code>string</code></td>
-<td><code>https://www.10000steps.org.au/api/users/334098/</code></td>
-<td>A URL that identifies the user</td>
-</tr>
-<tr>
-<td><code>username</code></td>
-<td><code>string</code></td>
-<td><code>walker334098</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>email</code></td>
-<td><code>string</code></td>
-<td><code>admin@jasonsultana.com</code></td>
-<td>The user&apos;s email</td>
-</tr>
-<tr>
-<td><code>groups</code></td>
-<td><code>array</code></td>
-<td><code>[]</code></td>
-<td>An array of joined groups?</td>
-</tr>
-<tr>
-<td><code>walker</code></td>
-<td><code>object</code></td>
-<td>See below</td>
-<td>Usage data</td>
-</tr>
-</tbody>
-</table>
-<h5 id="walker-object">Walker Object</h5>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Sample</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>gender</code></td>
+<td><code>goal</code></td>
 <td><code>integer</code></td>
-<td><code>1</code></td>
-<td>An emum that represents the gender. 1 = M, 2 = F?</td>
-</tr>
-<tr>
-<td><code>total_steps</code></td>
-<td><code>integer</code></td>
-<td><code>277790</code></td>
-<td>The sum of the user&apos;s logged steps to date</td>
-</tr>
-<tr>
-<td><code>average_daily_steps</code></td>
-<td><code>integer</code></td>
-<td><code>5558</code></td>
-<td>An integer average of the user&apos;s daily steps</td>
+<td><code>10000</code></td>
+<td>The goal steps for the user identified by the access token</td>
 </tr>
 </tbody>
 </table>
@@ -431,7 +375,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"User","level":"1.5","depth":1,"next":{"title":"Goals","level":"1.6","depth":1,"path":"GOALS.md","ref":"GOALS.md","articles":[]},"previous":{"title":"Logout","level":"1.4","depth":1,"path":"LOGOUT.md","ref":"LOGOUT.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"USER.md","mtime":"2017-07-31T11:08:38.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T11:00:33.926Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Goals","level":"1.6","depth":1,"next":{"title":"Steps","level":"1.7","depth":1,"path":"STEPS.md","ref":"STEPS.md","articles":[]},"previous":{"title":"User","level":"1.5","depth":1,"path":"USER.md","ref":"USER.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-api","livereload"],"pluginsConfig":{"theme-api":{"languages":[{"lang":"js","name":"javascript","default":true}],"split":true,"theme":"light"},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"GOALS.md","mtime":"2017-07-31T11:01:49.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T11:00:33.926Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

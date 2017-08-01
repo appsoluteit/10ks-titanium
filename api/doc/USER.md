@@ -2,7 +2,7 @@
 ## User {#user}
 
 Call this to get user information. We call this mainly to get the user URL which is required for some other API calls
-``` 
+```
 https://www.10000steps.org.au/api/auth/user/
 ```
 
@@ -16,7 +16,7 @@ https://www.10000steps.org.au/api/auth/user/
 
 #### Returns {Object} ####
 | Name | Type | Sample | Description |
-| --   | --   | --     | --          | 
+| --   | --   | --     | --          |
 | `url` | `string` | `https://www.10000steps.org.au/api/users/334098/` | A URL that identifies the user |
 | `username` | `string` | `walker334098` | |
 | `email` | `string` | `admin@jasonsultana.com` | The user's email |
@@ -25,9 +25,8 @@ https://www.10000steps.org.au/api/auth/user/
 
 ##### Walker Object #####
 | Name | Type | Sample | Description |
-| --   | --   | --     | --          | 
+| --   | --   | --     | --          |
 | `gender` | `integer` | `1` | An emum that represents the gender. 1 = M, 2 = F? |
-| `goal` | `integer` | `10000` | The user's daily goal |
 | `total_steps` | `integer` | `277790` | The sum of the user's logged steps to date |
 | `average_daily_steps` | `integer` | `5558` | An integer average of the user's daily steps |
 
