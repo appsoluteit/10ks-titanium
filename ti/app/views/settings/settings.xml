@@ -3,6 +3,7 @@
 	<NavigationWindow id="settings" platform="ios">
 		<Window title="Settings" onOpen="window_open" id="window">			
 			<Require id="settingsView" src="settings/settingsView" type="view"/>
+			<Widget id="badge" arg="test" src="com.10000steps.badge"></Widget>
 		</Window>
 	</NavigationWindow>
 	

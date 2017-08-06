@@ -1,9 +1,27 @@
-"Label": {
-	color: '#000',
-	font: {
-		fontSize: 18,
-		fontWeight: 'bold'
-	},
+"#container": {
 	height: Ti.UI.SIZE,
-	width: Ti.UI.SIZE
+	width: Ti.UI.SIZE,
+	//borderColor: "black",
+	//borderWidth: "1px"
+}
+
+"#badge": {
+	borderRadius: 15,
+	width: 30,
+	height: 30,
+	right: 0,
+	top: 0,
+	//borderColor: 'black',
+	//borderWidth: '1px',
+	backgroundColor: 'red',
+}
+
+"#counter": {
+	color: 'white',
+	font: {
+		fontSize: '18dp',
+		//fontWeight: 'bold'
+	},
+	textAlign: 'center',
+	width: Ti.UI.FILL
 }
