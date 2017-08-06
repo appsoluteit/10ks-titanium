@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>au.org.steps10000.app</id>
-    <name>Steps 10000</name>
-    <version>3.0.9</version>
+    <name>10,000 Steps</name>
+    <version>3.1.7</version>
     <publisher>Appsolute IT Pty Ltd</publisher>
     <url>https://www.10000steps.org.au</url>
     <description>10K steps</description>
     <copyright>2017 10000 Steps</copyright>
-    <icon>DefaultIcon.png</icon>
+    <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>773adbcd-a3f9-40ca-9bbb-6a622ad2259c</guid>
+    <guid>8aba2249-729a-45a8-9aaa-10362e73642a</guid>
     <ios>
         <plist>
             <dict>
@@ -22,9 +22,6 @@
                 <key>UISupportedInterfaceOrientations~ipad</key>
                 <array>
                     <string>UIInterfaceOrientationPortrait</string>
-                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
-                    <string>UIInterfaceOrientationLandscapeLeft</string>
-                    <string>UIInterfaceOrientationLandscapeRight</string>
                 </array>
                 <key>UIRequiresPersistentWiFi</key>
                 <false/>
@@ -37,10 +34,23 @@
                 <key>NSCalendarsUsageDescription</key>
                 <string>Setting reminders to log your steps</string>
             </dict>
+ 			<dict>
+                <key>CFBundleURLTypes</key>
+                <array>
+                    <dict>
+                        <key>CFBundleURLName</key>
+                        <string>au.org.steps10000.app</string>
+                        <key>CFBundleURLSchemes</key>
+                              <array>
+                                    <string>steps10000</string>                           
+                              </array>
+                    </dict>
+                </array>
+            </dict>
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest>
+        <manifest android:versionCode="17" android:versionName="3.1.7">
             <application android:theme="@style/Theme.AppCompat.Light"/>
         </manifest>
     </android>
@@ -67,7 +77,7 @@
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
-    <property name="appc-app-id" type="string">58dc94cfb06506514cb3dc52</property>
+    <property name="appc-app-id" type="string">59767b2a2f6ba6193ab57111</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
     <property name="acs-oauth-secret-development" type="string">8our6lFXcQAytKRrFmVUbZ9CuUElMhZR</property>
