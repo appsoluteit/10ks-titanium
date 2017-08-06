@@ -8,12 +8,12 @@
 		<!-- Goal Steps -->
 		<TableViewRow id="tblRowGoalSteps">
 			<View layout="horizontal">
-				<View class="half">
+				<View width="48%">
 					<Label class="row-label">Goal Steps</Label>
 				</View>
 				
-				<View class="half">
-					<Label id="lblGoalSteps" class="row-value"></Label>
+				<View width="48%">
+					<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
 				</View>
 			</View>
 		</TableViewRow>

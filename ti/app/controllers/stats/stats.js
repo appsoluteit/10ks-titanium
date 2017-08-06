@@ -40,8 +40,7 @@ function showLogin() {
 }
 
 /**
- * @description Gets statistics from the /api/stats/ and populates the table with the results. Some statistics may come
- * from local storage as well.
+ * @description Gets statistics from the /api/stats/ and populates the table with the results.
  * @memberof Controllers.Stats
  */
 function loadStatistics() {
@@ -123,18 +122,19 @@ function loadStatistics() {
 	return defer.promise;
 }
 
-function loadUserData() {
+/**
+ * @description Gets the total steps from /auth/user/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
+function loadLifetimeSteps() {
 	var defer = q.defer();
 	
 	authProvider.getUser().then(function onSuccess() {
 		Ti.API.debug("AuthProvider -> getUser resolved");
 		
-		//Lifetime steps and goal steps come from /auth/user.
+		//Lifetime steps come from /auth/user.
 		var total_steps = Ti.App.Properties.getInt("total_steps", 0);
 		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(total_steps);
-		
-		var goal_steps = Ti.App.Properties.getInt("goal_steps", 0);
-		$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goal_steps);
 		
 		defer.resolve();
 	}, function onFail(reason) {
@@ -158,16 +158,60 @@ function loadUserData() {
 	return defer.promise;
 }
 
+/**
+ * @description Gets the goal steps from /goals/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
+function loadGoalSteps() {
+	var defer = q.defer();
+	
+	function onSuccess(response) {
+		if(response.results && response.results.length) {
+			//There may be multiple goals in the response. Just take the first (most recent)
+			var goalSteps = response.results[0].goal * 1;
+			Ti.API.debug("Saving goal steps", goalSteps);
+			
+			if(goalSteps > 0) {
+				$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+				Ti.App.Properties.setInt("goalSteps", goalSteps);
+			}
+		}
+		
+		defer.resolve();
+	}
+	
+	function onFail(response) {
+		Ti.API.error(response);
+		
+		Alloy.createWidget("com.mcongrove.toast", null, {
+			text: "Unable to fetch your goal setting",
+			duration: 2000,
+			view: $.stats,
+			theme: "error"
+		});	
+		
+		defer.resolve(); //Even if this failed, resolve to continue loading whatever we can
+	}
+	
+	APIHelper.get({
+		url:		"goals/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+	
+	return defer.promise;
+}
+
 function loadPage() {
 	//Show a single spinner for the both GET operations
 	spinner.show("Loading statistics...");
 	
-	loadUserData().then(function() {
-		Ti.API.debug("loading user data finished");		
-		loadStatistics().then(function() {
-			spinner.hide();
-		});
-	});
+	loadGoalSteps().then(loadLifetimeSteps)
+				   .then(loadStatistics)
+				   .then(spinner.hide);
 }
 
 /**
