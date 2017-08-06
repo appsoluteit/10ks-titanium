@@ -1,71 +1,40 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
-        
-	<!-- iOS -->
-	<DashboardView editable="false" id="dashboard" wobble="true" columnCount="2" platform="ios">     
-		<!-- Note: it seems as though the badges don't show up in the simulator anymore. But so long as they work on the device,>
-		I don't think it's cause for concern -->
-		   
-		<DashboardItem 
-			label="Steps"
-			id="btnStepLog"
-			image="common/homepage_button_step-log@2x.png"/>
-		
-		<DashboardItem
-			id="btnChallenges"
-			label="Challenges"
-			image="/common/homepage_button_ichallenges@2x.png"/>
-		
-		<DashboardItem
-			id="btnStatistics"
-			image="/common/homepage_button_progress@2x.png"/>
-		
-		<DashboardItem
-			id="btnTournaments"
-			image="/common/homepage_button_friend-challenges@2x.png"/>
-		
-		<DashboardItem
-			id="btnSettings"
-			image="/common/homepage_button_profile-&-settings@2x.png"/>
-	</DashboardView>
 	
-	<!-- Android -->
-	<ScrollView platform="android" scrollType="vertical" showVerticalScrollIndicator="true">
-		<View layout="vertical">
-			<View layout="horizontal">
-				<View class="column" left="1%">
-					<Button
-						id="btnStepLog"
-						style="PLAIN"
-						image="/common/homepage_button_step-log@2x.png">
-					</Button>
-					
-					<Button
-						id="btnChallenges"
-						style="PLAIN"
-						image="/common/homepage_button_ichallenges@2x.png">
-					</Button>
-					
-					<Button
-						id="btnSettings"
-						style="PLAIN"
-						image="/common/homepage_button_profile-&-settings@2x.png">
-					</Button>
-				</View>
+	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true">
+		<View layout="horizontal">
+			<View class="column" left="1%">
+				<Widget 
+					id="btnStepLog" 
+					src="com.10000steps.badge"
+					image="/common/homepage_button_step-log@2x.png"
+				/>
 				
-				<View class="column" right="1%">
-					<Button
-						id="btnStatistics"
-						style="PLAIN"
-						image="/common/homepage_button_progress@2x.png">
-					</Button>
-					
-					<Button
-						id="btnTournaments"
-						style="PLAIN"
-						image="/common/homepage_button_friend-challenges@2x.png">
-					</Button>
-				</View>
+				<Button
+					id="btnChallenges"
+					style="PLAIN"
+					image="/common/homepage_button_ichallenges@2x.png">
+				</Button>
+				
+				<Button
+					id="btnSettings"
+					style="PLAIN"
+					image="/common/homepage_button_profile-&-settings@2x.png">
+				</Button>
+			</View>
+			
+			<View class="column" right="1%">
+				<Button
+					id="btnStatistics"
+					style="PLAIN"
+					image="/common/homepage_button_progress@2x.png">
+				</Button>
+				
+				<Button
+					id="btnTournaments"
+					style="PLAIN"
+					image="/common/homepage_button_friend-challenges@2x.png">
+				</Button>
 			</View>
 		</View>
 	</ScrollView>

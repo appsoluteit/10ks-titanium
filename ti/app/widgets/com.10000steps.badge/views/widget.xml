@@ -1,11 +1,13 @@
 <Alloy>
 	<View id="container">
-		<ImageView 
-			image="/common/homepage_button_step-log@2x.png">
-		</ImageView>
+		<Button 
+			id="icon"
+			style="PLAIN"
+			image="">
+		</Button>
 		
 		<View id="badge">
-			<Label id="counter">33</Label>
+			<Label id="counter"></Label>
 		</View>
 	</View>
 </Alloy>

@@ -1,7 +1,7 @@
 '.column': {
 	layout: 'vertical',
 	center: '0px',
-	width: '49%',
+	width: '48%',
 	top: 0,
 	//backgroundColor: 'yellow' //For debugging only
 }
