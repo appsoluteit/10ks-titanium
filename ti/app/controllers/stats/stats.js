@@ -76,6 +76,10 @@ function loadStatistics() {
 			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
 		}
 		
+		if(response.seven_day_average) {
+			$.statsView.lblSevenDayAverage.text = FormatHelper.formatNumber(response.seven_day_average);
+		}
+		
 		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 		var yearlyTotal = 0;
 		monthlySteps.forEach(function(item) {
@@ -88,22 +92,8 @@ function loadStatistics() {
 	}
 	
 	function onFail(response) {
-		Ti.API.info("Get stats fail", JSON.stringify(response));
-		
-		if(response.detail && response.detail === "Invalid token.") {
-			//If the token expired, open the login window to login again
-			showLogin();
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't get statistics",
-				duration: 2000,
-				view: $.stats,
-				theme: "error"
-			});	
-		}
-		
-		defer.resolve();
+		Ti.API.info("Get stats fail", response);
+		defer.reject(response);
 	}
 	
 	var data = {
@@ -138,21 +128,8 @@ function loadLifetimeSteps() {
 		
 		defer.resolve();
 	}, function onFail(reason) {
-		Ti.API.info("Loading user failed. Reason: ", reason);
-		
-		if(reason === "Invalid token.") {
-			showLogin();
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't fetch account",
-				duration: 2000,
-				view: $.stats,
-				theme: "error"
-			});	
-		}
-		
-		defer.resolve();
+		Ti.API.debug("Loading user failed. Reason: ", reason);
+		defer.reject(reason);
 	});
 	
 	return defer.promise;
@@ -181,16 +158,8 @@ function loadGoalSteps() {
 	}
 	
 	function onFail(response) {
-		Ti.API.error(response);
-		
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Unable to fetch your goal setting",
-			duration: 2000,
-			view: $.stats,
-			theme: "error"
-		});	
-		
-		defer.resolve(); //Even if this failed, resolve to continue loading whatever we can
+		Ti.API.debug("Get goal steps failed.", response);
+		defer.reject(response);
 	}
 	
 	APIHelper.get({
@@ -209,9 +178,26 @@ function loadPage() {
 	//Show a single spinner for the both GET operations
 	spinner.show("Loading statistics...");
 	
+	function onFail(reason) {
+		Ti.API.error("Calculating stats failed. Reason = ", reason);
+		
+		if(reason.detail === "Invalid token.") {
+			spinner.hide();	//hide the spinner for this attempt
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't calculate statistics",
+				duration: 2000,
+				view: $.stats,
+				theme: "error"
+			});	
+		}
+	}
+	
 	loadGoalSteps().then(loadLifetimeSteps)
 				   .then(loadStatistics)
-				   .then(spinner.hide);
+				   .then(spinner.hide, onFail);
 }
 
 /**
@@ -367,6 +353,7 @@ function window_open() {
 	$.statsView.lblGoalSteps.text = 0;
 	$.statsView.lblLifeTimeSteps.text = 0;
 	$.statsView.lblYearlySteps.text = 0;
+	$.statsView.lblSevenDayAverage.text = 0;
 	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
 	
 	$.statsView.btnDailyGraph.addEventListener('click', btnDailyGraph_click);

@@ -2,8 +2,8 @@
 	<View id="container">
 		<Button 
 			id="icon"
-			style="PLAIN"
-			image="">
+			backgroundColor="transparent"
+			style="PLAIN">
 		</Button>
 		
 		<View id="badge">
