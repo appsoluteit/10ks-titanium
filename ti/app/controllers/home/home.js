@@ -9,6 +9,10 @@
 
 var CalendarFactory = require('classes/CalendarFactory');
 var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
+var StepsProvider = require('classes/StepsProvider');
+var spinner = Alloy.createWidget('nl.fokkezb.loading');
+
+var stepsProvider = new StepsProvider();
 
 /**
  * @description If the user is not logged in (based off the last known state, stored locally) then the login window is shown. Otherwise, on Android, this function
@@ -17,7 +21,41 @@ var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
  */
 function loginIfNeeded() {
 	if(!Alloy.Globals.IsLoggedIn) {
-		win = Alloy.createController('auth/login').getView();
+		var win = Alloy.createController('auth/login').getView();
+		win.addEventListener('close', function() {
+			//After a login, sync steps if required
+			var confirmDialog = Ti.UI.createAlertDialog({
+				cancel: 0,
+				buttonNames: ['Cancel', 'OK'],
+				message: 'Do you want to sync your steps now?',
+				title: 'Perform first sync?'
+			});
+			
+			confirmDialog.addEventListener('click', function(e) {
+				if(e.index !== e.source.cancel) {
+					spinner.show("Syncing...");
+					
+					//This may throw an InvalidToken exception, but since the user had "just" logged in,
+					//that should never happen.
+					stepsProvider.sync($.home, function() {
+						setTimeout(function() {
+							//Showing a toast here seems problematic (perhaps due to the window not having loaded yet).
+							Ti.UI.createAlertDialog({
+								buttonNames: ['OK'],
+								message: 'Sync complete',
+								title: 'Done!'	
+							}).show();
+							
+						}, 1000);
+						
+						spinner.hide();
+					});						
+				}
+			});
+			
+			confirmDialog.show();
+		});
+		
 		win.open();
 	}	
 	else if(Ti.Platform.osname === "android") {		
@@ -181,8 +219,6 @@ function window_load() {
 	
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 	
-	if(Ti.Platform.osname != "android") {
-		Ti.API.info("Number of unsynced steps: " + numSteps);
-		$.homeView.btnStepLog.badge = numSteps;
-	}
+	Ti.API.info("Number of unsynced steps: " + numSteps);
+	$.homeView.btnStepLog.setBadge(numSteps);
 }

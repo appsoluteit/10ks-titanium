@@ -40,8 +40,7 @@ function showLogin() {
 }
 
 /**
- * @description Gets statistics from the /api/stats/ and populates the table with the results. Some statistics may come
- * from local storage as well.
+ * @description Gets statistics from the /api/stats/ and populates the table with the results.
  * @memberof Controllers.Stats
  */
 function loadStatistics() {
@@ -77,6 +76,10 @@ function loadStatistics() {
 			$.statsView.lblAvgSteps.text = FormatHelper.formatNumber(response.average_steps);
 		}
 		
+		if(response.seven_day_average) {
+			$.statsView.lblSevenDayAverage.text = FormatHelper.formatNumber(response.seven_day_average);
+		}
+		
 		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
 		var yearlyTotal = 0;
 		monthlySteps.forEach(function(item) {
@@ -89,22 +92,8 @@ function loadStatistics() {
 	}
 	
 	function onFail(response) {
-		Ti.API.info("Get stats fail", JSON.stringify(response));
-		
-		if(response.detail && response.detail === "Invalid token.") {
-			//If the token expired, open the login window to login again
-			showLogin();
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't get statistics",
-				duration: 2000,
-				view: $.stats,
-				theme: "error"
-			});	
-		}
-		
-		defer.resolve();
+		Ti.API.info("Get stats fail", response);
+		defer.reject(response);
 	}
 	
 	var data = {
@@ -123,36 +112,63 @@ function loadStatistics() {
 	return defer.promise;
 }
 
-function loadUserData() {
+/**
+ * @description Gets the total steps from /auth/user/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
+function loadLifetimeSteps() {
 	var defer = q.defer();
 	
 	authProvider.getUser().then(function onSuccess() {
 		Ti.API.debug("AuthProvider -> getUser resolved");
 		
-		//Lifetime steps and goal steps come from /auth/user.
+		//Lifetime steps come from /auth/user.
 		var total_steps = Ti.App.Properties.getInt("total_steps", 0);
 		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(total_steps);
 		
-		var goal_steps = Ti.App.Properties.getInt("goal_steps", 0);
-		$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goal_steps);
-		
 		defer.resolve();
 	}, function onFail(reason) {
-		Ti.API.info("Loading user failed. Reason: ", reason);
-		
-		if(reason === "Invalid token.") {
-			showLogin();
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't fetch account",
-				duration: 2000,
-				view: $.stats,
-				theme: "error"
-			});	
+		Ti.API.debug("Loading user failed. Reason: ", reason);
+		defer.reject(reason);
+	});
+	
+	return defer.promise;
+}
+
+/**
+ * @description Gets the goal steps from /goals/ and populates the table with the results.
+ * @memberof Controllers.Stats
+ */
+function loadGoalSteps() {
+	var defer = q.defer();
+	
+	function onSuccess(response) {
+		if(response.results && response.results.length) {
+			//There may be multiple goals in the response. Just take the first (most recent)
+			var goalSteps = response.results[0].goal * 1;
+			Ti.API.debug("Saving goal steps", goalSteps);
+			
+			if(goalSteps > 0) {
+				$.statsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+				Ti.App.Properties.setInt("goalSteps", goalSteps);
+			}
 		}
 		
 		defer.resolve();
+	}
+	
+	function onFail(response) {
+		Ti.API.debug("Get goal steps failed.", response);
+		defer.reject(response);
+	}
+	
+	APIHelper.get({
+		url:		"goals/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
 	});
 	
 	return defer.promise;
@@ -162,12 +178,26 @@ function loadPage() {
 	//Show a single spinner for the both GET operations
 	spinner.show("Loading statistics...");
 	
-	loadUserData().then(function() {
-		Ti.API.debug("loading user data finished");		
-		loadStatistics().then(function() {
-			spinner.hide();
-		});
-	});
+	function onFail(reason) {
+		Ti.API.error("Calculating stats failed. Reason = ", reason);
+		
+		if(reason.detail === "Invalid token.") {
+			spinner.hide();	//hide the spinner for this attempt
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't calculate statistics",
+				duration: 2000,
+				view: $.stats,
+				theme: "error"
+			});	
+		}
+	}
+	
+	loadGoalSteps().then(loadLifetimeSteps)
+				   .then(loadStatistics)
+				   .then(spinner.hide, onFail);
 }
 
 /**
@@ -323,6 +353,7 @@ function window_open() {
 	$.statsView.lblGoalSteps.text = 0;
 	$.statsView.lblLifeTimeSteps.text = 0;
 	$.statsView.lblYearlySteps.text = 0;
+	$.statsView.lblSevenDayAverage.text = 0;
 	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
 	
 	$.statsView.btnDailyGraph.addEventListener('click', btnDailyGraph_click);

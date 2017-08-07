@@ -20,6 +20,14 @@
 						</View>
 					</TableViewRow>
 					
+					<!-- 7 day average -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">7 day average:</Label>
+							<Label right="10dp" id="lblSevenDayAverage" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+								
 					<!-- Yearly steps  -->
 					<TableViewRow>
 						<View class="whole">

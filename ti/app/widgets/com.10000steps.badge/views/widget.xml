@@ -1,0 +1,13 @@
+<Alloy>
+	<View id="container">
+		<Button 
+			id="icon"
+			backgroundColor="transparent"
+			style="PLAIN">
+		</Button>
+		
+		<View id="badge">
+			<Label id="counter"></Label>
+		</View>
+	</View>
+</Alloy>

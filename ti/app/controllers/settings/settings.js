@@ -66,9 +66,10 @@ function window_open() {
 	}
 	
 	//Pre-load the goal steps
-	var goalSteps = Ti.App.Properties.getInt("GoalSteps", -1);
-	
-	if(goalSteps > -1) {
+	if(Ti.App.Properties.hasProperty("goalSteps")) {
+		//Note: using snake case for the property 
+		var goalSteps = Ti.App.Properties.getInt("goalSteps");
+		Ti.API.debug("Goal steps from properties:", goalSteps);
 		$.settingsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
 	}
 	

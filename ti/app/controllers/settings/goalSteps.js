@@ -27,11 +27,12 @@ function loadGoalSteps() {
 	function onSuccess(response) {
 		if(response.results && response.results.length) {
 			//There may be multiple goals in the response. Just take the first (most recent)
-			var goalSteps = response.results[0].goal;
+			var goalSteps = response.results[0].goal * 1;
+			Ti.API.info("Saving goal steps:", goalSteps);
 			
 			if(goalSteps) {
 				$.goalStepsView.txtGoalSteps.value = goalSteps;
-				Ti.App.Properties.setInt("goal_steps", goalSteps);
+				Ti.App.Properties.setInt("goalSteps", goalSteps);
 			}
 		}
 	}
@@ -88,7 +89,7 @@ function btnSave_click() {
 	goalSteps = parseInt(goalSteps, 10);
 	
 	function onSuccess(response) {
-		Ti.App.Properties.setInt('goal_steps', goalSteps);
+		Ti.App.Properties.setInt('goalSteps', goalSteps);
 		
 		Alloy.createWidget("com.mcongrove.toast", null, {
 			text: "Goal steps saved",
