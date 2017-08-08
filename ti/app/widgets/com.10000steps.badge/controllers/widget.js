@@ -21,6 +21,13 @@ var args = $.args;
 	};
 	
 	$.setBadge = function(counter) {
+		if(counter > 0) {
+			$.badge.visible = true;	
+		}
+		else {
+			$.badge.visible = false;
+		}
+		
 		$.counter.text = counter;
 	};
 })();
