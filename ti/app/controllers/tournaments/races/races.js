@@ -7,8 +7,16 @@
 var args = $.args;
 var RaceTournamentsProvider = require('classes/RaceTournamentsProvider');
 var FormatHelper = require('helpers/FormatHelper');
-var racesProvider = new RaceTournamentsProvider();
+var SessionHelper = require('helpers/SessionHelper');
 
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
+	
+	win.addEventListener("close", function() {
+		fetchRaces();
+	});
+}
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -24,7 +32,9 @@ function fetchRaces() {
 	var spinner = Alloy.createWidget('nl.fokkezb.loading');
 	spinner.show("Fetching races...");
 	
-	racesProvider.fetch(function(response) {
+	var racesProvider = new RaceTournamentsProvider();
+	
+	function onSuccess(response) {
 		Ti.API.info("Races response: ", response);
 		
 		response.results.forEach(function(result) {
@@ -65,8 +75,27 @@ function fetchRaces() {
 		
 		$.racesView.tblRaces.appendRow(linkRow);
 		
-		spinner.hide();
-	});
+		spinner.hide();	
+	}
+	
+	function onFail(reason) {
+		Ti.API.error(reason);
+		
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.races);
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't get races",
+				duration: 2000,
+				view: $.races,
+				theme: "error"
+			});	
+		}		
+	}
+	
+	racesProvider.fetch().then(onSuccess, onFail);
 }
 
 /**

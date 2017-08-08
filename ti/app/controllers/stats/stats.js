@@ -12,6 +12,7 @@ var q = require('q');
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var APIHelper = require('helpers/APIHelper');
+var SessionHelper = require('helpers/SessionHelper');
 var StepsProvider = require('classes/StepsProvider');
 var AuthProvider = require('classes/AuthProvider');
 var NavBarButton = require('classes/NavBarButton');
@@ -22,13 +23,6 @@ var authProvider = new AuthProvider($.stats, $.statsView);
 var spinner = Alloy.createWidget('nl.fokkezb.loading');
 
 function showLogin() {
-	Alloy.createWidget("com.mcongrove.toast", null, {
-		text: "Session expired. Please log in again.",
-		duration: 2000,
-		view: $.stats,
-		theme: "error"
-	});
-	
 	setTimeout(function() {
 		var win = Alloy.createController("auth/login").getView();
 		win.open();
@@ -181,7 +175,9 @@ function loadPage() {
 	function onFail(reason) {
 		Ti.API.error("Calculating stats failed. Reason = ", reason);
 		
-		if(reason.detail === "Invalid token.") {
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.stats);
+			
 			spinner.hide();	//hide the spinner for this attempt
 			showLogin();
 		}

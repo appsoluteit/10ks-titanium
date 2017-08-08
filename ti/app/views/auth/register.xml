@@ -8,12 +8,12 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window platform="android" id="register" title="Register" onOpen="window_open" fullscreen="true">
+	<Window platform="android" title="Register" id="register" onOpen="window_open" fullscreen="true">
 		<ActionBar 
 			title="Register" 
 			displayHomeAsUp="true" 
 			homeButtonEnabled="true" 
-			onHomeIconItemSelected="btnBack_click">	
+			onHomeIconItemSelected="lblLogin_click">	
 		</ActionBar>
 		
 		<Require id="registerView" src="auth/registerWebView" type="view"/>

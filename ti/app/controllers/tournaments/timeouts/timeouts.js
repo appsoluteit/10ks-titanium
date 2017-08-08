@@ -8,7 +8,15 @@ var args = $.args;
 var TimeoutTournamentsProvider = require('classes/TimeoutTournamentsProvider');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 
-var timeoutsProvider = new TimeoutTournamentsProvider();
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
+	
+	win.addEventListener("close", function() {
+		fetchTimeouts();
+	});
+}
+
 /**
  * @description Event handler for `btnBack`. Closes the window.
  * @memberof Controllers.Tournaments.Timeouts
@@ -21,8 +29,9 @@ function fetchTimeouts() {
 	var spinner = Alloy.createWidget('nl.fokkezb.loading');
 	spinner.show("Fetching timeouts...");
 	
-	timeoutsProvider.fetch(function(response) {
-		
+	var timeoutsProvider = new TimeoutTournamentsProvider();
+	
+	function onSuccess(response) {
 		Ti.API.info("Timeouts: ", response);
 		
 		response.results.forEach(function(result) {
@@ -59,7 +68,26 @@ function fetchTimeouts() {
 		$.timeoutsView.tblTimeouts.appendRow(linkRow);
 		
 		spinner.hide();
-	});
+	}
+	
+	function onFail(reason) {
+		Ti.API.error(reason);
+		
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.timeouts);
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't get races",
+				duration: 2000,
+				view: $.timeouts,
+				theme: "error"
+			});	
+		}
+	}
+	
+	timeoutsProvider.fetch().then(onSuccess, onFail);
 }
 
 /**

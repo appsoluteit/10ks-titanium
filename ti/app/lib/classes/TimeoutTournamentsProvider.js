@@ -71,10 +71,8 @@ TimeoutTournamentsProvider.prototype.getTimeouts = function(page) {
 	return defer.promise;
 };
 
-TimeoutTournamentsProvider.prototype.fetch = function(callback) {
-	this.getTimeouts().then(function(results) {
-		callback(results);
-	});
+TimeoutTournamentsProvider.prototype.fetch = function() {
+	return this.getTimeouts();
 };
 
 module.exports = TimeoutTournamentsProvider;
