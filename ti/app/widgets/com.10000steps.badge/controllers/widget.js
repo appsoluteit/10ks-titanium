@@ -1,7 +1,7 @@
 var args = $.args;
 
 (function() {
-	console.log("Loading badge. Image = ", args.image, "Counter = ", args.badge);
+	console.log("Loading badge. Args:", args);
 	
 	if(args.image) {
 		$.icon.image = args.image;		
@@ -9,6 +9,10 @@ var args = $.args;
 	
 	if(args.badge) {
 		$.counter.text = args.badge;		
+	}
+	
+	if(args.top) {
+		$.container.top = args.top;
 	}
 	
 	//Expose the icon button for click events
