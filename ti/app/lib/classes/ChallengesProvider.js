@@ -70,10 +70,8 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	return defer.promise;
 };
 
-ChallengesProvider.prototype.fetch = function(callback) {
-	this.getChallenges().then(function(results) {
-		callback(results);
-	});
+ChallengesProvider.prototype.fetch = function() {
+	return this.getChallenges(); //return the promise returned by getChallenges
 };
 
 module.exports = ChallengesProvider;

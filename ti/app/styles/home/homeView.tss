@@ -6,6 +6,10 @@
 	//backgroundColor: 'yellow' //For debugging only
 }
 
+".push-down": {
+	top: "10dp"
+}
+
 "Button": {
 	backgroundColor: 'transparent' 
 }

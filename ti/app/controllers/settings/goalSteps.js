@@ -7,7 +7,17 @@
 
 var args = $.args;
 var APIHelper = require('helpers/APIHelper');
+var SessionHelper = require('helpers/SessionHelper');
+
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
 	
+	win.addEventListener("close", function() {
+		loadGoalSteps();
+	});
+}
+
 /**
  * @description Event handler for the Window's `open` event. Adds an event listener for `btnSave` and populates `txtGoalSteps` with the saved goal from app properties, if it 
  * exists.
@@ -37,15 +47,22 @@ function loadGoalSteps() {
 		}
 	}
 	
-	function onFail(response) {
-		Ti.API.error(response);
+	function onFail(reason) {
+		Ti.API.error(reason);
 		
-		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Unable to fetch your goal setting",
-			duration: 2000,
-			view: $.goalSteps,
-			theme: "error"
-		});	
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.goalSteps);
+			
+			setTimeout(showLogin, 2000);
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't fetch your goal setting",
+				duration: 2000,
+				view: $.goalSteps,
+				theme: "error"
+			});	
+		}
 	}
 	
 	APIHelper.get({

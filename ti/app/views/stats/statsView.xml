@@ -77,8 +77,8 @@
 					id="btnDailyGraph" 
 					title="Daily Graph" 
 					left="0dp"
-					platform="android">
-				</Button>
+					platform="android"
+				/>
 					
 				<Widget
 					id="btnDailyGraph"
@@ -94,8 +94,8 @@
 					id="btnMonthlyGraph" 
 					title="Monthly Graph" 
 					right="0dp"
-					platform="android">
-				</Button>
+					platform="android"
+				/>
 					
 				<Widget
 					id="btnMonthlyGraph"

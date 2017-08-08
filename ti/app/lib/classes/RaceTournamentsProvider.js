@@ -70,10 +70,8 @@ RaceTournamentsProvider.prototype.getRaces = function(page) {
 	return defer.promise;
 };
 
-RaceTournamentsProvider.prototype.fetch = function(callback) {	
-	this.getRaces().then(function(results) {
-		callback(results);
-	});
+RaceTournamentsProvider.prototype.fetch = function() {	
+	return this.getRaces();
 };
 
 module.exports = RaceTournamentsProvider;

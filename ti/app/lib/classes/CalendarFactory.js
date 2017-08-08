@@ -19,6 +19,8 @@
 
 var q = require('q');
 var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
+var FormatHelper = require('helpers/FormatHelper');
+
 var reminderRepeatSetting = new ReminderRepeatSetting();
 
 function validate() {

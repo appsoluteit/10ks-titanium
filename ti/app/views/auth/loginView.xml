@@ -70,8 +70,7 @@
 		top="10dp"
 		left="12.5%"
 		platform="android"
-		class="half">
-	</Button>
+		class="half"></Button>
 		
 	<Widget
 		id="btnLogin"
