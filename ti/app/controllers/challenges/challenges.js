@@ -18,6 +18,10 @@ function btnBack_click() {
 	$.challenges.close();
 }
 
+function btnRefresh_click() {
+	fetchChallenges();	
+}
+
 function showLogin() {
 	var win = Alloy.createController("auth/login").getView();
 	win.open();
@@ -30,6 +34,8 @@ function showLogin() {
 function fetchChallenges() {
 	var spinner = Alloy.createWidget('nl.fokkezb.loading');
 	spinner.show("Fetching challenges...");
+	
+	$.challengesView.tblChallenges.data = []; //Clear the table
 	
 	var challengesProvider = new ChallengesProvider();
 	
@@ -53,8 +59,8 @@ function fetchChallenges() {
 				});
 				
 				row.addEventListener('click', function() {
-					var detailWindow = Alloy.createController('challenges/challengesDetail', result).getView();
-					detailWindow.open();
+					var overviewWindow = Alloy.createController('challenges/challengesOverview', result).getView();
+					overviewWindow.open();
 				});
 				
 				$.challengesView.tblChallenges.appendRow(row);	
@@ -110,6 +116,24 @@ function fetchChallenges() {
 	challengesProvider.fetch().then(onSuccess, onFail);
 }
 
+function setNavButtons() {
+	if(Ti.Platform.osname === "android") {
+		//On Android, call this to ensure the correct actionbar menu is displayed
+		$.stats.activity.invalidateOptionsMenu();	
+	}
+	else {
+		$.window.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click	
+		});
+		
+		$.window.rightNavButton = NavBarButton.createRightNavButton({
+			image: '/common/icons/refresh-button.png',
+			onClick: btnRefresh_click
+		});
+	}
+}
+
 /**
  * @description Event handler for the Window's `open` event. Calls `fetchChallenges()`.
  * @memberOf Controllers.Challenges
@@ -119,12 +143,6 @@ function window_open() {
 		screenName: "Challenges"
 	});
 	
-	if(Ti.Platform.osname !== "android") {
-		$.window.leftNavButton = NavBarButton.createLeftNavButton({
-			text: "Home",
-			onClick: btnBack_click
-		});
-	}
-	
+	setNavButtons();
 	fetchChallenges();
 }
