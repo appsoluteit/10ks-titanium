@@ -3,7 +3,6 @@
 	<head>
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title></title>
 		<script src="jquery.min.js"></script>
 		<script src="highcharts.js"></script>
 		<script src="exporting.js"></script>
@@ -51,14 +50,32 @@
 		                }
 		            },
 		            
+		            //http://jsfiddle.net/UPmsm/
+		            xAxis: {
+			            tickInterval: 1,
+			            labels: {
+			                enabled: true,
+			                
+			                /*
+			                formatter: function() { 
+			                	console.log(this);
+			                	return options[this.value].name;
+			                },
+			                */
+			            }	
+		            },
+		            
 		            yAxis: {
 		            	plotLines: [{
 		            		value: goalSteps,
-		            		color: '#ff0000',
+		            		color: '#22DA9B',
 		            		width: 2,
 		            		zIndex: 4,
-		            		label: { text: "goal" }
-		            	}]	
+		            		//label: { text: "goal" }
+		            	}],
+		            	title: {
+		            		text: null
+		            	}	
 		            },
 		            
 		            series: [options]

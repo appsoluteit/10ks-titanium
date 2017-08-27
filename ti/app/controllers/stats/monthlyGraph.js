@@ -17,7 +17,7 @@ function window_open() {
 		screenName: "Monthly Graph"
 	});
 	
-	var goalSteps = Ti.App.Properties.getInt("goal_steps", 0);
+	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);
 	
 	if(hasSteps()) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({

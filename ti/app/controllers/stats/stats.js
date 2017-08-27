@@ -236,8 +236,10 @@ function btnMonthlyGraph_click() {
 	var monthIndex = 1;
 	
 	monthData.forEach(function(monthSteps) {
+		var monthName = DateTimeHelper.getMonthNameFromIndex(monthIndex - 1);
+		
 		chartData.push({
-			name: DateTimeHelper.getMonthNameFromIndex(monthIndex - 1),
+			name: monthName,
 			x: monthIndex,
 			y: monthSteps
 		});

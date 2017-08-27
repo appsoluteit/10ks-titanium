@@ -24,50 +24,15 @@ function window_open() {
 	
 	$.challengesOverviewView.lblGoalSteps.text = FormatHelper.formatNumber(args.steps_goal);
 	
-	/*
-	//Populate the metrics
-	var data = [
-		{ title: "Challenge Start:", value: DateTimeHelper.getShortDateLabel(startDate) },
-		{ title: "Challenge End:", value: DateTimeHelper.getShortDateLabel(endDate) },
-		{ title: "Started On:", value: DateTimeHelper.getShortDateLabel(startedOn) },
-		{ title: "Steps Walked:", value: FormatHelper.formatNumber(args.steps_total) },
-		{ title: "Percent Complete:", value: args.percentage_complete + "%" }
-	];
-	
-	data.forEach(function(item) {
-		console.log("Showing ", item);
-		
-		var row = Ti.UI.createTableViewRow({
-			height: Ti.UI.SIZE
-		});
-		
-		var left = Ti.UI.createLabel({
-			left: '5dp',
-			font: {
-				fontWeight: 'bold'
-			},
-			text: item.title
-		});
-		
-		var right = Ti.UI.createLabel({
-			right: '5dp',
-			text: item.value,
-			height: Ti.UI.SIZE,
-			wordWrap: true
-		});
-		
-		row.add(left);
-		row.add(right);
-		
-		$.challengesDetailView.tblMetrics.appendRow(row);
-	});	
-	*/
+	$.challengesOverviewView.btnDetails.addEventListener('click', btnDetails_click);
+	$.challengesOverviewView.btnGraph.addEventListener('click', btnGraph_click);
 }
 
 function btnDetails_click() {
-	
+	var win = Alloy.createController('challenges/challengesDetail', args).getView();
+	win.open();
 }
 
 function btnGraph_click() {
-	
+	alert("Coming soon!");
 }

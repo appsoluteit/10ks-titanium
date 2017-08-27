@@ -3,7 +3,7 @@
 		<View class="margin-10" height="Ti.UI.FILL">
 			<!-- TableView Container -->
 			<View top="0dp">
-				<TableView>
+				<TableView class="inner-content">
 					<!-- Current Goal Steps -->
 					<TableViewRow>
 						<View class="whole">
