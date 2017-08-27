@@ -2,7 +2,7 @@ function loadChart(options, goalSteps){ // data argument must be properly design
 	var templateURL=WPATH('/html/webview.html');
 	var optionsJSON = JSON.stringify(options);
 	
-	console.log("Widget loading chart. Options = ", optionsJSON);
+	console.log("Widget loading chart. Goal steps = ", goalSteps, "Options = ", options);
 	
 	$.chartWebView.url=templateURL;
 	$.chartWebView.addEventListener('load', function() {

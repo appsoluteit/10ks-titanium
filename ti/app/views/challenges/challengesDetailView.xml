@@ -1,25 +1,14 @@
 <Alloy>
-	<ScrollView id="view" layout="vertical" scrollType="vertical">
-		<View class="challengeBody">
-			<View class="imageContainer">
-				<ImageView>
-				</ImageView>
-			</View>
-			
-			<View id="labelContainer" class="labelContainer">
-				<!-- 
-					The task description gets dynamically generated and added to this container, since the html is only
-					'settable' during construction
-				-->
-			</View>
+	<View class="background-gradient" height="100%" top="0" layout="vertical">
+		<View class="margin-10" height="Ti.UI.FILL" layout="vertical">
+			<ScrollView id="view" layout="vertical" scrollType="vertical" class="inner-content" height="90%">				
+				<View id="labelContainer" class="labelContainer margin-10">
+					<!-- 
+						The task description gets dynamically generated and added to this container, since the html is only
+						'settable' during construction
+					-->
+				</View>
+			</ScrollView>
 		</View>
-		
-		<View class="line"></View>
-		
-		<TableView id="tblMetrics" class="challengeFooter">
-		</TableView>
-		
-		<View class="bar">
-		</View>
-	</ScrollView>
+	</View>
 </Alloy>

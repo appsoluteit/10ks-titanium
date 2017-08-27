@@ -26,12 +26,6 @@
 	height: "50dp"
 }
 
-"TableView": {
-	height: Ti.UI.SIZE,
-	borderColor: "#C8C8C8",
-	borderRadius: "5dp"
-}
-
 ".row-label": {
 	left: "10dp",
 	textAlign: "left",
@@ -79,6 +73,13 @@
     endPoint: { x: '100%', y: '100%' },
     backFillStart:false
   }
+}
+
+".inner-content": {
+	height: Ti.UI.SIZE,
+	borderColor: "#C8C8C8",
+	borderRadius: "5dp",
+	backgroundColor: "white"
 }
 
 /*********************************** TEXT ***********************************/
