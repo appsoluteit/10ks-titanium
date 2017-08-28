@@ -11,13 +11,7 @@ function hasSteps() {
 	}).length > 0;
 }
 
-function window_open() {
-	if(Ti.Platform.osname !== "android") {
-		$.dailyGraphWindow.setOrientationModes([
-			Ti.UI.LANDSCAPE_LEFT
-		]);
-	}
-	
+function window_open() {		
 	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);
 	
 	Alloy.Globals.tracker.trackScreen({

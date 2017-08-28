@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="dailyGraph" platform="ios">
-		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open" orientation="Ti.UI.LANDSCAPE_LEFT" orientationModes="[Ti.UI.LANDSCAPE_LEFT]">
+		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open">
 			<LeftNavButton>
 				<Button 
 					id="btnBack" 
