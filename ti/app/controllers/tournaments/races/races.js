@@ -37,6 +37,7 @@ function fetchRaces() {
 	function onSuccess(response) {
 		Ti.API.info("Races response: ", response);
 		
+		var count = 0;
 		response.results.forEach(function(result) {
 			Ti.API.info(JSON.stringify(result));
 			
@@ -56,8 +57,14 @@ function fetchRaces() {
 				detailWindow.open();
 			});
 			
-			$.racesView.tblRaces.appendRow(row);				
+			$.racesView.tblRaces.appendRow(row);	
+			count++;		
 		});
+		
+		if(count === 0) {
+			var row = Ti.UI.createTableViewRow({ title: 'There are no joined race tournaments.' });
+			$.racesView.tblRaces.appendRow(row);		
+		}
 		
 		var webLink = Ti.UI.createLabel({
 			text: "To join, create or view past Tournaments, go to your Dashboard on the 10,000 Steps website",

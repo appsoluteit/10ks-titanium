@@ -34,6 +34,7 @@ function fetchTimeouts() {
 	function onSuccess(response) {
 		Ti.API.info("Timeouts: ", response);
 		
+		var count = 0;
 		response.results.forEach(function(result) {
 			Ti.API.info("Result:", result);
 			
@@ -48,8 +49,14 @@ function fetchTimeouts() {
 				view: row
 			});
 			
-			$.timeoutsView.tblTimeouts.appendRow(row);				
+			$.timeoutsView.tblTimeouts.appendRow(row);	
+			count++;			
 		});
+		
+		if(count === 0) {
+			var row = Ti.UI.createTableViewRow({ title: 'There are no joined timeout tournaments.' });
+			$.timeoutsView.tblTimeouts.appendRow(row);		
+		}
 		
 		var webLink = Ti.UI.createLabel({
 			text: "To join, create or view past Tournaments, go to your Dashboard on the 10,000 Steps website",
