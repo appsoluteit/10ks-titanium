@@ -223,22 +223,7 @@ function btnDailyGraph_click() {
 		data: chartData
 	}).getView();
 	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
-	
 	win.open();
-	
-	/*
-	//This works
-	
-	var win = Ti.UI.createWindow({
-		backgroundColor: '#393a3a',
-		orientationModes: [Ti.UI.LANDSCAPE_LEFT]
-	});
-	win.add(Ti.UI.createLabel({
-		color: 'white',
-		text: 'Hello, World!'
-	}));
-	win.open();
-	*/
 }
 
 /**
@@ -262,10 +247,10 @@ function btnMonthlyGraph_click() {
 		monthIndex++;
 	});
 	
-	//TODO: Try creating a window the classic way here to create it with a landscape orientation, specifically
 	var win = Alloy.createController("stats/monthlyGraph", {
 		data: chartData
 	}).getView();
+	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
 
