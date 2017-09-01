@@ -7,10 +7,10 @@
 		<script src="highcharts.js"></script>
 		<script src="exporting.js"></script>
 		<script type="text/javascript">
-			function plotChart(options, goalSteps) {
+			function plotChart(options) {
 		        Ti.API.info('Webview: plotChart(' + JSON.stringify(options) + ')');
 		        
-		        new Highcharts.Chart({
+		        var config = {
 		        	credits: {
 		        		enabled: false	
 		        	},
@@ -23,7 +23,8 @@
 		            	renderTo: 'container',
 		                plotBackgroundColor: null,
 		                plotBorderWidth: null,
-		                plotShadow: false
+		                plotShadow: false,
+		                height: options.chartHeight
 		            },
 		            title: {
 		                text: options.name
@@ -54,32 +55,29 @@
 		            xAxis: {
 			            tickInterval: 1,
 			            labels: {
-			                enabled: true,
-			                
-			                /*
-			                formatter: function() { 
-			                	console.log(this);
-			                	return options[this.value].name;
-			                },
-			                */
+			                enabled: true
 			            }	
 		            },
 		            
 		            yAxis: {
-		            	plotLines: [{
-		            		value: goalSteps,
-		            		color: '#22DA9B',
-		            		width: 2,
-		            		zIndex: 4,
-		            		//label: { text: "goal" }
-		            	}],
 		            	title: {
 		            		text: null
 		            	}	
 		            },
 		            
-		            series: [options]
-		        });
+		            series: [options]	        	
+		        };
+		        
+		        if(options.showGoalSteps) {
+		      		config.yAxis.plotLines = [{
+	            		value: options.goalSteps,
+	            		color: '#22DA9B',
+	            		width: 2,
+	            		zIndex: 4,
+	            	}];
+		        }
+		        
+		        new Highcharts.Chart(config);
 			}
 		</script>
 	</head>

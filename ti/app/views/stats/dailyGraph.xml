@@ -1,13 +1,13 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="dailyGraph" platform="ios">
-		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open" orientation="Ti.UI.LANDSCAPE_LEFT" orientationModes="[Ti.UI.LANDSCAPE_LEFT]">
+		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open">
 			<LeftNavButton>
 				<Button 
 					id="btnBack" 
 					image="/common/chevrons/left-16.png"
 					onClick="btnBack_click">
-				</Button>	q
+				</Button>
 			</LeftNavButton>
 			
 			<Require id="dailyGraphView" src="stats/dailyGraphView" type="view"/>

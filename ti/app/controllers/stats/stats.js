@@ -218,11 +218,11 @@ function btnDailyGraph_click() {
 		
 		dayIndex++;
 	});
-
-	//TODO: Try creating a window the classic way here to create it with a landscape orientation, specifically
+	
 	var win = Alloy.createController("stats/dailyGraph", {
 		data: chartData
 	}).getView();
+	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
 
@@ -247,10 +247,10 @@ function btnMonthlyGraph_click() {
 		monthIndex++;
 	});
 	
-	//TODO: Try creating a window the classic way here to create it with a landscape orientation, specifically
 	var win = Alloy.createController("stats/monthlyGraph", {
 		data: chartData
 	}).getView();
+	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
 
