@@ -1,5 +1,3 @@
 <Alloy>
-	<View class="container">
-		<Widget src="com.alco.highcharts" id="monthlyGraphChart"/>
-	</View>
+	<Widget src="com.alco.highcharts" id="monthlyGraphChart"/>
 </Alloy>

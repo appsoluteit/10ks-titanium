@@ -13,78 +13,59 @@ function hasSteps() {
 
 //Returns the smaller of two dimensions. Useful for trying to programatically toggle between the window height or width 
 //under circumstances whereby the runtime hasn't responded to an orientation change yet.
-function smallerOf(x, y) {
-	if(x > y) {
-		return y;
+function smallerOf(options) {
+	var smallest = undefined;
+	
+	for(var i = 0; i < options.length; i++) {
+		if(options[i] < smallest || smallest === undefined) {
+			smallest = options[i];
+		}
 	}
-	else {
-		return x;
-	}
+	
+	return smallest;
 }
 
-function window_open() {	
-	Ti.Gesture.addEventListener('orientationchange',function(e) {
-		//e.source.isPortrait()
-		
-		Ti.API.info("Orientation change detected.");
-		var platformHeight = smallerOf(
-			Ti.Platform.displayCaps.platformHeight,
-			Ti.Platform.displayCaps.platformWidth
-		);
-		
-		var windowHeight = smallerOf(
-			$.dailyGraphWindow.rect.height,
-			$.dailyGraphWindow.rect.width
-		);
-		
-		var navWindowHeight = smallerOf(
-			$.dailyGraph.rect.height,
-			$.dailyGraph.rect.width
-		);
-		
-		Ti.API.info("Platform height:", platformHeight, "Window Height:", windowHeight, "Nav height:", navWindowHeight);	
-	});
+function showChart() {
+	var viewHeight = smallerOf([
+		Ti.Platform.displayCaps.platformHeight,
+		Ti.Platform.displayCaps.platformWidth,
+		$.dailyGraphWindow.rect.height,
+		$.dailyGraphWindow.rect.width,
+		$.dailyGraph.rect.height,
+		$.dailyGraph.rect.width	
+	]);
+	
+	Ti.API.info("Webview Height: ", viewHeight);
 	
 	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);
 	
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Daily Graph"
-	});
-	
 	var currentMonthLabel = DateTimeHelper.getCurrentMonthName();
 		
-	if(hasSteps()) {
-		Ti.API.info("Has steps");
-		
-		var platformHeight = smallerOf(
-			Ti.Platform.displayCaps.platformHeight,
-			Ti.Platform.displayCaps.platformWidth
-		);
-		
-		var windowHeight = smallerOf(
-			$.dailyGraphWindow.rect.height,
-			$.dailyGraphWindow.rect.width
-		);
-		
-		var navWindowHeight = smallerOf(
-			$.dailyGraph.rect.height,
-			$.dailyGraph.rect.width
-		);
-		
-		Ti.API.info("Platform height:", platformHeight, "Window Height:", windowHeight, "Nav height:", navWindowHeight);
-		
+	if(hasSteps()) {		
 		$.dailyGraphView.dailyGraphChart.loadChart({
 			type: "column",
 			name: "Daily Steps for " + currentMonthLabel,
 			data: args.data,
 			goalSteps: goalSteps,
 			showGoalSteps: true,
-			chartHeight: $.dailyGraphWindow.rect.height //pass in the height of the window
+			chartHeight: viewHeight
 		});	
 	}
-	else {
-		Ti.API.info("No steps");
-		
+	else {		
 		$.dailyGraphView.dailyGraphChart.showMessage("No steps logged for " + currentMonthLabel);	
 	}
+}
+
+function window_open() {	
+	//Redraw the chart after an orientation change to use the right dimensions
+	Ti.Gesture.addEventListener('orientationchange',function(e) {		
+		Ti.API.info("Orientation change detected.");
+		showChart();
+	});
+	
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Daily Graph"
+	});
+	
+	showChart();
 }
