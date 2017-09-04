@@ -12,31 +12,52 @@ function hasSteps() {
 	}).length > 0;
 }
 
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Monthly Graph"
-	});
+function smallerOf(options) {
+	var smallest = undefined;
 	
-	var platformHeight = Ti.Platform.displayCaps.platformHeight;
-	var platformWidth = Ti.Platform.displayCaps.platformWidth;
-	
-	if(platformHeight > platformWidth) {
-		//The displayCaps object is still using portrait dimensions. Manually re-assign
-		var tmp = platformHeight;
-		platformHeight = platformWidth;
-		platformWidth = tmp;	
+	for(var i = 0; i < options.length; i++) {
+		if(options[i] < smallest || smallest === undefined) {
+			smallest = options[i];
+		}
 	}
-		
+	
+	return smallest;
+}
+
+function showChart() {
+	var viewHeight = smallerOf([
+		Ti.Platform.displayCaps.platformHeight,
+		Ti.Platform.displayCaps.platformWidth,
+		$.monthlyGraphWindow.rect.height,
+		$.monthlyGraphWindow.rect.width,
+		$.monthlyGraph.rect.height,
+		$.monthlyGraph.rect.width	
+	]);
+	
 	if(hasSteps()) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",
 			name: "Monthly Steps for " + new Date().getFullYear(),
 			data: args.data,
 			showGoalSteps: false,
-			chartHeight: platformHeight
+			chartHeight: viewHeight
 		});	
 	}
 	else {
 		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for this year");
 	}
+}
+
+function window_open() {
+	//Redraw the chart after an orientation change to use the right dimensions
+	Ti.Gesture.addEventListener('orientationchange',function(e) {		
+		Ti.API.info("Orientation change detected.");
+		showChart();
+	});
+	
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Monthly Graph"
+	});
+	
+	showChart();
 }
