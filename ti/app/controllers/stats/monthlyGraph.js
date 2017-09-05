@@ -25,14 +25,19 @@ function smallerOf(options) {
 }
 
 function showChart() {
-	var viewHeight = smallerOf([
+	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
-		$.monthlyGraphWindow.rect.height,
-		$.monthlyGraphWindow.rect.width,
 		$.monthlyGraph.rect.height,
 		$.monthlyGraph.rect.width	
-	]);
+	];
+	
+	if(Ti.Platform.osname !== "android") {
+		options.push($.monthlyGraphWindow.rect.height);
+		options.push($.monthlyGraphWindow.rect.width);
+	}
+	
+	var viewHeight = smallerOf(options);
 	
 	if(hasSteps()) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({

@@ -19,6 +19,8 @@
 }
 
 'View': {
+	//Note: All height: Ti.UI.SIZE calls need to be replaced with something else for Android, since it messes up the 
+	//updating of label text. todo.
 	height: Ti.UI.SIZE
 }
 
