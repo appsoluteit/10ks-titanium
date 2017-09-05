@@ -3,3 +3,10 @@
 		fontSize: "18sp"
 	}
 }
+
+'Button': {
+	font: {
+		fontFamily: 'Arial',
+		fontSize: '16sp'
+	}
+}
