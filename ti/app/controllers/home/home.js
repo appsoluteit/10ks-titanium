@@ -109,6 +109,25 @@ function loginIfNeeded() {
  */
 function btnStepLog_click() {
 	var win = Alloy.createController('steps/steps').getView();
+	win.hello();
+	
+	if(Ti.Platform.osname === "android") {
+		var activity = win.activity;
+		
+		activity.onCreateOptionsMenu = function(e){
+		  var menu = e.menu;
+		  var menuItem = menu.add({
+		    title: "Item 1",
+		    icon:  "/common/icons/refresh-button.png",
+		    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+		  });
+		  
+		  menuItem.addEventListener("click", function(e) {
+		    Ti.API.debug("I was clicked");
+		  });
+		};
+	}
+	
 	win.open();
 	
 	win.addEventListener('close', function() {

@@ -182,11 +182,13 @@ function populateRows() {
  * @memberof Controllers.Steps
  */
 function window_open() {
+	//$.log.activity.invalidateOptionsMenu();	
+		
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Steps"
 	});
 	
-	setNavButtons();
+	//setNavButtons();
 	populateRows();
 }
 
@@ -258,3 +260,11 @@ function btnBack_click() {
 function btnSync_click() {
 	sync();
 }
+
+//Use this approach to expose a means of adding menu items to the Activity Bar to the calling code.
+//The caller will say win.addAndroidMenuItems(); before calling win.open();
+function hello() {
+	Ti.API.debug("Hi!");
+}
+
+$.log.hello = hello;

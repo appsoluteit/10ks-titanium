@@ -174,11 +174,10 @@ function loadPage() {
 	
 	function onFail(reason) {
 		Ti.API.error("Calculating stats failed. Reason = ", reason);
-		
+		spinner.hide();	//hide the spinner for this attempt
+			
 		if(SessionHelper.isTokenInvalid(reason)) {
 			SessionHelper.showInvalidTokenToast($.stats);
-			
-			spinner.hide();	//hide the spinner for this attempt
 			showLogin();
 		}
 		else {
