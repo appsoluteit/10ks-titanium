@@ -242,12 +242,7 @@ function window_open() {
  * @memberof Controllers.Settings.Reminder
  */
 function childWindow_close() {
-	if(Ti.Platform.osname == "android") {
-		$.reminder.close();	//go back to settings to refresh the view
-	}
-	else {
-		populateRows();
-	}
+	populateRows();
 }
 
 /**

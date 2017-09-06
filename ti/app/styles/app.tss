@@ -1,3 +1,5 @@
+/** Note: Setting a view to have a height of Ti.UI.SIZE causes update problems on Android. Avoid it where possible */
+
 /*********************************** iOS Windows ********************************/
 'Window[platform=ios]': {
 	barColor: "#575757",
