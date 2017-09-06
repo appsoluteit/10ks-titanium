@@ -19,7 +19,9 @@
 }
 
 'View': {
-	height: Ti.UI.SIZE
+	//Note: All height: Ti.UI.SIZE calls need to be replaced with something else for Android, since it messes up the 
+	//updating of label text. todo.
+	//height: Ti.UI.SIZE
 }
 
 "TableViewRow": {
@@ -76,7 +78,7 @@
 }
 
 ".inner-content": {
-	height: Ti.UI.SIZE,
+	//height: Ti.UI.SIZE,
 	borderColor: "#C8C8C8",
 	borderRadius: "5dp",
 	backgroundColor: "white"
@@ -85,7 +87,7 @@
 /*********************************** TEXT ***********************************/
 'Label': {
 	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE,
+	//height: Ti.UI.SIZE,
 	color: '#000',
 	font: {
 		fontFamily: 'Arial',

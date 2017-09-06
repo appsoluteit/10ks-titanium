@@ -1,9 +1,9 @@
 <Alloy>
 	<View class="background-gradient" height="100%">
-		<View class="margin-10" height="Ti.UI.FILL">
+		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
 			<!-- TableView Container -->
-			<View top="0dp">
-				<TableView class="inner-content">
+			<View top="0dp" height="80%">
+				<TableView>
 					<!-- Current Goal Steps -->
 					<TableViewRow>
 						<View class="whole">
@@ -71,12 +71,13 @@
 			</View>
 		
 			<!-- Buttons Container -->
-			<View width="100%" bottom="20dp">
+			<View left="10dp" right="10dp" bottom="20dp">
 				<!-- Daily Graph -->
 				<Button 
 					id="btnDailyGraph" 
 					title="Daily Graph" 
 					left="0dp"
+					font="{ fontSize: 10sp }"
 					platform="android"
 				/>
 					
@@ -94,6 +95,7 @@
 					id="btnMonthlyGraph" 
 					title="Monthly Graph" 
 					right="0dp"
+					font="{ fontSize: 10sp }"					
 					platform="android"
 				/>
 					

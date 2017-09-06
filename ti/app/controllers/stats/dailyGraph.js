@@ -26,14 +26,19 @@ function smallerOf(options) {
 }
 
 function showChart() {
-	var viewHeight = smallerOf([
+	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
-		$.dailyGraphWindow.rect.height,
-		$.dailyGraphWindow.rect.width,
 		$.dailyGraph.rect.height,
 		$.dailyGraph.rect.width	
-	]);
+	];
+	
+	if(Ti.Platform.osname !== "android") {
+		options.push($.dailyGraphWindow.rect.height);
+		options.push($.dailyGraphWindow.rect.width);
+	}
+	
+	var viewHeight = smallerOf(options);
 	
 	Ti.API.info("Webview Height: ", viewHeight);
 	
