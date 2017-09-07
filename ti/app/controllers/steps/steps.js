@@ -181,34 +181,46 @@ function populateRows() {
  * @description Event handler for the Window's `open` event. Calls 'populateRows'.
  * @memberof Controllers.Steps
  */
-function window_open() {
-	//$.log.activity.invalidateOptionsMenu();	
-		
+function window_open() {		
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Steps"
 	});
 	
-	//setNavButtons();
+	if(Ti.Platform.osname !== "android") {
+		setiOSNavButtons();
+	}
+	
 	populateRows();
 }
 
-function setNavButtons() {
-	if(Ti.Platform.osname === "android") {
-		//On Android, call this to ensure the correct actionbar menu is displayed
-		$.log.activity.invalidateOptionsMenu();	
-	}
-	else {
-		$.window.leftNavButton = NavBarButton.createLeftNavButton({
-			text: "Home",
-			onClick: btnBack_click
-		});
-		
-		$.window.rightNavButton = NavBarButton.createRightNavButton({
-			text: "Sync",
-			onClick: btnSync_click
-		});
-	}
+function setiOSNavButtons() {
+	$.window.leftNavButton = NavBarButton.createLeftNavButton({
+		text: "Home",
+		onClick: btnBack_click
+	});
+	
+	$.window.rightNavButton = NavBarButton.createRightNavButton({
+		text: "Sync",
+		onClick: btnSync_click
+	});
 }
+
+//Use this approach to expose a means of adding menu items to the Activity Bar to the calling code.
+//The caller will say win.addAndroidMenuItems(); before calling win.open();
+function setAndroidMenuItems() {
+	var activity = $.log.activity;
+	
+	activity.onCreateOptionsMenu = function(e){
+	  var menu = e.menu;
+	  var menuItem = menu.add({
+	    title: "Sync",
+	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+	  });
+	  
+	  menuItem.addEventListener("click", btnSync_click);
+	};
+}
+$.log.setAndroidMenuItems = setAndroidMenuItems;
 
 /**
  * @description Event handler for `tblRow`. If e is a 'Load More' button, it gets deleted and another month of dates are loaded. Otherwise, the form controller is shown.
@@ -260,11 +272,3 @@ function btnBack_click() {
 function btnSync_click() {
 	sync();
 }
-
-//Use this approach to expose a means of adding menu items to the Activity Bar to the calling code.
-//The caller will say win.addAndroidMenuItems(); before calling win.open();
-function hello() {
-	Ti.API.debug("Hi!");
-}
-
-$.log.hello = hello;
