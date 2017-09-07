@@ -109,6 +109,9 @@ function loginIfNeeded() {
  */
 function btnStepLog_click() {
 	var win = Alloy.createController('steps/steps').getView();
+	if(Ti.Platform.osname === "android") {
+		win.setAndroidMenuItems();
+	}
 	win.open();
 	
 	win.addEventListener('close', function() {
