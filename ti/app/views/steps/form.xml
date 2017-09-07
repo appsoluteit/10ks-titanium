@@ -29,7 +29,7 @@
 			title="" 
 			homeButtonEnabled="true" 
 			displayHomeAsUp="true" 
-			onHomeIconItemSelected="btnDone_click">
+			onHomeIconItemSelected="btnCancel_click">
 		</ActionBar>
 
 		<Require id="logEntryView" src="steps/formView" type="view"/>

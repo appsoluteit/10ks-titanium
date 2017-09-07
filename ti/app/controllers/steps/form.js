@@ -80,6 +80,21 @@ function window_open() {
 	$.logEntryView.txtStepsWalked.focus();
 }
 
+function setAndroidMenuItems() {
+	var activity = $.logEntry.activity;
+	
+	activity.onCreateOptionsMenu = function(e){
+	  var menu = e.menu;
+	  var menuItem = menu.add({
+	    title: "Done",
+	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+	  });
+	  
+	  menuItem.addEventListener("click", btnDone_click);
+	};	
+}
+$.logEntry.setAndroidMenuItems = setAndroidMenuItems;
+
 /**
  * @description Event handler for `txtStepsWalked`. Calls `calculateTotal()`.
  * @listens change

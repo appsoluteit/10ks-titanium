@@ -253,6 +253,10 @@ function tblRow_click(e) {
 			}
 		}).getView();
 		
+		if(Ti.Platform.osname === "android") {
+			entryWin.setAndroidMenuItems();
+		}
+		
 		entryWin.open();
 	}
 }
