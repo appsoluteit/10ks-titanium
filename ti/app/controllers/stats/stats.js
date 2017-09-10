@@ -248,6 +248,9 @@ function btnMonthlyGraph_click() {
 	var win = Alloy.createController("stats/monthlyGraph", {
 		data: chartData
 	}).getView();
+	if(Ti.Platform.osname === "android") {
+		win.setAndroidMenuItems();
+	}
 	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }

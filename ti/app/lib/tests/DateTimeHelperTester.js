@@ -23,7 +23,7 @@ function test() {
 		describe("Get current month name", function() {
 			it("Should return May", function() {
 				var monthName = DateTimeHelper.getCurrentMonthName();
-				expect(monthName).to.equal('June');
+				expect(monthName).to.equal('September');
 			});
 		});
 		

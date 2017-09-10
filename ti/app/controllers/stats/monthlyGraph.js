@@ -1,10 +1,11 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+var NavBarButton = require('classes/NavBarButton');
+
 function btnBack_click() {
 	$.monthlyGraph.close();
 }
-
 
 function hasSteps() {
 	return args.data.filter(function(item) {
@@ -64,5 +65,39 @@ function window_open() {
 		screenName: "Monthly Graph"
 	});
 	
+	setiOSNavButtons();
 	showChart();
 }
+
+function setiOSNavButtons() {
+	if(Ti.Platform.osname !== "android") {
+		$.monthlyGraphWindow.leftNavButton = NavBarButton.createLeftNavButton({
+			text: 'Home',
+			onClick: btnBack_click	
+		});
+		
+		$.monthlyGraphWindow.rightNavButton = NavBarButton.createRightNavButton({
+			text: "Coming soon",
+			onClick: function() {
+				console.log("todo");
+			}
+		});
+	}	
+}
+
+function setAndroidMenuItems() {
+	var activity = $.monthlyGraph.activity;
+	
+	activity.onCreateOptionsMenu = function(e){
+	  var menu = e.menu;
+	  var menuItem = menu.add({
+	    title: "Coming soon",
+	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+	  });
+	  
+	  menuItem.addEventListener("click", function() {
+	  	console.log("todo");
+	  });
+	};	
+}
+$.monthlyGraph.setAndroidMenuItems = setAndroidMenuItems;
