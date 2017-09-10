@@ -287,4 +287,21 @@ StepsDataProvider.prototype.readLifeTimeSteps = function() {
 	return sum;
 };
 
+/**
+ * @description Returns an array of years that have been logged 
+ */
+StepsDataProvider.prototype.readYears = function() {
+	var years = [];
+	
+	this.models.forEach(function(item) {
+		var tmp = item.stepsDate.getFullYear();
+		
+		if (years.indexOf(tmp) === -1) {
+			years.push(tmp);
+		}
+	});
+	
+	return years;
+};
+
 module.exports = StepsDataProvider;

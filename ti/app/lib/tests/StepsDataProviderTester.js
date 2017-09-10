@@ -228,6 +228,47 @@ function test() {
 				}
 			});
 		});
+	
+		describe("Read years", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1)
+				});
+						
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2000, 1, 1)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(1990, 5, 27)
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 15,
+					stepsDate: new Date(1981, 9, 19)
+				});
+				
+				done();
+			});
+			
+			it("Should return 2017, 2000, 1981 and 1990", function() {
+				//dataProvider.load();
+				var years = dataProvider.readYears();	
+	
+				expect(years.length).to.equal(4);
+				expect(years[0]).to.equal(2017);
+				expect(years[1]).to.equal(2000);
+				expect(years[2]).to.equal(1990);
+				expect(years[3]).to.equal(1981);
+			});	
+		});
 	});
 }
 
