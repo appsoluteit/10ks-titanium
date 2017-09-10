@@ -125,6 +125,9 @@ function btnStepLog_click() {
  */
 function btnStatistics_click() {
 	var win = Alloy.createController('stats/stats').getView();
+	if(Ti.Platform.osname === "android") {
+		win.setAndroidMenuItems();
+	}
 	win.open();
 	
 	win.addEventListener('close', function() {

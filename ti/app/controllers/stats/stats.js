@@ -329,7 +329,18 @@ function setiOSNavButtons() {
 }
 
 function setAndroidMenuItems() {
+	var activity = $.stats.activity;
 	
+	activity.onCreateOptionsMenu = function(e){
+	  var menu = e.menu;
+	  var menuItem = menu.add({
+	    title: "Sync",
+	    icon: "/common/icons/refresh-button-32.png",
+	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+	  });
+	  
+	  menuItem.addEventListener("click", btnRefresh_click);
+	};	
 }
 $.stats.setAndroidMenuItems = setAndroidMenuItems;
 
