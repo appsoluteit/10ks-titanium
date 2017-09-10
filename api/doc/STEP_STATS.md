@@ -1,9 +1,9 @@
 {% method -%}
-## Stats {#stats}
+## Stats {#step_stats}
 
 Call this to get statistics about logged steps for the logged in user.
 ```
-https://www.10000steps.org.au/api/stats/
+https://www.10000steps.org.au/api/step_stats/
 ```
 
 {% sample lang="js" -%}
@@ -20,6 +20,7 @@ https://www.10000steps.org.au/api/stats/
 | `max_month` | `object` | See below | Statistics about the highest recorded month |
 | `max_day`  | `object` | See below | Statistics about the highest recorded day |
 | `average_steps` | `int` | `9999` | Average daily steps |
+| `seven_day_average` | `int` | `9999` | A seven day average of posted steps |
 
 ##### Max Month #####
 | Name | Type | Sample | Description |

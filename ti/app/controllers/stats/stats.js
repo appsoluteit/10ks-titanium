@@ -5,7 +5,6 @@
  * @require helpers/DateTimeHelper
  * @require helpers/APIHelper
  * @namespace Controllers.Stats
- * @todo Possibly let the user choose for which month / year they want to run the graphs? Popup dialog?
  */
 
 var q = require('q');
@@ -95,7 +94,7 @@ function loadStatistics() {
 	};
 	
 	APIHelper.get({
-		url:		"stats/", 
+		url:		"step_stats/", 
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -315,23 +314,24 @@ function load() {
 	}
 }
 
-function setNavButtons() {
-	if(Ti.Platform.osname === "android") {
-		//On Android, call this to ensure the correct actionbar menu is displayed
-		$.stats.activity.invalidateOptionsMenu();	
-	}
-	else {
+function setiOSNavButtons() {
+	if(Ti.Platform.osname !== "android") {
 		$.window.leftNavButton = NavBarButton.createLeftNavButton({
 			text: 'Home',
 			onClick: btnBack_click	
 		});
 		
 		$.window.rightNavButton = NavBarButton.createRightNavButton({
-			image: '/common/icons/refresh-button.png',
+			image: '/common/icons/refresh-button-16.png',
 			onClick: btnRefresh_click
 		});
 	}
 }
+
+function setAndroidMenuItems() {
+	
+}
+$.stats.setAndroidMenuItems = setAndroidMenuItems;
 
 /**
  * @description Event handler for the Window's `open` event. Presets the row values and calls `load()`
@@ -342,7 +342,7 @@ function window_open() {
 		screenName: "Statistics"
 	});
 	
-	setNavButtons();
+	setiOSNavButtons();
 	
 	$.statsView.lblAvgSteps.text = 0;
 	$.statsView.lblBusiestDay.text = 0;	
