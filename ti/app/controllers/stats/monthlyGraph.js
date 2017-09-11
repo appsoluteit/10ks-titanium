@@ -1,31 +1,59 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
-var args = $.args;
-
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var NavBarButton = require('classes/NavBarButton');
 
-function btnBack_click() {
-	$.monthlyGraph.close();
-}
+var currentYear = -1;
 
-function hasSteps() {
-	return args.data.filter(function(item) {
-		return item.y > 0;
-	}).length > 0;
-}
-
-function smallerOf(options) {
-	var smallest = undefined;
-	
-	for(var i = 0; i < options.length; i++) {
-		if(options[i] < smallest || smallest === undefined) {
-			smallest = options[i];
+function window_open() {
+	//Redraw the chart after an orientation change to use the right dimensions
+	Ti.Gesture.addEventListener('orientationchange',function(e) {		
+		Ti.API.info("Orientation change detected.");
+		
+		if(currentYear > 0) {
+			showChartForYear(currentYear);	
 		}
-	}
+	});
 	
-	return smallest;
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Monthly Graph"
+	});
+	
+	setiOSNavButtons();
+	
+	var years = Alloy.Globals.Steps.readYears();
+	Ti.API.debug("Years", years);
+	
+	var mostRecentYear = highestOf(years);
+	Ti.API.debug("Highest year", mostRecentYear);
+	
+	showChartForYear(mostRecentYear);
 }
 
-function showChart() {
+function showChartForYear(year) {
+	Ti.API.debug("Getting months for ", year);
+	
+	var monthData = Alloy.Globals.Steps.readByMonthForYear(year);
+	var chartData = [];
+	var monthIndex = 1;
+	
+	Ti.API.debug("Months", monthData);
+	
+	monthData.forEach(function(monthSteps) {
+		var monthName = DateTimeHelper.getMonthNameFromIndex(monthIndex - 1);
+		
+		chartData.push({
+			name: monthName,
+			x: monthIndex,
+			y: monthSteps
+		});
+		
+		monthIndex++;
+	});
+	
+	currentYear = year;
+	showChart(chartData, year);
+}
+
+function showChart(args, year) {
 	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
@@ -38,13 +66,13 @@ function showChart() {
 		options.push($.monthlyGraphWindow.rect.width);
 	}
 	
-	var viewHeight = smallerOf(options);
+	var viewHeight = smallestOf(options);
 	
-	if(hasSteps()) {
+	if(hasSteps(args)) {
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",
-			name: "Monthly Steps for " + new Date().getFullYear(),
-			data: args.data,
+			name: "Monthly Steps for " + year,
+			data: args,
 			showGoalSteps: false,
 			chartHeight: viewHeight
 		});	
@@ -54,19 +82,34 @@ function showChart() {
 	}
 }
 
-function window_open() {
-	//Redraw the chart after an orientation change to use the right dimensions
-	Ti.Gesture.addEventListener('orientationchange',function(e) {		
-		Ti.API.info("Orientation change detected.");
-		showChart();
-	});
+function hasSteps(args) {
+	return args.filter(function(item) {
+		return item.y > 0;
+	}).length > 0;
+}
+
+function smallestOf(options) {
+	var smallest = undefined;
 	
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Monthly Graph"
-	});
+	for(var i = 0; i < options.length; i++) {
+		if(options[i] < smallest || smallest === undefined) {
+			smallest = options[i];
+		}
+	}
 	
-	setiOSNavButtons();
-	showChart();
+	return smallest;
+}
+
+function highestOf(options) {
+	var highest = undefined;
+	
+	for(var i = 0; i < options.length; i++) {
+		if(options[i] > highest || highest === undefined) {
+			highest = options[i];
+		}
+	}
+	
+	return highest;
 }
 
 function setiOSNavButtons() {
@@ -86,18 +129,30 @@ function setiOSNavButtons() {
 }
 
 function setAndroidMenuItems() {
+	var years = Alloy.Globals.Steps.readYears();
+	Ti.API.debug("Years with steps", years);
+	
+	var mostRecentYear = highestOf(years);
+	
 	var activity = $.monthlyGraph.activity;
 	
 	activity.onCreateOptionsMenu = function(e){
 	  var menu = e.menu;
+	  
 	  var menuItem = menu.add({
-	    title: "Coming soon",
+	    title: mostRecentYear,
 	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
 	  });
 	  
 	  menuItem.addEventListener("click", function() {
 	  	console.log("todo");
+	  	//TODO: Show a popup for a selection of each year
 	  });
 	};	
 }
 $.monthlyGraph.setAndroidMenuItems = setAndroidMenuItems;
+
+function btnBack_click() {
+	$.monthlyGraph.close();
+}
+

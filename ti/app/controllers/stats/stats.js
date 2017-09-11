@@ -229,28 +229,12 @@ function btnDailyGraph_click() {
  * @memberof Controllers.Stats
  */
 function btnMonthlyGraph_click() {
-	var monthData = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
-	var chartData = [];
-	var monthIndex = 1;
+	var win = Alloy.createController("stats/monthlyGraph").getView();
 	
-	monthData.forEach(function(monthSteps) {
-		var monthName = DateTimeHelper.getMonthNameFromIndex(monthIndex - 1);
-		
-		chartData.push({
-			name: monthName,
-			x: monthIndex,
-			y: monthSteps
-		});
-		
-		monthIndex++;
-	});
-	
-	var win = Alloy.createController("stats/monthlyGraph", {
-		data: chartData
-	}).getView();
 	if(Ti.Platform.osname === "android") {
 		win.setAndroidMenuItems();
 	}
+	
 	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
