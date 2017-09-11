@@ -1,23 +1,24 @@
 var DateTimeHelper = require('helpers/DateTimeHelper');
+var MathHelper = require('helpers/MathHelper');
 var NavBarButton = require('classes/NavBarButton');
 
-var currentYear = -1;
+var window_args = $.args;
 
-function window_open() {
+function window_open() {	
+	var years = Alloy.Globals.Steps.readYears();
+	Ti.API.debug("Years", years);
+	
+	var mostRecentYear = MathHelper.highestOf(years);
+	Ti.API.debug("Highest year", mostRecentYear);
+	
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
 		Ti.API.info("Orientation change detected.");
 		
-		if(currentYear > 0) {
-			showChartForYear(currentYear);	
+		if(mostRecentYear > 0) {
+			showChartForYear(mostRecentYear);	
 		}
 	});
-	
-	var years = Alloy.Globals.Steps.readYears();
-	Ti.API.debug("Years", years);
-	
-	var mostRecentYear = highestOf(years);
-	Ti.API.debug("Highest year", mostRecentYear);
 	
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Monthly Graph"
@@ -48,11 +49,12 @@ function showChartForYear(year) {
 		monthIndex++;
 	});
 	
-	currentYear = year;
 	showChart(chartData, year);
 }
 
 function showChart(args, year) {
+	Ti.API.debug("showChart called for " + year);
+	
 	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
@@ -65,9 +67,12 @@ function showChart(args, year) {
 		options.push($.monthlyGraphWindow.rect.width);
 	}
 	
-	var viewHeight = smallestOf(options);
+	var viewHeight = MathHelper.smallestOf(options);
 	
 	if(hasSteps(args)) {
+		//Re-create thw widget
+		$.monthlyGraphView.monthlyGraphChart = Alloy.createWidget('com.alco.highcharts');
+		
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",
 			name: "Monthly Steps for " + year,
@@ -87,30 +92,6 @@ function hasSteps(args) {
 	}).length > 0;
 }
 
-function smallestOf(options) {
-	var smallest = undefined;
-	
-	for(var i = 0; i < options.length; i++) {
-		if(options[i] < smallest || smallest === undefined) {
-			smallest = options[i];
-		}
-	}
-	
-	return smallest;
-}
-
-function highestOf(options) {
-	var highest = undefined;
-	
-	for(var i = 0; i < options.length; i++) {
-		if(options[i] > highest || highest === undefined) {
-			highest = options[i];
-		}
-	}
-	
-	return highest;
-}
-
 function setiOSNavButtons(years, mostRecentYear) {
 	if(Ti.Platform.osname !== "android") {
 		$.monthlyGraphWindow.leftNavButton = NavBarButton.createLeftNavButton({
@@ -127,23 +108,29 @@ function setiOSNavButtons(years, mostRecentYear) {
 	}	
 }
 
-function setAndroidMenuItems() {
-	var years = Alloy.Globals.Steps.readYears();	
-	var mostRecentYear = highestOf(years);
+function setAndroidMenuItems(years, currentYear) {
+	if(!years) {
+		years = Alloy.Globals.Steps.readYears();
+	}
+
+	if(!currentYear) {
+		currentYear = MathHelper.highestOf(years);	
+	}
 	
 	var activity = $.monthlyGraph.activity;
 	
-	activity.onCreateOptionsMenu = function(e){
-	  var menu = e.menu;
-	  
-	  var menuItem = menu.add({
-	    title: mostRecentYear,
-	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
-	  });
-	  
-	  menuItem.addEventListener("click", function() {
-		showYearPicker(years, mostRecentYear);
-	  });
+	activity.onCreateOptionsMenu = function(e) {
+		Ti.API.debug("Creating options menu [Android]");
+		var menu = e.menu;
+		  
+		var menuItem = menu.add({
+		  title: currentYear,
+		  showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+		});
+		  
+		menuItem.addEventListener("click", function() {
+		  showYearPicker(years, currentYear);
+		});
 	};	
 }
 $.monthlyGraph.setAndroidMenuItems = setAndroidMenuItems;
@@ -166,9 +153,15 @@ function showYearPicker(years, currentYear) {
 	  onDone: function(e) {
 	  	Ti.API.info(e);
 	  	
-		if(e.cancel == 0) {
-			//Note: this won't update the NavBar / Action Bar item
-			//Need to review
+		if(e.cancel == 0) {		
+			if(Ti.Platform.osname === "android") {
+				setAndroidMenuItems(years, e.data[0].value);
+				$.monthlyGraph.activity.invalidateOptionsMenu();
+			}
+			else {
+				setiOSNavButtons(years, e.data[0].value);
+			}
+			
 			showChartForYear(e.data[0].value);
 		}
 	  },
@@ -178,4 +171,3 @@ function showYearPicker(years, currentYear) {
 function btnBack_click() {
 	$.monthlyGraph.close();
 }
-
