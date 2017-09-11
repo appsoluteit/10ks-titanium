@@ -13,18 +13,17 @@ function window_open() {
 		}
 	});
 	
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Monthly Graph"
-	});
-	
-	setiOSNavButtons();
-	
 	var years = Alloy.Globals.Steps.readYears();
 	Ti.API.debug("Years", years);
 	
 	var mostRecentYear = highestOf(years);
 	Ti.API.debug("Highest year", mostRecentYear);
 	
+	Alloy.Globals.tracker.trackScreen({
+		screenName: "Monthly Graph"
+	});
+	
+	setiOSNavButtons(years, mostRecentYear);
 	showChartForYear(mostRecentYear);
 }
 
@@ -78,7 +77,7 @@ function showChart(args, year) {
 		});	
 	}
 	else {
-		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for this year");
+		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for " + year);
 	}
 }
 
@@ -112,7 +111,7 @@ function highestOf(options) {
 	return highest;
 }
 
-function setiOSNavButtons() {
+function setiOSNavButtons(years, mostRecentYear) {
 	if(Ti.Platform.osname !== "android") {
 		$.monthlyGraphWindow.leftNavButton = NavBarButton.createLeftNavButton({
 			text: 'Home',
@@ -120,18 +119,16 @@ function setiOSNavButtons() {
 		});
 		
 		$.monthlyGraphWindow.rightNavButton = NavBarButton.createRightNavButton({
-			text: "Coming soon",
+			text: mostRecentYear,
 			onClick: function() {
-				console.log("todo");
+				showYearPicker(years, mostRecentYear);
 			}
 		});
 	}	
 }
 
 function setAndroidMenuItems() {
-	var years = Alloy.Globals.Steps.readYears();
-	Ti.API.debug("Years with steps", years);
-	
+	var years = Alloy.Globals.Steps.readYears();	
 	var mostRecentYear = highestOf(years);
 	
 	var activity = $.monthlyGraph.activity;
@@ -145,12 +142,38 @@ function setAndroidMenuItems() {
 	  });
 	  
 	  menuItem.addEventListener("click", function() {
-	  	console.log("todo");
-	  	//TODO: Show a popup for a selection of each year
+		showYearPicker(years, mostRecentYear);
 	  });
 	};	
 }
 $.monthlyGraph.setAndroidMenuItems = setAndroidMenuItems;
+
+function showYearPicker(years, currentYear) {
+	Ti.API.debug("Showing picker. Current year ", currentYear, " Years: ", years);
+	
+	var values = {};
+	years.forEach(function(year) {
+		values[year] = year;	
+	});
+	
+	Alloy.createWidget('danielhanold.pickerWidget', {
+	  id: 'mySingleColumn',
+	  outerView: $.monthlyGraph,
+	  hideNavBar: false,
+	  type: 'single-column',
+	  selectedValues: [currentYear],
+	  pickerValues: [values],
+	  onDone: function(e) {
+	  	Ti.API.info(e);
+	  	
+		if(e.cancel == 0) {
+			//Note: this won't update the NavBar / Action Bar item
+			//Need to review
+			showChartForYear(e.data[0].value);
+		}
+	  },
+	});	
+}
 
 function btnBack_click() {
 	$.monthlyGraph.close();

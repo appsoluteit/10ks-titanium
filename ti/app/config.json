@@ -1,19 +1,20 @@
 {
-    "global": {},
-    "env:development": {},
-    "env:test": {},
-    "env:production": {},
-    "os:android": {},
-    "os:blackberry": {},
-    "os:ios": {},
-    "os:mobileweb": {},
-    "os:windows": {},
-    "dependencies": {
-        "nl.fokkezb.loading": "*",
-        "com.mcongrove.toast": "*",
-        "com.alco.highcharts": "*",
-        "com.10000steps.challengerow": "1.0",
-        "nl.fokkezb.button": "*",
-        "com.10000steps.badge": "1.0"
-    }
+  "global": {},
+  "env:development": {},
+  "env:test": {},
+  "env:production": {},
+  "os:android": {},
+  "os:blackberry": {},
+  "os:ios": {},
+  "os:mobileweb": {},
+  "os:windows": {},
+  "dependencies": {
+    "nl.fokkezb.loading": "*",
+    "com.mcongrove.toast": "*",
+    "com.alco.highcharts": "*",
+    "com.10000steps.challengerow": "1.0",
+    "nl.fokkezb.button": "*",
+    "com.10000steps.badge": "1.0",
+    "danielhanold.pickerWidget": "*"
+  }
 }
