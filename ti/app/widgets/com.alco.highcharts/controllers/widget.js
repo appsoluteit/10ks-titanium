@@ -1,14 +1,26 @@
-function loadChart(options){ // data argument must be properly designed so it can work in different situations
+function loadChart(options) {
+	Ti.API.info("widget loadChart called");
+	 
 	var templateURL=WPATH('/html/webview.html');
 	var optionsJSON = JSON.stringify(options);
 	
-	//console.log("Widget loading chart. Goal steps = ", goalSteps, "Options = ", options);
+	function onLoadTemplateUrl() {	
+		if(this.test === undefined) {
+			this.test = 0;
+		}
+		else {
+			this.test++;
+		}
+		
+		Ti.API.info('chartWebView ready: ' + this.test);
+		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');		
+		
+		//Remove any previously added event listeners to prevent them from stacking
+		$.chartWebView.removeEventListener('load', onLoadTemplateUrl);	
+	}
 	
-	$.chartWebView.url=templateURL;
-	$.chartWebView.addEventListener('load', function() {
-		Ti.API.info('chartWebView ready');
-		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');	 
-	});
+	$.chartWebView.setUrl(templateURL);
+	$.chartWebView.addEventListener('load', onLoadTemplateUrl);
 }
 
 function showMessage(message) {

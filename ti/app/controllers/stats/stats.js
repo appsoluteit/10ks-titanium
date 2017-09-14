@@ -236,6 +236,11 @@ function btnMonthlyGraph_click() {
 	}
 	
 	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
+	
+	win.addEventListener('close', function(e) {
+		Ti.API.info("Monthly graph window closed. Response: ", e);
+	});
+	
 	win.open();
 }
 
