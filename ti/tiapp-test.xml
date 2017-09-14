@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>au.org.steps10000.app</id>
     <name>10,000 Steps</name>
-    <version>3.2.4</version>
+    <version>3.2.5</version>
     <publisher>Appsolute IT Pty Ltd</publisher>
     <url>https://www.10000steps.org.au</url>
     <description>10K steps</description>
@@ -61,7 +61,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="24" android:versionName="3.2.4">
+        <manifest android:versionCode="25" android:versionName="3.2.5">
             <application android:theme="@style/Theme.AppCompat.Light"/>
             <uses-permission android:name="android.permission.READ_CALENDAR"/>
             <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
@@ -95,7 +95,7 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>6.1.2.GA</sdk-version>
+    <sdk-version>6.2.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
