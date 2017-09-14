@@ -39,7 +39,7 @@
 		class="whole error">
 	</Label>
 
-	<View layout="horizontal" left="12.5%">
+	<View layout="horizontal" left="12.5%" height="Ti.UI.SIZE">
 		<Switch id="swRememberMe" value="false" top="10dp">
 		</Switch>
 		
