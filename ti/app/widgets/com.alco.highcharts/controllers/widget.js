@@ -4,15 +4,22 @@ function loadChart(options) {
 	var templateURL=WPATH('/html/webview.html');
 	var optionsJSON = JSON.stringify(options);
 	
-	//Remove any previously added event listeners to prevent them from stacking
-	$.chartWebView.removeEventListener('load', onLoadTemplateUrl);
-	
-	function onLoadTemplateUrl() {
-		Ti.API.info('chartWebView ready');
-		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');			
+	function onLoadTemplateUrl() {	
+		if(this.test === undefined) {
+			this.test = 0;
+		}
+		else {
+			this.test++;
+		}
+		
+		Ti.API.info('chartWebView ready: ' + this.test);
+		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');		
+		
+		//Remove any previously added event listeners to prevent them from stacking
+		$.chartWebView.removeEventListener('load', onLoadTemplateUrl);	
 	}
 	
-	$.chartWebView.url=templateURL;
+	$.chartWebView.setUrl(templateURL);
 	$.chartWebView.addEventListener('load', onLoadTemplateUrl);
 }
 

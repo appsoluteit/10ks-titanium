@@ -2,6 +2,7 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var MathHelper = require('helpers/MathHelper');
 var NavBarButton = require('classes/NavBarButton');
 
+var currentYear = -1; //keep track of the current year so that we can re-use it when the screen orientation changes.
 var window_args = $.args;
 
 function window_open() {	
@@ -15,8 +16,8 @@ function window_open() {
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
 		Ti.API.info("Orientation change detected.");
 		
-		if(mostRecentYear > 0) {
-			showChartForYear(mostRecentYear);	
+		if(currentYear > 0) {
+			showChartForYear(currentYear);	
 		}
 	});
 	
@@ -30,6 +31,8 @@ function window_open() {
 
 function showChartForYear(year) {
 	Ti.API.debug("Getting months for ", year);
+	
+	currentYear = year;
 	
 	var monthData = Alloy.Globals.Steps.readByMonthForYear(year);
 	var chartData = [];
@@ -69,10 +72,7 @@ function showChart(args, year) {
 	
 	var viewHeight = MathHelper.smallestOf(options);
 	
-	if(hasSteps(args)) {
-		//Re-create thw widget
-		$.monthlyGraphView.monthlyGraphChart = Alloy.createWidget('com.alco.highcharts');
-		
+	if(hasSteps(args)) {		
 		$.monthlyGraphView.monthlyGraphChart.loadChart({
 			type: "column",
 			name: "Monthly Steps for " + year,
