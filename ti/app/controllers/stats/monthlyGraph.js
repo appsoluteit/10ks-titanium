@@ -3,7 +3,6 @@ var MathHelper = require('helpers/MathHelper');
 var NavBarButton = require('classes/NavBarButton');
 
 var currentYear = -1; //keep track of the current year so that we can re-use it when the screen orientation changes.
-var window_args = $.args;
 
 function window_open() {	
 	var years = Alloy.Globals.Steps.readYears();

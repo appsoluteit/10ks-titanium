@@ -269,6 +269,53 @@ function test() {
 				expect(years[3]).to.equal(1981);
 			});	
 		});
+		
+		describe("Read months and years", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1) //1st of May
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2000, 5, 2) //2nd of June
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 30,
+					stepsDate: new Date(1990, 6, 3) //3rd of July
+				});
+				
+				done();
+			});
+			
+			it("Should return 05|2017, 06|2000 and 07|1990", function() {
+				var monthYears = dataProvider.readMonthsAndYears();
+				
+				//TODO
+			});
+		});
+		
+		describe("Read months for year", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				//TODO
+				
+				done();
+			});
+			
+			it("Should return 05|2017, 06|2000 and 07|1990", function() {
+				//TODO
+			});		
+		});
 	});
 }
 
