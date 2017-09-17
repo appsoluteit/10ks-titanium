@@ -199,9 +199,7 @@ function loadPage() {
  * @memberof Controllers.Stats
  */
 function btnDailyGraph_click() {
-	var win = Alloy.createController("stats/dailyGraph", {
-		data: chartData
-	}).getView();
+	var win = Alloy.createController("stats/dailyGraph").getView();
 	
 	if(Ti.Platform.osname === "android") {
 		win.setAndroidMenuItems();

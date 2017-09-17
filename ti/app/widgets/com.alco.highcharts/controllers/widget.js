@@ -5,14 +5,6 @@ function loadChart(options) {
 	var optionsJSON = JSON.stringify(options);
 	
 	function onLoadTemplateUrl() {	
-		if(this.test === undefined) {
-			this.test = 0;
-		}
-		else {
-			this.test++;
-		}
-		
-		Ti.API.info('chartWebView ready: ' + this.test);
 		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');		
 		
 		//Remove any previously added event listeners to prevent them from stacking

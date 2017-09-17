@@ -297,7 +297,10 @@ function test() {
 			it("Should return 05|2017, 06|2000 and 07|1990", function() {
 				var monthYears = dataProvider.readMonthsAndYears();
 				
-				//TODO
+				expect(monthYears).to.be.an('array');
+				expect(monthYears.length).to.equal(3);
+				expect(monthYears[0].year).to.equal(2017);
+				expect(monthYears[0].month).to.equal(4);
 			});
 		});
 		
@@ -307,13 +310,30 @@ function test() {
 			before(function(done) {
 				dataProvider.removeAll();
 				
-				//TODO
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1) //1st of May
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2000, 5, 2) //2nd of June
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 30,
+					stepsDate: new Date(1990, 6, 3) //3rd of July
+				});
 				
 				done();
 			});
 			
 			it("Should return 05|2017, 06|2000 and 07|1990", function() {
-				//TODO
+				var months = dataProvider.readMonthsForYear(2017);
+				
+				expect(months).to.be.an('array');
+				expect(months.length).to.equal(1);
+				expect(months[0]).to.equal(4);
 			});		
 		});
 	});
