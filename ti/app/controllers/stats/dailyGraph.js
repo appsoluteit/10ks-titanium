@@ -8,20 +8,9 @@ var currentMonth = -1;
 function window_open() {	
 	var monthsAndYears = Alloy.Globals.Steps.readMonthsAndYears();
 	var years = Alloy.Globals.Steps.readYears();
-	
-	Ti.API.info("Years logged", years);
-	
 	var mostRecentYear = MathHelper.highestOf(years);
-	
-	Ti.API.info("Highest year", mostRecentYear);
-	
-	var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);
-	
-	Ti.API.info("Months logged", months);
-	
+	var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
 	var mostRecentMonth = MathHelper.highestOf(months);
-	
-	Ti.API.info("Highest month", mostRecentMonth);
 	
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
@@ -40,16 +29,11 @@ function window_open() {
 	showChartForMonthAndYear(mostRecentYear, mostRecentMonth);
 }
 
-function showChartForMonthAndYear(year, month) {
-	Ti.API.info("Showing chart for month and year: " + month + ", " + year);
-	
+function showChartForMonthAndYear(year, month) {	
 	currentYear = year;
 	currentMonth = month;
 	
 	var dailyData = Alloy.Globals.Steps.readByDayForMonth(month + 1, year);
-
-	Ti.API.info("Daily data:");
-	Ti.API.info(dailyData);
 
 	var chartData = [];
 	var dayIndex = 1;
@@ -67,9 +51,7 @@ function showChartForMonthAndYear(year, month) {
 	showChart(chartData, year, month);
 }
 
-function showChart(args, year, month) {
-	Ti.API.info("Showing chart for month " + month + ", year " + year);
-	
+function showChart(args, year, month) {	
 	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
@@ -83,10 +65,7 @@ function showChart(args, year, month) {
 	}
 	
 	var viewHeight = MathHelper.smallestOf(options);
-	
-	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);
-	Ti.API.info("Goal steps", goalSteps);
-	
+	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);	
 	var currentMonthLabel = DateTimeHelper.getMonthNameFromIndex(month);
 		
 	if(hasSteps(args)) {		
@@ -139,7 +118,6 @@ function setAndroidMenuItems(monthYears, mostRecentYear, mostRecentMonth) {
 	var activity = $.dailyGraph.activity;
 	
 	activity.onCreateOptionsMenu = function(e) {
-		Ti.API.debug("Creating options menu [Android]");
 		var menu = e.menu;
 		  
 		var menuItem = menu.add({
@@ -156,15 +134,12 @@ $.dailyGraph.setAndroidMenuItems = setAndroidMenuItems;
 
 function showMonthYearPicker(monthYears, currentYear, currentMonth) {	
 	var selectedValue = currentMonth + "/" + currentYear;
-	Ti.API.info("Selected value:", selectedValue);
 	
 	var values = {};
 	monthYears.forEach(function(item) {
 		var tmp = (item.month + 1) + "/" + item.year;
 		values[tmp] = tmp;	
 	});
-	
-	Ti.API.info("Picker values", values);
 	
 	Alloy.createWidget('danielhanold.pickerWidget', {
 	  id: 'mySingleColumn',
@@ -177,8 +152,8 @@ function showMonthYearPicker(monthYears, currentYear, currentMonth) {
 	  	Ti.API.info(e);
 	  	
 		if(e.cancel == 0) {		
-			var selectedMonth = e.data[0].value.split('/')[0] - 1;
-			var selectedYear = e.data[0].value.split('/')[1];
+			var selectedMonth = e.data[0].value.split('/')[0] - 1; //Convert to number (JSDate style month, 0 indexed)
+			var selectedYear = e.data[0].value.split('/')[1] * 1;  //Convert to number
 			
 			if(Ti.Platform.osname === "android") {
 				setAndroidMenuItems(monthYears, selectedMonth, selectedYear);

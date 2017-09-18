@@ -162,7 +162,6 @@ function test() {
 			});
 			
 			it("Should return 10 for January, 20 for February and 30 for March", function() {
-				dataProvider.load();
 				var data = dataProvider.readByMonthForYear(2017);
 				
 				expect(data).to.be.an('array');
@@ -213,9 +212,8 @@ function test() {
 			});
 			
 			it("Should return 10 on 1/05, 20 on 2/05 and 30 on 3/05", function() {
-				dataProvider.load();
 				var data = dataProvider.readByDayForMonth(5, 2017);
-				//Ti.API.info(data);
+				Ti.API.info(data);
 				
 				expect(data).to.be.an('array');
 				expect(data.length).to.equal(31);
@@ -259,7 +257,6 @@ function test() {
 			});
 			
 			it("Should return 2017, 2000, 1981 and 1990", function() {
-				//dataProvider.load();
 				var years = dataProvider.readYears();	
 	
 				expect(years.length).to.equal(4);
