@@ -7,9 +7,10 @@
 		<script src="highcharts.js"></script>
 		<script src="exporting.js"></script>
 		<script type="text/javascript">
-			function plotChart(options) {
-		        Ti.API.info('Plotting chart', options);
-		        
+			function plotChart(chartOptions, customOptions) {	
+				Ti.API.info("plotting chart");
+				Ti.API.info(chartOptions);
+					     
 		        var config = {
 		        	credits: {
 		        		enabled: false	
@@ -24,11 +25,13 @@
 		                plotBackgroundColor: null,
 		                plotBorderWidth: null,
 		                plotShadow: false,
-		                height: options.chartHeight
+		                height: customOptions.chartHeight
 		            },
+		            
 		            title: {
-		                text: options.name
+		                text: chartOptions.name
 		            },
+		            
 		            tooltip: {
 		        	    pointFormat: '{series.name}: <b>{point.y}</b>'
 		            },
@@ -51,7 +54,6 @@
 		                }
 		            },
 		            
-		            //http://jsfiddle.net/UPmsm/
 		            xAxis: {
 			            tickInterval: 1,
 			            labels: {
@@ -65,15 +67,16 @@
 		            	}	
 		            },
 		            
-		            series: [options]	        	
+		            series: [chartOptions]	        	
 		        };
-		        
-		        if(options.showGoalSteps) {
+		      
+		        if(customOptions.showGoalSteps == 1) {
+		        	Ti.API.info("Adding goal steps plotline for: " + customOptions.goalSteps);
+		        	
 		      		config.yAxis.plotLines = [{
-	            		value: options.goalSteps,
+	            		value: customOptions.goalSteps * 1,
 	            		color: '#22DA9B',
-	            		width: 2,
-	            		zIndex: 4,
+	            		width: 2
 	            	}];
 		        }
 		        

@@ -72,13 +72,18 @@ function showChart(args, year) {
 	var viewHeight = MathHelper.smallestOf(options);
 	
 	if(hasSteps(args)) {		
-		$.monthlyGraphView.monthlyGraphChart.loadChart({
+		var chartOptions = {
 			type: "column",
 			name: "Monthly Steps for " + year,
-			data: args,
+			data: args		
+		};
+		
+		var customOptions = {
 			showGoalSteps: false,
-			chartHeight: viewHeight
-		});	
+			chartHeight: viewHeight			
+		};
+		
+		$.monthlyGraphView.monthlyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {
 		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for " + year);

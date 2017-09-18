@@ -1,11 +1,11 @@
-function loadChart(options) {
-	Ti.API.info("widget loadChart called");
-	 
+function loadChart(chartOptions, customOptions) {	 
 	var templateURL=WPATH('/html/webview.html');
-	var optionsJSON = JSON.stringify(options);
+	
+	chartOptions = JSON.stringify(chartOptions);
+	customOptions = JSON.stringify(customOptions);
 	
 	function onLoadTemplateUrl() {	
-		$.chartWebView.evalJS('plotChart('+ optionsJSON + ')');		
+		$.chartWebView.evalJS('plotChart('+ chartOptions + ',' + customOptions + ')');		
 		
 		//Remove any previously added event listeners to prevent them from stacking
 		$.chartWebView.removeEventListener('load', onLoadTemplateUrl);	

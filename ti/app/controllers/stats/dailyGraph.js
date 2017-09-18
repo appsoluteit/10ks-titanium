@@ -68,15 +68,20 @@ function showChart(args, year, month) {
 	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);	
 	var currentMonthLabel = DateTimeHelper.getMonthNameFromIndex(month);
 		
-	if(hasSteps(args)) {		
-		$.dailyGraphView.dailyGraphChart.loadChart({
+	if(hasSteps(args)) {	
+		var chartOptions = {
 			type: "column",
 			name: "Daily Steps for " + currentMonthLabel + ", " + year,
-			data: args,
+			data: args		
+		};
+		
+		var customOptions = {
 			goalSteps: goalSteps,
-			showGoalSteps: true,
-			chartHeight: viewHeight
-		});	
+			showGoalSteps: 1,
+			chartHeight: viewHeight			
+		};
+		
+		$.dailyGraphView.dailyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {		
 		$.dailyGraphView.dailyGraphChart.showMessage("No steps logged for " + currentMonthLabel + ", " + year);	
