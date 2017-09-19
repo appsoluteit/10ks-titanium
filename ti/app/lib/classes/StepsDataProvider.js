@@ -304,4 +304,39 @@ StepsDataProvider.prototype.readYears = function() {
 	return years;
 };
 
+StepsDataProvider.prototype.readMonthsAndYears = function() {
+	var monthYears = [];
+	
+	this.models.forEach(function(item) {
+		var tmpYear = item.stepsDate.getFullYear();
+		var tmpMonth = item.stepsDate.getMonth();
+		
+		var obj = {
+			year: tmpYear,
+			month: tmpMonth	
+		};
+		
+		if (monthYears.indexOf(obj) === -1) {
+			monthYears.push(obj);
+		}
+	});
+	
+	return monthYears;
+};
+
+StepsDataProvider.prototype.readMonthsForYear = function(year) {
+	var months = [];
+	
+	this.models.forEach(function(item) {
+		var tmpMonth = item.stepsDate.getMonth();
+		var tmpYear = item.stepsDate.getFullYear();
+		
+		if (months.indexOf(tmpMonth) === -1 && tmpYear === year) {
+			months.push(tmpMonth);
+		}
+	});
+	
+	return months;
+};
+
 module.exports = StepsDataProvider;

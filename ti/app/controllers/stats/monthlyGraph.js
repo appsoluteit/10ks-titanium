@@ -3,7 +3,6 @@ var MathHelper = require('helpers/MathHelper');
 var NavBarButton = require('classes/NavBarButton');
 
 var currentYear = -1; //keep track of the current year so that we can re-use it when the screen orientation changes.
-var window_args = $.args;
 
 function window_open() {	
 	var years = Alloy.Globals.Steps.readYears();
@@ -73,13 +72,18 @@ function showChart(args, year) {
 	var viewHeight = MathHelper.smallestOf(options);
 	
 	if(hasSteps(args)) {		
-		$.monthlyGraphView.monthlyGraphChart.loadChart({
+		var chartOptions = {
 			type: "column",
 			name: "Monthly Steps for " + year,
-			data: args,
+			data: args		
+		};
+		
+		var customOptions = {
 			showGoalSteps: false,
-			chartHeight: viewHeight
-		});	
+			chartHeight: viewHeight			
+		};
+		
+		$.monthlyGraphView.monthlyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {
 		$.monthlyGraphView.monthlyGraphChart.showMessage("No steps logged for " + year);

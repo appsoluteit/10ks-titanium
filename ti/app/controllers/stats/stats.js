@@ -199,27 +199,12 @@ function loadPage() {
  * @memberof Controllers.Stats
  */
 function btnDailyGraph_click() {
-	var dailyData = Alloy.Globals.Steps.readByDayForMonth(new Date().getMonth() + 1, new Date().getFullYear());
-
-	Ti.API.info("Daily data:");
-	Ti.API.info(dailyData);
-
-	var chartData = [];
-	var dayIndex = 1;
+	var win = Alloy.createController("stats/dailyGraph").getView();
 	
-	dailyData.forEach(function(steps) {
-		chartData.push({
-			name: dayIndex + "/" + (new Date().getMonth() + 1),
-			x: dayIndex,
-			y: steps
-		});
-		
-		dayIndex++;
-	});
+	if(Ti.Platform.osname === "android") {
+		win.setAndroidMenuItems();
+	}
 	
-	var win = Alloy.createController("stats/dailyGraph", {
-		data: chartData
-	}).getView();
 	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
@@ -235,12 +220,7 @@ function btnMonthlyGraph_click() {
 		win.setAndroidMenuItems();
 	}
 	
-	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
-	
-	win.addEventListener('close', function(e) {
-		Ti.API.info("Monthly graph window closed. Response: ", e);
-	});
-	
+	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];	
 	win.open();
 }
 

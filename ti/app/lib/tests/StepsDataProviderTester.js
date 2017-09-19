@@ -162,7 +162,6 @@ function test() {
 			});
 			
 			it("Should return 10 for January, 20 for February and 30 for March", function() {
-				dataProvider.load();
 				var data = dataProvider.readByMonthForYear(2017);
 				
 				expect(data).to.be.an('array');
@@ -213,9 +212,8 @@ function test() {
 			});
 			
 			it("Should return 10 on 1/05, 20 on 2/05 and 30 on 3/05", function() {
-				dataProvider.load();
 				var data = dataProvider.readByDayForMonth(5, 2017);
-				//Ti.API.info(data);
+				Ti.API.info(data);
 				
 				expect(data).to.be.an('array');
 				expect(data.length).to.equal(31);
@@ -259,7 +257,6 @@ function test() {
 			});
 			
 			it("Should return 2017, 2000, 1981 and 1990", function() {
-				//dataProvider.load();
 				var years = dataProvider.readYears();	
 	
 				expect(years.length).to.equal(4);
@@ -268,6 +265,73 @@ function test() {
 				expect(years[2]).to.equal(1990);
 				expect(years[3]).to.equal(1981);
 			});	
+		});
+		
+		describe("Read months and years", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1) //1st of May
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2000, 5, 2) //2nd of June
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 30,
+					stepsDate: new Date(1990, 6, 3) //3rd of July
+				});
+				
+				done();
+			});
+			
+			it("Should return 05|2017, 06|2000 and 07|1990", function() {
+				var monthYears = dataProvider.readMonthsAndYears();
+				
+				expect(monthYears).to.be.an('array');
+				expect(monthYears.length).to.equal(3);
+				expect(monthYears[0].year).to.equal(2017);
+				expect(monthYears[0].month).to.equal(4);
+			});
+		});
+		
+		describe("Read months for year", function() {
+			var dataProvider = new StepsDataProvider();
+			
+			before(function(done) {
+				dataProvider.removeAll();
+				
+				dataProvider.writeSingle({
+					stepsTotal: 10,
+					stepsDate: new Date(2017, 4, 1) //1st of May
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 20,
+					stepsDate: new Date(2000, 5, 2) //2nd of June
+				});
+				
+				dataProvider.writeSingle({
+					stepsTotal: 30,
+					stepsDate: new Date(1990, 6, 3) //3rd of July
+				});
+				
+				done();
+			});
+			
+			it("Should return 05|2017, 06|2000 and 07|1990", function() {
+				var months = dataProvider.readMonthsForYear(2017);
+				
+				expect(months).to.be.an('array');
+				expect(months.length).to.equal(1);
+				expect(months[0]).to.equal(4);
+			});		
 		});
 	});
 }
