@@ -17,7 +17,10 @@
 /*********************************** GENERAL ***********************************/
 'Window': {
 	layout: 'vertical',
-	backgroundColor: 'white'
+	backgroundColor: 'white',
+    orientationModes :[
+        Ti.UI.PORTRAIT
+    ]
 }
 
 'View': {

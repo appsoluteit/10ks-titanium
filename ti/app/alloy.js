@@ -46,7 +46,7 @@
 	 * @type {String}
 	 * @memberof Alloy.Globals
 	 */
-	Alloy.Globals.FeedbackURL = "https://10000steps.org.au/contact/";
+	Alloy.Globals.FeedbackURL = "https://www.10000steps.org.au/contact/";
 	
 	/**
 	 * @instance

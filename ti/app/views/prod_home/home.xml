@@ -1,0 +1,16 @@
+<Alloy>
+	<!-- iOS -->
+	<Window id="home" title="Home" onOpen="window_open" platform="ios">
+		<Require id="homeView" src="prod_home/homeView" type="view"/>
+	</Window>
+		
+	<!-- Android -->
+	<Window 
+		navBarHidden="true"
+		id="home" 
+		platform="android" 
+		onAndroid:back="androidBack_click" 
+		onOpen="window_open">			
+			<Require id="homeView" src="prod_home/homeView" type="view"/>
+	</Window>
+</Alloy>

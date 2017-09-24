@@ -4,5 +4,15 @@
  * @namespace Controllers.Index
  */
 
-var win = Alloy.createController('home/home').getView();
-win.open();
+if(Alloy.Globals.IsDebug) {
+	Ti.API.info("IsDebug turned on. Showing development home screen.");
+	
+	var win = Alloy.createController('home/home').getView();
+	win.open();	
+}
+else {
+	Ti.API.info("IsDebug turned off. Showing production home screen.");
+	
+	var win = Alloy.createController('prod_home/home').getView();
+	win.open();
+}
