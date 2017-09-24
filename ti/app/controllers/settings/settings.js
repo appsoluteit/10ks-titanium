@@ -95,8 +95,13 @@ function window_open() {
  * @memberof Controllers.Settings
  */
 function tblRowReminder_click() {
-	var win = Alloy.createController('settings/reminder/reminder').getView();
-	win.open();
+	if(Alloy.Globals.IsDebug) {
+		var win = Alloy.createController('settings/reminder/reminder').getView();
+		win.open();	
+	}
+	else {
+		Ti.Platform.openURL('https://www.10000steps.org.au/profile/subscriptions/');
+	}
 }
 
 /**

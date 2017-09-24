@@ -11,9 +11,9 @@ This application allows members of the 10,000 Steps program to record and log th
 				
 Queensland Health provided funding to Central Queensland University for the development of 10,000 Steps.
 			</Label>
+			
+			<Button id="btnWebsite" title="10,000 Steps Website"/>
+			<Button id="btnSendFeedback" title="Send Feedback via Website"/>
 		</ScrollView>
-		
-		<Button id="btnWebsite" title="10,000 Steps Website"/>
-		<Button id="btnSendFeedback" title="Send Feedback via Website"/>
 	</View>
 </Alloy>

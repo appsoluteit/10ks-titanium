@@ -1,0 +1,15 @@
+'.column': {
+	layout: 'vertical',
+	center: '0px',
+	width: '48%',
+	top: 0,
+	//backgroundColor: 'yellow' //For debugging only
+}
+
+".push-down": {
+	top: "10dp"
+}
+
+"Button": {
+	backgroundColor: 'transparent' 
+}

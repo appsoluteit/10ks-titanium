@@ -1,0 +1,32 @@
+<Alloy>
+	<Require src="header" type="view"></Require>
+	
+	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true" top="0" >
+		<View layout="horizontal" top="0">
+			<View class="column" left="1%">
+				<Widget 
+					id="btnStepLog" 
+					class="push-down"
+					src="com.10000steps.badge"
+					image="/common/homepage_button_step-log@2x.png"
+				/>
+				
+				<Button
+					id="btnSettings"
+					class="push-down"
+					style="PLAIN"
+					image="/common/homepage_button_profile-&-settings@2x.png">
+				</Button>
+			</View>
+			
+			<View class="column" right="1%">
+				<Button
+					id="btnStatistics"
+					class="push-down"
+					style="PLAIN"
+					image="/common/homepage_button_progress@2x.png">
+				</Button>
+			</View>
+		</View>
+	</ScrollView>
+</Alloy>
