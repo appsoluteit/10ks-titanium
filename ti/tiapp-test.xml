@@ -2,16 +2,16 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>au.org.steps10000.app</id>
     <name>10,000 Steps</name>
-    <version>3.2.6</version>
+    <version>3.2.7</version>
     <publisher>Appsolute IT Pty Ltd</publisher>
     <url>https://www.10000steps.org.au</url>
-    <description>10K steps</description>
-    <copyright>2017 10000 Steps</copyright>
+    <description>Every step counts. Challenge yourself, friends and workmates to the 10,000 Steps program.</description>
+    <copyright>2017 10,000 Steps</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>8aba2249-729a-45a8-9aaa-10362e73642a</guid>
+    <guid>fb7ab385-9929-4e5a-9888-10362e73642a</guid>
     <ios>
         <plist>
             <dict>
@@ -61,7 +61,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="26" android:versionName="3.2.6">
+        <manifest android:versionCode="27" android:versionName="3.2.7">
             <application android:theme="@style/Theme.AppCompat.Light"/>
             <uses-permission android:name="android.permission.READ_CALENDAR"/>
             <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
@@ -99,7 +99,7 @@
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
-    <property name="appc-app-id" type="string">59767b2a2f6ba6193ab57111</property>
+    <property name="appc-app-id" type="string">59c961a1de6b662bf33709db</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
     <property name="acs-oauth-secret-development" type="string">8our6lFXcQAytKRrFmVUbZ9CuUElMhZR</property>
