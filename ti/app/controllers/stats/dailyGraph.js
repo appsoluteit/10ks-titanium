@@ -120,6 +120,11 @@ function setAndroidMenuItems(monthYears, mostRecentYear, mostRecentMonth) {
 		mostRecentYear = MathHelper.highestOf(years);
 	}
 	
+	if(!mostRecentMonth) {
+		var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
+		mostRecentMonth = MathHelper.highestOf(months);			
+	}
+	
 	var activity = $.dailyGraph.activity;
 	
 	activity.onCreateOptionsMenu = function(e) {
@@ -161,7 +166,7 @@ function showMonthYearPicker(monthYears, currentYear, currentMonth) {
 			var selectedYear = e.data[0].value.split('/')[1] * 1;  //Convert to number
 			
 			if(Ti.Platform.osname === "android") {
-				setAndroidMenuItems(monthYears, selectedMonth, selectedYear);
+				setAndroidMenuItems(monthYears, selectedYear, selectedMonth);
 				$.dailyGraph.activity.invalidateOptionsMenu();
 			}
 			else {
