@@ -1,0 +1,7 @@
+'Window': {
+	layout: 'vertical',
+	backgroundColor: 'white',
+    orientationModes :[
+    	Ti.UI.LANDSCAPE_LEFT
+    ]
+}
