@@ -28,6 +28,29 @@ function getMonthNameFromIndex(index) {
 	return monthNames[index];
 }
 
+function getIndexFromMonthName(strName) {
+	var monthNames = [
+		"January", 
+		"February", 
+		"March", 
+		"April", 
+		"May", 
+		"June", 
+		"July", 
+		"August", 
+		"September", 
+		"October", 
+		"November", 
+		"December"
+	];
+	
+	for(var i = 0; i < monthNames.length; i++) {
+		if(monthNames[i] === strName) {
+			return i;
+		}
+	}	
+};
+
 /**
  * Returns the name of the current month.
  * @returns {String}
@@ -135,6 +158,7 @@ function areDatesEqual(date1, date2) {
 }
 
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
+module.exports.getIndexFromMonthName = getIndexFromMonthName;
 module.exports.getCurrentMonthName = getCurrentMonthName;
 module.exports.getShortDateLabel = getShortDateLabel;
 module.exports.getDateLabel = getDateLabel;

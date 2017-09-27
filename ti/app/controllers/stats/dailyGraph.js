@@ -143,11 +143,11 @@ function setAndroidMenuItems(monthYears, mostRecentYear, mostRecentMonth) {
 $.dailyGraph.setAndroidMenuItems = setAndroidMenuItems;
 
 function showMonthYearPicker(monthYears, currentYear, currentMonth) {	
-	var selectedValue = currentMonth + "/" + currentYear;
+	var selectedValue = DateTimeHelper.getMonthNameFromIndex(currentMonth) + ", " + currentYear;
 	
 	var values = {};
 	monthYears.forEach(function(item) {
-		var tmp = (item.month + 1) + "/" + item.year;
+		var tmp = DateTimeHelper.getMonthNameFromIndex(item.month) + ", " + item.year;
 		values[tmp] = tmp;	
 	});
 	
@@ -162,8 +162,13 @@ function showMonthYearPicker(monthYears, currentYear, currentMonth) {
 	  	Ti.API.info(e);
 	  	
 		if(e.cancel == 0) {		
-			var selectedMonth = e.data[0].value.split('/')[0] - 1; //Convert to number (JSDate style month, 0 indexed)
-			var selectedYear = e.data[0].value.split('/')[1] * 1;  //Convert to number
+			var selectedMonthText = e.data[0].value.split(', ')[0];
+			var selectedYear = e.data[0].value.split(', ')[1] * 1;  //Convert to number
+			var selectedMonth = DateTimeHelper.getIndexFromMonthName(selectedMonthText);
+			
+			//Ti.API.debug("Selected month text: " + selectedMonthText);
+			//Ti.API.debug("Selected month index: " + selectedMonth);
+			//Ti.API.debug("Selected year: " + selectedYear);
 			
 			if(Ti.Platform.osname === "android") {
 				setAndroidMenuItems(monthYears, selectedYear, selectedMonth);
