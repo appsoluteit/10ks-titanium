@@ -3,13 +3,17 @@ var args = $.args;
 (function() {
 	console.log("Loading badge. Args:", args);
 	
-	/*
-	if(args.image) {
-		$.icon.image = args.image;		
-	}
-	*/
+	//On Android, load the image from the widget's local directory. Otherwise the image may not show.
+	//On iOS, load it from the project root. Otherwise the image may be too big.
 	
-	$.icon.image = WPATH('image.png');
+	if(Ti.Platform.osname === "android") {
+		$.icon.image = WPATH('image.png');		
+	}
+	else {
+		if(args.image) {
+			$.icon.image = args.image;		
+		}		
+	}
 	
 	if(args.badge) {
 		$.counter.text = args.badge;		

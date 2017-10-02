@@ -35,7 +35,8 @@ StepsProvider.prototype.getSteps = function(page) {
 		
 		if(e.next) {
 			setTimeout(function() {
-				//Sleep a little so we don't flood the network
+				//Sleep a little so we don't flood the network. Try to keep the delay minimal though, for accounts with
+				//lots of data.
 				
 				me.getSteps(page + 1).then(function(nextResponse) {
 					e.results = e.results.concat(nextResponse.results);
@@ -44,7 +45,7 @@ StepsProvider.prototype.getSteps = function(page) {
 					Ti.API.info("Page " + page + " resolving. Records: " + e.results.length);
 					defer.resolve(e);
 				});
-			}, 200);
+			}, 100); 
 		}
 		else {
 			defer.resolve(e);
@@ -144,22 +145,11 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      			lastUpdatedOn: new Date()
      		};
 
-     		if(!Alloy.Globals.Steps.readByDate(json.stepsDate)) {
-     			Ti.API.debug(item.steps_date + " does not exist yet. Writing to local storage.");
+     		//if(!Alloy.Globals.Steps.readByDate(json.stepsDate)) {
+     		//	Ti.API.debug(item.steps_date + " does not exist yet. Writing to local storage.");
      			Alloy.Globals.Steps.writeSingle(json);	
-     		}
+     		//}
      	});
-     	   
-     	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
-     	Ti.API.info("Models to post: " + toPost.length);
-     	//Ti.API.info(toPost);
-     	
-     	if(toPost.length > 0) {
-	     	//Sleep for a little so we don't flood the network 	
-	     	setTimeout(function() {
-	     		return me.postSteps(toPost);  
-	     	}, 200);  		
-     	}
     }
     
     function getStepsFail(reason) {
@@ -206,8 +196,8 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 			//	theme: 'success'
 			//});
 			
-			Ti.API.info("Sync success. Invoking callback.");
-			callback();    
+			Ti.API.info("Steps post success");
+			//callback();    
     	}, 1000);	
     }
     
@@ -223,12 +213,31 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 		
 		Ti.API.info("Failed to post steps. " + reason);    	
 		
-		callback(reason);
+		//callback(reason);
     }
     
+    //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.
+   
+ 	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
+ 	Ti.API.info("Models to post: " + toPost.length);
+ 	//Ti.API.info(toPost);
+ 	
+ 	if(toPost.length > 0) {
+	    this.postSteps(toPost)
+	    	.then(postStepsSuccess, postStepsFail)
+	    	.then(this.getSteps)
+	    	.then(getStepsSuccess, getStepsFail);
+ 	}
+ 	else {
+ 		this.getSteps()
+ 			.then(getStepsSuccess, getStepsFail);
+ 	}
+    	
+    /*
 	this.getSteps()
 	    .then(getStepsSuccess, getStepsFail)
 	    .then(postStepsSuccess, postStepsFail);
+	*/
 };
 
 module.exports = StepsProvider;

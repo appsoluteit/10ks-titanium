@@ -4,6 +4,11 @@
 	backgroundColor: 'transparent'
 }
 
+"#icon": {
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE
+}
+
 "#badge": {
 	borderRadius: 15,
 	width: 30,
