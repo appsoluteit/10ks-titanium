@@ -95,7 +95,7 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>6.2.2.GA</sdk-version>
+    <sdk-version>5.5.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
@@ -119,5 +119,5 @@
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <!-- Custom Properties -->
     <property name="google-analytics-id" type="string">UA-101176022-1</property>
-    <property name="is-debug" type="bool">false</property>
+    <property name="is-debug" type="bool">true</property>
 </ti:app>
