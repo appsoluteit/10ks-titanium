@@ -59,7 +59,7 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 		if(item) {
 			numSteps = item.stepsTotal;
 			
-			Ti.API.debug("Showing item in row: ", item);
+			//Ti.API.debug("Showing item in row: ", item);
 			
 			if(item.lastSyncedOn) {
 				//After syncing for the first time, these will be equal

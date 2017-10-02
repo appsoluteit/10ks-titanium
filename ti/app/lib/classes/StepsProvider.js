@@ -145,11 +145,17 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      			lastUpdatedOn: new Date()
      		};
 
-     		//if(!Alloy.Globals.Steps.readByDate(json.stepsDate)) {
-     		//	Ti.API.debug(item.steps_date + " does not exist yet. Writing to local storage.");
-     			Alloy.Globals.Steps.writeSingle(json);	
-     		//}
+			//Overwrite any existing items
+			var item = Alloy.Globals.Steps.readByDate(json.stepsDate);
+			if(item) {
+				json.id = item.id;	
+			}
+			
+     		Alloy.Globals.Steps.writeSingle(json);	
      	});
+     	
+     	Ti.API.info("Get steps success");
+     	callback();
     }
     
     function getStepsFail(reason) {
@@ -181,6 +187,7 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 			});	
 			
 			Ti.API.info("Failed to get steps. Reason: " + reason);
+			callback(reason);
      	}   	
     }
     
