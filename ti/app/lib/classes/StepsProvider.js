@@ -146,12 +146,13 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      		};
 
 			//Overwrite any existing items
-			var item = Alloy.Globals.Steps.readByDate(json.stepsDate);
-			if(item) {
-				json.id = item.id;	
+			var existingItem = Alloy.Globals.Steps.readByDate(json.stepsDate);
+			if(existingItem) {
+				json.id = existingItem.id;	
 			}
 			
      		Alloy.Globals.Steps.writeSingle(json);	
+     		Ti.API.info("Finished saving record");
      	});
      	
      	Ti.API.info("Get steps success");
