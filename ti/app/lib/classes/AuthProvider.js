@@ -129,7 +129,6 @@ AuthProvider.prototype.logout = function() {
 		
 		Ti.App.Properties.removeProperty("AuthKey");
 		Ti.App.Properties.removeProperty("UserURL");	
-		Ti.App.Properties.removeProperty("goalSteps");
 		
 		defer.resolve();
 	}

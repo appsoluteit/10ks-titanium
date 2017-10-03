@@ -7,15 +7,10 @@
 
 var args = $.args;
 var APIHelper = require('helpers/APIHelper');
-var SessionHelper = require('helpers/SessionHelper');
 
 function showLogin() {
 	var win = Alloy.createController("auth/login").getView();
 	win.open();
-	
-	win.addEventListener("close", function() {
-		loadGoalSteps();
-	});
 }
 
 /**
@@ -30,50 +25,7 @@ function window_open() {
 	
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 	
-	loadGoalSteps();
-}
-
-function loadGoalSteps() {
-	function onSuccess(response) {
-		if(response.results && response.results.length) {
-			//There may be multiple goals in the response. Just take the first (most recent)
-			var goalSteps = response.results[0].goal * 1;
-			Ti.API.info("Saving goal steps:", goalSteps);
-			
-			if(goalSteps) {
-				$.goalStepsView.txtGoalSteps.value = goalSteps;
-				Ti.App.Properties.setInt("goalSteps", goalSteps);
-			}
-		}
-	}
-	
-	function onFail(reason) {
-		Ti.API.error(reason);
-		
-		if(SessionHelper.isTokenInvalid(reason)) {
-			SessionHelper.showInvalidTokenToast($.goalSteps);
-			
-			setTimeout(showLogin, 2000);
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't fetch your goal setting",
-				duration: 2000,
-				view: $.goalSteps,
-				theme: "error"
-			});	
-		}
-	}
-	
-	APIHelper.get({
-		message: "Fetching your goal setting",
-		url:		"goals/",
-		headers: [{
-				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
-		}],
-		success: 	onSuccess,
-		fail: 		onFail
-	});
+	$.goalStepsView.txtGoalSteps.value = $.args.goalSteps;
 }
 
 /**
@@ -105,9 +57,7 @@ function btnSave_click() {
 	
 	goalSteps = parseInt(goalSteps, 10);
 	
-	function onSuccess(response) {
-		Ti.App.Properties.setInt('goalSteps', goalSteps);
-		
+	function onSuccess(response) {		
 		Alloy.createWidget("com.mcongrove.toast", null, {
 			text: "Goal steps saved",
 			duration: 2000,

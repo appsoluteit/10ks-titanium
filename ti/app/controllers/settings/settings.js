@@ -7,12 +7,15 @@
  * @namespace Controllers.Settings
  */
 
-var FormatHelper = require('helpers/FormatHelper');
+var APIHelper = require('helpers/APIHelper');
 var AuthProvider = require('classes/AuthProvider');
+var FormatHelper = require('helpers/FormatHelper');
 var NavBarButton = require('classes/NavBarButton');
+var SessionHelper = require('helpers/SessionHelper');
 var Tests = require('tests/bootstrap');
 
 var args = $.args;
+var goalSteps = 0;
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -65,14 +68,6 @@ function window_open() {
 		});
 	}
 	
-	//Pre-load the goal steps
-	if(Ti.App.Properties.hasProperty("goalSteps")) {
-		//Note: using snake case for the property 
-		var goalSteps = Ti.App.Properties.getInt("goalSteps");
-		Ti.API.debug("Goal steps from properties:", goalSteps);
-		$.settingsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
-	}
-	
 	if(Alloy.Globals.IsDebug) {
 		var tblRowTests = makeRow("Run Tests");
 		$.settingsView.tblContainer.appendRow(tblRowTests);
@@ -88,6 +83,59 @@ function window_open() {
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
 	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
+	
+	loadGoalSteps();
+}
+
+function loadGoalSteps() {
+	function onSuccess(response) {
+		if(response.results && response.results.length) {
+			//There may be multiple goals in the response. Just take the first (most recent)
+			goalSteps = response.results[0].goal * 1;
+			Ti.API.info("Saving goal steps:", goalSteps);
+			
+			if(goalSteps) {
+				$.settingsView.lblGoalSteps.text = FormatHelper.formatNumber(goalSteps);
+			}
+		}
+	}
+	
+	function onFail(reason) {
+		Ti.API.error(reason);
+		
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.settings);
+			
+			setTimeout(showLogin, 2000);
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't fetch your goal setting",
+				duration: 2000,
+				view: $.settings,
+				theme: "error"
+			});	
+		}
+	}
+	
+	APIHelper.get({
+		message: "Fetching your goal setting",
+		url:		"goals/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+}
+
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
+	
+	win.addEventListener("close", function() {
+		loadGoalSteps();
+	});
 }
 
 /**
@@ -110,6 +158,8 @@ function tblRowReminder_click() {
  */
 function tblRowGoalSteps_click() {
 	var win = Alloy.createController('settings/goalSteps', {
+		goalSteps: goalSteps,
+		
 		callback: function(goalSteps) {
 			var formatted = FormatHelper.formatNumber(goalSteps);
 			$.settingsView.lblGoalSteps.text = formatted;
