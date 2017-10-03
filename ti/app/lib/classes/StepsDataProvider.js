@@ -214,6 +214,13 @@ StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
 StepsDataProvider.prototype.writeSingle = function(model) {
 	var backboneModel = new BackboneModel(model);
 
+	//DEBUG CODE
+	if(backboneModel.steps_date === '2017-09-26') {
+		Ti.API.info("Found target", backboneModel);
+	}
+	
+	//END DEBUG CODE
+	
 	var instance;
 
 	instance = Alloy.createModel('log', backboneModel);
@@ -230,6 +237,8 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 			//Ti.API.debug("Model exists. Updating...");
 			instance.save();
 			
+			//TODO: Don't update the item returned by Array.Filter. This may not be a by-reference return.
+			//Use a classic for-loop and update the record in the array directly by its index.
 			var match = this.models.filter(function(item) {
 				return DateTimeHelper.areDatesEqual(item.stepsDate, model.stepsDate);
 			})[0];
@@ -238,6 +247,11 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 				var existingId = match.id;
 				match = model;
 				match.id = existingId; //keep the PK in tact
+				
+				//DEBUG CODE
+ 				if(backboneModel.steps_date === '2017-09-26') {
+ 					Ti.API.debug("New model", match);
+ 				}
 			}
 			else {
 				Ti.API.error("Instance already exists, but couldn't find it in memory storage");
