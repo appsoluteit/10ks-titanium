@@ -212,18 +212,8 @@ StepsDataProvider.prototype.readByDayForMonth = function(month, year) {
  * @returns {BackboneModel} The backbone model written to storage.
  */
 StepsDataProvider.prototype.writeSingle = function(model) {
-	var backboneModel = new BackboneModel(model);
-
-	//DEBUG CODE
-	if(backboneModel.steps_date === '2017-09-26') {
-		Ti.API.info("Found target", backboneModel);
-	}
-	
-	//END DEBUG CODE
-	
-	var instance;
-
-	instance = Alloy.createModel('log', backboneModel);
+	var backboneModel = new BackboneModel(model);	
+	var instance = Alloy.createModel('log', backboneModel);
 
 	if (instance.isValid()) {
 		if(instance.isNew()) {
@@ -237,24 +227,22 @@ StepsDataProvider.prototype.writeSingle = function(model) {
 			//Ti.API.debug("Model exists. Updating...");
 			instance.save();
 			
-			//TODO: Don't update the item returned by Array.Filter. This may not be a by-reference return.
-			//Use a classic for-loop and update the record in the array directly by its index.
-			var match = this.models.filter(function(item) {
-				return DateTimeHelper.areDatesEqual(item.stepsDate, model.stepsDate);
-			})[0];
+			var bFound = false;
+			for(var i = 0; i < this.models.length; i++) {
+				if(DateTimeHelper.areDatesEqual(this.models[i].stepsDate, model.stepsDate)) {
+					var existingId = this.models[i].id;
+					this.models[i] = model;
+					this.models[i].id = existingId; //keep the PK in tact	
+					
+					bFound = true;				
+				}
+			}
 			
-			if(match) {
-				var existingId = match.id;
-				match = model;
-				match.id = existingId; //keep the PK in tact
-				
-				//DEBUG CODE
- 				if(backboneModel.steps_date === '2017-09-26') {
- 					Ti.API.debug("New model", match);
- 				}
+			if(!bFound) {
+				Ti.API.error("Instance already exists, but couldn't find it in memory storage");				
 			}
 			else {
-				Ti.API.error("Instance already exists, but couldn't find it in memory storage");
+				//Ti.API.debug("Updated model");
 			}
 		}
 	} else {

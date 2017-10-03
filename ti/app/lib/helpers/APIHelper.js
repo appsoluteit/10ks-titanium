@@ -59,6 +59,7 @@ function send(options) {
 		}
 		catch(err) {
 			Ti.API.error('API Caught error: ' + err);
+			req.onerror(err);
 		}
 		
 		if(options.message) {

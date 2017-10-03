@@ -142,6 +142,8 @@ function sync() {
 	
 	var stepsProvider = new StepsProvider();
 	stepsProvider.sync($.log, function(failReason) {
+		Ti.API.info("Sync callback called");
+		
 		if(failReason) {
 			if(failReason === "InvalidToken") {
 				setTimeout(function() {
