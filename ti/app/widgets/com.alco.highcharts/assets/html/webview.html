@@ -57,7 +57,25 @@
 		            xAxis: {
 			            tickInterval: 1,
 			            labels: {
-			                enabled: true
+			                enabled: true,
+			                formatter: function() {			                	
+			                	var labels = [
+			                		'January',
+			                		'February',
+			                		'March',
+			                		'April',
+			                		'May',
+			                		'June',
+			                		'July',
+			                		'August',
+			                		'September',
+			                		'October',
+			                		'November',
+			                		'December'
+			                	];
+			                	
+			                	return labels[this.value - 1].substring(0, 3);
+			                }
 			            }	
 		            },
 		            
