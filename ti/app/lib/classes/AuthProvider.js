@@ -81,8 +81,7 @@ AuthProvider.prototype.getUser = function() {
 		//Set some attributes required by settings, statistics, etc
 		if(response.walker) {
 			Ti.App.Properties.setInt("total_steps", response.walker.total_steps);	
-			Ti.App.Properties.setInt("average_daily_steps", response.walker.average_daily_steps);
-			Ti.App.Properties.setInt("goal_steps", response.walker.goal);		
+			Ti.App.Properties.setInt("average_daily_steps", response.walker.average_daily_steps);		
 		}
 		
 		defer.resolve();
@@ -130,6 +129,7 @@ AuthProvider.prototype.logout = function() {
 		
 		Ti.App.Properties.removeProperty("AuthKey");
 		Ti.App.Properties.removeProperty("UserURL");	
+		Ti.App.Properties.removeProperty("goalSteps");
 		
 		defer.resolve();
 	}
