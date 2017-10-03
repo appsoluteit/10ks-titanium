@@ -3,9 +3,13 @@ var args = $.args;
 (function() {
 	console.log("Loading badge. Args:", args);
 	
+	/*
 	if(args.image) {
 		$.icon.image = args.image;		
 	}
+	*/
+	
+	$.icon.image = WPATH('image.png');
 	
 	if(args.badge) {
 		$.counter.text = args.badge;		

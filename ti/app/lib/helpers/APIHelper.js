@@ -82,6 +82,10 @@ function send(options) {
 		}
 	};
 	
+	if(Alloy.Globals.IsDebug) {
+		Ti.API.debug("Opening connection: " + Alloy.Globals.BaseURL + options.url);	
+	}
+	
 	req.open(options.method, Alloy.Globals.BaseURL + options.url);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	

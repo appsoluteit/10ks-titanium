@@ -119,5 +119,5 @@
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <!-- Custom Properties -->
     <property name="google-analytics-id" type="string">UA-101176022-1</property>
-    <property name="is-debug" type="bool">false</property>
+    <property name="is-debug" type="bool">true</property>
 </ti:app>
