@@ -251,24 +251,24 @@ function load() {
 		
 		confirmDialog.addEventListener('click', function(e) {
 			if(e.index !== e.source.cancel) {
-				try {
-					stepsProvider.sync($.statsView, function() {
-						Ti.API.info("sync complete. Calculating stats");
-						loadPage();
-					});						
-				}
-				catch(e) {
-					if(e==="InvalidToken") {
-						setTimeout(function() {
-							var win = Alloy.createController("auth/login").getView();
-							win.open();
-						
-							win.addEventListener("close", function() {
-								load();
-							});
-						}, 2000);
+				stepsProvider.sync($.statsView, function(failReason) {
+					if(failReason) {
+						if(failReason === "Invalid token.") {
+							setTimeout(function() {
+								var win = Alloy.createController("auth/login").getView();
+								win.open();
+							
+								win.addEventListener("close", function() {
+									load();
+								});
+							}, 2000);
+						}							
 					}
-				}
+					else {
+						Ti.API.info("sync complete. Calculating stats");
+						loadPage();	
+					}
+				});						
 			}
 			else {
 				setTimeout(function() {
