@@ -171,13 +171,13 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 					theme: 'error'
 				});	
 				
-				throw "InvalidToken";
-				
-				Ti.API.info("Unable to sync. Invalid token");
+				Ti.API.info("Failed to get steps Invalid token");
      		}
      		else {
-     			Ti.API.info("Unable to sync. Unknown reason");
-     		}	
+     			Ti.API.info("Unable to get steps. Unknown reason");
+     		}
+     		
+     		callback(reason.detail);	
      	}
      	else {
 			Alloy.createWidget('com.mcongrove.toast', null, {

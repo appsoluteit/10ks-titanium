@@ -145,7 +145,7 @@ function sync() {
 		Ti.API.info("Sync callback called");
 		
 		if(failReason) {
-			if(failReason === "InvalidToken") {
+			if(failReason === "Invalid token.") {
 				setTimeout(function() {
 					var win = Alloy.createController("auth/login").getView();
 					win.open();

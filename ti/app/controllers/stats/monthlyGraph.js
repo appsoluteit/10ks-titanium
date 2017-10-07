@@ -80,7 +80,8 @@ function showChart(args, year) {
 		
 		var customOptions = {
 			showGoalSteps: false,
-			chartHeight: viewHeight			
+			chartHeight: viewHeight,
+			useMonthFormatter: 1	
 		};
 		
 		$.monthlyGraphView.monthlyGraphChart.loadChart(chartOptions, customOptions);	
