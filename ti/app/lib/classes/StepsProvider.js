@@ -21,7 +21,7 @@ function StepsProvider() { }
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
-StepsProvider.prototype.getSteps = function(page) {
+StepsProvider.prototype.getSteps = function(page, onProgress) {
 	var defer = q.defer();
 	var me = this;
 	
@@ -33,12 +33,22 @@ StepsProvider.prototype.getSteps = function(page) {
 		Ti.API.info("Get steps success. Page = ", page);
 		//Ti.API.info("Response", e);
 		
+		var pageSize = 100;
+		var percentComplete = Math.round(((page * pageSize) / e.count) * 100);
+		if(percentComplete > 100) {
+			percentComplete = 100;
+		}
+		
+		if(typeof(onProgress) === 'function') {
+			onProgress("Downloading..." + percentComplete + "%");		
+		}
+		
 		if(e.next) {
 			setTimeout(function() {
 				//Sleep a little so we don't flood the network. Try to keep the delay minimal though, for accounts with
 				//lots of data.
 				
-				me.getSteps(page + 1).then(function(nextResponse) {
+				me.getSteps(page + 1, onProgress).then(function(nextResponse) {
 					e.results = e.results.concat(nextResponse.results);
 					//Note: The JS engine here doesn't support Array.push.apply.
 					
@@ -78,7 +88,7 @@ StepsProvider.prototype.getSteps = function(page) {
  * @todo incomplete
  * @returns Promise
  */
-StepsProvider.prototype.postSteps = function(models) {
+StepsProvider.prototype.postSteps = function(models, count, onProgress) {
 	var defer = q.defer();
 	var me = this;
 	
@@ -86,14 +96,16 @@ StepsProvider.prototype.postSteps = function(models) {
 	
 	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
 	
-	models.pop();
-	
-	Ti.API.info("Posting model:", data);
-	Ti.API.info("# remaining: " + models.length);
-	
-	function onSuccess(e) {
-		Ti.API.info("Post steps success", JSON.stringify(e));
+	if(typeof(onProgress) === 'function') {
+		Ti.API.info("Posted " + models.length + " of " + count);
 		
+		var percentComplete = Math.round((count - models.length) / count * 100);
+		onProgress("Uploading..." + percentComplete + "%");		
+	}
+	
+	models.pop();
+		
+	function onSuccess(e) {		
 		Alloy.Globals.Steps.saveAsSynced(jsonModel.id);
 		
 		if(models.length === 0) {
@@ -101,8 +113,8 @@ StepsProvider.prototype.postSteps = function(models) {
 			defer.resolve();			
 		}
 		else {
-			me.postSteps(models).then(function() {
-				Ti.Api.info("Resolving instance: " + models.length);
+			me.postSteps(models, count, onProgress).then(function onSuccess() {
+				Ti.API.info("Resolving instance: " + models.length);
 				defer.resolve();
 			});
 		}
@@ -127,11 +139,15 @@ StepsProvider.prototype.postSteps = function(models) {
 	return defer.promise;
 };
 
-StepsProvider.prototype.sync = function(rootView, callback) {
+StepsProvider.prototype.sync = function(rootView, options) {
     var me = this;
     
     function getStepsSuccess(steps) {
     	Ti.API.info("Get steps success. Count = " + steps.count + ", Total = " + steps.results.length);
+    	
+    	if(typeof(options.onProgress === 'function')) {
+    		options.onProgress("Saving steps...");	
+    	}
     	
      	steps.results.forEach(function(item) {
      		var json = {
@@ -152,11 +168,9 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 			}
 			
      		Alloy.Globals.Steps.writeSingle(json);	
-     		Ti.API.info("Finished saving record");
      	});
      	
-     	Ti.API.info("Get steps success");
-     	callback();
+     	options.onComplete();
     }
     
     function getStepsFail(reason) {
@@ -177,7 +191,7 @@ StepsProvider.prototype.sync = function(rootView, callback) {
      			Ti.API.info("Unable to get steps. Unknown reason");
      		}
      		
-     		callback(reason.detail);	
+     		options.onComplete(reason.detail);	
      	}
      	else {
 			Alloy.createWidget('com.mcongrove.toast', null, {
@@ -188,25 +202,15 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 			});	
 			
 			Ti.API.info("Failed to get steps. Reason: " + reason);
-			callback(reason);
+			options.onComplete(reason);
      	}   	
     }
     
     function postStepsSuccess() {
     	Ti.API.info("Post steps success");
     	
-    	setTimeout(function() {
-    		//If we stack these widgets too fast, things can break.
-			//Alloy.createWidget('com.mcongrove.toast', null, {
-			//	text: 'Steps synced successfully!',
-			//	duration: 2000,
-			//	view: rootView,
-			//	theme: 'success'
-			//});
-			
-			Ti.API.info("Steps post success");
-			//callback();    
-    	}, 1000);	
+		me.getSteps(1, options.onProgress)
+		  .then(getStepsSuccess, getStepsFail);
     }
     
     function postStepsFail(reason) {
@@ -221,31 +225,21 @@ StepsProvider.prototype.sync = function(rootView, callback) {
 		
 		Ti.API.info("Failed to post steps. " + reason);    	
 		
-		//callback(reason);
+		options.onComplete(reason);
     }
     
-    //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.
-   
+    //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.  
  	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
  	Ti.API.info("Models to post: " + toPost.length);
- 	//Ti.API.info(toPost);
  	
  	if(toPost.length > 0) {
-	    this.postSteps(toPost)
-	    	.then(postStepsSuccess, postStepsFail)
-	    	.then(this.getSteps)
-	    	.then(getStepsSuccess, getStepsFail);
+	    this.postSteps(toPost, toPost.length, options.onProgress)
+	    	.then(postStepsSuccess, postStepsFail);
  	}
  	else {
- 		this.getSteps()
+ 		this.getSteps(1, options.onProgress)
  			.then(getStepsSuccess, getStepsFail);
  	}
-    	
-    /*
-	this.getSteps()
-	    .then(getStepsSuccess, getStepsFail)
-	    .then(postStepsSuccess, postStepsFail);
-	*/
 };
 
 module.exports = StepsProvider;

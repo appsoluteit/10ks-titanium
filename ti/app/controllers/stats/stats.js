@@ -251,23 +251,53 @@ function load() {
 		
 		confirmDialog.addEventListener('click', function(e) {
 			if(e.index !== e.source.cancel) {
-				stepsProvider.sync($.statsView, function(failReason) {
-					if(failReason) {
-						if(failReason === "Invalid token.") {
-							setTimeout(function() {
-								var win = Alloy.createController("auth/login").getView();
-								win.open();
+				
+				var onComplete = function(message) {
+					setTimeout(function() {
+						if(message) {
+							if(message === "Invalid token.") {
+								setTimeout(function() {
+									var win = Alloy.createController("auth/login").getView();
+									win.open();
+								
+									win.addEventListener("close", function() {
+										load();
+									});
+								}, 2000);
+							}
+							else {
+								Ti.UI.createAlertDialog({
+									buttonNames: ['OK'],
+									message: 'Sync completed with error: ' + message,
+									title: 'Done!'	
+								}).show();		
+								
+								loadPage();	
+							}								
+						}
+						else {
+							Ti.UI.createAlertDialog({
+								buttonNames: ['OK'],
+								message: 'Sync complete',
+								title: 'Done!'	
+							}).show();		
 							
-								win.addEventListener("close", function() {
-									load();
-								});
-							}, 2000);
-						}							
-					}
-					else {
-						Ti.API.info("sync complete. Calculating stats");
-						loadPage();	
-					}
+							loadPage();				
+						}
+						
+					}, 1000);
+					
+					spinner.hide();					
+				};
+				
+				var onProgress = function(message) {
+					Ti.API.info("On progress: " + message);
+					spinner.show(message);	
+				};
+				
+				stepsProvider.sync($.statsView, {
+					onComplete: onComplete,
+					onProgress: onProgress
 				});						
 			}
 			else {
