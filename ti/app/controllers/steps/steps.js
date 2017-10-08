@@ -141,27 +141,52 @@ function sync() {
 	spinner.show("Syncing...");
 	
 	var stepsProvider = new StepsProvider();
-	stepsProvider.sync($.log, function(failReason) {
-		Ti.API.info("Sync callback called");
-		
-		if(failReason) {
-			if(failReason === "Invalid token.") {
-				setTimeout(function() {
-					var win = Alloy.createController("auth/login").getView();
-					win.open();
+	
+	var onComplete = function(message) {
+		setTimeout(function() {
+			if(message) {
+				if(message === "Invalid token.") {
+					setTimeout(function() {
+						var win = Alloy.createController("auth/login").getView();
+						win.open();
 					
-					win.addEventListener("close", function() {
-						sync();
-					});
-				}, 2000);					
+						win.addEventListener("close", function() {
+							sync();
+						});
+					}, 2000);
+				}
+				else {
+					Ti.UI.createAlertDialog({
+						buttonNames: ['OK'],
+						message: 'Sync completed with error: ' + message,
+						title: 'Done!'	
+					}).show();		
+				}								
 			}
-		}
-		else {
-			$.tblDays.setData([]);
-			populateRows();	
-		}
+			else {
+				Ti.UI.createAlertDialog({
+					buttonNames: ['OK'],
+					message: 'Sync complete',
+					title: 'Done!'	
+				}).show();		
+				
+				$.tblDays.setData([]);
+				populateRows();				
+			}
+			
+		}, 1000);
 		
-		spinner.hide();
+		spinner.hide();					
+	};
+	
+	var onProgress = function(message) {
+		Ti.API.info("On progress: " + message);
+		spinner.show(message);	
+	};
+	
+	stepsProvider.sync($.log, {
+		onComplete: onComplete,
+		onProgress: onProgress
 	});	
 }
 

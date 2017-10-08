@@ -35,21 +35,39 @@ function loginIfNeeded() {
 				if(e.index !== e.source.cancel) {
 					spinner.show("Syncing...");
 					
-					//This may throw an InvalidToken exception, but since the user had "just" logged in,
-					//that should never happen.
-					stepsProvider.sync($.home, function() {
+					var onComplete = function(message) {
 						setTimeout(function() {
-							//Showing a toast here seems problematic (perhaps due to the window not having loaded yet).
-							Ti.UI.createAlertDialog({
-								buttonNames: ['OK'],
-								message: 'Sync complete',
-								title: 'Done!'	
-							}).show();
+							if(message) {
+								Ti.UI.createAlertDialog({
+									buttonNames: ['OK'],
+									message: 'Sync completed with error: ' + message,
+									title: 'Done!'	
+								}).show();									
+							}
+							else {
+								Ti.UI.createAlertDialog({
+									buttonNames: ['OK'],
+									message: 'Sync complete',
+									title: 'Done!'	
+								}).show();					
+							}
 							
 						}, 1000);
 						
-						spinner.hide();
-					});						
+						spinner.hide();					
+					};
+					
+					var onProgress = function(message) {
+						Ti.API.info("On progress: " + message);
+						spinner.show(message);	
+					};
+					
+					//This may throw an InvalidToken exception, but since the user had "just" logged in,
+					//that should never happen.
+					stepsProvider.sync($.home, {
+						onComplete: onComplete,
+						onProgress: onProgress
+					});			
 				}
 			});
 			
