@@ -83,5 +83,8 @@
 					0
 			</Label>
 		</View>
+		
+		<Label id="lblLastSyncedOn"></Label>
+		<Label id="lblLastUpdatedOn"></Label>
 	</View>
 </Alloy>

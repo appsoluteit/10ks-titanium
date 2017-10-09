@@ -52,19 +52,16 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 	
 	//Don't add the # of steps if its a 'Load More' button
 	if(!isLoadMoreButton) {
-		var color = "red";
+		var color = "#75CFFB"; //synced blue colour
 		var numSteps = 0;
 		var item = Alloy.Globals.Steps.readByDate(dateObj);
 		
 		if(item) {
 			numSteps = item.stepsTotal;
 			
-			//Ti.API.debug("Showing item in row: ", item);
-			
-			if(item.lastSyncedOn) {
-				//After syncing for the first time, these will be equal
-				if(item.lastSyncedOn.getTime() >= item.lastUpdatedOn.getTime()) {
-					color = "#75CFFB";	
+			if(item.lastSyncedOn && item.lastUpdatedOn) {
+				if(item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
+					color = "red";	
 				}
 			}
 		}	

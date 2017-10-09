@@ -66,6 +66,21 @@ function window_open() {
 		$.logEntryView.txtVigorousMins.value = item.vigorousMins;
 		
 		calculateTotal();
+		
+		if(Alloy.Globals.IsDebug) {
+			var strLastSyncedOn = "Never";
+			if(item.lastSyncedOn) {
+				strLastSyncedOn = item.lastSyncedOn.getTime();	
+			}
+			
+			var strLastUpdatedOn = "Never";
+			if(item.lastUpdatedOn) {
+				strLastUpdatedOn = item.lastUpdatedOn.getTime();	
+			}
+			
+			$.logEntryView.lblLastSyncedOn.text = "Last synced on " + strLastSyncedOn;
+			$.logEntryView.lblLastUpdatedOn.text = "Last updated on " + strLastUpdatedOn;
+		}
 	}
 	else {
 		item = {};
