@@ -158,7 +158,8 @@ StepsProvider.prototype.sync = function(rootView, options) {
      			moderateMins: item.moderate,
      			stepsDate: new Date(item.steps_date),
      			lastSyncedOn: new Date(),
-     			lastUpdatedOn: new Date()
+     			lastUpdatedOn: null
+     			//lastUpdatedOn: new Date()
      		};
 
 			//Overwrite any existing items
