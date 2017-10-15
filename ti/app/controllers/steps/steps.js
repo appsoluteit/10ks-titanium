@@ -193,6 +193,8 @@ function sync() {
  */
 function populateRows() {	
 	var today = new Date();
+	Ti.API.info("Today: ", today);
+	
 	addDateRow("Today", today);
 	
 	var yesterday = DateTimeHelper.getDayBefore(today);

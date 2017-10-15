@@ -8,6 +8,7 @@
  */
 
 var APIHelper = require('helpers/APIHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var q = require('q');
 
 /**
@@ -156,7 +157,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
      			activityPart: item.activity_part,
      			vigorousMins: item.vigorous,
      			moderateMins: item.moderate,
-     			stepsDate: new Date(item.steps_date),
+     			stepsDate: DateTimeHelper.localise(new Date(item.steps_date)),
      			lastSyncedOn: new Date(),
      			lastUpdatedOn: null
      			//lastUpdatedOn: new Date()
@@ -168,6 +169,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
 				json.id = existingItem.id;	
 			}
 			
+			Ti.API.info("Writing date ", item.steps_date);
      		Alloy.Globals.Steps.writeSingle(json);	
      	});
      	
@@ -232,6 +234,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
     //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.  
  	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
  	Ti.API.info("Models to post: " + toPost.length);
+ 	Ti.API.info("First model: " + JSON.stringify(toPost[0]));
  	
  	if(toPost.length > 0) {
 	    this.postSteps(toPost, toPost.length, options.onProgress)

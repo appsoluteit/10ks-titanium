@@ -36,6 +36,14 @@ function JsonModel(model) {
 		
 		this.stepsDate = new Date(model.get('steps_date'));
 		
+		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
+			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
+			this.stepsDate = undefined;
+		}
+		else {
+			this.stepsDate = DateTimeHelper.localise(this.stepsDate);	
+		}
+		
 		//the engine doesn't like creating a date via ticks
 		//passed to the constructor. Do it this way.
 		
@@ -44,11 +52,6 @@ function JsonModel(model) {
 		
 		this.lastSyncedOn = new Date();
 		this.lastSyncedOn.setTime(model.get('last_synced_on'));
-
-		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
-			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
-			this.stepsDate = undefined;
-		}
 
 		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
 			Ti.API.error(this.lastUpdatedOn + " is not a lastUpdatedOn date. Setting to undefined. Source = " + model.get('last_updated_on'));
@@ -153,10 +156,15 @@ StepsDataProvider.prototype.readByDate = function(dateObj) {
  */
 StepsDataProvider.prototype.readWhereNeedsSyncing = function() {
 	return this.models.filter(function(item) {
-		if (!item.lastUpdatedOn || !item.lastSyncedOn) {
-			//lastUpdatedOn or lastSyncedOn are undefined. We need to sync this item.
+		if (!item.lastSyncedOn) {
+			//The item has never been synced. We need to sync this item.
 			return true;
-		} else if (item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
+		}
+		else if(!item.lastUpdatedOn) {
+			//The item has never been updated. Skip it.
+			return false;
+		} 
+		else if (item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
 			//The item has been updated since it was last synced. Sync it again.
 			return true;
 		} else {
