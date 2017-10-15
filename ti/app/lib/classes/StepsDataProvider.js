@@ -153,10 +153,15 @@ StepsDataProvider.prototype.readByDate = function(dateObj) {
  */
 StepsDataProvider.prototype.readWhereNeedsSyncing = function() {
 	return this.models.filter(function(item) {
-		if (!item.lastUpdatedOn || !item.lastSyncedOn) {
-			//lastUpdatedOn or lastSyncedOn are undefined. We need to sync this item.
+		if (!item.lastSyncedOn) {
+			//The item has never been synced. We need to sync this item.
 			return true;
-		} else if (item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
+		}
+		else if(!item.lastUpdatedOn) {
+			//The item has never been updated. Skip it.
+			return false;
+		} 
+		else if (item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
 			//The item has been updated since it was last synced. Sync it again.
 			return true;
 		} else {

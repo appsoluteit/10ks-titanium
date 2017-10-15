@@ -232,6 +232,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
     //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.  
  	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
  	Ti.API.info("Models to post: " + toPost.length);
+ 	Ti.API.info("First model: " + JSON.stringify(toPost[0]));
  	
  	if(toPost.length > 0) {
 	    this.postSteps(toPost, toPost.length, options.onProgress)
