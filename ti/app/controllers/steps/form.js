@@ -59,9 +59,10 @@ function window_open() {
 	Ti.API.info("Searching for date: " + args.date);
 	
 	item = Alloy.Globals.Steps.readByDate(args.date);
-	Ti.API.info("Found match:", item.stepsDate);
 	
 	if(item) {
+		Ti.API.info("Found match:", item.stepsDate);
+	
 		$.logEntryView.txtStepsWalked.value = item.stepsWalked;
 		$.logEntryView.txtModerateMins.value = item.moderateMins;
 		$.logEntryView.txtVigorousMins.value = item.vigorousMins;

@@ -8,6 +8,7 @@
  */
 
 var APIHelper = require('helpers/APIHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var q = require('q');
 
 /**
@@ -156,7 +157,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
      			activityPart: item.activity_part,
      			vigorousMins: item.vigorous,
      			moderateMins: item.moderate,
-     			stepsDate: new Date(item.steps_date),
+     			stepsDate: DateTimeHelper.localise(new Date(item.steps_date)),
      			lastSyncedOn: new Date(),
      			lastUpdatedOn: null
      			//lastUpdatedOn: new Date()
@@ -168,6 +169,7 @@ StepsProvider.prototype.sync = function(rootView, options) {
 				json.id = existingItem.id;	
 			}
 			
+			Ti.API.info("Writing date ", item.steps_date);
      		Alloy.Globals.Steps.writeSingle(json);	
      	});
      	

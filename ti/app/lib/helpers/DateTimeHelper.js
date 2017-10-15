@@ -158,14 +158,23 @@ function areDatesEqual(date1, date2) {
 }
 
 /**
- * Returns a date representing dateObj without a timezone attached.
+ * Returns a date localised to the device timezone.
  */
-function removeTimezone(dateObj) {
-	var y = dateObj.getFullYear();
-	var m = dateObj.getMonth() + 1;
-	var d = dateObj.getDate();
+function localise(dateObj) {	
+	var localTimezoneMins = dateObj.getTimezoneOffset();
+	//Ti.API.info("Local timezone hours: " + localTimezoneMins / 60);
 	
-	return new Date(y + "-" + m + "-" + d);
+	var localTimezoneMs = localTimezoneMins * 60000; //in milliseconds
+	//Ti.API.info("Local timezone ms: " + localTimezoneMs);
+	
+	//Undo whatever time adjustment the JS engine will do to the local time.
+	//Eg: if the local timezone is UTC-6, apply t - (-6) = t + 6 = UTC+0 time.
+	var localTime = new Date(dateObj.getTime() + localTimezoneMs);
+    
+    //Ti.API.info("Original date", dateObj);
+    //Ti.API.info("Local date", localTime);
+    
+    return localTime;
 }
 
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
@@ -177,4 +186,4 @@ module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
 module.exports.isValidDate = isValidDate;
 module.exports.areDatesEqual = areDatesEqual;
-module.exports.removeTimezone = removeTimezone;
+module.exports.localise = localise;

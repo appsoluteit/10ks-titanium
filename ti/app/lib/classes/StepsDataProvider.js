@@ -36,6 +36,14 @@ function JsonModel(model) {
 		
 		this.stepsDate = new Date(model.get('steps_date'));
 		
+		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
+			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
+			this.stepsDate = undefined;
+		}
+		else {
+			this.stepsDate = DateTimeHelper.localise(this.stepsDate);	
+		}
+		
 		//the engine doesn't like creating a date via ticks
 		//passed to the constructor. Do it this way.
 		
@@ -44,11 +52,6 @@ function JsonModel(model) {
 		
 		this.lastSyncedOn = new Date();
 		this.lastSyncedOn.setTime(model.get('last_synced_on'));
-
-		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
-			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
-			this.stepsDate = undefined;
-		}
 
 		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
 			Ti.API.error(this.lastUpdatedOn + " is not a lastUpdatedOn date. Setting to undefined. Source = " + model.get('last_updated_on'));
