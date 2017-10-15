@@ -56,9 +56,10 @@ function window_open() {
 		$.window.title = args.title;
 	}	
 	
-	item = Alloy.Globals.Steps.readByDate(args.date);
+	Ti.API.info("Searching for date: " + args.date);
 	
-	Ti.API.info("Found match:", item);
+	item = Alloy.Globals.Steps.readByDate(args.date);
+	Ti.API.info("Found match:", item.stepsDate);
 	
 	if(item) {
 		$.logEntryView.txtStepsWalked.value = item.stepsWalked;

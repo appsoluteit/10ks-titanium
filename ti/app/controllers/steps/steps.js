@@ -192,7 +192,13 @@ function sync() {
  * @memberof Controllers.Steps
  */
 function populateRows() {	
+	//Ti.API.info(new Date());
 	var today = new Date();
+	var userOffset = today.getTimezoneOffset() * 60000; // [min*60000 = ms]
+	today = new Date(today.getTime() + userOffset);
+	
+	Ti.API.info("Today: ", today);
+	
 	addDateRow("Today", today);
 	
 	var yesterday = DateTimeHelper.getDayBefore(today);

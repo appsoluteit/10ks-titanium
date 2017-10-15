@@ -157,6 +157,17 @@ function areDatesEqual(date1, date2) {
 	return match;
 }
 
+/**
+ * Returns a date representing dateObj without a timezone attached.
+ */
+function removeTimezone(dateObj) {
+	var y = dateObj.getFullYear();
+	var m = dateObj.getMonth() + 1;
+	var d = dateObj.getDate();
+	
+	return new Date(y + "-" + m + "-" + d);
+}
+
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getIndexFromMonthName = getIndexFromMonthName;
 module.exports.getCurrentMonthName = getCurrentMonthName;
@@ -166,3 +177,4 @@ module.exports.getMonthLabel = getMonthLabel;
 module.exports.getDayBefore = getDayBefore;
 module.exports.isValidDate = isValidDate;
 module.exports.areDatesEqual = areDatesEqual;
+module.exports.removeTimezone = removeTimezone;
