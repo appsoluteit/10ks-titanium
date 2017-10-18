@@ -119,7 +119,7 @@ function loadGoalSteps() {
 	}
 	
 	APIHelper.get({
-		message: "Fetching your goal setting",
+		message: "Loading Goal Steps",
 		url:		"goals/",
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
