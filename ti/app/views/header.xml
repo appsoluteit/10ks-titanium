@@ -1,17 +1,13 @@
 <Alloy>
 	<View id="header" height="Ti.UI.SIZE" layout="vertical">
 		<ImageView 
-			top="0px"
-			height="90dp"
-			width="Ti.UI.FILL"
-			image="/common/homepage_logo_background@2x.png">
+			id="background"
+			image="/common/home/logo-bg@2x.png">
 		</ImageView>
 		
 		<ImageView
-			top="-60dp"
-			height="120dp"
-			width="auto"
-			image="/common/homepage_logo@2x.png">
+			id="logo"
+			image="/common/home/logo@2x.png">
 		</ImageView>
 	</View>
 </Alloy>

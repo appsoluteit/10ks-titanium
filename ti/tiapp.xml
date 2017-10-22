@@ -117,7 +117,8 @@
     <property name="appc-org-id" type="string">100030337</property>
     <property name="appc-creator-user-id" type="string">9844e344-b67c-4cae-9c0c-297593c53cf6</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
+    
     <!-- Custom Properties -->
     <property name="google-analytics-id" type="string">UA-101176022-1</property>
-    <property name="is-debug" type="bool">true</property>
+    <property name="is-debug" type="bool">false</property>
 </ti:app>

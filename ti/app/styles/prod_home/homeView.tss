@@ -10,6 +10,35 @@
 	top: "10dp"
 }
 
+//For Android
 "Button": {
 	backgroundColor: 'transparent' 
+}
+
+//Increased button sizes for iPad
+"#btnStepLog": {
+	image: "/common/home/steps@2x.png"
+}
+
+"#btnStepLog[platform=ios formFactor=tablet]": {
+	image: "/common/home/steps-ipad@2x.png",
+	//backgroundColor: "blue"
+}
+
+"#btnSettings": {
+	image: "/common/home/settings@2x.png"
+}
+
+"#btnSettings[platform=ios formFactor=tablet]": {
+	image: "/common/home/settings-ipad@2x.png",
+	//backgroundColor: "blue"
+}
+
+"#btnStatistics": {
+	image: "/common/home/stats@2x.png"
+}
+
+"#btnStatistics[platform=ios formFactor=tablet]": {
+	image: "/common/home/stats-ipad@2x.png",
+	//backgroundColor: "blue"
 }
