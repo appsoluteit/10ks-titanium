@@ -8,21 +8,18 @@
 					id="btnStepLog" 
 					class="push-down"
 					src="com.10000steps.badge"
-					image="/common/homepage_button_step-log@2x.png"
 				/>
 				
 				<Button
 					id="btnChallenges"
 					class="push-down"
-					style="PLAIN"
-					image="/common/homepage_button_ichallenges@2x.png">
+					style="PLAIN">
 				</Button>
 				
 				<Button
 					id="btnSettings"
 					class="push-down"
-					style="PLAIN"
-					image="/common/homepage_button_profile-&-settings@2x.png">
+					style="PLAIN">
 				</Button>
 			</View>
 			
@@ -30,15 +27,13 @@
 				<Button
 					id="btnStatistics"
 					class="push-down"
-					style="PLAIN"
-					image="/common/homepage_button_progress@2x.png">
+					style="PLAIN">
 				</Button>
 				
 				<Button
 					id="btnTournaments"
 					class="push-down"
-					style="PLAIN"
-					image="/common/homepage_button_friend-challenges@2x.png">
+					style="PLAIN">
 				</Button>
 			</View>
 		</View>
