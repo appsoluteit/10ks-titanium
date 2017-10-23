@@ -1,0 +1,24 @@
+"#background": {
+	top: "0px",
+	height: "90dp",
+	width: Ti.UI.FILL
+}
+
+"#logo": {
+	top: "-60dp",
+	height: "120dp",
+	width: "auto"
+}
+
+/* iPad */
+"#background[platform=ios formFactor=tablet]": {
+	top: "0px",
+	height: "160dp",
+	width: Ti.UI.FILL
+}
+
+"#logo[platform=ios formFactor=tablet]": {
+	top: "-120dp",
+	height: "200dp",
+	width: "auto"
+}

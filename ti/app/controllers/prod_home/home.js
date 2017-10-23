@@ -221,10 +221,12 @@ function androidBack_click() {
  * @memberOf Controllers.Home
  */
 function window_open() {	
+	//Set event handlers
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
 	
+	//Load logic
 	window_load();
 }
 
