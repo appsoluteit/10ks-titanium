@@ -64,6 +64,10 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 					color = "red";	
 				}
 			}
+			else if(!item.lastSyncedOn) {
+				//The item has never been synced. Mark it as red.
+				color = "red";
+			}
 		}	
 		
 		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
