@@ -1,28 +1,27 @@
 "#container": {
 	height: Ti.UI.SIZE,
 	width: Ti.UI.SIZE,
-	backgroundColor: 'transparent'
+	backgroundColor: 'yellow' //debug
+	//backgroundColor: 'transparent'
 }
 
 "#icon": {
-	height: Ti.UI.SIZE,
-	width: Ti.UI.SIZE
+	height: '221dp',
+	width: '196dp',
+	
+	//height: Ti.UI.SIZE,
+	//width: Ti.UI.SIZE
 }
 
 "#badge": {
-	borderRadius: 15,
-	width: 30,
-	height: 30,
 	right: 0,
 	top: 0,
 	backgroundColor: 'red',
+	//Other properties set in widget.js
 }
 
 "#counter": {
 	color: 'white',
-	font: {
-		fontSize: '18dp',
-	},
 	textAlign: 'center',
 	width: Ti.UI.FILL
 }
