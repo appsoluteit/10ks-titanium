@@ -8,21 +8,43 @@
 					id="btnStepLog" 
 					class="push-down"
 					src="com.10000steps.badge"
+					platform="ios"
 				/>
+				
+				<ImageView
+					id="btnStepLog"
+					class="push-down"
+					style="PLAIN"
+					platform="android">
+				</ImageView>
 				
 				<Button
 					id="btnSettings"
 					class="push-down"
+					platform="ios"
 					style="PLAIN">
 				</Button>
+				
+				<ImageView
+					id="btnSettings"
+					class="push-down"
+					platform="android">
+				</ImageView>
 			</View>
 			
 			<View class="column" right="1%">
 				<Button
 					id="btnStatistics"
 					class="push-down"
+					platform="ios"
 					style="PLAIN">
 				</Button>
+				
+				<ImageView
+					id="btnStatistics"
+					class="push-down"
+					platform="android">
+				</ImageView>
 			</View>
 		</View>
 	</ScrollView>

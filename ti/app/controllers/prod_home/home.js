@@ -238,11 +238,22 @@ function window_load() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Home"
 	});
-	
+		
 	loginIfNeeded();
 	
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 	
 	Ti.API.info("Number of unsynced steps: " + numSteps);
-	$.homeView.btnStepLog.setBadge(numSteps);
+	
+	if(Ti.Platform.osname === "android") {
+		if(numSteps === 0) {
+			$.homeView.btnStepLog.image = '/common/home/steps@2x.png';
+		}
+		else {
+			$.homeView.btnStepLog.image = '/steps/steps_' + numSteps + '.png';	
+		}
+	}
+	else {
+		$.homeView.btnStepLog.setBadge(numSteps);			
+	}
 }
