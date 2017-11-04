@@ -1,9 +1,11 @@
 <Alloy>
 	<TableView id="tblContainer" class="margin-10">
 		<!-- Reminder to log steps-->
+		<!--
 		<TableViewRow id="tblRowReminder">
 			<Label class="row-label">Reminder to Log Steps</Label>
 		</TableViewRow>
+		-->
 		
 		<!-- Goal Steps -->
 		<TableViewRow id="tblRowGoalSteps">
