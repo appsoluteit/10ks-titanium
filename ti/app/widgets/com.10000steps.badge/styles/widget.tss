@@ -1,16 +1,16 @@
 "#container": {
 	height: Ti.UI.SIZE,
 	width: Ti.UI.SIZE,
-	backgroundColor: 'yellow' //debug
-	//backgroundColor: 'transparent'
+	//backgroundColor: 'yellow' //debug
+	backgroundColor: 'transparent'
 }
 
 "#icon": {
-	height: '221dp',
-	width: '196dp',
+	//height: '221dp',
+	//width: '196dp',
 	
-	//height: Ti.UI.SIZE,
-	//width: Ti.UI.SIZE
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE
 }
 
 "#badge": {

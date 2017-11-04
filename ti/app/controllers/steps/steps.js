@@ -77,8 +77,21 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {
 			textAlign: "right",
 			color: color,
 			text: numStepsStr,
-			width: Ti.UI.SIZE
+			width: Ti.UI.SIZE,
+			font: {
+				fontFamily: 'Arial',
+				fontSize: '20sp',
+				fontWeight: 'normal'
+			}
 		});
+		
+		if(color != "red") {
+			labelRight.font = {
+				fontFamily: 'Arial',
+				fontSize: '20sp',
+				fontWeight: 'bold'
+			};
+		}
 		
 		var chevron = null;
 		
