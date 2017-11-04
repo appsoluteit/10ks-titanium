@@ -96,10 +96,12 @@ function hasSteps(args) {
 
 function setiOSNavButtons(monthYears, mostRecentYear, mostRecentMonth) {
 	if(Ti.Platform.osname !== "android") {
+		/*
 		$.dailyGraphWindow.leftNavButton = NavBarButton.createLeftNavButton({
 			text: 'Home',
 			onClick: btnBack_click	
 		});
+		*/
 		
 		$.dailyGraphWindow.rightNavButton = NavBarButton.createRightNavButton({
 			text: DateTimeHelper.getMonthNameFromIndex(mostRecentMonth) + ", " + mostRecentYear,
