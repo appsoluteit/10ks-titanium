@@ -16,9 +16,45 @@ Contact us or send feedback via the Website.
 
 This initiative is funded by the Queensland Government.
 			</Label>
-			
-			<Button id="btnWebsite" title="10,000 Steps Website"/>
-			<Button id="btnSendFeedback" title="Send Feedback via Website"/>
+		
+			<!-- 10,000 Steps Website -->
+			<Button 
+				id="btnWebsite" 
+				title="10,000 Steps Website"
+				font="{ fontSize: 10sp }"
+				platform="android"
+			/>
+				
+			<Widget
+				id="btnWebsite"
+				src="nl.fokkezb.button"
+				title="10,000 Steps Website"
+				style="steps-default"
+				platform="ios"
+				height="60dp"
+				width="140dp"
+				textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER"
+			/>	
+				
+			<!-- Send Feedback via Website -->
+			<Button 
+				id="btnSendFeedback" 
+				title="Send Feedback via Website"
+				font="{ fontSize: 10sp }"
+				platform="android"
+			/>
+				
+			<Widget
+				id="btnSendFeedback"
+				src="nl.fokkezb.button"
+				title="Send Feedback via Website"
+				style="steps-default"
+				platform="ios"
+				height="60dp"
+				width="140dp"
+				textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER"
+				top="10dp"
+			/>
 		</ScrollView>
 	</View>
 </Alloy>
