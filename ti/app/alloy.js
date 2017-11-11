@@ -115,7 +115,7 @@
 		//These are the highest values usable on an iPhone 5 / iPhone SE that will allow two buttons to be 
 		//stacked horizontally without any overlap
 		height: "50dp",
-		width: "130dp"
+		width: "135dp"
 	});
 })();
 
