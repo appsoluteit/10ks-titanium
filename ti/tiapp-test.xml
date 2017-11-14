@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>au.org.steps10000.app</id>
     <name>10,000 Steps</name>
-    <version>3.2.9.2</version>
+    <version>3.3.0</version>
     <publisher>Appsolute IT Pty Ltd</publisher>
     <url>https://www.10000steps.org.au</url>
     <description>Every step counts. Challenge yourself, friends and workmates to the 10,000 Steps program.</description>
@@ -61,7 +61,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="29" android:versionName="3.2.9.1">
+        <manifest android:versionCode="30" android:versionName="3.3.0">
             <application android:theme="@style/Theme.AppCompat.Light"/>
             <uses-permission android:name="android.permission.READ_CALENDAR"/>
             <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
