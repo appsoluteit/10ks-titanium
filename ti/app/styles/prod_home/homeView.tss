@@ -10,17 +10,13 @@
 	top: "10dp"
 }
 
-//For Android
 "Button": {
 	backgroundColor: 'transparent' 
 }
 
 //Increased button sizes for iPad
 "#btnStepLog": {
-	image: "/common/home/steps@2x.png",
-	height: 'auto',
-	width: 'auto',
-	//backgroundColor: 'pink'
+	image: "/common/home/steps@2x.png"
 }
 
 "#btnStepLog[platform=ios formFactor=tablet]": {
@@ -44,4 +40,20 @@
 "#btnStatistics[platform=ios formFactor=tablet]": {
 	image: "/common/home/stats-ipad@2x.png",
 	//backgroundColor: "blue"
+}
+
+"#btnChallenges": {
+	image: "/common/home/challenges@2x.png"
+}
+
+"#btnChallenges[platform=ios formFactor=tablet]": {
+	image: "/common/home/challenges-ipad@2x.png"
+}
+
+"#btnTournaments": {
+	image: "/common/home/tournaments@2x.png"
+}
+
+"#btnTournaments[platform=ios formFactor=tablet]": {
+	image: "/common/home/tournaments-ipad@2x.png"
 }

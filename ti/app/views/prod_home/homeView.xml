@@ -19,6 +19,20 @@
 				</ImageView>
 				
 				<Button
+					id="btnChallenges"
+					class="push-down"
+					platform="ios"
+					style="PLAIN">
+				</Button>
+				
+				<ImageView
+					id="btnChallenges"
+					class="push-down"
+					style="PLAIN"
+					platform="android">
+				</ImageView>
+				
+				<Button
 					id="btnSettings"
 					class="push-down"
 					platform="ios"
@@ -42,6 +56,19 @@
 				
 				<ImageView
 					id="btnStatistics"
+					class="push-down"
+					platform="android">
+				</ImageView>
+				
+				<Button
+					id="btnTournaments"
+					class="push-down"
+					platform="ios"
+					style="PLAIN">
+				</Button>
+				
+				<ImageView
+					id="btnTournaments"
 					class="push-down"
 					platform="android">
 				</ImageView>

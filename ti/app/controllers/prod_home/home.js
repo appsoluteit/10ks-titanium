@@ -75,7 +75,7 @@ function loginIfNeeded() {
 		});
 		
 		win.open();
-	}	
+	}
 }
 
 /**
@@ -178,12 +178,12 @@ function androidBack_click() {
  * @memberOf Controllers.Home
  */
 function window_open() {	
-	//Set event handlers
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
+	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
+	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
 	
-	//Load logic
 	window_load();
 }
 
@@ -195,13 +195,12 @@ function window_load() {
 	Alloy.Globals.tracker.trackScreen({
 		screenName: "Home"
 	});
-		
+	
 	loginIfNeeded();
 	
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 	
 	Ti.API.info("Number of unsynced steps: " + numSteps);
-	
 	if(Ti.Platform.osname === "android") {
 		if(numSteps === 0) {
 			$.homeView.btnStepLog.image = '/common/home/steps@2x.png';
