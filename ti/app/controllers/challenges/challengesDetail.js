@@ -4,10 +4,8 @@ var ui = require('xp.ui');
 
 console.log("Opening details window", args);
 
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Challenge Detail"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Challenge Details');
 	
 	if(Ti.Platform.osname === "android") {
 		$.challengesDetail.activity.actionBar.title = args.task.name;

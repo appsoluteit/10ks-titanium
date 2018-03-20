@@ -224,10 +224,8 @@ function populateRows() {
  * @description Event handler for the Window's `open` event. Calls 'populateRows'.
  * @memberof Controllers.Steps
  */
-function window_open() {		
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Steps"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Steps');	
 	
 	if(Ti.Platform.osname !== "android") {
 		setiOSNavButtons();

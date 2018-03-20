@@ -11,10 +11,8 @@ var args = $.args;
  * @memberof Controllers.Settings.About
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "About"
-	});
-	
+	Alloy.Globals.tracker.addScreenView('About');
+		
 	$.aboutView.lblVersion.text = "Version " + Ti.App.version;
 	
 	$.aboutView.btnWebsite.addEventListener('click', btnWebsite_click);

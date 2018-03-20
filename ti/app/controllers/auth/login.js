@@ -13,21 +13,19 @@ var AuthProvider = require('classes/AuthProvider');
  * @memberOf Controllers.Auth.Login
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Login"
-	});
-	
+	Alloy.Globals.tracker.addScreenView('Login');
+
 	$.loginView.lblForgotPassword.addEventListener('click', lblForgotPassword_click);
 	$.loginView.lblSignUp.addEventListener('click', lblSignUp_click);
-	$.loginView.btnLogin.addEventListener('click', btnLogin_click);	
+	$.loginView.btnLogin.addEventListener('click', btnLogin_click);
 	$.loginView.swRememberMe.addEventListener('change', swRememberMe_change);
-	
+
 	var email = Ti.App.Properties.getString("email", "");
 	var rememberMe = Ti.App.Properties.getBool("rememberMe", false);
-	
+
 	Ti.API.log("Window opened, Email = " + email + ", RememberMe = " + rememberMe);
-	
-	if(rememberMe) {
+
+	if (rememberMe) {
 		$.loginView.swRememberMe.value = true;
 		$.loginView.txtUsername.value = email;
 	}
@@ -38,56 +36,54 @@ function window_open() {
  * account information in `txtUsername` and `txtPassword`. In either case, it will call `login` on the `AuthProvider`, then call `getUser`.
  * @memberOf Controllers.Auth.Login
  */
-function btnLogin_click() {	
+function btnLogin_click() {
 	$.loginView.lblError.text = "";
 	var authProvider = new AuthProvider();
-	
-	if(Alloy.Globals.IsDebug) {
-		if($.loginView.txtUsername.value === "") {
+
+	if (Alloy.Globals.IsDebug) {
+		if ($.loginView.txtUsername.value === "") {
 			$.loginView.txtUsername.value = "ichimansteps@gmail.com";
-		}	
-		
-		if($.loginView.txtPassword.value === "") {
+		}
+
+		if ($.loginView.txtPassword.value === "") {
 			$.loginView.txtPassword.value = "12345678";
 		}
 	}
-	
-	authProvider.login(
-		$.loginView.txtUsername.value, 
-		$.loginView.txtPassword.value
-	).then(function onSuccess() {	
+
+	authProvider.login($.loginView.txtUsername.value, $.loginView.txtPassword.value).then(function onSuccess() {
 		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Logged in successfully",
-			duration: 2000,
-			view: $.login,
-			theme: "success"
-		});	
-			
+			text : "Logged in successfully",
+			duration : 2000,
+			view : $.login,
+			theme : "success"
+		});
+
 		setTimeout(function() {
-			swRememberMe_change();	//trigger change on the remember me switch to either save the properties or remove them
-			
+			swRememberMe_change();
+			//trigger change on the remember me switch to either save the properties or remove them
+
 			authProvider.getUser().then(function onSuccess() {
 				$.login.close();
 			}, function onFail(reason) {
 				$.loginView.lblError.text = reason;
-				
+
 				Alloy.createWidget("com.mcongrove.toast", null, {
-					text: "Couldn't get user information",
-					duration: 2000,
-					view: $.login,
-					theme: "error"
-				});	
+					text : "Couldn't get user information",
+					duration : 2000,
+					view : $.login,
+					theme : "error"
+				});
 			});
 		}, 1000);
 	}, function onFail(reason) {
 		$.loginView.lblError.text = reason;
-		
+
 		Alloy.createWidget("com.mcongrove.toast", null, {
-			text: "Failed to login",
-			duration: 2000,
-			view: $.login,
-			theme: "error"
-		});	
+			text : "Failed to login",
+			duration : 2000,
+			view : $.login,
+			theme : "error"
+		});
 	});
 }
 
@@ -105,16 +101,15 @@ function lblForgotPassword_click() {
 }
 
 function swRememberMe_change() {
-	if($.loginView.swRememberMe.value) {
+	if ($.loginView.swRememberMe.value) {
 		var email = $.loginView.txtUsername.value;
-		
+
 		Ti.App.Properties.setString("email", email);
-		Ti.App.Properties.setBool("rememberMe", true);		
-	}
-	else {
+		Ti.App.Properties.setBool("rememberMe", true);
+	} else {
 		Ti.App.Properties.removeProperty("email");
 		Ti.App.Properties.removeProperty("rememberMe");
-	}	
+	}
 }
 
 /**

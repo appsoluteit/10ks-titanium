@@ -56,10 +56,8 @@ function makeRow(title) {
  * 'run tests' is removed.
  * @memberof Controllers.Settings
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Settings"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Settings');
 	
 	if(Ti.Platform.osname !== "android") {
 		$.window.leftNavButton = NavBarButton.createLeftNavButton({

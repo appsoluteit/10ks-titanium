@@ -19,9 +19,7 @@ function btnBack_click() {
  * @memberof Controllers.Tournaments
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Tournaments"
-	});
+	Alloy.Globals.tracker.addScreenView('Tournaments');
 	
 	if(Ti.Platform.osname !== "android") {
 		$.window.leftNavButton = NavBarButton.createLeftNavButton({

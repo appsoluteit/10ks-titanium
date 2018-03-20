@@ -102,9 +102,6 @@ function fetchTimeouts() {
  * @memberof Controllers.Tournaments.Timeouts
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Timeout Tournaments"
-	});
-	
+	Alloy.Globals.tracker.addScreenView('Timeout Tournaments');	
 	fetchTimeouts();
 }

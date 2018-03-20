@@ -110,9 +110,7 @@ function fetchRaces() {
  * @memberof Controllers.Tournaments.Races
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Race Tournaments"
-	});
+	Alloy.Globals.tracker.addScreenView('Race Tournaments');
 	
 	fetchRaces();
 }

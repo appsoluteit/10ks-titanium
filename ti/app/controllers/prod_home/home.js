@@ -191,10 +191,8 @@ function window_open() {
  * description 'loads' the window. Tracks the screen, calls login if necessary and refreshes the 
  * steps log badge.
  */
-function window_load() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Home"
-	});
+function window_load() {	
+	Alloy.Globals.tracker.addScreenView('Home');
 	
 	loginIfNeeded();
 	

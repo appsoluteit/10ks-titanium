@@ -20,9 +20,7 @@ function window_open() {
 		}
 	});
 	
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Monthly Graph"
-	});
+	Alloy.Globals.tracker.addScreenView('Monthly Graph');
 	
 	setiOSNavButtons(years, mostRecentYear);
 	showChartForYear(mostRecentYear);

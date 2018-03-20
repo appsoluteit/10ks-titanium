@@ -15,10 +15,8 @@ var args = $.args;
  * don't do it). Also presets the switch values based on saved app properties.
  * @memberof Controllers.Settings.ReminderRepeat
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Reminder Repeat"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Reminder Repeat');
 	
 	//This causes a bug on Android where switch values are always off by 1
 	if(Ti.Platform.osname != "android") {

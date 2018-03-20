@@ -12,10 +12,8 @@ var args = $.args;
  * @description Event handler for Window's `open` event. If a reminder time has been set in the app properties, pre-load the time picker with it.
  * @memberof Controllers.Settings.ReminderTime
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Reminder Time"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Reminder Time');
 	
 	var reminderTime = Ti.App.Properties.getString('ReminderTime', '');
 	

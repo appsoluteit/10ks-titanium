@@ -13,10 +13,8 @@ var NavBarButton = require('classes/NavBarButton');
  * @description Event handler for the window's `open` event. Adds `click` event listeners for `btnLogin` and `btnRegister` in the view.
  * @memberOf Controllers.Auth.Register
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Register"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Register');
 	
 	//$.registerView.lblLogin.addEventListener('click', lblLogin_click);
 	//$.registerView.btnRegister.addEventListener('click', btnRegister_click);	

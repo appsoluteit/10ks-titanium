@@ -45,9 +45,7 @@ function btnDone_click() {
  * @memberof Controllers.Steps.Form
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Steps Form"
-	});
+	Alloy.Globals.tracker.addScreenView('Steps Form');
 	
 	if(Ti.Platform.osname === "android") {
 		$.logEntry.activity.actionBar.title = args.title;

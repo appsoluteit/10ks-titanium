@@ -351,9 +351,7 @@ $.stats.setAndroidMenuItems = setAndroidMenuItems;
  * @memberof Controllers.Stats
  */
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Statistics"
-	});
+	Alloy.Globals.tracker.addScreenView('Statistics');
 	
 	setiOSNavButtons();
 	

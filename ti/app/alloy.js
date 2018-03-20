@@ -121,15 +121,18 @@
 
 //Google Analytics Tracking
 (function() {
-	var GoogleAnalyticsTrackerID = Ti.App.Properties.getString("google-analytics-id");
-	var GA = require("analytics.google");
-	if(Ti.Platform.osname == 'android') {
-	    GA.dispatchInterval = 2; // in minutes
-	}
-	else if(Ti.Platform.name == 'iPhone OS') {
-	    GA.dispatchInterval = 120; // in seconds
-	}
-	Alloy.Globals.tracker = GA.getTracker(GoogleAnalyticsTrackerID);
+	var trackerId = Ti.App.Properties.getString("google-analytics-id");
+	var ga = require('ti.ga');
+	ga.setDebug(true);
+	ga.setDispatchInterval(120); // every 120 seconds
+	
+	var tracker = ga.createTracker({
+		trackingId: trackerId,
+		useSecure: true,
+		debug: true
+	});
+	
+	Alloy.Globals.tracker = tracker;
 })();
 
 //Steps Singleton

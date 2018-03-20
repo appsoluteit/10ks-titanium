@@ -18,10 +18,8 @@ function showLogin() {
  * exists.
  * @memberof Controllers.Settings.GoalSteps
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Goal Steps"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Goal Steps');
 	
 	$.goalStepsView.btnSave.addEventListener('click', btnSave_click);
 	

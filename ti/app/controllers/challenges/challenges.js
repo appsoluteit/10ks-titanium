@@ -138,10 +138,8 @@ function setNavButtons() {
  * @description Event handler for the Window's `open` event. Calls `fetchChallenges()`.
  * @memberOf Controllers.Challenges
  */
-function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Challenges"
-	});
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Challenges');
 	
 	setNavButtons();
 	fetchChallenges();

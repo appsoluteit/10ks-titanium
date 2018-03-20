@@ -192,9 +192,7 @@ function window_open() {
  * steps log badge.
  */
 function window_load() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Home"
-	});
+	Alloy.Globals.tracker.addScreenView('Home');
 	
 	loginIfNeeded();
 	

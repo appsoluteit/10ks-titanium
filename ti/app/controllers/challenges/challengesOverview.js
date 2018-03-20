@@ -7,9 +7,7 @@ function btnBack_click() {
 }
 
 function window_open() {
-	Alloy.Globals.tracker.trackScreen({
-		screenName: "Challenge Detail"
-	});
+	Alloy.Globals.tracker.addScreenView('Challenges');
 	
 	if(Ti.Platform.osname === "android") {
 		$.challengesOverview.activity.actionBar.title = args.task.name;
