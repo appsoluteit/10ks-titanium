@@ -30,50 +30,50 @@ function loginIfNeeded() {
 				message: 'Do you want to sync your steps now?',
 				title: 'Perform first sync?'
 			});
-			
+
 			confirmDialog.addEventListener('click', function(e) {
 				if(e.index !== e.source.cancel) {
 					spinner.show("Syncing...");
-					
+
 					var onComplete = function(message) {
 						setTimeout(function() {
 							if(message) {
 								Ti.UI.createAlertDialog({
 									buttonNames: ['OK'],
 									message: 'Sync completed with error: ' + message,
-									title: 'Done!'	
-								}).show();									
+									title: 'Done!'
+								}).show();
 							}
 							else {
 								Ti.UI.createAlertDialog({
 									buttonNames: ['OK'],
 									message: 'Sync complete',
-									title: 'Done!'	
-								}).show();					
+									title: 'Done!'
+								}).show();
 							}
-							
+
 						}, 1000);
-						
-						spinner.hide();					
+
+						spinner.hide();
 					};
-					
+
 					var onProgress = function(message) {
 						Ti.API.info("On progress: " + message);
-						spinner.show(message);	
+						spinner.show(message);
 					};
-					
+
 					//This may throw an InvalidToken exception, but since the user had "just" logged in,
 					//that should never happen.
 					stepsProvider.sync($.home, {
 						onComplete: onComplete,
 						onProgress: onProgress
-					});			
+					});
 				}
 			});
-			
+
 			confirmDialog.show();
 		});
-		
+
 		win.open();
 	}
 }
@@ -88,9 +88,9 @@ function btnStepLog_click() {
 		win.setAndroidMenuItems();
 	}
 	win.open();
-	
+
 	win.addEventListener('close', function() {
-		window_load();		
+		window_load();
 	});
 }
 
@@ -104,9 +104,9 @@ function btnStatistics_click() {
 		win.setAndroidMenuItems();
 	}
 	win.open();
-	
+
 	win.addEventListener('close', function() {
-		window_load();		
+		window_load();
 	});
 }
 
@@ -114,14 +114,17 @@ function btnStatistics_click() {
  * @description Event handler for the `btnChallenges` button. Opens the challenges view.
  * @memberOf Controllers.Home
  */
+// <Praj Basnet @22/03/2018> Disable challenges
+/*
 function btnChallenges_click() {
 	var win = Alloy.createController('challenges/challenges').getView();
 	win.open();
-	
+
 	win.addEventListener('close', function() {
-		window_load();		
+		window_load();
 	});
 }
+*/
 
 /**
  * @description Event handler for the `btnTournaments` button. Opens the tournaments view.
@@ -130,9 +133,9 @@ function btnChallenges_click() {
 function btnTournaments_click() {
 	var win = Alloy.createController('tournaments/tournaments').getView();
 	win.open();
-	
+
 	win.addEventListener('close', function() {
-		window_load();		
+		window_load();
 	});
 }
 
@@ -144,7 +147,7 @@ function btnTournaments_click() {
 function btnSettings_click() {
 	var win = Alloy.createController('settings/settings').getView();
 	win.open();
-	
+
 	win.addEventListener('close', function() {
 		window_load();
 	});
@@ -162,13 +165,13 @@ function androidBack_click() {
 		message: 'Are you sure you want to exit 10,000 steps?',
 		title: 'Exit App?'
 	});
-	
+
 	confirmDialog.addEventListener('click', function(e) {
 		if(e.index !== e.source.cancel) {
 			$.home.close();
-		}	
+		}
 	});
-	
+
 	confirmDialog.show();
 }
 
@@ -177,37 +180,38 @@ function androidBack_click() {
  * Also tracks the screen in Google Analytics.
  * @memberOf Controllers.Home
  */
-function window_open() {	
+function window_open() {
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
-	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
+	// <Praj Basnet @22/03/2018> Disable challenges
+	//$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
-	
+
 	window_load();
 }
 
 /**
- * description 'loads' the window. Tracks the screen, calls login if necessary and refreshes the 
+ * description 'loads' the window. Tracks the screen, calls login if necessary and refreshes the
  * steps log badge.
  */
 function window_load() {
 	Alloy.Globals.tracker.addScreenView('Home');
-	
+
 	loginIfNeeded();
-	
+
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
-	
+
 	Ti.API.info("Number of unsynced steps: " + numSteps);
 	if(Ti.Platform.osname === "android") {
 		if(numSteps === 0) {
 			$.homeView.btnStepLog.image = '/common/home/steps@2x.png';
 		}
 		else {
-			$.homeView.btnStepLog.image = '/steps/steps_' + numSteps + '.png';	
+			$.homeView.btnStepLog.image = '/steps/steps_' + numSteps + '.png';
 		}
 	}
 	else {
-		$.homeView.btnStepLog.setBadge(numSteps);			
+		$.homeView.btnStepLog.setBadge(numSteps);
 	}
 }

@@ -11,7 +11,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>fb7ab385-9929-4e5a-9888-10362e73642a</guid>
+    <guid>b3e067e5-b7fd-440a-9ccc-377b619bef36</guid>
     <ios>
         <plist>
             <dict>
@@ -76,8 +76,7 @@
         </manifest>
     </android>
     <modules>
-
-<module platform="android" version="4.0.1">ti.ga</module>
+        <module platform="android" version="4.0.1">ti.ga</module>
         <module platform="android">facebook</module>
         <module platform="commonjs">ti.cloud</module>
         <module platform="iphone" version="3.1.0">ti.ga</module>
@@ -93,7 +92,7 @@
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
-    <property name="appc-app-id" type="string">59c961a1de6b662bf33709db</property>
+    <property name="appc-app-id">5aaecfaec597d5477670faf4</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
     <property name="acs-oauth-secret-development" type="string">8our6lFXcQAytKRrFmVUbZ9CuUElMhZR</property>
@@ -111,7 +110,9 @@
     <property name="appc-org-id" type="string">100025334</property>
     <property name="appc-creator-user-id" type="string">1d7601ce-3a74-4808-ac11-63a8871742b9</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
+    
     <!-- Custom Properties -->
-    <property name="google-analytics-id" type="string">UA-75895710-1</property>
+    <!--<property name="google-analytics-id" type="string">UA-75895710-1</property>--> <!-- CQUs account -->
+	<property name="google-analytics-id" type="string">UA-101176022-1</property> <!-- Jason's dummy account -->
     <property name="is-debug" type="bool">false</property>
 </ti:app>

@@ -18,6 +18,7 @@
 					platform="android">
 				</ImageView>
 				
+				<!-- <Praj Basnet @22/03/2018> Disable challenges
 				<Button
 					id="btnChallenges"
 					class="push-down"
@@ -31,6 +32,7 @@
 					style="PLAIN"
 					platform="android">
 				</ImageView>
+				-->
 				
 				<Button
 					id="btnSettings"
