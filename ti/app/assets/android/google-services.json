@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "514821068358",
+    "firebase_url": "https://j10k-steps.firebaseio.com",
+    "project_id": "j10k-steps"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514821068358:android:8475da8cff3a2adc",
+        "android_client_info": {
+          "package_name": "au.org.steps10000.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514821068358-eni21mk1fc0cmscoucnkd46bjq5a5pss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuadNqgZ3P8xOB9J8knuU7VOG-EaBijy0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

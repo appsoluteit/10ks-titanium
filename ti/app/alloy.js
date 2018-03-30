@@ -120,19 +120,28 @@
 })();
 
 //Google Analytics Tracking
-(function() {
-	var trackerId = Ti.App.Properties.getString("google-analytics-id");
-	var ga = require('ti.ga');
-	ga.setDebug(true);
-	ga.setDispatchInterval(120); // every 120 seconds
+(function() {	
+	// Require the Firebase Core module (own project!)
+	var FirebaseCore = require('firebase.core');
 	
-	var tracker = ga.createTracker({
-		trackingId: trackerId,
-		useSecure: true,
-		debug: true
-	});
+	// Configure Firebase
+	FirebaseCore.configure();
 	
-	Alloy.Globals.tracker = tracker;
+	// Require the Firebase Analytics module
+	var FirebaseAnalytics = require('firebase.analytics');
+	
+	if(Alloy.Globals.IsLoggedIn) {
+		FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
+	}
+	
+	Alloy.Globals.tracker = {
+		addScreenView: function(screenName) {
+			FirebaseAnalytics.setScreenNameAndScreenClass({
+  				screenName: screenName,
+  				screenClass: screenName
+			});	
+		}
+	};
 })();
 
 //Steps Singleton
@@ -144,8 +153,10 @@
 //Facebook SDK Integration
 //https://github.com/appcelerator-modules/ti.facebook
 (function() {
+   //Ti.API.warn('initialising facebook sdk');
    var fb = require('facebook');
    fb.initialize();
+  
    // Only need Pixel support, not login
 })();
 
