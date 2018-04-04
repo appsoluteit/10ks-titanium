@@ -11,7 +11,8 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>fb7ab385-9929-4e5a-9888-10362e73642a</guid>
+    <guid>278dc07f-988f-4916-9bbb-052273ceb8fd</guid>
+    <!--<guid>b3e067e5-b7fd-440a-9ccc-377b619bef36</guid>-->
     <ios>
         <plist>
             <dict>
@@ -69,38 +70,31 @@
             <uses-permission android:name="android.permission.READ_CALENDAR"/>
             <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26"/>
-
-			<!-- Firebase -->
-			<service android:name="com.google.android.gms.measurement.AppMeasurementService" android:enabled="true" android:exported="false" />	
-
-			<service android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="true" android:exported="false" />
-
-			<service android:name="au.org.steps10000.app.gcm.RegistrationIntentService" android:exported="false" />
-
-			<receiver android:name="com.google.android.gms.measurement.AppMeasurementReceiver" android:enabled="true">
-			   <intent-filter>
-				  <action android:name="com.google.android.gms.measurement.UPLOAD" />
-			   </intent-filter>
-			</receiver>  
-
-			<service android:name="au.org.steps10000.app.gcm.GcmIntentService" android:exported="false">
-			   <intent-filter>
-				  <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-			   </intent-filter>
-			</service>
-
-			<service android:name="au.org.steps10000.app.gcm.GcmIntentService" android:exported="false">
-			   <intent-filter>
-				  <action android:name="com.google.android.c2dm.intent.SEND" />
-			   </intent-filter>
-			</service>
-
-			<service android:name="au.org.steps10000.app.gcm.GcmIDListenerService" android:exported="false">
-			   <intent-filter>
-				  <action android:name="com.google.android.gms.iid.InstanceID" />
-			   </intent-filter>
-			</service>
-			
+            <!-- Firebase -->
+            <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+            <service android:enabled="true" android:exported="false"
+                android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.RegistrationIntentService"/>
+            <receiver android:enabled="true" android:name="com.google.android.gms.measurement.AppMeasurementReceiver">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.measurement.UPLOAD"/>
+                </intent-filter>
+            </receiver>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIntentService">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                </intent-filter>
+            </service>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIntentService">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.SEND"/>
+                </intent-filter>
+            </service>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIDListenerService">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID"/>
+                </intent-filter>
+            </service>
             <!-- Facebook SDK -->
             <activity
                 android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -114,17 +108,9 @@
         </manifest>
     </android>
     <modules>
-<<<<<<< HEAD
-=======
-
-<module platform="android" version="4.0.1">ti.ga</module>
         <module platform="android">facebook</module>
         <module platform="commonjs">ti.cloud</module>
-        <module platform="iphone" version="3.1.0">ti.ga</module>
->>>>>>> 12fff22b980426ab53092b3869caac44b6f0c8aa
         <module platform="commonjs">nl.fokkezb.html2as</module>
-        <module platform="commonjs">ti.cloud</module>
-        <module platform="android">facebook</module>
         <module platform="iphone">facebook</module>
         <module platform="iphone">firebase.core</module>
         <module platform="android">firebase.core</module>
@@ -140,11 +126,7 @@
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
-<<<<<<< HEAD
-    <property name="appc-app-id" type="string">5aaecfaec597d5477670faf4</property>
-=======
-    <property name="appc-app-id" type="string">59c961a1de6b662bf33709db</property>
->>>>>>> 12fff22b980426ab53092b3869caac44b6f0c8aa
+    <property name="appc-app-id" type="string">5a74162038a42255ba7be1b6</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
     <property name="acs-oauth-secret-development" type="string">8our6lFXcQAytKRrFmVUbZ9CuUElMhZR</property>
@@ -163,13 +145,5 @@
     <property name="appc-creator-user-id" type="string">1d7601ce-3a74-4808-ac11-63a8871742b9</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <!-- Custom Properties -->
-<<<<<<< HEAD
-    <!--<property name="google-analytics-id" type="string">UA-75895710-1</property>-->
-    <!-- CQUs account -->
-    <property name="google-analytics-id" type="string">UA-101176022-1</property>
-    <!-- Jason's dummy account -->
-=======
-    <property name="google-analytics-id" type="string">UA-75895710-1</property>
->>>>>>> 12fff22b980426ab53092b3869caac44b6f0c8aa
     <property name="is-debug" type="bool">false</property>
 </ti:app>

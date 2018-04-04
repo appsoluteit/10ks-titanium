@@ -2,18 +2,36 @@
 	<!-- iOS -->
 	<NavigationWindow id="tournaments" platform="ios">
 		<Window title="Tournaments" onOpen="window_open" id="window">
+		    <LeftNavButton>
+                <Button title="Back" onClick="btnBack_click" />
+            </LeftNavButton>
+            
+            <RightNavButton>
+                <Button image="/common/icons/refresh-button-16.png" onClick="btnRefresh_click" />
+            </RightNavButton>     
+                
 			<Require id="tournamentsView" src="tournaments/tournamentsView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="tournaments" platform="android" onOpen="window_open">
-		<ActionBar 
-			title="Tournaments" 
-			displayHomeAsUp="true" 
-			homeButtonEnabled="true" 
-			onHomeIconItemSelected="btnBack_click"></ActionBar>
-			
+	<Window title="10,000 Steps" platform="android" onOpen="window_open">
+        <ActionBar 
+        	id="actionbar" 
+        	title="Tournaments" 
+        	homeButtonEnabled="true"
+        	displayHomeAsUp="true"
+        	onHomeIconItemSelected="btnBack_click" />
+        	
+        <Menu>
+            <MenuItem 
+            	id="item1" 
+            	title="Refresh" 
+            	showAsAction="Ti.Android.SHOW_AS_ACTION_IF_ROOM"
+            	icon="/common/icons/refresh-button-32.png" 
+            	onClick="btnRefresh_click" />
+        </Menu>
+        
 		<Require id="tournamentsView" src="tournaments/tournamentsView" type="view"/>
-	</Window>
+    </Window>
 </Alloy>

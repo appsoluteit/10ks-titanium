@@ -14,38 +14,19 @@ function btnBack_click() {
 	$.tournaments.close();
 }
 
+function btnRefresh_click() {
+	loadTournaments();
+}
+
 /**
  * @description Event handler for the Window's open event. Adds event handlers for the races and timeout rows.
  * @memberof Controllers.Tournaments
  */
 function window_open() {
 	Alloy.Globals.tracker.addScreenView('Tournaments');
-	
-	if(Ti.Platform.osname !== "android") {
-		$.window.leftNavButton = NavBarButton.createLeftNavButton({
-			text: 'Home',
-			onClick: btnBack_click
-		});
-	}
-	
-	$.tournamentsView.vwRaceTournaments.addEventListener('click', raceTournaments_click);
-	$.tournamentsView.vwTimeoutTournaments.addEventListener('click', timeoutTournaments_click);
+	loadTournaments();
 }
 
-/**
- * @descrption Event handler for the race tournaments row.
- * @memberof Controllers.Tournaments
- */
-function raceTournaments_click() {
-	var win = Alloy.createController('tournaments/races/races').getView();
-	win.open();
-}
-
-/**
- * @description Event handler for the timeout tournaments row.
- * @memberof Controllers.Tournaments
- */
-function timeoutTournaments_click() {
-	var win = Alloy.createController('tournaments/timeouts/timeouts').getView();
-	win.open();
+function loadTournaments() {
+	// TODO
 }
