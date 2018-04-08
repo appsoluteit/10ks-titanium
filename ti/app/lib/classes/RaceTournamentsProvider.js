@@ -1,4 +1,5 @@
 /**
+ * @deprecated This module has been deprecated. Use `TournamentsProvider` instead, which combines both timeout and race tournaments.
  * @file Race Tournaments Provider
  * @description Provides an abstraction of the race tournaments endpoint interactions via the API helper. Also handles paging.
  * @summary Use this provider class to interact with the race tournaments API endpoint instead of communicating with it manually.
@@ -11,6 +12,7 @@ var APIHelper = require('helpers/APIHelper');
 var q = require('q');
 
 /**
+ * @deprecated This module has been deprecated. Use `TournamentsProvider` instead, which combines both timeout and race tournaments.
  * @class
  * @description Creates a new instance of the Race Tournaments Provider
  */

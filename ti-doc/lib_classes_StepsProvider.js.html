@@ -28,15 +28,15 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * @file Steps Provider
- * @description Provides an abstraction of the steps endpoint interactions via the API helper
+ * @description Provides an abstraction of the steps endpoint interactions via the API helper. Also handles paging.
  * @summary Use this provider class to interact with the steps API endpoint instead of communicating with it manually.
  * @require helpers/APIHelper
  * @require q
  * @exports StepsProvider
- * @todo This class is incomplete. It needs to read from and write from local storage (waiting for a StepsDataProvider to do this) instead of sending dummy data.
  */
 
-var APIHelper = require("helpers/APIHelper");
+var APIHelper = require('helpers/APIHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var q = require('q');
 
 /**
@@ -47,20 +47,48 @@ function StepsProvider() { }
 
 /**
  * @description Gets the steps from the steps API endpoint. This will recur so long as there are additional pages in the API response.
- * @todo incomplete
  * @param {Number} page The page to fetch.
  * @returns Promise
  */
-StepsProvider.prototype.getSteps = function(page) {
+StepsProvider.prototype.getSteps = function(page, onProgress) {
 	var defer = q.defer();
+	var me = this;
+	
+	if(page === undefined) {
+		page = 1;
+	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get steps success", JSON.stringify(e));
+		Ti.API.info("Get steps success. Page = ", page);
+		//Ti.API.info("Response", e);
 		
-		//TODO: Add/update results to local storage
-		//TODO: Recur while e.next is not null
+		var pageSize = 100;
+		var percentComplete = Math.round(((page * pageSize) / e.count) * 100);
+		if(percentComplete > 100) {
+			percentComplete = 100;
+		}
 		
-		defer.resolve(e);
+		if(typeof(onProgress) === 'function') {
+			onProgress("Downloading..." + percentComplete + "%");		
+		}
+		
+		if(e.next) {
+			setTimeout(function() {
+				//Sleep a little so we don't flood the network. Try to keep the delay minimal though, for accounts with
+				//lots of data.
+				
+				me.getSteps(page + 1, onProgress).then(function(nextResponse) {
+					e.results = e.results.concat(nextResponse.results);
+					//Note: The JS engine here doesn't support Array.push.apply.
+					
+					Ti.API.info("Page " + page + " resolving. Records: " + e.results.length);
+					defer.resolve(e);
+				});
+			}, 100); 
+		}
+		else {
+			defer.resolve(e);
+		}
 	}
 	
 	function onFail(e) {
@@ -72,8 +100,7 @@ StepsProvider.prototype.getSteps = function(page) {
 	};
 	
 	APIHelper.get({
-		message:	"Fetching steps...",
-		url:		"steps/",
+		url:		"steps/?page=" + page,
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -90,37 +117,44 @@ StepsProvider.prototype.getSteps = function(page) {
  * @todo incomplete
  * @returns Promise
  */
-StepsProvider.prototype.postSteps = function() {
+StepsProvider.prototype.postSteps = function(models, count, onProgress) {
 	var defer = q.defer();
+	var me = this;
 	
-	function onSuccess(e) {
-		Ti.API.info("Post steps success", JSON.stringify(e));
+	var jsonModel = models[models.length - 1];
+	
+	var data = Alloy.Globals.Steps.toBackboneModel(jsonModel);
+	
+	if(typeof(onProgress) === 'function') {
+		Ti.API.info("Posted " + models.length + " of " + count);
 		
-		defer.resolve();
+		var percentComplete = Math.round((count - models.length) / count * 100);
+		onProgress("Uploading..." + percentComplete + "%");		
+	}
+	
+	models.pop();
+		
+	function onSuccess(e) {		
+		Alloy.Globals.Steps.saveAsSynced(jsonModel.id);
+		
+		if(models.length === 0) {
+			Ti.API.info("All models posted. Resolving");
+			defer.resolve();			
+		}
+		else {
+			me.postSteps(models, count, onProgress).then(function onSuccess() {
+				Ti.API.info("Resolving instance: " + models.length);
+				defer.resolve();
+			});
+		}
 	}
 	
 	function onFail(e) {
 		Ti.API.info("Post steps fail", JSON.stringify(e));
-		
 		defer.reject(e.errorMessage);
 	}
 	
-	//TODO: Get all steps in local storage which have NOT been synced yet
-	//Recur until they've all been posted
-	var data = {
-		//user: Alloy.Globals.UserURL,
-		steps_date: "2016-10-12",
-		steps_total: "9999",
-		//steps_walked: "9999",
-		//moderate: "9999",
-		//vigorous: "9999",
-		activity_part: "9999"
-	};
-	
-	Ti.API.info("Posting", data);
-	
 	APIHelper.post({
-		message:	"Sending steps...",
 		url: 		"steps/",
 		headers: [{
 			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
@@ -134,6 +168,112 @@ StepsProvider.prototype.postSteps = function() {
 	return defer.promise;
 };
 
+StepsProvider.prototype.sync = function(rootView, options) {
+    var me = this;
+    
+    function getStepsSuccess(steps) {
+    	Ti.API.info("Get steps success. Count = " + steps.count + ", Total = " + steps.results.length);
+    	
+    	if(typeof(options.onProgress === 'function')) {
+    		options.onProgress("Saving steps...");	
+    	}
+    	
+     	steps.results.forEach(function(item) {
+     		var json = {
+     			stepsWalked: item.steps_walked,
+     			stepsTotal: item.steps_total,
+     			activityPart: item.activity_part,
+     			vigorousMins: item.vigorous,
+     			moderateMins: item.moderate,
+     			stepsDate: DateTimeHelper.localise(new Date(item.steps_date)),
+     			lastSyncedOn: new Date(),
+     			lastUpdatedOn: null
+     			//lastUpdatedOn: new Date()
+     		};
+
+			//Overwrite any existing items
+			var existingItem = Alloy.Globals.Steps.readByDate(json.stepsDate);
+			if(existingItem) {
+				json.id = existingItem.id;	
+			}
+			
+			Ti.API.info("Writing date ", item.steps_date);
+     		Alloy.Globals.Steps.writeSingle(json);	
+     	});
+     	
+     	options.onComplete();
+    }
+    
+    function getStepsFail(reason) {
+    	Ti.API.info("Get steps fail");
+    	
+     	if(reason.detail) {
+     		if(reason.detail === 'Invalid token.') {
+				Alloy.createWidget('com.mcongrove.toast', null, {
+					text: 'Sesson expired. Please log in again.',
+					duration: 2000,
+					view: rootView,
+					theme: 'error'
+				});	
+				
+				Ti.API.info("Failed to get steps Invalid token");
+     		}
+     		else {
+     			Ti.API.info("Unable to get steps. Unknown reason");
+     		}
+     		
+     		options.onComplete(reason.detail);	
+     	}
+     	else {
+			Alloy.createWidget('com.mcongrove.toast', null, {
+				text: 'Failed to get steps. Reason: ' + reason,
+				duration: 2000,
+				view: rootView,
+				theme: 'error'
+			});	
+			
+			Ti.API.info("Failed to get steps. Reason: " + reason);
+			options.onComplete(reason);
+     	}   	
+    }
+    
+    function postStepsSuccess() {
+    	Ti.API.info("Post steps success");
+    	
+		me.getSteps(1, options.onProgress)
+		  .then(getStepsSuccess, getStepsFail);
+    }
+    
+    function postStepsFail(reason) {
+    	Ti.API.info("Post steps fail");
+    	
+		Alloy.createWidget('com.mcongrove.toast', null, {
+			text: 'Failed to post steps. Reason: ' + reason,
+			duration: 2000,
+			view: rootView,
+			theme: 'error'
+		});			 
+		
+		Ti.API.info("Failed to post steps. " + reason);    	
+		
+		options.onComplete(reason);
+    }
+    
+    //Post first. Keep the server up-to-date. Then we can trust whatever is returned by the server's GET response.  
+ 	var toPost = Alloy.Globals.Steps.readWhereNeedsSyncing();
+ 	Ti.API.info("Models to post: " + toPost.length);
+ 	Ti.API.info("First model: " + JSON.stringify(toPost[0]));
+ 	
+ 	if(toPost.length > 0) {
+	    this.postSteps(toPost, toPost.length, options.onProgress)
+	    	.then(postStepsSuccess, postStepsFail);
+ 	}
+ 	else {
+ 		this.getSteps(1, options.onProgress)
+ 			.then(getStepsSuccess, getStepsFail);
+ 	}
+};
+
 module.exports = StepsProvider;</code></pre>
         </article>
     </section>
@@ -144,13 +284,13 @@ module.exports = StepsProvider;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
 </footer>
 
 <script> prettyPrint(); </script>

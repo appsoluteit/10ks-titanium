@@ -32,96 +32,163 @@
  * @namespace Alloy.Globals
  */
 
-/** 
- * @instance
- * @description Indicates whether or not the user is logged in, according to local data. The API may respond with 'Invalid token.' at any time, indicating that
- * the user is not logged in (anymore). This setting is set by the existence of an `AuthKey` property in App Properties.
- * @type {Boolean}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
+//Alloy Globals
+(function() {
+	/**
+	 * @instance
+	 * @description Indicates whether or not the user is logged in, according to local data. The API may respond with 'Invalid token.' at any time, indicating that
+	 * the user is not logged in (anymore). This setting is set by the existence of an `AuthKey` property in App Properties.
+	 * @type {Boolean}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.IsLoggedIn = Ti.App.Properties.hasProperty("AuthKey");
 
-/**
- * @instance
- * @description Stores the user URL unique to the current user.
- * @type {String}
- * @memberof Alloy.Globals
- * @todo Is this field still neccesary?
- */
-Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
+	/**
+	 * @instance
+	 * @description Stores the user URL unique to the current user.
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 * @todo Is this field still neccesary?
+	 */
+	Alloy.Globals.UserURL = Ti.App.Properties.getString("UserURL", "");
 
-/**
- * @instance
- * @description Stores the authentication token for the current user for use in future API requests. Set by the `AuthKey` property in App Properties.
- * @type {String}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
+	/**
+	 * @instance
+	 * @description Stores the authentication token for the current user for use in future API requests. Set by the `AuthKey` property in App Properties.
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.AuthKey = Ti.App.Properties.getString("AuthKey", "");
 
-/**
- * @instance
- * @description Stores the URL to the 10000 steps website.
- * @type {String}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.WebURL = 'https://www.10000steps.org.au/';
+	/**
+	 * @instance
+	 * @description Stores the URL to the 10000 steps website.
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.WebURL = 'https://www.10000steps.org.au/';
 
-/**
- * @instance
- * @description Stores the URL to the feedback form on the 10000 steps website.
- * @type {String}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.FeedbackURL = "http://10000steps.org.au/help/contact-us/";
+	/**
+	 * @instance
+	 * @description Stores the URL to the feedback form on the 10000 steps website.
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.FeedbackURL = "https://www.10000steps.org.au/contact/";
 
-/**
- * @instance
- * @description Stores the base URL for all API requests
- * @type {String}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
+	/**
+	 * @instance
+	 * @description Stores the base URL for all API requests
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.BaseURL = 'https://www.10000steps.org.au/api/';
 
-/**
- * @instance
- * @description Stores the reminder end date which indicates how far in advance reminders should be saved on Android, since due to Titanium SDK restrictions,
- * we are unable to save them indefinitely.
- * @type {Date}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.ReminderEndDate = new Date();
-Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
+	/**
+	 * @instance
+	 * @description Stores the reminder end date which indicates how far in advance reminders should be saved on Android, since due to Titanium SDK restrictions,
+	 * we are unable to save them indefinitely.
+	 * @type {Date}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.ReminderEndDate = new Date();
+	Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
 
-/**
- * @instance
- * @description Stores how many days before a reminder expiry the user should be prompted to save their reminders again (Android)
- * @type {Number}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.ReminderExpiryBufferDays = 7; //how many days before the expiry should we ask the user to save reminders again
+	/**
+	 * @instance
+	 * @description Stores how many days before a reminder expiry the user should be prompted to save their reminders again (Android)
+	 * @type {Number}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.ReminderExpiryBufferDays = 7; //how many days before the expiry should we ask the user to save reminders again
 
-/**
- * @instance
- * @description Stores a constant string used as a description for reminders (in addition to the label, which is set by the user)
- * @type {String}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
+	/**
+	 * @instance
+	 * @description Stores a constant string used as a description for reminders (in addition to the label, which is set by the user)
+	 * @type {String}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.AlarmDescription = "Don't forget to log your time!";
 
-/**
- * @instance
- * @description Stores whether or not the app should run in 'debug mode'. If on, the user is able to automatically log into the debug account by clicking login on the 
- * auth/login controller. In addition, when visiting settings, there is an additional row for running app unit tests.
- * @type {Boolean}
- * @memberof Alloy.Globals
- */
-Alloy.Globals.IsDebug = true;
-//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
+	/**
+	 * @instance
+	 * @description Stores whether or not the app should run in 'debug mode'. If on, the user is able to automatically log into the debug account by clicking login on the
+	 * auth/login controller. In addition, when visiting settings, there is an additional row for running app unit tests.
+	 * @type {Boolean}
+	 * @memberof Alloy.Globals
+	 */
+	Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
+	//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
+})();
 
-// added during app creation. this will automatically login to
-// ACS for your application and then fire an event (see below)
-// when connected or errored. if you do not use ACS in your
-// application as a client, you should remove this block
+//iOS custom button styling
+(function() {
+	var styles = require('nl.fokkezb.button/styles');
+	styles.set('steps-default', {
+		backgroundColor: "#52B3FA",
+		color: "white",
+		borderRadius: "5dp",
+		font: {
+			fontFamily: 'Arial',
+			fontSize: '18sp',
+			fontWeight: 'bold'
+		},
+		activeStyle: {
+			backgroundColor: '#397CAD',
+			color: 'white'
+		},
+		//height: "30dp",
+		//width: "125dp"
+
+		//These are the highest values usable on an iPhone 5 / iPhone SE that will allow two buttons to be
+		//stacked horizontally without any overlap
+		height: "50dp",
+		width: "135dp"
+	});
+})();
+
+//Google Analytics Tracking
+(function() {	
+	// Require the Firebase Core module (own project!)
+	var FirebaseCore = require('firebase.core');
+	
+	// Configure Firebase
+	FirebaseCore.configure();
+	
+	// Require the Firebase Analytics module
+	var FirebaseAnalytics = require('firebase.analytics');
+	
+	if(Alloy.Globals.IsLoggedIn) {
+		FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
+	}
+	
+	Alloy.Globals.tracker = {
+		addScreenView: function(screenName) {
+			FirebaseAnalytics.setScreenNameAndScreenClass({
+  				screenName: screenName,
+  				screenClass: screenName
+			});	
+		}
+	};
+})();
+
+//Steps Singleton
+(function() {
+	var StepsDataProvider = require('classes/StepsDataProvider');
+	Alloy.Globals.Steps = new StepsDataProvider();	//this global instance should be used application-wide
+})();
+
+//Facebook SDK Integration
+//https://github.com/appcelerator-modules/ti.facebook
+(function() {
+   //Ti.API.warn('initialising facebook sdk');
+   var fb = require('facebook');
+   fb.initialize();
+  
+   // Only need Pixel support, not login
+})();
+
+//ACS
 (function() {
 	var ACS = require('ti.cloud'),
 	    env = Ti.App.deployType.toLowerCase() === 'production' ? 'production' : 'development',
@@ -152,7 +219,7 @@ Alloy.Globals.IsDebug = true;
 			Ti.App.fireEvent('login.failed', result, env);
 		}
 	});
-})(); </code></pre>
+})();</code></pre>
         </article>
     </section>
 
@@ -162,13 +229,13 @@ Alloy.Globals.IsDebug = true;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
 </footer>
 
 <script> prettyPrint(); </script>

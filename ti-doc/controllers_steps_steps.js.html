@@ -34,16 +34,12 @@
  * @require classes/StepsProvider
  * @require widgets/com.mcongrove.toast
  * @namespace Controllers.Steps
- * @todo This controller should utilize a "StepsDataProvider" that abstracts the Alloy model
  */
 
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
-
-var stepsProvider = new StepsProvider($.log);
-var logCollection = Alloy.createCollection('log');
-logCollection.fetch();
+var NavBarButton = require('classes/NavBarButton');
 
 /**
  * @description Adds a row to the dates table
@@ -52,12 +48,10 @@ logCollection.fetch();
  * @param {Date} dateObj The date that this record represents.
  * @param {Boolean} isLoadMoreButton A boolean to indicate whether this is the 'Load More' button
  * @param {Integer} index (Optional) The index to add the new row at. If omitted, it will be appended to the end.
- * @param {String} numSteps (Optional) The text to add to the right of the row, in red
  */
-function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {		
+function addDateRow(strLabel, dateObj, isLoadMoreButton, index) {			
 	//Add a new row to the table view	
 	var row = Ti.UI.createTableViewRow({
-		//title: strLabel,
 		color: 'black',
 		height: '50dp',
 		
@@ -68,9 +62,9 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 	});
 	row.addEventListener('click', tblRow_click);
 	
-	var view = Ti.UI.createView({
-		//backgroundColor: 'blue'	
-	});
+	var view = Ti.UI.createView({});
+	view.addEventListener('click', function(e) { }); //adding this event handler to the view seems to fix a bug where the event handler
+													 //for the row wouldn't fire
 	
 	var labelLeft = Ti.UI.createLabel({
 		left: '10dp',
@@ -82,35 +76,82 @@ function addDateRow(strLabel, dateObj, isLoadMoreButton, index, numSteps) {
 		text: strLabel,
 		width: Ti.UI.SIZE
 	});
-	
-	var dateString = FormatHelper.formatDate(dateObj);
-	
-	//findWhere seems to be unsupported??
-	var item = logCollection.where({
-		'steps_date': dateString
-	});
-	
-	if(item.length > 0) {
-		numSteps = item[0].get('steps_total');
-	}
-	
-	var labelRight = Ti.UI.createLabel({
-		right: "10dp",
-		textAlign: "right",
-		color: "red",
-		text: numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "",
-		width: Ti.UI.SIZE
-	});
-	
 	view.add(labelLeft);
-	view.add(labelRight);
+	
+	//Don't add the # of steps if its a 'Load More' button
+	if(!isLoadMoreButton) {
+		var color = "#75CFFB"; //synced blue colour
+		var numSteps = 0;
+		var item = Alloy.Globals.Steps.readByDate(dateObj);
+		
+		if(item) {
+			numSteps = item.stepsTotal;
+			
+			if(item.lastSyncedOn &amp;&amp; item.lastUpdatedOn) {
+				if(item.lastUpdatedOn.getTime() > item.lastSyncedOn.getTime()) {
+					color = "red";	
+				}
+			}
+			else if(!item.lastSyncedOn) {
+				//The item has never been synced. Mark it as red.
+				color = "red";
+			}
+		}	
+		
+		var numStepsStr = numSteps > 0 ? FormatHelper.formatNumber(numSteps) : "";
+		
+		var labelRight = Ti.UI.createLabel({
+			right: "30dp",
+			textAlign: "right",
+			color: color,
+			text: numStepsStr,
+			width: Ti.UI.SIZE,
+			font: {
+				fontFamily: 'Arial',
+				fontSize: '20sp',
+				fontWeight: 'normal'
+			}
+		});
+		
+		if(color != "red") {
+			labelRight.font = {
+				fontFamily: 'Arial',
+				fontSize: '20sp',
+				fontWeight: 'bold'
+			};
+		}
+		
+		var chevron = null;
+		
+		if(Ti.Platform.osname === "android") {
+			//On Android, create an ImageView instead of a button
+			chevron = Ti.UI.createImageView({
+				right: "5dp",
+				image: "/common/chevrons/right-16.png"
+			});
+		}
+		else {
+			chevron = Ti.UI.createButton({
+				right: "5dp",
+				image: "/common/chevrons/right-16-g.png",
+				tintColor: "gray",
+				style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+			});
+		}
+		
+		view.add(labelRight);	
+		view.add(chevron);	
+	}
+
 	row.add(view);		//Adding the view to the TableViewRow causes its properties
 						//to become inaccessible by the logEntry controller...need to fix.
 	
-	if(index == undefined) {
+	if(index === undefined) {
+		//Ti.API.info("Appending row");
 		$.tblDays.appendRow(row);
 	}
 	else {
+		//Ti.API.info("Inserting row. Index = " + index);
 		$.tblDays.insertRowAfter(index, row);	
 	}
 }
@@ -138,71 +179,117 @@ function loadDatesFrom(dateObj) {
  * @memberof Controllers.Steps
  */
 function sync() {
-	stepsProvider.getSteps()
-			     .then(function success(steps) {
-			     	//TODO: write steps to local storage
-			     	
-			     	return stepsProvider.postSteps();
-			     }, function fail(reason) {
-			     	if(reason.detail) {
-			     		if(reason.detail === 'Invalid token.') {
-							Alloy.createWidget('com.mcongrove.toast', null, {
-								text: 'Sesson expired. Please log in again.',
-								duration: 2000,
-								view: $.log,
-								theme: 'error'
-							});	
-							
-							setTimeout(function() {
-								var win = Alloy.createController("auth/login").getView();
-								win.open();
-								
-								win.addEventListener("close", function() {
-									sync();
-								});
-							}, 2000);
-			     		}	
-			     	}
-			     	else {
-						Alloy.createWidget('com.mcongrove.toast', null, {
-							text: 'Failed to get steps. Reason: ' + reason,
-							duration: 2000,
-							view: $.log,
-							theme: 'error'
-						});	
-			     	}
-			     })
-			     .then(function success() {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Steps synced successfully!',
-						duration: 2000,
-						view: $.log,
-						theme: 'success'
-					});
-			     }, function fail(reason) {
-					Alloy.createWidget('com.mcongrove.toast', null, {
-						text: 'Failed to post steps. Reason: ' + reason,
-						duration: 2000,
-						view: $.log,
-						theme: 'error'
-					});			     	
-			     });
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Syncing...");
 	
+	var stepsProvider = new StepsProvider();
+	
+	var onComplete = function(message) {
+		setTimeout(function() {
+			if(message) {
+				if(message === "Invalid token.") {
+					setTimeout(function() {
+						var win = Alloy.createController("auth/login").getView();
+						win.open();
+					
+						win.addEventListener("close", function() {
+							sync();
+						});
+					}, 2000);
+				}
+				else {
+					Ti.UI.createAlertDialog({
+						buttonNames: ['OK'],
+						message: 'Sync completed with error: ' + message,
+						title: 'Done!'	
+					}).show();		
+				}								
+			}
+			else {
+				Ti.UI.createAlertDialog({
+					buttonNames: ['OK'],
+					message: 'Sync complete',
+					title: 'Done!'	
+				}).show();		
+				
+				$.tblDays.setData([]);
+				populateRows();				
+			}
+			
+		}, 1000);
+		
+		spinner.hide();					
+	};
+	
+	var onProgress = function(message) {
+		Ti.API.info("On progress: " + message);
+		spinner.show(message);	
+	};
+	
+	stepsProvider.sync($.log, {
+		onComplete: onComplete,
+		onProgress: onProgress
+	});	
 }
 
 /**
- * @description Event handler for the Window's `open` event. Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
+ * @description Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
  * @memberof Controllers.Steps
  */
-function window_open() {
+function populateRows() {	
 	var today = new Date();
+	Ti.API.info("Today: ", today);
+	
 	addDateRow("Today", today);
 	
 	var yesterday = DateTimeHelper.getDayBefore(today);
 	addDateRow("Yesterday", yesterday);
 	
-	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));	
+	loadDatesFrom(DateTimeHelper.getDayBefore(yesterday));
 }
+
+/**
+ * @description Event handler for the Window's `open` event. Calls 'populateRows'.
+ * @memberof Controllers.Steps
+ */
+function window_open() {	
+	Alloy.Globals.tracker.addScreenView('Steps');	
+	
+	if(Ti.Platform.osname !== "android") {
+		setiOSNavButtons();
+	}
+	
+	populateRows();
+}
+
+function setiOSNavButtons() {
+	$.window.leftNavButton = NavBarButton.createLeftNavButton({
+		text: "Home",
+		onClick: btnBack_click
+	});
+	
+	$.window.rightNavButton = NavBarButton.createRightNavButton({
+		text: "Sync",
+		onClick: btnSync_click
+	});
+}
+
+//Use this approach to expose a means of adding menu items to the Activity Bar to the calling code.
+//The caller will say win.addAndroidMenuItems(); before calling win.open();
+function setAndroidMenuItems() {
+	var activity = $.log.activity;
+	
+	activity.onCreateOptionsMenu = function(e){
+	  var menu = e.menu;
+	  var menuItem = menu.add({
+	    title: "Sync",
+	    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+	  });
+	  
+	  menuItem.addEventListener("click", btnSync_click);
+	};
+}
+$.log.setAndroidMenuItems = setAndroidMenuItems;
 
 /**
  * @description Event handler for `tblRow`. If e is a 'Load More' button, it gets deleted and another month of dates are loaded. Otherwise, the form controller is shown.
@@ -211,6 +298,8 @@ function window_open() {
  * @memberof Controllers.Steps
  */
 function tblRow_click(e) {
+	Ti.API.info("Row clicked.", e);
+	
 	//Due to the child view in the TableViewRow, e.source doesn't
 	//contain custom properties. Using e.row instead.
 	if(e.row.isLoadMoreButton) {
@@ -223,12 +312,19 @@ function tblRow_click(e) {
 			date:  e.row.date,
 			obj: e.row,
 			callback: function(stepsLogged) {
-				//Ti.API.info("Callback for: " + e.row.title);
-				
-				addDateRow(e.row.label, e.row.date, e.row.isLoadMoreButton, e.index, stepsLogged);
-				$.tblDays.deleteRow(e.row);
+				if(stepsLogged > 0) {
+					addDateRow(e.row.label, e.row.date, false, e.index);
+					
+					Ti.API.info("Deleting row:", e.row);
+					$.tblDays.deleteRow(e.index);	//Note: on iOS, it was observed that this line would randomly cause a crash when passing the Ti.UI.TableViewRow.
+													//pass an index instead.	
+				}
 			}
 		}).getView();
+		
+		if(Ti.Platform.osname === "android") {
+			entryWin.setAndroidMenuItems();
+		}
 		
 		entryWin.open();
 	}
@@ -248,7 +344,8 @@ function btnBack_click() {
  */
 function btnSync_click() {
 	sync();
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
@@ -258,13 +355,13 @@ function btnSync_click() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
 </footer>
 
 <script> prettyPrint(); </script>

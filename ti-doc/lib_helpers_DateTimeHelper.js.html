@@ -56,6 +56,29 @@ function getMonthNameFromIndex(index) {
 	return monthNames[index];
 }
 
+function getIndexFromMonthName(strName) {
+	var monthNames = [
+		"January", 
+		"February", 
+		"March", 
+		"April", 
+		"May", 
+		"June", 
+		"July", 
+		"August", 
+		"September", 
+		"October", 
+		"November", 
+		"December"
+	];
+	
+	for(var i = 0; i &lt; monthNames.length; i++) {
+		if(monthNames[i] === strName) {
+			return i;
+		}
+	}	
+};
+
 /**
  * Returns the name of the current month.
  * @returns {String}
@@ -93,6 +116,25 @@ function getDateLabel(dateObj, includeYear) {
 }
 
 /**
+ * Computes and returns a label that represents the date in dd/MM/yyyy format. Eg: 01/02/2013
+ * @param {Date} dateobj A date object
+ * @returns {String} The date label
+ */
+function getShortDateLabel(dateObj) {
+	if(isValidDate(dateObj)) {
+		return ("0" + dateObj.getDate()).slice(-2) 
+		     + "/"
+		     + ("0" + (dateObj.getMonth()+1)).slice(-2)
+		     + "/"
+		     + dateObj.getFullYear();
+	}
+	else {
+		Ti.API.error("Invalid date supplied to getShortDateLabel: ", dateObj);
+		return "";
+	}
+}
+
+/**
  * Computes and returns a label that represents the month for the given date. Eg: January 2017
  * @param {Date} dateObj A date to operate on
  * @returns {String} The month/year label
@@ -113,11 +155,66 @@ function getDayBefore(dateObj) {
 	return new Date(dateObj.getTime() - (24*60*60*1000));
 }
 
+/**
+ * Determines whether or not dateObj is a valid date
+ * @param {Object} dateObj A date to examine
+ */
+function isValidDate(dateObj) {
+	if ( Object.prototype.toString.call(dateObj) === "[object Date]" ) {
+		if ( isNaN( dateObj.getTime() ) ) {
+			return false;
+  		}
+  		else {
+  			return true;
+  		}
+	}
+	else {
+		return false;
+	}
+}
+
+function areDatesEqual(date1, date2) {
+	if(!isValidDate(date1) || !isValidDate(date2)) {
+		return false;
+	}
+	
+	var match = date1.getDate() === date2.getDate() &amp;&amp;
+		   		date1.getMonth() === date2.getMonth() &amp;&amp;
+		   		date1.getFullYear() === date2.getFullYear();	
+		   		
+	return match;
+}
+
+/**
+ * Returns a date localised to the device timezone.
+ */
+function localise(dateObj) {	
+	var localTimezoneMins = dateObj.getTimezoneOffset();
+	//Ti.API.info("Local timezone hours: " + localTimezoneMins / 60);
+	
+	var localTimezoneMs = localTimezoneMins * 60000; //in milliseconds
+	//Ti.API.info("Local timezone ms: " + localTimezoneMs);
+	
+	//Undo whatever time adjustment the JS engine will do to the local time.
+	//Eg: if the local timezone is UTC-6, apply t - (-6) = t + 6 = UTC+0 time.
+	var localTime = new Date(dateObj.getTime() + localTimezoneMs);
+    
+    //Ti.API.info("Original date", dateObj);
+    //Ti.API.info("Local date", localTime);
+    
+    return localTime;
+}
+
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
+module.exports.getIndexFromMonthName = getIndexFromMonthName;
 module.exports.getCurrentMonthName = getCurrentMonthName;
+module.exports.getShortDateLabel = getShortDateLabel;
 module.exports.getDateLabel = getDateLabel;
 module.exports.getMonthLabel = getMonthLabel;
-module.exports.getDayBefore = getDayBefore;</code></pre>
+module.exports.getDayBefore = getDayBefore;
+module.exports.isValidDate = isValidDate;
+module.exports.areDatesEqual = areDatesEqual;
+module.exports.localise = localise;</code></pre>
         </article>
     </section>
 
@@ -127,13 +224,13 @@ module.exports.getDayBefore = getDayBefore;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu May 18 2017 20:05:23 GMT+1000 (AEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
 </footer>
 
 <script> prettyPrint(); </script>

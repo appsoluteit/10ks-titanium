@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/tournaments/races/races.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/tournaments/races/races.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Race tournaments Controller
+ * @description The controller for the race tournaments.
+ * @namespace Controllers.Tournaments.Races.
+ */
+
+var args = $.args;
+var RaceTournamentsProvider = require('classes/RaceTournamentsProvider');
+var FormatHelper = require('helpers/FormatHelper');
+var SessionHelper = require('helpers/SessionHelper');
+
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
+	
+	win.addEventListener("close", function() {
+		fetchRaces();
+	});
+}
+
+/**
+ * @description Event handler for `btnBack`. Closes the window.
+ * @memberof Controllers.Tournaments.Races
+ */
+function btnBack_click() {
+	$.races.close();
+}
+
+function fetchRaces() {
+	Ti.API.info("Fetching races");
+	
+	var spinner = Alloy.createWidget('nl.fokkezb.loading');
+	spinner.show("Fetching races...");
+	
+	var racesProvider = new RaceTournamentsProvider();
+	
+	function onSuccess(response) {
+		Ti.API.info("Races response: ", response);
+		
+		var count = 0;
+		response.results.forEach(function(result) {
+			Ti.API.info(JSON.stringify(result));
+			
+			var row = Ti.UI.createTableViewRow({ });
+			
+			Alloy.createWidget("com.10000steps.challengerow", null, {
+				taskName: '',
+				taskDescription: result.team.tournament.tournament.description,
+				goalSteps: FormatHelper.formatNumber(result.team.tournament.tournament.total_steps) + ' steps',
+				percentComplete: FormatHelper.formatNumber(result.team.tournament.tournament.distance_metres) + 'm',
+				image:  "/common/race_badge_small.png",
+				view: row
+			});
+			
+			row.addEventListener('click', function() {
+				var detailWindow = Alloy.createController('tournaments/races/racesDetail', result).getView();
+				detailWindow.open();
+			});
+			
+			$.racesView.tblRaces.appendRow(row);	
+			count++;		
+		});
+		
+		if(count === 0) {
+			var row = Ti.UI.createTableViewRow({ title: 'There are no joined race tournaments.' });
+			$.racesView.tblRaces.appendRow(row);		
+		}
+		
+		var webLink = Ti.UI.createLabel({
+			text: "To join, create or view past Tournaments, go to your Dashboard on the 10,000 Steps website",
+			color: "#0645AD",
+			font: {
+				fontSize: 9
+			},
+			textAlign: "center"
+		});
+		webLink.addEventListener('click', function() {
+			Ti.Platform.openURL('https://www.10000steps.org.au/dashboard/tournaments/tournament-races/');
+		});
+		var linkRow = Ti.UI.createTableViewRow();
+		linkRow.add(webLink);
+		
+		$.racesView.tblRaces.appendRow(linkRow);
+		
+		spinner.hide();	
+	}
+	
+	function onFail(reason) {
+		Ti.API.error(reason);
+		
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.races);
+			showLogin();
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't get races",
+				duration: 2000,
+				view: $.races,
+				theme: "error"
+			});	
+		}		
+	}
+	
+	racesProvider.fetch().then(onSuccess, onFail);
+}
+
+/**
+ * @description Event handler for the Window's open event.
+ * @memberof Controllers.Tournaments.Races
+ */
+function window_open() {
+	Alloy.Globals.tracker.addScreenView('Race Tournaments');
+	
+	fetchRaces();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: widgets/danielhanold.pickerWidget/controllers/widget.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: widgets/danielhanold.pickerWidget/controllers/widget.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*--------------------------------------------------------
+* Initialization.
+*-------------------------------------------------------*/
+var args = arguments[0] || {};
+var outerView = args.outerView;
+
+// Placeholder for picker data.
+var pickerData = [];
+
+// Placeholder for keeping track of key/value pairs.
+var pickerValueArray = [];
+
+// For single-picker columns on Android, use an option dialog.
+var androidSpecificTypes = ['single-column'];
+var androidSpecific = (OS_ANDROID &amp;&amp; _.contains(androidSpecificTypes, args.type));
+
+// Placeholder elements.
+var pickerView;
+var picker;
+var optionsDialog;
+
+
+
+/*--------------------------------------------------------
+* Initialization.
+*-------------------------------------------------------*/
+
+// On iOS, hide the nav bar if requested.
+if (OS_IOS &amp;&amp; args.hideNavBar === true) {
+  outerView.hideNavBar();
+}
+
+// If specific UI elements are used on Android, don't create picker views.
+if (androidSpecific) {
+  switch (args.type) {
+  case 'single-column':
+    // Use option dialog for single-column pickers on Android.
+    populateOptionsDialog();
+    break;
+  }
+}
+else {
+  var overlay = Widget.createController('overlay').getView();
+  // Create the controller for the picker view.
+  // Pass callback functions to controller.
+  var pickerController = Widget.createController('pickerView', {
+    type: args.type,
+    pickerParams: args.pickerParams,
+    parentFunctions: {
+      close: close,
+      done: done
+    }
+  });
+  pickerView = pickerController.getView('pickerView');
+  picker = pickerController.getView('picker');
+
+  outerView.add(overlay);
+  outerView.add(pickerView);
+
+  // Populate picker.
+  populatePicker();
+}
+
+
+
+/*--------------------------------------------------------
+* Function.
+*-------------------------------------------------------*/
+
+/**
+* Generate and populate the optionsDialog.
+*/
+function populateOptionsDialog() {
+  var selectedIndex = undefined;
+
+  // Convert the object into array pairs.
+  pickerValueArray = _.pairs(args.pickerValues[0]);
+
+  // Iterate over all pairs and add the original
+  // value (pair[1]) as a picker row.
+  _.each(pickerValueArray, function(pair, index){
+    pickerData.push(pair[1]);
+  });
+
+  // Determine the selected index.
+  if (_.isArray(args.selectedValues) &amp;&amp; !_.isEmpty(args.selectedValues)) {
+    selectedIndex = getKeyIndexFromPairs(pickerValueArray, args.selectedValues[0]);
+  }
+
+  // Create an options dialog.
+  optionsDialog = Ti.UI.createOptionDialog({
+    options: pickerData,
+    buttonNames: ['Cancel'],
+    selectedIndex: selectedIndex
+  });
+  optionsDialog.show();
+  optionsDialog.addEventListener('click', done);
+}
+
+/**
+* Populate the picker with data.
+*/
+function populatePicker() {
+  switch (args.type) {
+  case 'single-column':
+    // Convert the object into array pairs.
+    pickerValueArray = _.pairs(args.pickerValues[0]);
+
+    // Iterate over all pairs and add the original
+    // value (pair[1]) as a picker row.
+    _.each(pickerValueArray, function(pair, index){
+      var pickerRow = Ti.UI.createPickerRow({
+        title: pair[1]
+      });
+      pickerData.push(pickerRow);
+    });
+
+    // Add the picker data to the picker.
+    picker.add(pickerData);
+
+    // Set the defaults.
+    if (_.isArray(args.selectedValues) &amp;&amp; !_.isEmpty(args.selectedValues)) {
+      var rowIndex = getKeyIndexFromPairs(pickerValueArray, args.selectedValues[0]);
+      picker.setSelectedRow(0, rowIndex, false);
+    }
+    break;
+
+  case 'age-range':
+    // Set defaults for age range.
+    args.pickerParams = args.pickerParams || {};
+    args.pickerParams.min = args.pickerParams.min || 18;
+    args.pickerParams.max = args.pickerParams.max || 100;
+
+    var minAge = args.pickerParams.min;
+    var maxAge = args.pickerParams.max;
+
+    // Create 2 picker columns.
+    var columnParams = {width: (OS_ANDROID) ? 100 : undefined};
+    var pickerColumns = [Ti.UI.createPickerColumn(columnParams), Ti.UI.createPickerColumn(columnParams)];
+
+    // Create an array with all ages.
+    var agesArray = _.range(minAge, (maxAge + 1), 1);
+
+    // Fill each column with the full age range.
+    _.each(pickerColumns, function(column, index) {
+      _.each(agesArray, function(age) {
+        pickerColumns[index].addRow(Ti.UI.createPickerRow({
+          title: String(age)
+        }));
+      });
+    });
+
+    // Set columns data.
+    picker.setColumns(pickerColumns);
+
+    // On iOS, reload columns to ensure they show up correctly.
+    if (OS_IOS) {
+      _.each(pickerColumns, function(column) {
+        picker.reloadColumn(column);
+      });
+    }
+
+    // Set the defaults.
+    if (_.isArray(args.selectedValues) &amp;&amp; !_.isEmpty(args.selectedValues)) {
+      _.each(args.selectedValues, function(value, columnIndex) {
+        var rowIndex = _.indexOf(agesArray, Number(value));
+        picker.setSelectedRow(columnIndex, rowIndex, false);
+      });
+    }
+    break;
+
+  case 'date-picker':
+    // On Android, the picker type can't bet set after
+    // the picker is created.
+    // On iOS, the picker type can be set after the picker
+    // is created. On iOS 8+, there are intermittent issues
+    // if the picker type is set after the picker is created.
+    // @see https://github.com/danielhanold/danielhanold.pickerwidget/issues/8
+    //
+    // To circumvent both issues, set values on creation.
+    // See pickerView.js
+    break;
+  }
+}
+
+/**
+* Get the value from a selected row.
+*
+* @param index
+*   Index for the picker column. Defaults to 0.
+*/
+function getSelectedRowTitle(index) {
+  index = index || 0;
+  return picker.getSelectedRow(index).title;
+}
+
+/**
+* Get index for key from pairs.
+*
+*/
+function getKeyIndexFromPairs(pairs, key) {
+  pairs = pairs || [];
+  key = key || null;
+  var rowIndex = null;
+
+  // Determine index.
+  _.each(pairs, function(pair, index) {
+    if (key == pair[0]) {
+      rowIndex = index;
+      return;
+    }
+  });
+
+  return rowIndex;
+}
+
+/**
+* Determine the the key of the pair in this array.
+*
+* @param pairs
+*   Array of pairs.
+* @param title
+*   Title that is currently selected.
+*/
+function getKeyFromPairs(pairs, title) {
+  pairs = pairs || [];
+  title = title || null;
+  var key = null;
+
+  // Determine key.
+  _.each(pairs, function(pair) {
+    if (title == pair[1]) {
+      key = pair[0];
+      return;
+    }
+  });
+
+  return key;
+}
+
+/**
+* User clicks done.
+*/
+function done(e) {
+  // Return data.
+  var data = null;
+
+  // Boolean for cancel data.
+  var cancel = false;
+
+  switch (args.type) {
+  case 'single-column':
+    if (OS_IOS) {
+      // Determine key and value from actual picker on iOS.
+      var value = getSelectedRowTitle(0);
+      var key = getKeyFromPairs(pickerValueArray, value);
+      var data = [{
+        key: key,
+        value: value
+      }];
+    }
+
+    if (OS_ANDROID) {
+      // Set the data from the picker on Android.
+      e = e || {};
+      e.source = e.source || {};
+      e.source.options = e.source.options || [];
+
+      // Determine if the user clicked cancel.
+      if (e.button === true) {
+        cancel = true;
+      }
+      else {
+        var data = [{
+          key: getKeyFromPairs(pickerValueArray, e.source.options[e.index]),
+          value: e.source.options[e.index]
+        }];
+      }
+    }
+    break;
+
+  case 'age-range':
+    // Get the numbers.
+    var numberLow = Number(picker.getSelectedRow(0).title);
+    var numberHigh = Number(picker.getSelectedRow(1).title);
+
+    // Validation: Ensure high number is higher than low.
+    if (numberLow >= numberHigh) {
+      var alertDialog = Ti.UI.createAlertDialog({
+        title: "Error",
+        message: 'Please pick a valid age range',
+        buttonNames: ['Ok']
+      }).show();
+      return;
+    }
+
+    // Validation: If minDifference is set, ensure age
+    // difference is large enough.
+    if (_.isNumber(args.pickerParams.minDifference)) {
+      if ((numberHigh - numberLow) &lt; Number(args.pickerParams.minDifference)) {
+        var alertDialog = Ti.UI.createAlertDialog({
+          title: "Error",
+          message: 'Ages must be ' + String(args.pickerParams.minDifference) + ' years apart.',
+          buttonNames: ['Ok']
+        }).show();
+        return;
+      }
+    }
+
+    // If validation is passed, set the numbers.
+    data = {
+      low: numberLow,
+      high: numberHigh
+    }
+    break;
+
+  case 'date-picker':
+    // Determine the selected date.
+    var selectedDate = picker.getValue();
+
+    // Error checking for minimum selected date.
+    if (_.isDate(args.pickerParams.maxSelectedDate) &amp;&amp; (selectedDate > args.pickerParams.maxSelectedDate)) {
+      if (_.isString(args.pickerParams.maxSelectedDateErrorMessage)) {
+        var message = args.pickerParams.maxSelectedDateErrorMessage;
+      }
+      else {
+        var message = 'The date you selected is not valid';
+      }
+      var alertDialog = Ti.UI.createAlertDialog({
+        title: "Error",
+        message: message,
+        buttonNames: ['Ok']
+      }).show();
+      return;
+    }
+
+    // @see http://stackoverflow.com/questions/4060004/calculate-age-in-javascript
+    var age = Math.floor((Date.now() - selectedDate) / (31557600000));
+    var unixMilliseconds = Math.round(selectedDate.getTime());
+    var unixSeconds = Math.round(selectedDate.getTime() / 1000);
+    data = {
+      date: selectedDate,
+      age: age,
+      unixMilliseconds: unixMilliseconds,
+      unixSeconds: unixSeconds
+    }
+    break;
+  }
+
+  // Close the view.
+  close({
+    type: args.type,
+    data: data,
+    cancel: cancel
+  });
+}
+
+/**
+* Close the window.
+*/
+function close(_callbackParams) {
+  _callbackParams = _callbackParams || {};
+  _callbackParams.type = args.type;
+  _callbackParams.id = args.id || null;
+  _callbackParams.data = _callbackParams.data || null;
+  _callbackParams.cancel = _callbackParams.cancel || false;
+
+  // If the navbar was supposed to be hidden, show it again.
+  if (OS_IOS &amp;&amp; args.hideNavBar === true) {
+    outerView.showNavBar();
+  }
+
+  // Execute callback function if one is set.
+  if (_.isFunction(args.onDone)) {
+    args.onDone(_callbackParams);
+  }
+
+  // Remove elements from views.
+  if (androidSpecific === false) {
+    outerView.remove(overlay);
+    outerView.remove(pickerView);
+  }
+
+  // Null out elements.
+  overlay = null;
+  pickerView = null;
+  picker = null;
+  optionsDialog = null;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="lib_classes_AuthProvider.module_js.html">lib/classes/AuthProvider.js</a></li><li><a href="lib_classes_CalendarFactory.module_js.html">lib/classes/CalendarFactory.js</a></li><li><a href="lib_classes_ChallengesProvider.module_js.html">lib/classes/ChallengesProvider.js</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js.html">lib/classes/RaceTournamentsProvider.js</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js.html">lib/classes/ReminderRepeatSetting.js</a></li><li><a href="lib_classes_StepsProvider.module_js.html">lib/classes/StepsProvider.js</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js.html">lib/classes/TimeoutTournamentsProvider.js</a></li><li><a href="lib_helpers_APIHelper.module_js.html">lib/helpers/APIHelper.js</a></li><li><a href="lib_helpers_DateTimeHelper.module_js.html">lib/helpers/DateTimeHelper.js</a></li><li><a href="lib_helpers_FormatHelper.module_js.html">lib/helpers/FormatHelper.js</a></li></ul><h3>Classes</h3><ul><li><a href="BackboneModel.html">BackboneModel</a></li><li><a href="JsonModel.html">JsonModel</a></li><li><a href="lib_classes_AuthProvider.module_js-AuthProvider.html">AuthProvider</a></li><li><a href="lib_classes_CalendarFactory.module_js-AndroidReminder.html">AndroidReminder</a></li><li><a href="lib_classes_CalendarFactory.module_js-AppleReminder.html">AppleReminder</a></li><li><a href="lib_classes_ChallengesProvider.module_js-ChallengesProvider.html">ChallengesProvider</a></li><li><a href="lib_classes_RaceTournamentsProvider.module_js-RaceTournamentsProvider.html">RaceTournamentsProvider</a></li><li><a href="lib_classes_ReminderRepeatSetting.module_js-ReminderRepeatSetting.html">ReminderRepeatSetting</a></li><li><a href="lib_classes_StepsProvider.module_js-StepsProvider.html">StepsProvider</a></li><li><a href="lib_classes_TimeoutTournamentsProvider.module_js-TimeoutTournamentsProvider.html">TimeoutTournamentsProvider</a></li><li><a href="StepsDataProvider.html">StepsDataProvider</a></li></ul><h3>Namespaces</h3><ul><li><a href="Alloy.Globals.html">Alloy.Globals</a></li><li><a href="Controllers.Auth.Login.html">Controllers.Auth.Login</a></li><li><a href="Controllers.Auth.Register.html">Controllers.Auth.Register</a></li><li><a href="Controllers.Challenges.html">Controllers.Challenges</a></li><li><a href="Controllers.Home.html">Controllers.Home</a></li><li><a href="Controllers.Index.html">Controllers.Index</a></li><li><a href="Controllers.Settings.html">Controllers.Settings</a></li><li><a href="Controllers.Settings.About.html">Controllers.Settings.About</a></li><li><a href="Controllers.Settings.GoalSteps.html">Controllers.Settings.GoalSteps</a></li><li><a href="Controllers.Settings.Reminder.html">Controllers.Settings.Reminder</a></li><li><a href="Controllers.Settings.ReminderLabel.html">Controllers.Settings.ReminderLabel</a></li><li><a href="Controllers.Settings.ReminderRepeat.html">Controllers.Settings.ReminderRepeat</a></li><li><a href="Controllers.Settings.ReminderTime.html">Controllers.Settings.ReminderTime</a></li><li><a href="Controllers.Stats.html">Controllers.Stats</a></li><li><a href="Controllers.Steps.html">Controllers.Steps</a></li><li><a href="Controllers.Steps.Form.html">Controllers.Steps.Form</a></li><li><a href="Controllers.Tournaments.html">Controllers.Tournaments</a></li><li><a href="Controllers.Tournaments.Races..html">Controllers.Tournaments.Races.</a></li><li><a href="Controllers.Tournaments.Timeouts.html">Controllers.Tournaments.Timeouts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#close">close</a></li><li><a href="global.html#createTextField">createTextField</a></li><li><a href="global.html#done">done</a></li><li><a href="global.html#getKeyFromPairs">getKeyFromPairs</a></li><li><a href="global.html#getKeyIndexFromPairs">getKeyIndexFromPairs</a></li><li><a href="global.html#getSelectedRowTitle">getSelectedRowTitle</a></li><li><a href="global.html#populateOptionsDialog">populateOptionsDialog</a></li><li><a href="global.html#populatePicker">populatePicker</a></li><li><a href="global.html#ui">ui</a></li><li><a href="global.html#window_load">window_load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 13:09:22 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

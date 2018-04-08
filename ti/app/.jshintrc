@@ -1,0 +1,9 @@
+{
+    "undef": true,
+    "unused": true,
+    "node": true,
+    "globals": {
+      "Ti": true,
+      "Alloy": true
+    }
+  }

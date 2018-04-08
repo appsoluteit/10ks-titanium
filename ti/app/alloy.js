@@ -4,6 +4,11 @@
  * @namespace Alloy.Globals
  */
 
+ //Polyfills. These should be run first to enable support for anything else in this file
+ (function() {
+	Array.prototype.map = require('polyfills/array.prototype.map');
+ })();
+
 //Alloy Globals
 (function() {
 	/**

@@ -4,7 +4,8 @@
  * @namespace Controllers.Tournaments
  */
 
-var NavBarButton = require('classes/NavBarButton');
+var TournamentsProvider = require('classes/TournamentsProvider');
+var tournamentsProvider = new TournamentsProvider();
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -28,5 +29,12 @@ function window_open() {
 }
 
 function loadTournaments() {
-	// TODO
+	tournamentsProvider.fetch().then(function(results) {
+		Ti.API.info('Finished loading tournaments');
+		Ti.API.info(results);
+
+		results.forEach(function(element) {
+			Ti.API.info(element);
+		});
+	});
 }
