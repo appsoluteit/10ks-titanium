@@ -25,7 +25,6 @@ function get(endpoint, page) {
 	}
 	
 	function onSuccess(e) {
-		Ti.API.info("Get tournaments success. Page = ", page);
 		defer.resolve(e);
 	}
 	
@@ -46,12 +45,10 @@ function get(endpoint, page) {
 }
 
 function getTimeouts(page) {
-    Ti.API.info('Getting timeouts');
     return get('tournament_timeouts', page);
 }
 
 function getRaces(page) {
-    Ti.API.info('Getting races');
     return get('tournament_races', page);
 }
 
@@ -65,9 +62,6 @@ TournamentsProvider.prototype.fetch = function(page) {
 
     getTimeouts(page)
         .then(function(timeouts) {
-            Ti.API.info('Timeouts resolved.');
-            Ti.API.info(timeouts);
-
             timeouts = timeouts.results.map(function(item) {
                 // Flatten out the response
                 return {
@@ -84,9 +78,6 @@ TournamentsProvider.prototype.fetch = function(page) {
             return getRaces(page);
         })
         .then(function(races) {
-            Ti.API.info('Races resolved');
-            Ti.API.info(races);
-
             races = races.results.map(function(item) {
                 return {
                     teamName: '',
