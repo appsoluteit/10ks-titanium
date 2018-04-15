@@ -61,7 +61,9 @@ TournamentsProvider.prototype.fetch = function(page) {
     var results = [];
 
     getTimeouts(page)
-        .then(function(timeouts) {
+        .then(function onSuccess(timeouts) {
+            Ti.API.info('Got timeouts: ' + timeouts);
+
             timeouts = timeouts.results.map(function(item) {
                 // Flatten out the response
                 return {
@@ -70,14 +72,19 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentWeeks: item.team.tournament.weeks,
                     tournamentStartDate: item.team.tournament.date_started,
                     tournamentSteps: item.steps,
-                    type: 'timeout'
+                    type: 'timeout',
+                    hasNextPage: true,
+                    //hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
                 };
             })
             results = results.concat(timeouts);
-           
+
+
             return getRaces(page);
+        }, function onFail(e) {
+            deferer.reject(e);
         })
-        .then(function(races) {
+        .then(function onSuccess(races) {
             races = races.results.map(function(item) {
                 return {
                     teamName: '',
@@ -88,13 +95,17 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentStartDate: item.team.tournament.date_started,
                     tournamentSteps: item.steps,
                     type: 'race',
-                    active: item.team.tournament.tournament.active
+                    active: item.team.tournament.tournament.active,
+                    hasNextPage: true,
+                    //hasNextPage: !!(races.next)
                 };
             })
             .filter(function(item) { return item.active == 1; });
             
             results = results.concat(races);
             deferer.resolve(results);
+        }, function onFail(e) {
+            deferer.reject(e);
         });
 
     return deferer.promise;

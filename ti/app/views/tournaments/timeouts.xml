@@ -1,0 +1,21 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="timeouts" platform="ios">
+        <!-- TODO: Window title to be dynamic -->
+		<Window title="Timeouts" onOpen="window_open" id="window">
+		    <LeftNavButton>
+                <Button title="Back" onClick="btnBack_click" />
+            </LeftNavButton>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window title="10,000 Steps" platform="android" onOpen="window_open">
+        <ActionBar 
+        	id="actionbar" 
+        	title="Timeouts" 
+        	homeButtonEnabled="true"
+        	displayHomeAsUp="true"
+        	onHomeIconItemSelected="btnBack_click" />
+    </Window>
+</Alloy>
