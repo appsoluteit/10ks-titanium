@@ -62,8 +62,6 @@ TournamentsProvider.prototype.fetch = function(page) {
 
     getTimeouts(page)
         .then(function onSuccess(timeouts) {
-            Ti.API.info('Got timeouts: ' + timeouts);
-
             timeouts = timeouts.results.map(function(item) {
                 // Flatten out the response
                 return {
@@ -96,8 +94,8 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentSteps: item.steps,
                     type: 'race',
                     active: item.team.tournament.tournament.active,
-                    hasNextPage: true,
-                    //hasNextPage: !!(races.next)
+                    //hasNextPage: true, // debug: uncomment this to force it to show a load more button when there aren't any.
+                    hasNextPage: !!(races.next)
                 };
             })
             .filter(function(item) { return item.active == 1; });

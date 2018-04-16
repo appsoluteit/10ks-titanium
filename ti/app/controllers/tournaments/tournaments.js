@@ -41,11 +41,7 @@ function window_open() {
  */
 function loadTournaments() {
 	function onLoadTournamentsSuccess(results) {
-		Ti.API.info('Fetching finished');
-
 		results.forEach(function(element) {
-			Ti.API.info('row: ' + element);
-
 			var row = Ti.UI.createTableViewRow({
 				color: 'black',
 				height: '60dp',
@@ -140,10 +136,6 @@ function loadTournaments() {
 
 		spinner.hide();
 	}
-	//Ti.API.info('Navigation window', $.tournaments);
-	//Ti.API.info('Window', $.tournaments.window);
-	//Ti.API.info('View', $.tournamentsView); // View <null> when referenced from the window.
-	//Ti.API.info('Table', $.tournamentsView.tblTournaments);
 
 	spinner.show('Fetching tournaments...');
 	tournamentsProvider.fetch(currentPage)

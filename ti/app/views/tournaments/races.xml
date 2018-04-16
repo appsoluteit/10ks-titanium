@@ -4,18 +4,24 @@
         <!-- TODO: Window title to be dynamic -->
 		<Window title="Races" onOpen="window_open" id="window">
 		    <LeftNavButton>
-                <Button title="Back" onClick="btnBack_click" />
+				<View width="Ti.UI.SIZE" height="30">
+                	<Button image="/common/chevrons/left-16-w.png" title="Back" onClick="btnBack_click" style="Ti.UI.iOS.SystemButtonStyle.PLAIN"/>
+				</View>
             </LeftNavButton>
+
+			<Require id="racesView" src="tournaments/racesView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window title="10,000 Steps" platform="android" onOpen="window_open">
+	<Window id="races" title="10,000 Steps" platform="android" onOpen="window_open">
         <ActionBar 
         	id="actionbar" 
         	title="Races" 
         	homeButtonEnabled="true"
         	displayHomeAsUp="true"
         	onHomeIconItemSelected="btnBack_click" />
+
+		<Require id="racesView" src="tournaments/racesView" type="view"/>
     </Window>
 </Alloy>

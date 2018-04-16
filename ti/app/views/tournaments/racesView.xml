@@ -1,0 +1,84 @@
+<Alloy>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
+			<!-- TableView Container -->
+			<View top="0dp" height="80%">
+				<TableView height="100%" id="tblRaces">
+					<!-- Participating Teams -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Participating Teams</Label>
+							<Label right="10dp" id="lblParticipatingTeams" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
+					<!-- Participating Members -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Participating Members</Label>
+							<Label right="10dp" id="lblParticipatingMembers" class="row-value"></Label>
+						</View>
+					</TableViewRow>               
+
+					<!-- Total Steps Taken -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Total Steps Taken</Label>
+							<Label right="10dp" id="lblTotalStepsTaken" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
+					<!-- Start Date -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Start Date</Label>
+							<Label right="10dp" id="lblStartDate" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+				</TableView>
+			</View>
+
+            <!-- Buttons Container -->
+			<View left="10dp" right="10dp" bottom="20dp">
+				<!-- Daily Graph -->
+				<Button 
+					id="btnTeamLeaderboard" 
+					title="Team Leaderboard" 
+					left="0dp"
+					font="{ fontSize: 10sp }"
+					platform="android"
+                    onClick="btnTeamLeaderboard_click"
+				/>
+					
+				<Widget
+					id="btnTeamLeaderboard"
+					left="0dp"
+					src="nl.fokkezb.button"
+					title="Team Leaderboard"
+					style="steps-default"
+					platform="ios"
+                    textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER"
+				/>	
+				
+				<!-- Monthly Graph -->
+				<Button 
+					id="btnTeamMembers" 
+					title="Team Members" 
+					right="0dp"
+					font="{ fontSize: 10sp }"					
+					platform="android"
+				/>
+					
+				<Widget
+					id="btnTeamMembers"
+					right="0dp"
+					src="nl.fokkezb.button"
+					title="Team Members"
+					style="steps-default"
+					platform="ios"
+                    textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER"
+				/>	
+			</View>
+		</View>
+	</View>
+</Alloy>
