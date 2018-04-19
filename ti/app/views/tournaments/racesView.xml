@@ -4,29 +4,21 @@
 			<!-- TableView Container -->
 			<View top="0dp" height="80%">
 				<TableView height="100%" id="tblRaces">
-					<!-- Participating Teams -->
+					<!-- Goal -->
 					<TableViewRow>
 						<View class="whole">
-							<Label class="row-label">Participating Teams</Label>
-							<Label right="10dp" id="lblParticipatingTeams" class="row-value"></Label>
+							<Label class="row-label">Goal</Label>
+							<Label right="10dp" id="lblGoal" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 
-					<!-- Participating Members -->
+					<!-- Distance -->
 					<TableViewRow>
 						<View class="whole">
-							<Label class="row-label">Participating Members</Label>
-							<Label right="10dp" id="lblParticipatingMembers" class="row-value"></Label>
+							<Label class="row-label">Distance</Label>
+							<Label right="10dp" id="lblDistance" class="row-value"></Label>
 						</View>
 					</TableViewRow>               
-
-					<!-- Total Steps Taken -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Total Steps Taken</Label>
-							<Label right="10dp" id="lblTotalStepsTaken" class="row-value"></Label>
-						</View>
-					</TableViewRow>
 
 					<!-- Start Date -->
 					<TableViewRow>
@@ -35,6 +27,23 @@
 							<Label right="10dp" id="lblStartDate" class="row-value"></Label>
 						</View>
 					</TableViewRow>
+
+					<!-- Team Total Steps -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Team Total Steps</Label>
+							<Label right="10dp" id="lblTeamTotalSteps" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
+					<!-- Percent Complete -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">% Complete</Label>
+							<Label right="10dp" id="lblPercentComplete" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
 				</TableView>
 			</View>
 

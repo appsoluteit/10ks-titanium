@@ -151,7 +151,6 @@ function tblRow_click(e) {
 	else {
 		if(e.row.tournament.type === 'race') {
 			Alloy.createController('tournaments/races', {
-				title: e.row.label,
 				tournament: e.row.tournament
 			})
 			.getView()
@@ -159,7 +158,6 @@ function tblRow_click(e) {
 		}
 		else if(e.row.tournament.type === 'timeout') {
 			Alloy.createController('tournaments/timeouts', {
-				title: e.row.label,
 				tournament: e.row.tournament
 			})
 			.getView()

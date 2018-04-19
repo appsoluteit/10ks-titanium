@@ -1,5 +1,8 @@
 var args = $.args;
 
+var DateTimeHelper = require('helpers/DateTimeHelper');
+var FormatHelper = require('helpers/FormatHelper');
+
 function window_open() {
     Alloy.Globals.tracker.addScreenView('Race Tournaments');
     
@@ -16,7 +19,12 @@ function window_open() {
 		$.window.title = args.tournament.tournamentName;
     }	
 
-    // TODO: Populate the labels. I guess we'll go with the written text instead of the screenshot.
+    // Populate the labels
+    $.racesView.lblGoal.text = FormatHelper.formatNumber(args.tournament.tournamentTotalSteps) + " steps";
+    $.racesView.lblDistance.text = FormatHelper.formatNumber(args.tournament.tournamentDistance) + "m";
+    $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(new Date(args.tournament.tournamentStartDate));
+    $.racesView.lblTeamTotalSteps.text = "";
+    $.racesView.lblPercentComplete.text = "";
 }
 
 function btnBack_click() {
