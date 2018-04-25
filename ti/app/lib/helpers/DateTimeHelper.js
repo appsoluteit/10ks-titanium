@@ -4,52 +4,50 @@
  * @module
  */
 
-/**
- * Returns a month name from January - December based on the provided index.
- * @param {Integer} index A number 0-11 that indicates the month.
- * @returns {String}
- */
-function getMonthNameFromIndex(index) {
-	var monthNames = [
-		"January", 
-		"February", 
-		"March", 
-		"April", 
-		"May", 
-		"June", 
-		"July", 
-		"August", 
-		"September", 
-		"October", 
-		"November", 
-		"December"
-	];
+ /////////////////////////////////////////////////////////////////////////////////////////////
 
-	return monthNames[index];
+module.exports.addWeeks = addWeeks;
+module.exports.areDatesEqual = areDatesEqual;
+module.exports.getCurrentMonthName = getCurrentMonthName;
+module.exports.getDateLabel = getDateLabel;
+module.exports.getDayBefore = getDayBefore;
+module.exports.getIndexFromMonthName = getIndexFromMonthName;
+module.exports.getMinutesBetween = getMinutesBetween;
+module.exports.getMonthLabel = getMonthLabel;
+module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
+module.exports.getShortDateLabel = getShortDateLabel;
+module.exports.isValidDate = isValidDate;
+module.exports.localise = localise;
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+ /**
+ * Adds a number of weeks to a date and returns the result.
+ * @param {Date} dateObj The source date to add weeks to. Must be a valid date object.
+ * @param {Number} weeks The number of weeks to add.
+ */
+function addWeeks(dateObj, weeks) {
+	var result = new Date();
+	result.setTime(dateObj.getTime() + (weeks * 7 * 24 * 60 * 60 * 1000)); // 7 days, 24 hours, 60 minutes, 60 seconds, 1000ms = weeks in milliseconds
+	return result;
 }
 
-function getIndexFromMonthName(strName) {
-	var monthNames = [
-		"January", 
-		"February", 
-		"March", 
-		"April", 
-		"May", 
-		"June", 
-		"July", 
-		"August", 
-		"September", 
-		"October", 
-		"November", 
-		"December"
-	];
+/**
+ * Returns a bool indicating whether two dates can be considered equal. i.e - do they hold the same day, month and year value.
+ * @param {Date} date1 
+ * @param {Date} date2 
+ */
+function areDatesEqual(date1, date2) {
+	if(!isValidDate(date1) || !isValidDate(date2)) {
+		return false;
+	}
 	
-	for(var i = 0; i < monthNames.length; i++) {
-		if(monthNames[i] === strName) {
-			return i;
-		}
-	}	
-};
+	var match = date1.getDate() === date2.getDate() &&
+		   		date1.getMonth() === date2.getMonth() &&
+		   		date1.getFullYear() === date2.getFullYear();	
+		   		
+	return match;
+}
 
 /**
  * Returns the name of the current month.
@@ -88,6 +86,94 @@ function getDateLabel(dateObj, includeYear) {
 }
 
 /**
+ * Gets a Date Object for the day before dateObj
+ * @param {Date} dateObj The input date
+ * @returns {Date} A date object set 1 day before dateObj
+ */
+function getDayBefore(dateObj) {
+	return new Date(dateObj.getTime() - (24*60*60*1000));
+}
+
+/**
+ * Returns a (zero-based) index for a given month name. This is case-insensitive.
+ * @param {String} strName The name of the month to search for. This can't be abbreviated.
+ */
+function getIndexFromMonthName(strName) {
+	var monthNames = [
+		"January", 
+		"February", 
+		"March", 
+		"April", 
+		"May", 
+		"June", 
+		"July", 
+		"August", 
+		"September", 
+		"October", 
+		"November", 
+		"December"
+	];
+	
+	for(var i = 0; i < monthNames.length; i++) {
+		if(monthNames[i].toLowerCase() === strName.toLowerCase()) {
+			return i;
+		}
+	}	
+};
+
+/**
+ * Computes and returns the number of minutes (absolute) between two dates.
+ * @param {*} firstDate 
+ * @param {*} secondDate 
+ */
+function getMinutesBetween(firstDate, secondDate) {
+	Ti.API.info('First date ms: ' + firstDate.getTime());
+	Ti.API.info('Second date ms: ' + secondDate.getTime());
+	
+	var diff = Math.abs(firstDate.getTime() - secondDate.getTime());
+
+	Ti.API.info('Difference in ms: ' + diff);
+
+	return Math.round(diff / 1000 / 60); // convert to seconds, then minutes. 
+}
+
+/**
+ * Computes and returns a label that represents the month for the given date. Eg: January 2017
+ * @param {Date} dateObj A date to operate on
+ * @returns {String} The month/year label
+ */
+function getMonthLabel(dateObj) {	
+	var month = getMonthNameFromIndex(dateObj.getMonth());
+	var year = dateObj.getFullYear();
+	
+	return month + " " + year;
+}
+
+/**
+ * Returns a month name from January - December based on the provided index. See also: getIndexFromMonthName.
+ * @param {Integer} index A number 0-11 that indicates the month.
+ * @returns {String}
+ */
+function getMonthNameFromIndex(index) {
+	var monthNames = [
+		"January", 
+		"February", 
+		"March", 
+		"April", 
+		"May", 
+		"June", 
+		"July", 
+		"August", 
+		"September", 
+		"October", 
+		"November", 
+		"December"
+	];
+
+	return monthNames[index];
+}
+
+/**
  * Computes and returns a label that represents the date in dd/MM/yyyy format. Eg: 01/02/2013
  * @param {Date} dateobj A date object
  * @returns {String} The date label
@@ -107,27 +193,6 @@ function getShortDateLabel(dateObj) {
 }
 
 /**
- * Computes and returns a label that represents the month for the given date. Eg: January 2017
- * @param {Date} dateObj A date to operate on
- * @returns {String} The month/year label
- */
-function getMonthLabel(dateObj) {	
-	var month = getMonthNameFromIndex(dateObj.getMonth());
-	var year = dateObj.getFullYear();
-	
-	return month + " " + year;
-}
-
-/**
- * Gets a Date Object for the day before dateObj
- * @param {Date} dateObj The input date
- * @returns {Date} A date object set 1 day before dateObj
- */
-function getDayBefore(dateObj) {
-	return new Date(dateObj.getTime() - (24*60*60*1000));
-}
-
-/**
  * Determines whether or not dateObj is a valid date
  * @param {Object} dateObj A date to examine
  */
@@ -143,18 +208,6 @@ function isValidDate(dateObj) {
 	else {
 		return false;
 	}
-}
-
-function areDatesEqual(date1, date2) {
-	if(!isValidDate(date1) || !isValidDate(date2)) {
-		return false;
-	}
-	
-	var match = date1.getDate() === date2.getDate() &&
-		   		date1.getMonth() === date2.getMonth() &&
-		   		date1.getFullYear() === date2.getFullYear();	
-		   		
-	return match;
 }
 
 /**
@@ -176,14 +229,3 @@ function localise(dateObj) {
     
     return localTime;
 }
-
-module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
-module.exports.getIndexFromMonthName = getIndexFromMonthName;
-module.exports.getCurrentMonthName = getCurrentMonthName;
-module.exports.getShortDateLabel = getShortDateLabel;
-module.exports.getDateLabel = getDateLabel;
-module.exports.getMonthLabel = getMonthLabel;
-module.exports.getDayBefore = getDayBefore;
-module.exports.isValidDate = isValidDate;
-module.exports.areDatesEqual = areDatesEqual;
-module.exports.localise = localise;

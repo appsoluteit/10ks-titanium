@@ -71,8 +71,8 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentStartDate: item.team.tournament.date_started,
                     tournamentSteps: item.steps,
                     type: 'timeout',
-                    hasNextPage: true,
-                    //hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
+                    //hasNextPage: true,
+                    hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
                 };
             })
             results = results.concat(timeouts);

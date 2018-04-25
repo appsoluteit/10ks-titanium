@@ -10,8 +10,6 @@ function window_open() {
     $.racesView.btnTeamLeaderboard.addEventListener('click', btnTeamLeaderboard_click);
     $.racesView.btnTeamMembers.addEventListener('click', btnTeamMembers_click);
 
-    Ti.API.info(args);
-
     if(Ti.Platform.osname === "android") {
 		$.races.activity.actionBar.title = args.tournament.tournamentName;
 	}
