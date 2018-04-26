@@ -15,6 +15,7 @@
     "com.10000steps.challengerow": "1.0",
     "nl.fokkezb.button": "*",
     "com.10000steps.badge": "1.0",
-    "danielhanold.pickerWidget": "*"
+    "danielhanold.pickerWidget": "*",
+    "com.mcvendrell.valuebar": "*"
   }
 }

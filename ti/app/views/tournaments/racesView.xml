@@ -2,7 +2,7 @@
 	<View class="background-gradient" height="100%">
 		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
 			<!-- TableView Container -->
-			<View top="0dp" height="80%">
+			<View top="0dp" height="50%">
 				<TableView height="100%" id="tblRaces">
 					<!-- Goal -->
 					<TableViewRow>
@@ -43,9 +43,10 @@
 							<Label right="10dp" id="lblPercentComplete" class="row-value"></Label>
 						</View>
 					</TableViewRow>
-
 				</TableView>
 			</View>
+
+			<Widget id="vbar1" src="com.mcvendrell.valuebar" title="" />
 
             <!-- Buttons Container -->
 			<View left="10dp" right="10dp" bottom="20dp">

@@ -23,6 +23,8 @@ function window_open() {
     $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(new Date(args.tournament.tournamentStartDate));
     $.racesView.lblTeamTotalSteps.text = "";
     $.racesView.lblPercentComplete.text = "";
+
+    $.racesView.vbar1.init(40, 100);
 }
 
 function btnBack_click() {

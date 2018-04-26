@@ -1,0 +1,11 @@
+"#vbar1": {
+    width: '90%',
+    valueColor: '#397CAD',
+    backgroundColor: 'red',
+    borderRadius: '5dp',
+    showValuesInside: false
+}
+
+"#tblRaces": {
+    //backgroundColor: 'pink'
+}
