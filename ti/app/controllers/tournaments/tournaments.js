@@ -120,6 +120,16 @@ function loadTournaments() {
 		if(e.detail === 'Invalid page.') {
 			// There are no more tournaments to show. Do nothing.
 		}
+		else if(e.detail === 'Invalid token.') {
+			setTimeout(function() {
+				var win = Alloy.createController("auth/login").getView();
+				win.open();
+			
+				win.addEventListener("close", function() {
+					loadTournaments();
+				});
+			}, 2000);
+		}
 		else if(e.detail) {
 			Alloy.createWidget("com.mcongrove.toast", null, {
 				text : e.detail,
@@ -140,7 +150,7 @@ function loadTournaments() {
 		spinner.hide();
 	}
 
-	spinner.show('Fetching tournaments...');
+	spinner.show('Loading tournaments...');
 	tournamentsProvider.fetch(currentPage)
 		.then(onLoadTournamentsSuccess, onLoadTournamentsFail);
 }

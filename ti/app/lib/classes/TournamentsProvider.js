@@ -52,6 +52,18 @@ function getRaces(page) {
     return get('tournament_races', page);
 }
 
+function sortDates(a, b) {
+    if(a.getTime() < b.getTime()) {
+        return -1;
+    }
+    else if(a.getTime() > b.getTime()) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 /**
  * Fetches a single page of both tournaments and races and joins them. 
  * @param {*} page 
@@ -62,6 +74,8 @@ TournamentsProvider.prototype.fetch = function(page) {
 
     getTimeouts(page)
         .then(function onSuccess(timeouts) {
+            Ti.API.info(timeouts);
+
             timeouts = timeouts.results.map(function(item) {
                 // Flatten out the response
                 return {
@@ -83,6 +97,8 @@ TournamentsProvider.prototype.fetch = function(page) {
             deferer.reject(e);
         })
         .then(function onSuccess(races) {
+            Ti.API.info(races);
+
             races = races.results.map(function(item) {
                 return {
                     teamName: '',
@@ -101,6 +117,10 @@ TournamentsProvider.prototype.fetch = function(page) {
             .filter(function(item) { return item.active == 1; });
             
             results = results.concat(races);
+            //results.sort(sortDates); // Need to add a polyfill for this.
+
+            Ti.API.info('sorting results finished');
+
             deferer.resolve(results);
         }, function onFail(e) {
             deferer.reject(e);
