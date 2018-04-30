@@ -7,6 +7,7 @@
  //Polyfills. These should be run first to enable support for anything else in this file
  (function() {
 	Array.prototype.map = require('polyfills/array.prototype.map');
+	Array.prototype.sort = require('polyfills/array.prototype.sort');
  })();
 
 //Alloy Globals

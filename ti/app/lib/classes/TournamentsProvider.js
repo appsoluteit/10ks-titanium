@@ -10,6 +10,7 @@
 
 var APIHelper = require('helpers/APIHelper');
 var q = require('q');
+//Array.prototype.sort = require('polyfills/array.prototype.sort');
 
 /**
  * @class
@@ -53,10 +54,12 @@ function getRaces(page) {
 }
 
 function sortDates(a, b) {
-    if(a.getTime() < b.getTime()) {
+    Ti.API.info('Sorting between ' + a + ' and ' + b);
+    
+    if(a.tournamentStartDate.getTime() < b.tournamentStartDate.getTime()) {
         return -1;
     }
-    else if(a.getTime() > b.getTime()) {
+    else if(a.tournamentStartDate.getTime() > b.tournamentStartDate.getTime()) {
         return 1;
     }
     else {
@@ -82,7 +85,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     teamName: item.team.name,
                     tournamentName: item.team.tournament.name,
                     tournamentWeeks: item.team.tournament.weeks,
-                    tournamentStartDate: item.team.tournament.date_started,
+                    tournamentStartDate: new Date(item.team.tournament.date_started),
                     tournamentSteps: item.steps,
                     type: 'timeout',
                     //hasNextPage: true,
@@ -106,7 +109,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentTime: item.team.tournament.tournament.default_time,
                     tournamentTotalSteps: item.team.tournament.tournament.total_steps,
                     tournamentDistance: item.team.tournament.tournament.distance_metres,
-                    tournamentStartDate: item.team.tournament.date_started,
+                    tournamentStartDate: new Date(item.team.tournament.date_started),
                     tournamentSteps: item.steps,
                     type: 'race',
                     active: item.team.tournament.tournament.active,
@@ -117,7 +120,11 @@ TournamentsProvider.prototype.fetch = function(page) {
             .filter(function(item) { return item.active == 1; });
             
             results = results.concat(races);
-            //results.sort(sortDates); // Need to add a polyfill for this.
+
+            Ti.API.info(results);
+            Ti.API.info('Preparing to sort...');
+
+            results.sort(sortDates);
 
             Ti.API.info('sorting results finished');
 
