@@ -5,10 +5,12 @@
  */
 
  //Polyfills. These should be run first to enable support for anything else in this file
+ /*
  (function() {
 	Array.prototype.map = require('polyfills/array.prototype.map');
 	Array.prototype.sort = require('polyfills/array.prototype.sort');
  })();
+*/
 
 //Alloy Globals
 (function() {
@@ -96,6 +98,12 @@
 	 * @memberof Alloy.Globals
 	 */
 	Alloy.Globals.IsDebug = Ti.App.Properties.getBool("is-debug");
+
+	Alloy.Globals.Env = Ti.App.Properties.getString("environment");
+	
+	Ti.API.info('Environment: ' + Alloy.Globals.Env);
+	Ti.API.info('Is Debug: ' + Alloy.Globals.IsDebug);
+
 	//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 })();
 
@@ -125,8 +133,17 @@
 	});
 })();
 
-//Google Analytics Tracking
+//Firebase (GA)
 (function() {	
+	if(Alloy.Globals.Env === 'Development') {
+		Alloy.Globals.tracker = {
+			addScreenView: function(screenName) {
+				Ti.API.info('Logging ' + screenName);
+			}
+		};
+		return;
+	}
+
 	// Require the Firebase Core module (own project!)
 	var FirebaseCore = require('firebase.core');
 	
@@ -159,11 +176,13 @@
 //Facebook SDK Integration
 //https://github.com/appcelerator-modules/ti.facebook
 (function() {
-   //Ti.API.warn('initialising facebook sdk');
-   var fb = require('facebook');
-   fb.initialize();
-  
-   // Only need Pixel support, not login
+   if(!Alloy.Globals.Env === 'Development') {
+	//Ti.API.warn('initialising facebook sdk');
+	var fb = require('facebook');
+	fb.initialize();
+	
+	// Only need Pixel support, not login
+   }
 })();
 
 //ACS

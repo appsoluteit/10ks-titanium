@@ -55,7 +55,12 @@ function loadTournaments() {
 			view.addEventListener('click', function(e) { }); //adding this event handler to the view seems to fix a bug where the event handler
 															//for the row wouldn't fire
 			
-			var icon = Ti.UI.createImageView({ left: '5dp', image: '/common/' + element.type + '_badge_small.png' });
+			var icon = Ti.UI.createImageView({ 
+				left: '5dp', 
+				width: '32dp',
+				//backgroundColor: 'red',
+				image: '/common/' + element.type + '_badge_small.png' 
+			});
 
 			var labelView = Ti.UI.createView({ layout: 'vertical', left: '50dp', width: '75%' })
 			labelView.add(Ti.UI.createLabel({
@@ -70,7 +75,7 @@ function loadTournaments() {
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
 				top: '5dp',
-				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate))
+				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate), true)
 			}));
 
 			var chevron = null;

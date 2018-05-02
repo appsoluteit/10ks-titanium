@@ -13,6 +13,8 @@
     <analytics>true</analytics>
     <guid>278dc07f-988f-4916-9bbb-052273ceb8fd</guid>
     <ios>
+        <run-on-mainthread>true</run-on-mainthread>
+
         <plist>
             <dict>
                 <key>UISupportedInterfaceOrientations~iphone</key>
@@ -107,15 +109,20 @@
         </manifest>
     </android>
     <modules>
-    <module platform="android">facebook</module>
-    <module platform="iphone" version="5.8.0">facebook</module>
-    <module platform="commonjs">ti.cloud</module>
-    <module platform="commonjs">nl.fokkezb.html2as</module>
-    <module platform="iphone">firebase.core</module>
-    <module platform="android">firebase.core</module>
-    <module platform="iphone">firebase.analytics</module>
-    <module platform="android">firebase.analytics</module>
-  </modules>
+        <module platform="commonjs">ti.cloud</module>
+        <module platform="commonjs">nl.fokkezb.html2as</module>
+
+        <!-- Enable these when doing a production build -->
+
+        <!--
+        <module platform="android">facebook</module>
+        <module platform="iphone" version="5.8.0">facebook</module>
+        <module platform="iphone">firebase.core</module>
+        <module platform="android">firebase.core</module>
+        <module platform="iphone">firebase.analytics</module>
+        <module platform="android">firebase.analytics</module>
+        -->
+    </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="ipad">true</target>
@@ -145,4 +152,6 @@
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <!-- Custom Properties -->
     <property name="is-debug" type="bool">false</property>
+    <property name="environment" type='string'>Development</property>
+    <property name="run-on-main-thread" type="bool">true</property>
 </ti:app>

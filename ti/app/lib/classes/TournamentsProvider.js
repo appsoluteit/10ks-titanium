@@ -56,10 +56,10 @@ function getRaces(page) {
 function sortDates(a, b) {
     Ti.API.info('Sorting between ' + a + ' and ' + b);
     
-    if(a.tournamentStartDate.getTime() < b.tournamentStartDate.getTime()) {
+    if(a.tournamentStartDate.getTime() > b.tournamentStartDate.getTime()) {
         return -1;
     }
-    else if(a.tournamentStartDate.getTime() > b.tournamentStartDate.getTime()) {
+    else if(a.tournamentStartDate.getTime() < b.tournamentStartDate.getTime()) {
         return 1;
     }
     else {
@@ -77,9 +77,14 @@ TournamentsProvider.prototype.fetch = function(page) {
 
     getTimeouts(page)
         .then(function onSuccess(timeouts) {
-            Ti.API.info(timeouts);
+            //Ti.API.info(timeouts);
 
             timeouts = timeouts.results.map(function(item) {
+                // Timeout tournaments without a name should show the number of weeks.
+                if(!item.team.name || !item.team.name.length) {
+                    item.team.name = item.team.tournament.weeks + " week timeout tournament";
+                }
+
                 // Flatten out the response
                 return {
                     teamName: item.team.name,
@@ -92,6 +97,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
                 };
             })
+
             results = results.concat(timeouts);
 
 
@@ -100,7 +106,7 @@ TournamentsProvider.prototype.fetch = function(page) {
             deferer.reject(e);
         })
         .then(function onSuccess(races) {
-            Ti.API.info(races);
+            //Ti.API.info(races);
 
             races = races.results.map(function(item) {
                 return {
@@ -121,12 +127,12 @@ TournamentsProvider.prototype.fetch = function(page) {
             
             results = results.concat(races);
 
-            Ti.API.info(results);
-            Ti.API.info('Preparing to sort...');
+            //Ti.API.info(results);
+            //Ti.API.info('Preparing to sort...');
 
             results.sort(sortDates);
 
-            Ti.API.info('sorting results finished');
+            //Ti.API.info('sorting results finished');
 
             deferer.resolve(results);
         }, function onFail(e) {

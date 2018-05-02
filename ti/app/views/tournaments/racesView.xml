@@ -82,7 +82,7 @@
 					id="btnTeamMembers"
 					right="0dp"
 					src="nl.fokkezb.button"
-					title="Team Members"
+					title="Team     Members"
 					style="steps-default"
 					platform="ios"
                     textAlign="Ti.UI.TEXT_ALIGNMENT_CENTER"
