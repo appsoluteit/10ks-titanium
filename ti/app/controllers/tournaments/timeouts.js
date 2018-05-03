@@ -4,7 +4,9 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require('helpers/FormatHelper');
 
 function btnTeamLeaderboard_click() {
-    alert("Leaderboard coming soon");
+    Alloy.createController("tournaments/teamLeaderboard")
+         .getView()
+         .open();
 }
 
 function btnTeamMembers_click() {
@@ -12,7 +14,7 @@ function btnTeamMembers_click() {
 }
 
 function window_open() {
-    Ti.API.info(args);
+    //Ti.API.info(args);
 
     Alloy.Globals.tracker.addScreenView('Timeout Tournaments');
     

@@ -32,7 +32,9 @@ function btnBack_click() {
 }
 
 function btnTeamLeaderboard_click() {
-    alert("Leaderboard coming soon");
+    Alloy.createController("tournaments/teamLeaderboard")
+         .getView()
+         .open();
 }
 
 function btnTeamMembers_click() {
