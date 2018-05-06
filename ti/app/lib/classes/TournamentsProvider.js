@@ -54,7 +54,7 @@ function getRaces(page) {
 }
 
 function sortDates(a, b) {
-    Ti.API.info('Sorting between ' + a + ' and ' + b);
+    //Ti.API.info('Sorting between ' + a + ' and ' + b);
     
     if(a.tournamentStartDate.getTime() > b.tournamentStartDate.getTime()) {
         return -1;

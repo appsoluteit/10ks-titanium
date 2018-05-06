@@ -38,5 +38,7 @@ function btnTeamLeaderboard_click() {
 }
 
 function btnTeamMembers_click() {
-    alert("Team members coming soon");
+    Alloy.createController("tournaments/teamMembers")
+         .getView()
+         .open();
 }
