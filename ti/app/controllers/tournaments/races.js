@@ -32,13 +32,17 @@ function btnBack_click() {
 }
 
 function btnTeamLeaderboard_click() {
-    Alloy.createController("tournaments/teamLeaderboard")
-         .getView()
-         .open();
+    Alloy.createController("tournaments/teamLeaderboard", {
+        type: 'race'
+    })
+    .getView()
+    .open();
 }
 
 function btnTeamMembers_click() {
-    Alloy.createController("tournaments/teamMembers")
-         .getView()
-         .open();
+    Alloy.createController("tournaments/teamMembers", {
+        type: 'race'
+    })
+    .getView()
+    .open();
 }

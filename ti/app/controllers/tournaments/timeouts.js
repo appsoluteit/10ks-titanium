@@ -4,15 +4,19 @@ var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require('helpers/FormatHelper');
 
 function btnTeamLeaderboard_click() {
-    Alloy.createController("tournaments/teamLeaderboard")
-         .getView()
-         .open();
+    Alloy.createController("tournaments/teamLeaderboard", {
+        type: 'timeout'
+    })
+    .getView()
+    .open();
 }
 
 function btnTeamMembers_click() {
-    Alloy.createController("tournaments/teamMembers")
-         .getView()
-         .open();
+    Alloy.createController("tournaments/teamMembers", {
+        type: 'timeout'
+    })
+    .getView()
+    .open();
 }
 
 function window_open() {
