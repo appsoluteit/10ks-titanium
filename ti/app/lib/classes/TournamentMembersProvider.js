@@ -36,7 +36,7 @@ TournamentMembersProvider.prototype.fetch = function(tournamentGuid) {
     setTimeout(function() {
         me.data.sort(sort);
         deferer.resolve(me.data);
-    }, 1000);
+    }, 3000);
 
     return deferer.promise;
 }

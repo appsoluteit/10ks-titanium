@@ -1,3 +1,4 @@
+var spinner = Alloy.createWidget('nl.fokkezb.loading');
 var FormatHelper = require('helpers/FormatHelper');
 var TournamentMembersProvider = require('classes/TournamentMembersProvider');
 var membersProvider = new TournamentMembersProvider();
@@ -11,6 +12,7 @@ function btnBack_click() {
 }
 
 function loadMembers() {
+    spinner.show('Loading...');
     membersProvider.fetch().then(function(contacts) {
         Ti.API.info('results: ', contacts);
 
@@ -61,5 +63,7 @@ function loadMembers() {
 
         $.membersView.tbMembers.setData(sectionArr);
         $.membersView.tbMembers.index = index;
+
+        spinner.hide();
     });
 }

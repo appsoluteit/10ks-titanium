@@ -1,8 +1,10 @@
 var ctrl;
 
 function show(_message, _cancelable) {
+    Ti.API.info('Showing spinner ' + _message);
 
     if (ctrl && ctrl.hasFocus) {
+        Ti.API.info('has focus. Updating');
         ctrl.update(_message, _cancelable);
         return;
     }
@@ -12,6 +14,7 @@ function show(_message, _cancelable) {
     newCtrl.show(_message, _cancelable);
 
     if (ctrl) {
+        Ti.API.info('Already exists. Hiding');
         hide();
     }
 

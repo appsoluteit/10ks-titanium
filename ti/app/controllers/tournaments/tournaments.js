@@ -118,6 +118,7 @@ function loadTournaments() {
 			$.tournamentsView.tblTournaments.appendRow(row);
 		}
 
+		Ti.API.info('Done loading');
 		spinner.hide();
 	}
 
