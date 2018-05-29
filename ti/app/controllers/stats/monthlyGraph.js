@@ -3,14 +3,10 @@ var MathHelper = require('helpers/MathHelper');
 var NavBarButton = require('classes/NavBarButton');
 
 var currentYear = -1; //keep track of the current year so that we can re-use it when the screen orientation changes.
-
-function window_open() {	
-	var years = Alloy.Globals.Steps.readYears();
-	Ti.API.debug("Years", years);
+var years = Alloy.Globals.Steps.readYears();	
+var mostRecentYear = MathHelper.highestOf(years);
 	
-	var mostRecentYear = MathHelper.highestOf(years);
-	Ti.API.debug("Highest year", mostRecentYear);
-	
+function window_open() {		
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
 		Ti.API.info("Orientation change detected.");
@@ -25,6 +21,9 @@ function window_open() {
 	});
 	
 	setiOSNavButtons(years, mostRecentYear);
+}
+
+function window_postlayout() {
 	showChartForYear(mostRecentYear);
 }
 

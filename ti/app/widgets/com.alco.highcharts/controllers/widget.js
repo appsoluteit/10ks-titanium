@@ -1,3 +1,4 @@
+
 function loadChart(chartOptions, customOptions) {	 
 	var templateURL=WPATH('/html/webview.html');
 	
@@ -5,14 +6,16 @@ function loadChart(chartOptions, customOptions) {
 	customOptions = JSON.stringify(customOptions);
 	
 	function onLoadTemplateUrl() {	
+		Ti.API.info('loading template');
+		
 		$.chartWebView.evalJS('plotChart('+ chartOptions + ',' + customOptions + ')');		
 		
 		//Remove any previously added event listeners to prevent them from stacking
 		$.chartWebView.removeEventListener('load', onLoadTemplateUrl);	
 	}
 	
-	$.chartWebView.setUrl(templateURL);
 	$.chartWebView.addEventListener('load', onLoadTemplateUrl);
+	$.chartWebView.setUrl(templateURL);
 }
 
 function showMessage(message) {

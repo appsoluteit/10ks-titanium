@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="monthlyGraph" platform="ios">
-		<Window id="monthlyGraphWindow" title="Monthly Graph" onOpen="window_open">
+		<Window id="monthlyGraphWindow" title="Monthly Graph" onOpen="window_open" onPostlayout="window_postlayout">
 			<LeftNavButton>
 				<Button 
 					id="btnBack" 
@@ -15,7 +15,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="monthlyGraph" platform="android" onOpen="window_open">
+	<Window id="monthlyGraph" platform="android" onOpen="window_open" onPostlayout="window_postlayout">
 		<ActionBar 
 			title="Statistics" 
 			displayHomeAsUp="true" 

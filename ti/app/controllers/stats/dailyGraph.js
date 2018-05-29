@@ -5,13 +5,13 @@ var NavBarButton = require('classes/NavBarButton');
 var currentYear = -1; //keep track of the current year so that we can re-use it when the screen orientation changes.
 var currentMonth = -1;
 
-function window_open() {	
-	var monthsAndYears = Alloy.Globals.Steps.readMonthsAndYears();
-	var years = Alloy.Globals.Steps.readYears();
-	var mostRecentYear = MathHelper.highestOf(years);
-	var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
-	var mostRecentMonth = MathHelper.highestOf(months);
+var monthsAndYears = Alloy.Globals.Steps.readMonthsAndYears();
+var years = Alloy.Globals.Steps.readYears();
+var mostRecentYear = MathHelper.highestOf(years);
+var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
+var mostRecentMonth = MathHelper.highestOf(months);
 	
+function window_open() {		
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
 		Ti.API.info("Orientation change detected.");
@@ -26,7 +26,10 @@ function window_open() {
 	});
 	
 	setiOSNavButtons(monthsAndYears, mostRecentYear, mostRecentMonth);
-	showChartForMonthAndYear(mostRecentYear, mostRecentMonth);
+}
+
+function window_postlayout() {
+	showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
 }
 
 function showChartForMonthAndYear(year, month) {	
@@ -81,6 +84,7 @@ function showChart(args, year, month) {
 			chartHeight: viewHeight			
 		};
 		
+		Ti.API.info('before loading chart. Custom options = ', customOptions);
 		$.dailyGraphView.dailyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {		
