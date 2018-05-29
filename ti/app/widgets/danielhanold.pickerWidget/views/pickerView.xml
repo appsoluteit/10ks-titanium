@@ -3,9 +3,9 @@
 
     <Toolbar id="toolbar" platform="ios">
       <Items>
-        <Button id="buttonCancel" title="L('cancelButton', 'Cancel')" style="Ti.UI.iPhone.SystemButtonStyle.BORDERED" onClick="onCancel" />
+        <Button id="buttonCancel" title="L('cancelButton', 'Cancel')" style="Ti.UI.iOS.SystemButtonStyle.BORDERED" onClick="onCancel" />
         <FlexSpace/>
-        <Button id="buttonDone" title="L('doneButton', 'Done')" style="Ti.UI.iPhone.SystemButtonStyle.DONE" onClick="onDone" />
+        <Button id="buttonDone" title="L('doneButton', 'Done')" style="Ti.UI.iOS.SystemButtonStyle.DONE" onClick="onDone" />
       </Items>
     </Toolbar>
 

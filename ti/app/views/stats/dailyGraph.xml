@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="dailyGraph" platform="ios">
-		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open">
+		<Window id="dailyGraphWindow" title="Daily Graph" onOpen="window_open" onPostlayout="window_postlayout">
 			<LeftNavButton>
 				<Button 
 					id="btnBack" 
@@ -15,7 +15,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="dailyGraph" platform="android" onOpen="window_open">
+	<Window id="dailyGraph" platform="android" onOpen="window_open" onPostlayout="window_postlayout">
 		<ActionBar 
 			title="Daily Graph" 
 			displayHomeAsUp="true" 

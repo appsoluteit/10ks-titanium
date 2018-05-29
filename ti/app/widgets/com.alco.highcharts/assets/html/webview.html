@@ -4,109 +4,107 @@
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script src="jquery.min.js"></script>
-		<script src="highcharts.js"></script>
-		<script src="exporting.js"></script>
+		<script src="highcharts.3.0.5.js"></script>
 		<script type="text/javascript">
-			function plotChart(chartOptions, customOptions) {	
-				//Ti.API.info("plotting chart");
-				//Ti.API.info(chartOptions);
-					     
-		        var config = {
-		        	credits: {
-		        		enabled: false	
-		        	},
-		        	
-		        	exporting: {
-		        		enabled: false	
-		        	},
-		        	
-		            chart: {
-		            	renderTo: 'container',
-		                plotBackgroundColor: null,
-		                plotBorderWidth: null,
-		                plotShadow: false,
-		                height: customOptions.chartHeight
-		            },
-		            
-		            title: {
-		                text: chartOptions.name
-		            },
-		            
-		            tooltip: {
-		        	    pointFormat: '{series.name}: <b>{point.y}</b>'
-		            },
-		           
-		            plotOptions: {
-		                column: {
-		                    allowPointSelect: true,
-		                    cursor: 'pointer',
-		                    dataLabels: {
-		                        enabled: false
-		                    },
-		                    showInLegend: false,
-		                    color: {
-							    linearGradient: { x1: 0, x2: 0, y1: 1, y2: 0 },
-							    stops: [
-							        [0, '#8D00FF'],
-							        [1, '#00E59D']
-							    ]		                    	
-		                    }
-		                }
-		            },
-		            
-		            xAxis: {
-			            tickInterval: 1,
-			            labels: {
-			                enabled: true
-			            }	
-		            },
-		            
-		            yAxis: {
-		            	title: {
-		            		text: null
-		            	}	
-		            },
-		            
-		            series: [chartOptions]	        	
-		        };
-		      
-		        if(customOptions.showGoalSteps == 1) {
-		        	Ti.API.info("Adding goal steps plotline for: " + customOptions.goalSteps);
-		        	
-		      		config.yAxis.plotLines = [{
-	            		value: customOptions.goalSteps * 1,
-	            		color: '#22DA9B',
-	            		width: 2
-	            	}];
-		        }
-		        
-		        if(customOptions.useMonthFormatter == 1) {
-		        	Ti.API.info("Adding formatter");
-		        	
-		        	config.xAxis.labels.formatter = function() {			                	
-		            	var labels = [
-		            		'January',
-		            		'February',
-		            		'March',
-		            		'April',
-		            		'May',
-		            		'June',
-		            		'July',
-		            		'August',
-		            		'September',
-		            		'October',
-		            		'November',
-		            		'December'
-		            	];
-		            	
-		            	return labels[this.value - 1].substring(0, 3);
-					};
-		        }
-		        else {
-		        	Ti.API.info("No formatter defined");
-		        }
-		        
-		        new Highcharts.Chart(config);
+			function plotChart(chartOptions, customOptions) {				
+				try {
+			        var config = {
+			        	credits: {
+			        		enabled: false	
+			        	},
+			        	
+			        	exporting: {
+			        		enabled: false	
+			        	},
+			        	
+			            chart: {
+			            	renderTo: 'container',
+			                plotBackgroundColor: null,
+			                plotBorderWidth: null,
+			                plotShadow: false,
+			                height: customOptions.chartHeight
+			            },
+			            
+			            title: {
+			                text: chartOptions.name
+			            },
+			            
+			            tooltip: {
+			        	    pointFormat: '{series.name}: <b>{point.y}</b>'
+			            },
+			           
+			            plotOptions: {
+			                column: {
+			                    allowPointSelect: true,
+			                    cursor: 'pointer',
+			                    dataLabels: {
+			                        enabled: false
+			                    },
+			                    showInLegend: false,
+			                    color: {
+								    linearGradient: { x1: 0, x2: 0, y1: 1, y2: 0 },
+								    stops: [
+								        [0, '#8D00FF'],
+								        [1, '#00E59D']
+								    ]		                    	
+			                    }
+			                }
+			            },
+			            
+			            xAxis: {
+			            	//tickPixelInterval: 1,
+				            //tickInterval: 1,
+				            labels: {
+				                enabled: true
+				            }	
+			            },
+			            
+			            yAxis: {
+			            	title: {
+			            		text: null
+			            	}	
+			            },
+			            
+			            series: [chartOptions]	        	
+			        };
+			      
+			        if(customOptions.showGoalSteps == 1) {			        	
+			      		config.yAxis.plotLines = [{
+		            		value: customOptions.goalSteps * 1,
+		            		color: '#22DA9B',
+		            		width: 2
+		            	}];
+			        }
+			        
+			        if(customOptions.useMonthFormatter == 1) {			        	
+			        	config.xAxis.labels.formatter = function() {			                	
+			            	var labels = [
+			            		'January',
+			            		'February',
+			            		'March',
+			            		'April',
+			            		'May',
+			            		'June',
+			            		'July',
+			            		'August',
+			            		'September',
+			            		'October',
+			            		'November',
+			            		'December'
+			            	];
+			            	
+			            	return labels[this.value - 1].substring(0, 3);
+						};
+			        }
+			        
+			        // Wait a second to give the view a chance to render properly.
+			        setTimeout(function() {
+			       		new Highcharts.Chart(config);
+			        }, 1000);
+				}
+				catch(e) {
+					alert(e);	
+				}
 			}
 		</script>
 	</head>
