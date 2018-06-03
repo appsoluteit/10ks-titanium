@@ -59,7 +59,7 @@ function getCurrentMonthName() {
 }
 
 /**
- * Computes and returns a label that represents the given date. Eg: Mon Feb 24.
+ * Computes and returns a label that represents the given date. Eg: Mon 24 Feb.
  * @param {Date} dateObj A date object for the date to process
  * @param {Boolean} includeYear Whether or not this function should include the year at the end of the string
  * @returns {String} The date label
@@ -75,8 +75,8 @@ function getDateLabel(dateObj, includeYear) {
 	
 	var days = dateObj.getDate();
 	var str = dayNames[dateObj.getDay()] + " " + 
-			  monthNames[dateObj.getMonth()] + " " + 
-			  (days < 10? "0" + days : days);
+			  (days < 10? "0" + days : days) + " " +
+			  monthNames[dateObj.getMonth()];
 			  
 	if(includeYear) {
 		str += " " + dateObj.getFullYear();
