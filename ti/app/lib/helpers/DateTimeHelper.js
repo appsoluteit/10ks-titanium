@@ -16,6 +16,7 @@ module.exports.getMinutesBetween = getMinutesBetween;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getShortDateLabel = getShortDateLabel;
+module.exports.getTimeBetween = getTimeBetween;
 module.exports.isValidDate = isValidDate;
 module.exports.localise = localise;
 
@@ -126,15 +127,42 @@ function getIndexFromMonthName(strName) {
  * @param {*} firstDate 
  * @param {*} secondDate 
  */
-function getMinutesBetween(firstDate, secondDate) {
-	Ti.API.info('First date ms: ' + firstDate.getTime());
-	Ti.API.info('Second date ms: ' + secondDate.getTime());
-	
+function getMinutesBetween(firstDate, secondDate) {	
 	var diff = Math.abs(firstDate.getTime() - secondDate.getTime());
-
-	Ti.API.info('Difference in ms: ' + diff);
-
 	return Math.round(diff / 1000 / 60); // convert to seconds, then minutes. 
+}
+
+/**
+ * Computes and returns the time between two dates in a formatted string. Eg: 2 weeks, 3 days, 6 hours, 32 minutes.
+ * @param {Date} firstDate 
+ * @param {Date} secondDate 
+ */
+function getTimeBetween(firstDate, secondDate) {
+	var MINUTES_PER_HOUR = 60;
+	var MINUTES_PER_DAY = MINUTES_PER_HOUR * 24;
+	var MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
+
+	var totalMins = getMinutesBetween(firstDate, secondDate);
+  
+	var weeks = Math.floor(totalMins / MINUTES_PER_WEEK);
+  	var weeksRemainder = totalMins % MINUTES_PER_WEEK;
+  
+  	var days = Math.floor(weeksRemainder / MINUTES_PER_DAY);
+  	var daysRemainder = weeksRemainder % MINUTES_PER_DAY;
+  
+  	var hours = Math.ceil(daysRemainder / MINUTES_PER_HOUR);
+     
+  	var ret = weeks + ' weeks';
+  
+  	if(days > 0 || hours > 0) {
+  		ret += ', ' + days + ' days';
+  	}
+  
+  	if(hours > 0) {
+  		ret += ', ' + hours + ' hours';
+  	}
+  
+	return ret;
 }
 
 /**

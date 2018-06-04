@@ -5,16 +5,19 @@ function TournamentLeaderboardProvider() {
     this.data = [{
         rank: 2,
         name: 'Illidan\'s immortals',
+        numMembers: 9,
         totalSteps: 9999,
         status: 90
     }, {
         rank: 1,
         name: 'The Ginyu Force',
+        numMembers: 7,
         totalSteps: 12345,
         status: 100
     }, {
         rank: 3,
         name: 'Perpetual Procrastinators',
+        numMembers: 2,
         totalSteps: 5,
         status: 1
     }];
