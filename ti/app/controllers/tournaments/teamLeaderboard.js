@@ -4,8 +4,8 @@ var tournamentLeaderboardProvider = new TournamentLeaderboardProvider();
 
 var args = $.args;
 var cells = [
-    '28%',
-    '30%',
+    '15%',
+    '43%',
     '20%',
     '18%'
 ];
@@ -36,14 +36,41 @@ function drawRow(team) {
         layout: 'horizontal'
     });
 
-    rowView.add(Ti.UI.createLabel({
-        text: 'Hello!'
-    }));
+    var data = [team.rank, team.name + ' (' + team.numMembers + ')', team.totalSteps];
+    if(args.type === 'race') {
+        data.push(team.status);
+    }
+
+    drawCells(rowView, data, false);
 
     var row = Ti.UI.createTableViewRow({});
     row.add(rowView);
 
     $.leaderboardView.tblLeaderboard.appendRow(row);
+}
+
+function drawCells(row, values, isHeader) {
+    if(values.length > cells.length) {
+        throw "ArgumentException: number of values exceeds number of cells";
+    }
+
+    var titles = [];
+    for(var i = 0; i < values.length; i++) {
+        titles.push(Ti.UI.createLabel({
+            text: values[i],
+            font: {
+                fontWeight: isHeader ? 'bold' : ''
+            },
+            color: isHeader ? 'white' : 'black',
+            top: '5dp',
+            left: i == 0 ? '2%' : 0,
+            width: cells[i]
+        }));
+    }
+
+    titles.forEach(function(title) {
+        row.add(title);
+    });
 }
 
 function drawHeader() {
@@ -53,54 +80,12 @@ function drawHeader() {
         layout: 'horizontal'
     });
 
-    var titles = [
-        Ti.UI.createLabel({
-            text: 'Team name',
-            font: {
-                fontWeight: 'bold'
-            },
-            color: 'white',
-            top: '5dp',
-            left: '2%',
-            width: cells[0]
-        }),
-
-        Ti.UI.createLabel({
-            text: 'Members',
-            font: {
-                fontWeight: 'bold'
-            },
-            top: '5dp',
-            color: 'white',
-            width: cells[1]
-        }),
-
-        Ti.UI.createLabel({
-            text: 'Steps',
-            font: {
-                fontWeight: 'bold'
-            },
-            top: '5dp',
-            color: 'white',
-            width: cells[2]
-        })
-    ];
-
+    var titles = ['Rank', 'Team Name', 'Steps'];
     if(args.type === 'race') {
-        titles.push(Ti.UI.createLabel({
-            text: 'Status',
-            font: {
-                fontWeight: 'bold'
-            },
-            top: '5dp',
-            color: 'white',
-            width: cells[3]
-        }));
+        titles.push('Status');
     }
 
-    titles.forEach(function(title) {
-        headerRow.add(title);
-    });
+    drawCells(headerRow, titles, true);
 
     var section = Ti.UI.createTableViewSection({
         headerView: headerRow

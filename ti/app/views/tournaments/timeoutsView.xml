@@ -39,7 +39,7 @@
 					<!-- Total Team Steps -->
 					<TableViewRow>
 						<View class="whole">
-							<Label class="row-label">Team Total Seps</Label>
+							<Label class="row-label">Team Total Steps</Label>
 							<Label right="10dp" id="lblTeamTotalSteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>

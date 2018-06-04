@@ -1,9 +1,19 @@
 "#vbar1": {
     width: '90%',
-    valueColor: '#397CAD',
-    backgroundColor: 'red',
+    //valueColor: '#397CAD', // we now use a gradient
+    backgroundColor: 'black',
     borderRadius: '5dp',
-    showValuesInside: false
+    showValuesInside: false,
+    gradient: {
+        type: 'linear',
+        startPoint: { x: '0%', y: '0%' },
+        endPoint: { x: '100%', y: '100%' },
+        colors: [{ 
+            color: '#8D00FF', offset: 0.0
+        }, {
+            color: '#00E59D', offset: 0.5
+        }],
+    }
 }
 
 "#tblRaces": {

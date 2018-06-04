@@ -137,7 +137,7 @@ function loadDatesFrom(dateObj) {
 	var start = dateObj.getDate();
 	
 	for(var i = start; i >= start - 30; i--) {
-		var labelStr = DateTimeHelper.getDateLabel(dateObj);
+		var labelStr = DateTimeHelper.getDateLabel(dateObj, true);
 		addDateRow(labelStr, dateObj, false);
 		
 		dateObj = DateTimeHelper.getDayBefore(dateObj);

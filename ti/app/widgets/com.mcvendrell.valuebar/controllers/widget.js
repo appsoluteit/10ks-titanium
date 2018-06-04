@@ -26,8 +26,12 @@ var width = args.width || '80%',
 		fontSize: 12
 	} : {
 		fontSize: '12dp'
-	});
+    }),
 
+    gradient = args.gradient || null;
+
+    Ti.API.info(gradient);
+    
 // Transforms values into percentages
 function valToPct(value, total) {
     return String(parseInt(100 * value / total)) + "%";
@@ -43,6 +47,12 @@ exports.init = function(value, total) {
     $.valueWrapper.height = barHeight;
     $.value.backgroundColor = valueColor;
     $.value.font = titleFont;
+
+    if(args.gradient) {
+        $.value.backgroundColor = undefined;
+        $.value.backgroundGradient = gradient;
+    }
+
     // Set value
     exports.setVal(value, total);
 };
