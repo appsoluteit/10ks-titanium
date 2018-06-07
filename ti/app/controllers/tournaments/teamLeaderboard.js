@@ -32,13 +32,13 @@ function drawTable(data) {
 
 function drawRow(team) {
     var rowView = Ti.UI.createView({
-        height: '40dp',
+        height: Ti.UI.SIZE,
         layout: 'horizontal'
     });
 
-    var data = [team.rank, team.name + ' (' + team.numMembers + ')', team.totalSteps];
+    var data = [team.rank, team.name + ' (' + team.numMembers + ' members)', team.totalSteps];
     if(args.type === 'race') {
-        data.push(team.status);
+        data.push(team.status + '%');
     }
 
     drawCells(rowView, data, false);
