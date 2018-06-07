@@ -123,12 +123,17 @@ function getIndexFromMonthName(strName) {
 };
 
 /**
- * Computes and returns the number of minutes (absolute) between two dates.
+ * Computes and returns the number of minutes between two dates. If firstDate is prior to secondDate, 0 is returned.
  * @param {*} firstDate 
  * @param {*} secondDate 
  */
 function getMinutesBetween(firstDate, secondDate) {	
-	var diff = Math.abs(firstDate.getTime() - secondDate.getTime());
+	var diff = firstDate.getTime() - secondDate.getTime();
+
+	if(diff < 0) {
+		return 0;
+	}
+
 	return Math.round(diff / 1000 / 60); // convert to seconds, then minutes. 
 }
 
