@@ -23,7 +23,7 @@ function test() {
 		describe("Get current month name", function() {
 			it("Should return May", function() {
 				var monthName = DateTimeHelper.getCurrentMonthName();
-				expect(monthName).to.equal('September');
+				expect(monthName).to.equal('June');
 			});
 		});
 		
@@ -31,13 +31,13 @@ function test() {
 			it("Should be Sun Jan 01", function() {
 				var day = new Date(2017, 0, 1);
 				var dayString = DateTimeHelper.getDateLabel(day);	
-				expect(dayString).to.equal('Sun Jan 01');			
+				expect(dayString).to.equal('Sun 01 Jan');			
 			});
 			
 			it("Should be Thurs Feb 02", function() {
 				var day = new Date(2017, 1, 2);
 				var dayString = DateTimeHelper.getDateLabel(day);
-				expect(dayString).to.equal('Thurs Feb 02');
+				expect(dayString).to.equal('Thurs 02 Feb');
 			});
 		});
 		
@@ -79,6 +79,32 @@ function test() {
 				expect(DateTimeHelper.isValidDate(test2)).to.equal(false);
 				expect(DateTimeHelper.isValidDate(test3)).to.equal(false);
 				expect(DateTimeHelper.isValidDate(test4)).to.equal(false);
+			});
+		});
+
+		describe("Get minutes between", function() {
+			it("should return 60", function() {
+				var d1 = new Date(2018, 0, 1, 14);
+				var d2 = new Date(2018, 0, 1, 13);
+
+				//Ti.API.info("d1", d1.toString());
+				//Ti.API.info("d2", d2.toString());
+
+				//d1 is 60 minutes after d2
+				var minutes = DateTimeHelper.getMinutesBetween(d1, d2);
+
+				expect(minutes).to.equal(60);
+			});
+
+			it("should return 0", function() {
+				//d1 is before d2. Should return 0.
+
+				var d1 = new Date(2018, 0, 1, 13);
+				var d2 = new Date(2018, 0, 1, 14);
+				
+				var minutes = DateTimeHelper.getMinutesBetween(d1, d2);
+
+				expect(minutes).to.equal(0);
 			});
 		});
 	});
