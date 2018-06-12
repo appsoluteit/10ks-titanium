@@ -1,0 +1,136 @@
+<!-- 
+    This file should be tracked by source control instead of tiapp.xml. Use meld to merge this file with tiapp.xml before
+    doing a build. Usage: meld file1 file2.
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <icon>appicon.png</icon>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+
+    <ios>
+        <run-on-mainthread>true</run-on-mainthread>
+        <plist>
+            <dict>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+                <key>NSCalendarsUsageDescription</key>
+                <string>Setting reminders to log your steps</string>
+                <!-- Facebook SDK -->
+                <key>FacebookAppID</key>
+                <string>514984175541353</string>
+                <key>FacebookDisplayName</key>
+                <string>CQUniversity Australia</string>
+                <key>CFBundleURLTypes</key>
+                <array>
+                    <dict>
+                        <key>CFBundleURLName</key>
+                        <string>au.org.steps10000.app</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                            <string>steps10000</string>
+                            <string>fb514984175541353</string>
+                        </array>
+                    </dict>
+                </array>
+                <key>LSApplicationQueriesSchemes</key>
+                <array>
+                    <string>fbapi</string>
+                    <string>fb-messenger-api</string>
+                    <string>fbauth2</string>
+                    <string>fbshareextension</string>
+                </array>
+                <key>NSBluetoothPeripheralUsageDescription</key>
+                <string>Access information related to your 10,000 steps account</string>
+            </dict>
+        </plist>
+    </ios>
+
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:versionCode="30" android:versionName="3.3.1">
+            <!-- Standard stuff -->
+            <application android:theme="@style/Theme.AppCompat.Light"/>
+            <uses-permission android:name="android.permission.READ_CALENDAR"/>
+            <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+            <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26"/>
+            <!-- Firebase -->
+            <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+            <service android:enabled="true" android:exported="false"
+                android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.RegistrationIntentService"/>
+            <receiver android:enabled="true" android:name="com.google.android.gms.measurement.AppMeasurementReceiver">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.measurement.UPLOAD"/>
+                </intent-filter>
+            </receiver>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIntentService">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                </intent-filter>
+            </service>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIntentService">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.SEND"/>
+                </intent-filter>
+            </service>
+            <service android:exported="false" android:name="au.org.steps10000.app.gcm.GcmIDListenerService">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID"/>
+                </intent-filter>
+            </service>
+            <!-- Facebook SDK -->
+            <activity
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="10,000 Steps"
+                android:name="au.org.steps10000.app" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+            <activity
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_id"
+                android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        </manifest>
+    </android>
+
+    <modules>
+        <module platform="android">facebook</module>
+        <module platform="iphone" version="5.8.0">facebook</module>
+        <module platform="commonjs">ti.cloud</module>
+        <module platform="commonjs">nl.fokkezb.html2as</module>
+        <module platform="iphone">firebase.core</module>
+        <module platform="android">firebase.core</module>
+        <module platform="iphone">firebase.analytics</module>
+        <module platform="android">firebase.analytics</module>
+  </modules>
+    <deployment-targets>
+        <target device="android">true</target>
+        <target device="ipad">true</target>
+        <target device="iphone">true</target>
+    </deployment-targets>
+    <sdk-version>7.1.1.GA</sdk-version>
+    <plugins>
+        <plugin version="1.0">ti.alloy</plugin>
+    </plugins>
+
+    <property name="ti.ui.defaultunit" type="string">dp</property>
+
+    <!-- Custom Properties -->
+    <property name="is-debug" type="bool">false</property>
+    <property name="environment" type="string">Development</property>
+    <property name="run-on-main-thread" type="bool">true</property>
+</ti:app>
