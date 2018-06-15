@@ -21,10 +21,12 @@ function window_open() {
     $.racesView.lblGoal.text = FormatHelper.formatNumber(args.tournament.tournamentTotalSteps) + " steps";
     $.racesView.lblDistance.text = FormatHelper.formatNumber(args.tournament.tournamentDistance) + "m";
     $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(new Date(args.tournament.tournamentStartDate));
-    $.racesView.lblTeamTotalSteps.text = "";
-    $.racesView.lblPercentComplete.text = "";
+    $.racesView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 
-    $.racesView.vbar1.init(40, 100);
+    $.racesView.lblPercentComplete.text = 
+        Math.round(args.tournament.teamSteps / args.tournament.tournamentStartDate) + '%';
+
+    $.racesView.vbar1.init(args.tournament.teamSteps, args.tournament.tournamentStartDate);
 }
 
 function btnBack_click() {
