@@ -60,11 +60,15 @@ function loadTournaments() {
 			var icon = Ti.UI.createImageView({ 
 				left: '5dp', 
 				width: '32dp',
-				//backgroundColor: 'red',
 				image: '/common/' + element.type + '_badge_small.png' 
 			});
 
-			var labelView = Ti.UI.createView({ layout: 'vertical', left: '50dp', width: '75%' })
+			var labelView = Ti.UI.createView({ 
+				layout: 'vertical', 
+				height: Ti.UI.SIZE,
+				width: '75%', 
+			});
+
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
 				top: '5dp',
@@ -77,7 +81,6 @@ function loadTournaments() {
 
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
-				top: '5dp',
 				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate), true)
 			}));
 
