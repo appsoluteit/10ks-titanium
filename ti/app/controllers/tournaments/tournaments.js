@@ -44,28 +44,35 @@ function loadTournaments() {
 		results.forEach(function(element) {
 			var row = Ti.UI.createTableViewRow({
 				color: 'black',
-				height: '60dp',
+				height: Ti.UI.SIZE,
 
 				// Custom attributes
 				tournament: element
 			});
 			row.addEventListener('click', tblRow_click);
 
-			var view = Ti.UI.createView({ });
+			var view = Ti.UI.createView({ 
+				height: Ti.UI.SIZE
+			});
 			view.addEventListener('click', function(e) { }); //adding this event handler to the view seems to fix a bug where the event handler
 															//for the row wouldn't fire
 			
 			var icon = Ti.UI.createImageView({ 
 				left: '5dp', 
 				width: '32dp',
-				//backgroundColor: 'red',
 				image: '/common/' + element.type + '_badge_small.png' 
 			});
 
-			var labelView = Ti.UI.createView({ layout: 'vertical', left: '50dp', width: '75%' })
+			var labelView = Ti.UI.createView({ 
+				layout: 'vertical', 
+				height: Ti.UI.SIZE,
+				width: '75%', 
+			});
+
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
 				top: '5dp',
+				height: Ti.UI.SIZE,
 				font: {
 					fontWeight: 'bold'
 				},
@@ -74,7 +81,6 @@ function loadTournaments() {
 
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
-				top: '5dp',
 				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate), true)
 			}));
 
