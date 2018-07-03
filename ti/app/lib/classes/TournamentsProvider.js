@@ -81,8 +81,8 @@ TournamentsProvider.prototype.fetch = function(page) {
 
             timeouts = timeouts.results.map(function(item) {
                 // Timeout tournaments without a name should show the number of weeks.
-                if(!item.team.name || !item.team.name.length) {
-                    item.team.name = item.team.tournament.weeks + " week timeout tournament";
+                if(!item.team.tournament.name || !item.team.tournament.name.length) {
+                    item.team.tournament.name = item.team.tournament.weeks + " week timeout tournament";
                 }
 
                 // Flatten out the response
@@ -107,7 +107,7 @@ TournamentsProvider.prototype.fetch = function(page) {
             deferer.reject(e);
         })
         .then(function onSuccess(races) {
-            //Ti.API.info(races);
+            Ti.API.info(races);
 
             races = races.results.map(function(item) {
                 return {

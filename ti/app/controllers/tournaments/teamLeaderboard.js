@@ -1,4 +1,5 @@
 var spinner = Alloy.createWidget('nl.fokkezb.loading');
+var FormatHelper = require('helpers/FormatHelper');
 var TournamentLeaderboardProvider = require('classes/TournamentLeaderboardProvider');
 var tournamentLeaderboardProvider = new TournamentLeaderboardProvider();
 
@@ -36,7 +37,12 @@ function drawRow(team) {
         layout: 'horizontal'
     });
 
-    var data = [team.rank, team.name + ' (' + team.numMembers + ' members)', team.totalSteps];
+    var data = [
+        team.rank, 
+        team.name + '\r\n(' + team.numMembers + ' members)', 
+        FormatHelper.formatNumber(team.totalSteps)
+    ];
+
     if(args.type === 'race') {
         data.push(team.status + '%');
     }
