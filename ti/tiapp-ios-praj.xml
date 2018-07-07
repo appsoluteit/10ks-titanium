@@ -36,9 +36,9 @@
                 <string>Setting reminders to log your steps</string>
                 <!-- Facebook SDK -->
                 <key>FacebookAppID</key>
-                <string>514984175541353</string>
+                <string>197640947606698</string>
                 <key>FacebookDisplayName</key>
-                <string>CQUniversity Australia</string>
+                <string>10,000 Steps</string>
                 <key>CFBundleURLTypes</key>
                 <array>
                     <dict>
@@ -47,7 +47,7 @@
                         <key>CFBundleURLSchemes</key>
                         <array>
                             <string>steps10000</string>
-                            <string>fb514984175541353</string>
+                            <string>fb197640947606698</string>
                         </array>
                     </dict>
                 </array>
