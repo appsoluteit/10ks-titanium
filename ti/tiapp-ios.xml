@@ -66,8 +66,8 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="30" android:versionName="3.3.1">
-            <!-- Standard stuff -->
+        <manifest android:versionCode="47" android:versionName="4.0.7">
+            <uses-sdk android:minSdkVersion="20"/>
             <application android:theme="@style/Theme.AppCompat.Light"/>
             <uses-permission android:name="android.permission.READ_CALENDAR"/>
             <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
