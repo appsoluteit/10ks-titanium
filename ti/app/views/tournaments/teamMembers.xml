@@ -21,6 +21,6 @@
         	displayHomeAsUp="true"
         	onHomeIconItemSelected="btnBack_click" />
 
-		<Require id="membersView" src="tournaments/membersView" type="view"/>
+		<Require id="membersView" src="tournaments/teamMembersView" type="view"/>
     </Window>
 </Alloy>
