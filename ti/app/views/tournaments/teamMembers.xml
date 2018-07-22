@@ -21,6 +21,10 @@
         	displayHomeAsUp="true"
         	onHomeIconItemSelected="btnBack_click" />
 
+<<<<<<< HEAD
 		<Require id="membersView" src="tournaments/teammembersView" type="view"/>
+=======
+		<Require id="membersView" src="tournaments/teamMembersView" type="view"/>
+>>>>>>> 6c034d398cd30075b85dff83b3cd6c9a51e1ea1d
     </Window>
 </Alloy>
