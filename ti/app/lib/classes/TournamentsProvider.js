@@ -88,10 +88,10 @@ TournamentsProvider.prototype.fetch = function(page) {
                 // Flatten out the response
                 return {
                     teamName: item.team.name,
+                    tournamentId: item.team.tournament.id,
                     tournamentName: item.team.tournament.name,
                     tournamentWeeks: item.team.tournament.weeks,
                     tournamentStartDate: new Date(item.team.tournament.date_started),
-                    //tournamentSteps: item.steps,
                     type: 'timeout',
                     teamSteps: item.team.total_steps,
                     //hasNextPage: true,
@@ -112,6 +112,7 @@ TournamentsProvider.prototype.fetch = function(page) {
             races = races.results.map(function(item) {
                 return {
                     teamName: '',
+                    tournamentId: item.team.tournament.id,
                     tournamentName: item.team.tournament.tournament.title,
                     tournamentTime: item.team.tournament.tournament.default_time,
                     tournamentTotalSteps: item.team.tournament.tournament.total_steps,
@@ -119,7 +120,6 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentStartDate: new Date(item.team.tournament.date_started),
 
                     teamSteps: item.team.total_steps,
-                    //tournamentSteps: item.steps,
                     type: 'race',
                     active: item.team.tournament.tournament.active,
                     //hasNextPage: true, // debug: uncomment this to force it to show a load more button when there aren't any.
