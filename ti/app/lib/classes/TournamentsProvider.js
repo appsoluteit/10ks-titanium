@@ -82,7 +82,7 @@ TournamentsProvider.prototype.fetch = function(page) {
             timeouts = timeouts.results.map(function(item) {
                 // Timeout tournaments without a name should show the number of weeks.
                 if(!item.team.tournament.name || !item.team.tournament.name.length) {
-                    item.team.tournament.name = item.team.tournament.weeks + " week timeout tournament";
+                    item.team.tournament.name = item.team.tournament.weeks + " Week Time Out Tournament";
                 }
 
                 // Flatten out the response
