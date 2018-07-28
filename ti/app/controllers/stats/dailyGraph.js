@@ -149,6 +149,8 @@ $.dailyGraph.setAndroidMenuItems = setAndroidMenuItems;
 function showMonthYearPicker(monthYears, currentYear, currentMonth) {	
 	var selectedValue = DateTimeHelper.getMonthNameFromIndex(currentMonth) + ", " + currentYear;
 	
+	Ti.API.info(JSON.stringify(monthYears));
+
 	var values = {};
 	monthYears.forEach(function(item) {
 		var tmp = DateTimeHelper.getMonthNameFromIndex(item.month) + ", " + item.year;

@@ -310,13 +310,15 @@ StepsDataProvider.prototype.readYears = function() {
 			years.push(tmp);
 		}
 	});
+
+	years.sort(); // no need for custom sorting.
 	
 	return years;
 };
 
 StepsDataProvider.prototype.readMonthsAndYears = function() {
 	var monthYears = [];
-	
+
 	this.models.forEach(function(item) {
 		var tmpYear = item.stepsDate.getFullYear();
 		var tmpMonth = item.stepsDate.getMonth();
@@ -328,6 +330,27 @@ StepsDataProvider.prototype.readMonthsAndYears = function() {
 		
 		if (monthYears.indexOf(obj) === -1) {
 			monthYears.push(obj);
+		}
+	});
+
+	monthYears.sort(function(a, b) {
+		if(a.year > b.year) {
+			return 1;
+		}
+		else if(b.year > a.year) {
+			return -1;
+		}
+		else {
+			// The years are the same
+			if(a.month > b.month) {
+				return 1;
+			}
+			else if(b.month > a.month) {
+				return -1;
+			}
+			else {
+				return 0; // the year and the month is the same. Should never happen but handle it anyway.
+			}
 		}
 	});
 	
