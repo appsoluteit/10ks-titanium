@@ -11,7 +11,7 @@ function window_open() {
     $.racesView.btnTeamMembers.addEventListener('click', btnTeamMembers_click);
 
     if(Ti.Platform.osname === "android") {
-		$.races.activity.actionBar.title = args.tournament.tournamentName;
+		$.races.activity.actionBar.setTitle(args.tournament.tournamentName);
 	}
 	else {
 		$.window.title = args.tournament.tournamentName;

@@ -16,7 +16,6 @@
 	<Window id="timeouts" title="10,000 Steps" platform="android" onOpen="window_open">
         <ActionBar 
         	id="actionbar" 
-        	title="Timeouts" 
         	homeButtonEnabled="true"
         	displayHomeAsUp="true"
         	onHomeIconItemSelected="btnBack_click" />

@@ -29,7 +29,7 @@ function window_open() {
     $.timeoutsView.btnTeamMembers.addEventListener('click', btnTeamMembers_click);
 
     if(Ti.Platform.osname === "android") {
-        $.timeouts.activity.actionBar.title = args.tournament.tournamentName;
+        $.timeouts.activity.actionBar.setTitle(args.tournament.tournamentName);
     }
     else {
         $.window.title = args.tournament.tournamentName;
