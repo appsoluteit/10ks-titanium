@@ -6,7 +6,7 @@ var expect = chai.expect;
 var AUTH_TOKEN = null;
 
 describe("GET /stats/", function(url, quiet) {
-    url = 'https://www.10000steps.org.au/api/stats/';
+    url = 'https://www.10000steps.org.au/api/step_stats/';
 	quiet = true;
 
     before(function(done) {
@@ -33,6 +33,7 @@ describe("GET /stats/", function(url, quiet) {
 
         it("Should return statistics data", function() {
             expect(responseBody.average_steps).to.be.a('number');
+            expect(responseBody.seven_day_average).to.be.a('number');
             expect(responseBody.max_month).to.be.an('object');
             expect(responseBody.max_day).to.be.an('object');
         });

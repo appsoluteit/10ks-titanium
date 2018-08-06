@@ -53,7 +53,7 @@ describe("GET /steps/", function(url, quiet) {
 describe("POST /steps/", function(url, quiet, responseBody) {
     url = 'https://www.10000steps.org.au/api/steps/';
 	quiet = true;
-
+	
     describe("OK", function(requestBody, responseBody) {
         before(function(done) {
     		var today = new Date();
@@ -119,7 +119,7 @@ describe("POST /steps/", function(url, quiet, responseBody) {
     describe("GET UPDATE OK", function(requestBody, responseBody) {
         before(function(done) {
     		var config = {
-    			authToken: AUTH_TOKEN,
+    			token: AUTH_TOKEN,
     			to: url,
     			quiet: quiet,
     			then: function(response) {
