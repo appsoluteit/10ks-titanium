@@ -1,4 +1,3 @@
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
 var FormatHelper = require('helpers/FormatHelper');
 var TournamentLeaderboardProvider = require('classes/TournamentLeaderboardProvider');
 var tournamentLeaderboardProvider = new TournamentLeaderboardProvider();
@@ -12,17 +11,10 @@ var cells = [
 ];
 
 function window_open() {
-    spinner.show('Loading...');
-    load().then(function(result) {
-        drawHeader();
-        drawTable(result);
+    var leaderboard = tournamentLeaderboardProvider.fetch(args.tournament);
 
-        spinner.hide();
-    });
-}
-
-function load() {
-    return tournamentLeaderboardProvider.fetch(args.tournamentGuid);
+    drawHeader();
+    drawTable(leaderboard);
 }
 
 function drawTable(data) {

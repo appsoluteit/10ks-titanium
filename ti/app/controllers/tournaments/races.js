@@ -35,7 +35,8 @@ function btnBack_click() {
 
 function btnTeamLeaderboard_click() {
     Alloy.createController("tournaments/teamLeaderboard", {
-        type: 'race'
+        type: 'race',
+        tournament: args.tournament
     })
     .getView()
     .open();
@@ -43,7 +44,8 @@ function btnTeamLeaderboard_click() {
 
 function btnTeamMembers_click() {
     Alloy.createController("tournaments/teamMembers", {
-        type: 'race'
+        type: 'race',
+        tournament: args.tournament
     })
     .getView()
     .open();

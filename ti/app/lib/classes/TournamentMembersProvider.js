@@ -1,5 +1,3 @@
-var q = require('q');
-
 function TournamentMembersProvider() { 
     // Initialise with dummy data until the real endpoint is implemented
     this.data = [{
@@ -29,16 +27,28 @@ function sort(a, b) {
     }
 }
 
-TournamentMembersProvider.prototype.fetch = function(tournamentGuid) {
-    var deferer = q.defer();
-    var me = this;
+TournamentMembersProvider.prototype.fetch = function(tournament) {
+    // Note: this will show ALL members for ALL teams. We may want to filter
+    // to the logged in user's team OR show the team name.
 
-    setTimeout(function() {
-        me.data.sort(sort);
-        deferer.resolve(me.data);
-    }, 3000);
+    var members = [];
+    tournament.teams.forEach(function(e) {
+        e.team_members.forEach(function(member) {
+            members.push(member);
+        });
+    });
 
-    return deferer.promise;
+    console.log('discovered members: ' + JSON.stringify(members));
+
+    this.data = members.map(function(member) {
+        return {
+            firstName: member.first_name.length ? member.first_name : "Unknown",
+            lastName: member.last_name.length ? member.last_name : "Unknown",
+            steps: member.total_steps
+        };
+    });
+    this.data.sort(sort);   
+    return this.data;
 }
 
 module.exports = TournamentMembersProvider;

@@ -5,7 +5,8 @@ var FormatHelper = require('helpers/FormatHelper');
 
 function btnTeamLeaderboard_click() {
     Alloy.createController("tournaments/teamLeaderboard", {
-        type: 'timeout'
+        type: 'timeout',
+        tournament: args.tournament
     })
     .getView()
     .open();
@@ -13,7 +14,8 @@ function btnTeamLeaderboard_click() {
 
 function btnTeamMembers_click() {
     Alloy.createController("tournaments/teamMembers", {
-        type: 'timeout'
+        type: 'timeout',
+        tournament: args.tournament
     })
     .getView()
     .open();
