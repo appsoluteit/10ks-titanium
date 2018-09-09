@@ -46,6 +46,7 @@ var http = {
         };
 
         if(!quiet) {
+            console.log('GET to', to);
             console.log("GET headers", headers);
         }
 

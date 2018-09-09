@@ -20,7 +20,7 @@ function window_open() {
     // Populate the labels
     $.racesView.lblGoal.text = FormatHelper.formatNumber(args.tournament.tournamentTotalSteps) + " steps";
     $.racesView.lblDistance.text = FormatHelper.formatNumber(args.tournament.tournamentDistance) + "m";
-    $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(new Date(args.tournament.tournamentStartDate));
+    $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(new Date(args.tournament.tournamentStartDate), true);
     $.racesView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 
     var percentComplete = args.tournament.teamSteps / args.tournament.tournamentTotalSteps;
@@ -35,7 +35,8 @@ function btnBack_click() {
 
 function btnTeamLeaderboard_click() {
     Alloy.createController("tournaments/teamLeaderboard", {
-        type: 'race'
+        type: 'race',
+        tournament: args.tournament
     })
     .getView()
     .open();
@@ -43,7 +44,8 @@ function btnTeamLeaderboard_click() {
 
 function btnTeamMembers_click() {
     Alloy.createController("tournaments/teamMembers", {
-        type: 'race'
+        type: 'race',
+        tournament: args.tournament
     })
     .getView()
     .open();

@@ -1,5 +1,3 @@
-var q = require('q');
-
 function TournamentLeaderboardProvider() { 
     // Initialise with dummy data until the real endpoint is implemented
     this.data = [{
@@ -35,16 +33,19 @@ function sort(a, b) {
     }
 }
 
-TournamentLeaderboardProvider.prototype.fetch = function(tournamentGuid) {
-    var deferer = q.defer();
-    var me = this;
+TournamentLeaderboardProvider.prototype.fetch = function(tournament) {
+    this.data = tournament.teams.map(function(team) {
+        return {
+            rank: team.ranking,
+            name: team.name,
+            numMembers: team.get_member_count,
+            totalSteps: team.total_steps,
+            status: Math.round(team.total_steps / tournament.tournamentTotalSteps * 100)
+        };
+    });
 
-    setTimeout(function() {
-        me.data.sort(sort);
-        deferer.resolve(me.data);
-    }, 3000);
-
-    return deferer.promise;
+    this.data.sort(sort);
+    return this.data;
 }
 
 module.exports = TournamentLeaderboardProvider;

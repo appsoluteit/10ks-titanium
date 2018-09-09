@@ -5,7 +5,8 @@ var FormatHelper = require('helpers/FormatHelper');
 
 function btnTeamLeaderboard_click() {
     Alloy.createController("tournaments/teamLeaderboard", {
-        type: 'timeout'
+        type: 'timeout',
+        tournament: args.tournament
     })
     .getView()
     .open();
@@ -13,7 +14,8 @@ function btnTeamLeaderboard_click() {
 
 function btnTeamMembers_click() {
     Alloy.createController("tournaments/teamMembers", {
-        type: 'timeout'
+        type: 'timeout',
+        tournament: args.tournament
     })
     .getView()
     .open();
@@ -40,9 +42,9 @@ function window_open() {
     var tournamentWeeks = args.tournament.tournamentWeeks * 1;
     var endDate = DateTimeHelper.addWeeks(startDate, tournamentWeeks);
 
-    $.timeoutsView.lblStartDate.text = DateTimeHelper.getDateLabel(startDate);
+    $.timeoutsView.lblStartDate.text = DateTimeHelper.getDateLabel(startDate, true);
     $.timeoutsView.lblDuration.text = args.tournament.tournamentWeeks + " weeks";
-    $.timeoutsView.lblEndDate.text = DateTimeHelper.getDateLabel(endDate);
+    $.timeoutsView.lblEndDate.text = DateTimeHelper.getDateLabel(endDate, true);
     $.timeoutsView.lblTimeLeft.text = DateTimeHelper.getTimeBetween(endDate, new Date());
     $.timeoutsView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 }

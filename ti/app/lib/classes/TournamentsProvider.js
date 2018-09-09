@@ -1,8 +1,7 @@
 /**
  * @file Tournaments Provider
- * @description Provides an abstraction of both the timeout tournaments endpoint and race tournaments endpoint
- * interactions via the API helper. Also handles paging.
- * @summary Use this provider class to interact with the timeout/race tournaments API endpoints instead of communicating with them manually.
+ * @description Provides an abstraction of the new tournaments endpoint. Also handles paging.
+ * @summary Use this provider class to interact with the new tournaments endpoint.
  * @require helpers/APIHelper
  * @require q
  * @exports TournamentsProvider
@@ -45,17 +44,7 @@ function get(endpoint, page) {
 	return defer.promise;
 }
 
-function getTimeouts(page) {
-    return get('tournament_timeouts', page);
-}
-
-function getRaces(page) {
-    return get('tournament_races', page);
-}
-
-function sortDates(a, b) {
-    //Ti.API.info('Sorting between ' + a + ' and ' + b);
-    
+function sortDates(a, b) {    
     if(a.tournamentStartDate.getTime() > b.tournamentStartDate.getTime()) {
         return -1;
     }
@@ -75,68 +64,53 @@ TournamentsProvider.prototype.fetch = function(page) {
     var deferer = q.defer();
     var results = [];
 
-    getTimeouts(page)
-        .then(function onSuccess(timeouts) {
-            //Ti.API.info(timeouts);
-
-            timeouts = timeouts.results.map(function(item) {
+    get('tournaments', page)
+        .then(function onSuccess(result) {
+            // Timeouts
+            timeouts = result.timeouts.map(function(item) {
                 // Timeout tournaments without a name should show the number of weeks.
-                if(!item.team.tournament.name || !item.team.tournament.name.length) {
-                    item.team.tournament.name = item.team.tournament.weeks + " Week Time Out Tournament";
+                if(!item.name || !item.name.length) {
+                    item.name = item.weeks + " Week Time Out Tournament";
                 }
 
                 // Flatten out the response
                 return {
-                    teamName: item.team.name,
-                    tournamentId: item.team.tournament.id,
-                    tournamentName: item.team.tournament.name,
-                    tournamentWeeks: item.team.tournament.weeks,
-                    tournamentStartDate: new Date(item.team.tournament.date_started),
+                    teamName: item.name,
+                    tournamentId: item.id,
+                    tournamentName: item.name,
+                    tournamentWeeks: item.weeks,
+                    tournamentStartDate: new Date(item.date_started),
                     type: 'timeout',
-                    teamSteps: item.team.total_steps,
-                    //hasNextPage: true,
-                    hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
+                    teams: item.timeout_teams,
+                    teamSteps: 0, // todo: this needs to be re-introduced back into the endpoint
+                    //hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
                 };
             })
-
             results = results.concat(timeouts);
 
-
-            return getRaces(page);
-        }, function onFail(e) {
-            deferer.reject(e);
-        })
-        .then(function onSuccess(races) {
-            Ti.API.info(races);
-
-            races = races.results.map(function(item) {
+            // Races
+            races = result.races.map(function(item) {
                 return {
-                    teamName: '',
-                    tournamentId: item.team.tournament.id,
-                    tournamentName: item.team.tournament.tournament.title,
-                    tournamentTime: item.team.tournament.tournament.default_time,
-                    tournamentTotalSteps: item.team.tournament.tournament.total_steps,
-                    tournamentDistance: item.team.tournament.tournament.distance_metres,
-                    tournamentStartDate: new Date(item.team.tournament.date_started),
+                    teamName: item.name,
+                    tournamentId: item.id,
+                    tournamentName: item.tournament.title,
+                    tournamentTime: item.tournament.default_time,
+                    tournamentTotalSteps: item.tournament.total_steps,
+                    tournamentDistance: item.tournament.distance_metres,
+                    tournamentStartDate: new Date(item.date_started),
 
-                    teamSteps: item.team.total_steps,
+                    teamSteps: 0, //todo
                     type: 'race',
-                    active: item.team.tournament.tournament.active,
+                    active: item.tournament.active,
+                    teams: item.race_teams,
                     //hasNextPage: true, // debug: uncomment this to force it to show a load more button when there aren't any.
-                    hasNextPage: !!(races.next)
+                    //hasNextPage: !!(races.next)
                 };
             })
-            .filter(function(item) { return item.active == 1; });
-            
+            .filter(function(item) { return item.active == 1; });         
             results = results.concat(races);
 
-            //Ti.API.info(results);
-            //Ti.API.info('Preparing to sort...');
-
             results.sort(sortDates);
-
-            //Ti.API.info('sorting results finished');
-
             deferer.resolve(results);
         }, function onFail(e) {
             deferer.reject(e);
