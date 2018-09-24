@@ -73,6 +73,15 @@ TournamentsProvider.prototype.fetch = function(page) {
                     item.name = item.weeks + " Week Time Out Tournament";
                 }
 
+                var teamSteps = 0;
+                var userTeam = item.timeout_teams.filter(function(e) {
+                    return e.is_users_team;
+                })[0];
+
+                if(userTeam) {
+                    teamSteps = userTeam.total_steps;
+                }
+
                 // Flatten out the response
                 return {
                     teamName: item.name,
@@ -82,7 +91,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentStartDate: new Date(item.date_started),
                     type: 'timeout',
                     teams: item.timeout_teams,
-                    teamSteps: 0, // todo: this needs to be re-introduced back into the endpoint
+                    teamSteps: teamSteps
                     //hasNextPage: !!(timeouts.next) //True if truthy, false if falsy.
                 };
             })
@@ -90,6 +99,15 @@ TournamentsProvider.prototype.fetch = function(page) {
 
             // Races
             races = result.races.map(function(item) {
+                var teamSteps = 0;
+                var userTeam = item.race_teams.filter(function(e) {
+                    return e.is_users_team;
+                })[0];
+
+                if(userTeam) {
+                    teamSteps = userTeam.total_steps;
+                }
+
                 return {
                     teamName: item.name,
                     tournamentId: item.id,
@@ -99,7 +117,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentDistance: item.tournament.distance_metres,
                     tournamentStartDate: new Date(item.date_started),
 
-                    teamSteps: 0, //todo
+                    teamSteps: teamSteps,
                     type: 'race',
                     active: item.tournament.active,
                     teams: item.race_teams,
