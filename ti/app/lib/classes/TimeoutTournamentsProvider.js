@@ -57,10 +57,6 @@ TimeoutTournamentsProvider.prototype.getTimeouts = function(page) {
 		defer.reject(e);
 	}
 	
-	var data = {
-		Authorization: "Token " + Alloy.Globals.AuthKey
-	};
-	
 	APIHelper.get({
 		url:		"tournament_timeouts/?page=" + page,
 		headers: [{
