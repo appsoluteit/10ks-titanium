@@ -9,13 +9,16 @@ var TournamentsProvider = require('classes/TournamentsProvider');
 var tournamentsProvider = new TournamentsProvider();
 var spinner = Alloy.createWidget('nl.fokkezb.loading');
 var currentPage = 1;
+var isLoading = true;
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
  * @memberof Controllers.Tournaments
  */
 function btnBack_click() {
-	$.tournaments.close();
+	if(!isLoading) {
+		$.tournaments.close();
+	}
 }
 
 /**
@@ -23,7 +26,9 @@ function btnBack_click() {
  * @memberof Controllers.Tournaments
  */
 function btnRefresh_click() {
-	loadTournaments();
+	if(!isLoading) {
+		loadTournaments();
+	}
 }
 
 /**
@@ -40,6 +45,9 @@ function window_open() {
  * @memberof Controllers.Tournaments
  */
 function loadTournaments() {
+	isLoading = true;
+	$.tournamentsView.tblTournaments.setData([]); // first, clear the table
+
 	function onLoadTournamentsSuccess(results) {
 		results.forEach(function(element) {
 			var row = Ti.UI.createTableViewRow({
@@ -164,7 +172,10 @@ function loadTournaments() {
 
 	spinner.show('Loading tournaments...');
 	tournamentsProvider.fetch(currentPage)
-		.then(onLoadTournamentsSuccess, onLoadTournamentsFail);
+		.then(onLoadTournamentsSuccess, onLoadTournamentsFail)
+		.done(function() {
+			isLoading = false;
+		});
 }
 
 function tblRow_click(e) {

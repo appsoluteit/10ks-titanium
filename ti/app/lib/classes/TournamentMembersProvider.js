@@ -1,18 +1,5 @@
 function TournamentMembersProvider() { 
-    // Initialise with dummy data until the real endpoint is implemented
-    this.data = [{
-        firstName: 'John',
-        lastName: 'Doe',
-        steps: 1234
-    }, {
-        firstName: 'Lisa',
-        lastName: 'Simpson',
-        steps: 3456,
-    }, {
-        firstName: 'Bugs',
-        lastName: 'Bunny',
-        steps: 6789
-    }];
+    this.data = [];
 }
 
 function sort(a, b) {
@@ -28,17 +15,15 @@ function sort(a, b) {
 }
 
 TournamentMembersProvider.prototype.fetch = function(tournament) {
-    // Note: this will show ALL members for ALL teams. We may want to filter
-    // to the logged in user's team OR show the team name.
-
     var members = [];
     tournament.teams.forEach(function(e) {
-        e.team_members.forEach(function(member) {
-            members.push(member);
-        });
+        // Only show members belonging to the logged in user's team.
+        if(e.is_users_team) {
+            e.team_members.forEach(function(member) {
+                members.push(member);
+            });
+        }
     });
-
-    console.log('discovered members: ' + JSON.stringify(members));
 
     this.data = members.map(function(member) {
         return {
