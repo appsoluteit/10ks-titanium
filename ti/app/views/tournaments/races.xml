@@ -4,7 +4,10 @@
 		<Window title="Races" onOpen="window_open" id="window">
 		    <LeftNavButton>
 				<View width="Ti.UI.SIZE" height="30">
-                	<Button image="/common/chevrons/left-16-w.png" title="Back" onClick="btnBack_click" style="Ti.UI.iOS.SystemButtonStyle.PLAIN"/>
+                	<Button 
+						image="/common/chevrons/left-16-w.png" 
+						onClick="btnBack_click" 
+						style="Ti.UI.iOS.SystemButtonStyle.PLAIN"/>
 				</View>
             </LeftNavButton>
 
