@@ -9,5 +9,8 @@ tmp
 .settings
 Thumbs.db
 gimp
-platform
+ti/platform/*
+!ti/app/platform/android/AndroidManifest.xml
+!ti/app/platform/android/res/values
 ti/tiapp*
+
