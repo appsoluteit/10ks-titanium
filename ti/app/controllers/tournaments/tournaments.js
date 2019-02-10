@@ -75,7 +75,7 @@ function loadTournaments() {
 				layout: 'vertical', 
 				height: Ti.UI.SIZE,
 				width: '75%',
-				backgroundColor: 'blue' // debug
+				//backgroundColor: 'blue' // debug
 			});
 
 			var label = Ti.UI.createLabel({
@@ -86,16 +86,16 @@ function loadTournaments() {
 					fontWeight: 'bold'
 				},
 				text: element.tournamentName,
-				backgroundColor: 'red', // debug
-				color: 'white'			// debug
+				//backgroundColor: 'red', // debug
+				color: 'black'			// debug
 			});
 			labelView.add(label);
 
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
 				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate), true),
-				backgroundColor: 'green', // debug,
-				color: 'white' // debug
+				//backgroundColor: 'green', // debug,
+				color: 'gray' // debug
 			}));
 
 			var chevron = null;
