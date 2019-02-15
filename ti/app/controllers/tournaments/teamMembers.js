@@ -38,20 +38,23 @@ function loadMembers() {
         var nameView = Ti.UI.createView({ left: '5dp', layout: 'horizontal' });
         nameView.add(Ti.UI.createLabel({
             text: contacts[i].firstName,
-            top: '25%'
+            top: '25%',
+            color: 'black'
         }));
         nameView.add(Ti.UI.createLabel({
             text: ' ' + contacts[i].lastName,
             top: '25%',
             font: {
                 fontWeight: 'bold'
-            }
+            },
+            color: 'black'
         }));
 
         rowView.add(nameView);
         rowView.add(Ti.UI.createLabel({
             right: '5dp',
-            text: FormatHelper.formatNumber(contacts[i].steps)
+            text: FormatHelper.formatNumber(contacts[i].steps),
+            color: 'gray'
         }));
         row.add(rowView);
 

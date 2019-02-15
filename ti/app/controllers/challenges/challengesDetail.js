@@ -15,7 +15,8 @@ function window_open() {
 	}	
 	
 	var descriptionLabel = ui.createLabel({
-		html: args.task.description.replace("\n", "<br/>")
+		html: args.task.description.replace("\n", "<br/>"),
+		color: 'black'
 	});
 	
 	$.challengesDetailView.labelContainer.add(descriptionLabel);						

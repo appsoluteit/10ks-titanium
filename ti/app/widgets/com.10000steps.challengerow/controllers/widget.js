@@ -24,7 +24,8 @@ if(CONFIG.taskDescription) {
 		html: CONFIG.taskDescription.substring(0, 100) + "...",
 		font: {
 			fontSize: 10
-		}
+		},
+		color: 'black'
 	});
 	
 	$.labelContainer.add(taskDescription);
