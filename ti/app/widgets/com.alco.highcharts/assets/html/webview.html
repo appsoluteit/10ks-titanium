@@ -127,21 +127,17 @@
 				width: 100px;
 				height: 100px;
 				position: absolute;
-				top:0;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				margin: auto;
+				top:50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
 
 				border-radius: 5px;
 			}
 		</style>
 	</head>
 
-	<body>
+	<body style="position: static;">
 		<div id="container"></div>
-		<div id="loading">
-			<img src="loading.gif"/>
-		</div>
+		<img id="loading" src="loading.gif"/>
 	</body>
 </html> 

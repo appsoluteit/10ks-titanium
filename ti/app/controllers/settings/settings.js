@@ -15,7 +15,7 @@ var SessionHelper = require('helpers/SessionHelper');
 var Tests = require('tests/bootstrap');
 
 var args = $.args;
-var goalSteps = 0;
+var goalSteps = null;
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -78,10 +78,10 @@ function window_open() {
 	
 	//Set child view event handlers
 	//$.settingsView.tblRowReminder.addEventListener('click', tblRowReminder_click);
-	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
 	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
-	
+	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
+		
 	loadGoalSteps();
 }
 
