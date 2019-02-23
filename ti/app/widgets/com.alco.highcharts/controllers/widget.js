@@ -1,5 +1,5 @@
 
-function loadChart(chartOptions, customOptions) {	 
+function loadChart(chartOptions, customOptions) {	
 	var templateURL=WPATH('/html/webview.html');
 	
 	chartOptions = JSON.stringify(chartOptions);

@@ -11,7 +11,7 @@ var mostRecentYear = MathHelper.highestOf(years);
 var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
 var mostRecentMonth = MathHelper.highestOf(months);
 	
-function window_open() {		
+function window_open() {	
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
 		Ti.API.info("Orientation change detected.");
