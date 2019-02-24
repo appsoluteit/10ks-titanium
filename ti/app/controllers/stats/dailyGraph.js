@@ -11,23 +11,29 @@ var mostRecentYear = MathHelper.highestOf(years);
 var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
 var mostRecentMonth = MathHelper.highestOf(months);
 	
+var hasLoaded = false; // flag for whether or not to load data,
+					   // since postlayout will fire when the back button is pressed
+
 function window_open() {	
 	//Redraw the chart after an orientation change to use the right dimensions
-	Ti.Gesture.addEventListener('orientationchange',function(e) {		
-		Ti.API.info("Orientation change detected.");
-
+	Ti.Gesture.addEventListener('orientationchange', function(e) {
 		if(currentYear > 0 && currentMonth > 0) {
 			showChartForMonthAndYear(currentYear, currentMonth);
 		}
 	});
-	
+
 	Alloy.Globals.tracker.addScreenView('Daily Graph');
 	
 	setiOSNavButtons(monthsAndYears, mostRecentYear, mostRecentMonth);
 }
 
 function window_postlayout() {
-	showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
+	Ti.API.info('window postlayout');
+
+	if(!hasLoaded) {
+		showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
+		hasLoaded = true;
+	}
 }
 
 function showChartForMonthAndYear(year, month) {	

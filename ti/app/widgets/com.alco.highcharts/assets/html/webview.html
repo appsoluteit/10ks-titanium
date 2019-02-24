@@ -7,7 +7,7 @@
 		<script src="highcharts.3.0.5.js"></script>
 		<script type="text/javascript">	
 			function plotChart(chartOptions, customOptions) {	
-				$("#loading").show();
+				$("#loading").show(); // this will only work properly on iOS
 
 				try {
 			        var config = {
@@ -27,8 +27,7 @@
 							height: customOptions.chartHeight,
 							events: {
 								load: function() {
-									console.log('loading widget finished');
-									$("#loading").hide();
+									doneLoading();
 								}
 							}
 			            },
@@ -112,13 +111,18 @@
 				}
 				catch(e) {
 					alert(e);	
-					$("#loading").hide();
+					doneLoading();
 				}
 
 				setTimeout(function() {
 					// hide the loading spinner after 5 seconds, just in case the load event failed
-					$("#loading").hide();
+					doneLoading();
 				}, 5000);
+			}
+
+			function doneLoading() {
+				$("#loading").hide();
+				Ti.App.fireEvent('app:fromWebView');
 			}
 		</script>
 
