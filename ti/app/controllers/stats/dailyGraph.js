@@ -11,23 +11,29 @@ var mostRecentYear = MathHelper.highestOf(years);
 var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
 var mostRecentMonth = MathHelper.highestOf(months);
 	
-function window_open() {		
-	//Redraw the chart after an orientation change to use the right dimensions
-	Ti.Gesture.addEventListener('orientationchange',function(e) {		
-		Ti.API.info("Orientation change detected.");
+var hasLoaded = false; // flag for whether or not to load data,
+					   // since postlayout will fire when the back button is pressed
 
+function window_open() {	
+	//Redraw the chart after an orientation change to use the right dimensions
+	Ti.Gesture.addEventListener('orientationchange', function(e) {
 		if(currentYear > 0 && currentMonth > 0) {
 			showChartForMonthAndYear(currentYear, currentMonth);
 		}
 	});
-	
+
 	Alloy.Globals.tracker.addScreenView('Daily Graph');
 	
 	setiOSNavButtons(monthsAndYears, mostRecentYear, mostRecentMonth);
 }
 
 function window_postlayout() {
-	showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
+	Ti.API.info('window postlayout');
+
+	if(!hasLoaded) {
+		showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
+		hasLoaded = true;
+	}
 }
 
 function showChartForMonthAndYear(year, month) {	
@@ -53,6 +59,8 @@ function showChartForMonthAndYear(year, month) {
 }
 
 function showChart(args, year, month) {	
+	Ti.API.info('Showing daily chart for year ' + year + ', month ' + month);
+
 	var options = [
 		Ti.Platform.displayCaps.platformHeight,
 		Ti.Platform.displayCaps.platformWidth,
@@ -69,6 +77,8 @@ function showChart(args, year, month) {
 	var goalSteps = Ti.App.Properties.getInt("goalSteps", 0);	
 	var currentMonthLabel = DateTimeHelper.getMonthNameFromIndex(month);
 		
+	Ti.API.info('Current month label ' + currentMonthLabel);
+
 	if(hasSteps(args)) {	
 		var chartOptions = {
 			type: "column",
@@ -82,7 +92,7 @@ function showChart(args, year, month) {
 			chartHeight: viewHeight			
 		};
 		
-		Ti.API.info('before loading chart. Custom options = ', customOptions);
+		Ti.API.info('before loading chart. Custom options = ', JSON.stringify(customOptions));
 		$.dailyGraphView.dailyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {		
@@ -115,6 +125,8 @@ function setiOSNavButtons(monthYears, mostRecentYear, mostRecentMonth) {
 }
 
 function setAndroidMenuItems(monthYears, mostRecentYear, mostRecentMonth) {
+	Ti.API.info('Changing android menu items');
+
 	if(!monthYears) {
 		monthYears = Alloy.Globals.Steps.readMonthsAndYears();
 	}
@@ -124,7 +136,8 @@ function setAndroidMenuItems(monthYears, mostRecentYear, mostRecentMonth) {
 		mostRecentYear = MathHelper.highestOf(years);
 	}
 	
-	if(!mostRecentMonth) {
+	// This may be 0 - January
+	if(mostRecentMonth === undefined) {
 		var months = Alloy.Globals.Steps.readMonthsForYear(mostRecentYear);	
 		mostRecentMonth = MathHelper.highestOf(months);			
 	}
@@ -172,9 +185,9 @@ function showMonthYearPicker(monthYears, currentYear, currentMonth) {
 			var selectedYear = e.data[0].value.split(', ')[1] * 1;  //Convert to number
 			var selectedMonth = DateTimeHelper.getIndexFromMonthName(selectedMonthText);
 			
-			//Ti.API.debug("Selected month text: " + selectedMonthText);
-			//Ti.API.debug("Selected month index: " + selectedMonth);
-			//Ti.API.debug("Selected year: " + selectedYear);
+			Ti.API.info("Selected month text: " + selectedMonthText);
+			Ti.API.info("Selected month index: " + selectedMonth);
+			Ti.API.info("Selected year: " + selectedYear);
 			
 			if(Ti.Platform.osname === "android") {
 				setAndroidMenuItems(monthYears, selectedYear, selectedMonth);

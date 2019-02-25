@@ -5,8 +5,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script src="jquery.min.js"></script>
 		<script src="highcharts.3.0.5.js"></script>
-		<script type="text/javascript">
-			function plotChart(chartOptions, customOptions) {				
+		<script type="text/javascript">	
+			function plotChart(chartOptions, customOptions) {	
+				$("#loading").show(); // this will only work properly on iOS
+
 				try {
 			        var config = {
 			        	credits: {
@@ -22,7 +24,12 @@
 			                plotBackgroundColor: null,
 			                plotBorderWidth: null,
 			                plotShadow: false,
-			                height: customOptions.chartHeight
+							height: customOptions.chartHeight,
+							events: {
+								load: function() {
+									doneLoading();
+								}
+							}
 			            },
 			            
 			            title: {
@@ -104,12 +111,37 @@
 				}
 				catch(e) {
 					alert(e);	
+					doneLoading();
 				}
+
+				setTimeout(function() {
+					// hide the loading spinner after 5 seconds, just in case the load event failed
+					doneLoading();
+				}, 5000);
+			}
+
+			function doneLoading() {
+				$("#loading").hide();
+				Ti.App.fireEvent('app:fromWebView');
 			}
 		</script>
+
+		<style>
+			#loading {
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				top:50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+
+				border-radius: 5px;
+			}
+		</style>
 	</head>
 
-	<body>
+	<body style="position: static;">
 		<div id="container"></div>
+		<img id="loading" src="loading.gif"/>
 	</body>
 </html> 

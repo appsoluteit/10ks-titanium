@@ -6,6 +6,8 @@ var currentYear = -1; //keep track of the current year so that we can re-use it 
 var years = Alloy.Globals.Steps.readYears();	
 var mostRecentYear = MathHelper.highestOf(years);
 	
+var hasLoaded = false;
+
 function window_open() {		
 	//Redraw the chart after an orientation change to use the right dimensions
 	Ti.Gesture.addEventListener('orientationchange',function(e) {		
@@ -22,7 +24,10 @@ function window_open() {
 }
 
 function window_postlayout() {
-	showChartForYear(mostRecentYear);
+	if(!hasLoaded) {
+		showChartForYear(mostRecentYear);
+		hasLoaded = true;
+	}
 }
 
 function showChartForYear(year) {
@@ -173,5 +178,6 @@ function showYearPicker(years, currentYear) {
 }
 
 function btnBack_click() {
+	Ti.App.fireEvent('app:fromWebView');
 	$.monthlyGraph.close();
 }
