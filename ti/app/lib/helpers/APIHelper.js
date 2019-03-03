@@ -10,7 +10,7 @@
  * 		message: 'Hello, World',			//This will show next to the spinner or 'Loading...' will be shown if not provided
  * 		success: function(response) { },
  * 		fail: function(response) { },
- * 		url: '/steps/,
+ * 		url: '/steps/',
  * 		headers: [
  * 			{ key: 'something', value: 'somethingElse' }
  * 		]
@@ -33,10 +33,24 @@ function makeResponse(responseText) {
 }
 
 function send(options) {
+	var hasMinTimeoutCompleted = false;
+	var isFinished = false;
+
 	if(options.message) {
 		spinner.show(options.message);	
 	}
 	
+	// Show the loading spinner for at least 3 seconds.
+	// If the request finishes first, wait for this timeout to occur before closing the spinner.
+	// If the timeout finishes first, close the spinner after the request finishes.
+	setTimeout(function() {
+		hasMinTimeoutCompleted = true;
+
+		if(isFinished) {
+			spinner.hide();
+		}
+	}, 3000);
+
 	var req = Ti.Network.createHTTPClient();
 	req.onload = function() {
 		try {
@@ -63,7 +77,10 @@ function send(options) {
 		}
 		
 		if(options.message) {
-			spinner.hide();
+			isFinished = true;
+			if(hasMinTimeoutCompleted) {
+				spinner.hide();
+			}
 		}
 	};
 	
@@ -79,7 +96,10 @@ function send(options) {
 		}
 		
 		if(options.message) {
-			spinner.hide();
+			isFinished = true;
+			if(hasMinTimeoutCompleted) {
+				spinner.hide();
+			}
 		}
 	};
 	
