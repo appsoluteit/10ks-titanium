@@ -3,12 +3,20 @@ var TournamentLeaderboardProvider = require('classes/TournamentLeaderboardProvid
 var tournamentLeaderboardProvider = new TournamentLeaderboardProvider();
 
 var args = $.args;
+
+// keep in mind that there is 8% lost in left-margins
 var cells = [
-    '15%',
-    '43%',
-    '20%',
-    '18%'
+    '14%',  // rank
+    '40%',  // name
+    '20%',  // total steps
+    '17%'   // status (%)
 ];
+// total = 99%
+
+var titles = ['Rank', 'Team Name', 'Steps'];
+if(args.type === 'race') {
+    titles.push('Status');
+}
 
 function window_open() {
     var leaderboard = tournamentLeaderboardProvider.fetch(args.tournament);
@@ -26,7 +34,8 @@ function drawTable(data) {
 function drawRow(team) {
     var rowView = Ti.UI.createView({
         height: Ti.UI.SIZE,
-        layout: 'horizontal'
+        layout: 'horizontal',
+        //backgroundColor: 'red' // debug
     });
 
     var data = [
@@ -52,22 +61,28 @@ function drawCells(row, values, isHeader) {
         throw "ArgumentException: number of values exceeds number of cells";
     }
 
-    var titles = [];
+    var labels = [];
     for(var i = 0; i < values.length; i++) {
-        titles.push(Ti.UI.createLabel({
+        labels.push(Ti.UI.createLabel({
             text: values[i],
             font: {
                 fontWeight: isHeader ? 'bold' : ''
             },
             color: isHeader ? 'white' : 'black',
             top: '5dp',
-            left: i == 0 ? '2%' : 0,
-            width: cells[i]
+            left: '2%',
+            width: cells[i],
+
+            textAlign: titles[i] === 'Status' ? 
+                Ti.UI.TEXT_ALIGNMENT_CENTER :
+                Ti.UI.TEXT_ALIGNMENT_LEFT,
+
+            //backgroundColor: 'blue', // debug
         }));
     }
 
-    titles.forEach(function(title) {
-        row.add(title);
+    labels.forEach(function(label) {
+        row.add(label);
     });
 }
 
@@ -77,11 +92,6 @@ function drawHeader() {
         height: '40dp',
         layout: 'horizontal'
     });
-
-    var titles = ['Rank', 'Team Name', 'Steps'];
-    if(args.type === 'race') {
-        titles.push('Status');
-    }
 
     drawCells(headerRow, titles, true);
 
