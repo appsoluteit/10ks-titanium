@@ -39,13 +39,17 @@ function loadMembers() {
         nameView.add(Ti.UI.createLabel({
             text: contacts[i].firstName,
             top: '25%',
-            color: 'black'
+            color: 'black',
+            font: {
+                fontSize: '12pt'
+            }
         }));
         nameView.add(Ti.UI.createLabel({
             text: ' ' + contacts[i].lastName,
             top: '25%',
             font: {
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: '12pt'
             },
             color: 'black'
         }));
@@ -54,7 +58,10 @@ function loadMembers() {
         rowView.add(Ti.UI.createLabel({
             right: '5dp',
             text: FormatHelper.formatNumber(contacts[i].steps),
-            color: 'gray'
+            color: 'gray',
+            font: {
+                fontSize: '12pt'
+            }
         }));
         row.add(rowView);
 

@@ -66,7 +66,8 @@ function drawCells(row, values, isHeader) {
         labels.push(Ti.UI.createLabel({
             text: values[i],
             font: {
-                fontWeight: isHeader ? 'bold' : ''
+                fontWeight: isHeader ? 'bold' : '',
+                fontSize: '12pt'
             },
             color: isHeader ? 'white' : 'black',
             top: '5dp',

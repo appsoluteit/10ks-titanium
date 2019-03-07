@@ -8,19 +8,17 @@
 	on Android only.
 */
 
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
-
 Ti.App.addEventListener('app:fromWebView', function(e) {
-    spinner.hide();
+    Alloy.Globals.Spinner.hide();
 });
 
 function loadChart(chartOptions, customOptions) {	
 	if(Ti.Platform.osname === 'android') {
-		spinner.show("Loading...");
+		Alloy.Globals.Spinner.show("Loading...");
 	}
 
 	setTimeout(function() {
-		spinner.hide();
+		Alloy.Globals.Spinner.hide();
 	}, 5000);
 
 	var templateURL=WPATH('/html/webview.html');
