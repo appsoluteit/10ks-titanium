@@ -7,7 +7,7 @@
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var TournamentsProvider = require('classes/TournamentsProvider');
 var tournamentsProvider = new TournamentsProvider();
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
+
 var currentPage = 1;
 var isLoading = true;
 
@@ -136,7 +136,7 @@ function loadTournaments() {
 		}
 
 		Ti.API.info('Done loading');
-		spinner.hide();
+		Alloy.Globals.Spinner.hide();
 	}
 
 	function onLoadTournamentsFail(e) {
@@ -170,10 +170,10 @@ function loadTournaments() {
 			});
 		}
 
-		spinner.hide();
+		Alloy.Globals.Spinner.hide();
 	}
 
-	spinner.show('Loading tournaments...');
+	Alloy.Globals.Spinner.show('Loading tournaments...');
 	tournamentsProvider.fetch(currentPage)
 		.then(onLoadTournamentsSuccess, onLoadTournamentsFail)
 		.done(function() {

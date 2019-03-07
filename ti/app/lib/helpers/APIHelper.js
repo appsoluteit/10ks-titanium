@@ -1,7 +1,6 @@
 /**
  * @file APIHelper
  * @description Provides static helper functions for interacting with the 10000steps REST API.
- * @require widgets/nl.fokkezb.loading
  * @exports post
  * @exports get
  * @example 
@@ -16,8 +15,6 @@
  * 		]
  * });
  */
-
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
 	
 function makeResponse(responseText) {
 	var response = {};
@@ -37,7 +34,7 @@ function send(options) {
 	var isFinished = false;
 
 	if(options.message) {
-		spinner.show(options.message);	
+		Alloy.Globals.Spinner.show(options.message);	
 	}
 	
 	// Show the loading spinner for at least 3 seconds.
@@ -47,7 +44,7 @@ function send(options) {
 		hasMinTimeoutCompleted = true;
 
 		if(isFinished) {
-			spinner.hide();
+			Alloy.Globals.Spinner.hide();
 		}
 	}, 3000);
 
@@ -79,7 +76,7 @@ function send(options) {
 		if(options.message) {
 			isFinished = true;
 			if(hasMinTimeoutCompleted) {
-				spinner.hide();
+				Alloy.Globals.Spinner.hide();
 			}
 		}
 	};
@@ -98,7 +95,7 @@ function send(options) {
 		if(options.message) {
 			isFinished = true;
 			if(hasMinTimeoutCompleted) {
-				spinner.hide();
+				Alloy.Globals.Spinner.hide();
 			}
 		}
 	};

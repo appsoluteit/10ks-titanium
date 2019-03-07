@@ -19,7 +19,6 @@ var NavBarButton = require('classes/NavBarButton');
 var args = $.args;
 var stepsProvider = new StepsProvider();
 var authProvider = new AuthProvider($.stats, $.statsView);
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
 
 function showLogin() {
 	setTimeout(function() {
@@ -168,12 +167,12 @@ function loadGoalSteps() {
 }
 
 function loadPage() {
-	//Show a single spinner for the both GET operations
-	spinner.show("Loading statistics...");
+	//Show a single Alloy.Globals.Spinner for the both GET operations
+	Alloy.Globals.Spinner.show("Loading statistics...");
 	
 	function onFail(reason) {
 		Ti.API.error("Calculating stats failed. Reason = ", reason);
-		spinner.hide();	//hide the spinner for this attempt
+		Alloy.Globals.Spinner.hide();	//hide the Alloy.Globals.Spinner for this attempt
 			
 		if(SessionHelper.isTokenInvalid(reason)) {
 			SessionHelper.showInvalidTokenToast($.stats);
@@ -191,7 +190,7 @@ function loadPage() {
 	
 	loadGoalSteps().then(loadLifetimeSteps)
 				   .then(loadStatistics)
-				   .then(spinner.hide, onFail);
+				   .then(Alloy.Globals.Spinner.hide, onFail);
 }
 
 /**
@@ -287,12 +286,12 @@ function load() {
 						
 					}, 1000);
 					
-					spinner.hide();					
+					Alloy.Globals.Spinner.hide();					
 				};
 				
 				var onProgress = function(message) {
 					Ti.API.info("On progress: " + message);
-					spinner.show(message);	
+					Alloy.Globals.Spinner.show(message);	
 				};
 				
 				stepsProvider.sync($.statsView, {

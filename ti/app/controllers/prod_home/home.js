@@ -7,11 +7,8 @@
  * @namespace Controllers.Home
  */
 
-var CalendarFactory = require('classes/CalendarFactory');
-var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
-var StepsProvider = require('classes/StepsProvider');
-var spinner = Alloy.createWidget('nl.fokkezb.loading');
 
+var StepsProvider = require('classes/StepsProvider');
 var stepsProvider = new StepsProvider();
 
 /**
@@ -33,7 +30,7 @@ function loginIfNeeded() {
 
 			confirmDialog.addEventListener('click', function(e) {
 				if(e.index !== e.source.cancel) {
-					spinner.show("Syncing...");
+					Alloy.Globals.Spinner.show("Syncing...");
 
 					var onComplete = function(message) {
 						setTimeout(function() {
@@ -54,12 +51,12 @@ function loginIfNeeded() {
 
 						}, 1000);
 
-						spinner.hide();
+						Alloy.Globals.Spinner.hide();
 					};
 
 					var onProgress = function(message) {
 						Ti.API.info("On progress: " + message);
-						spinner.show(message);
+						Alloy.Globals.Spinner.show(message);
 					};
 
 					//This may throw an InvalidToken exception, but since the user had "just" logged in,

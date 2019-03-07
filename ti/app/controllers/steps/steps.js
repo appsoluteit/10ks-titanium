@@ -151,9 +151,7 @@ function loadDatesFrom(dateObj) {
  * @memberof Controllers.Steps
  */
 function sync() {
-	var spinner = Alloy.createWidget('nl.fokkezb.loading');
-	spinner.show("Syncing...");
-	
+	Alloy.Globals.Spinner.show("Syncing...");
 	var stepsProvider = new StepsProvider();
 	
 	var onComplete = function(message) {
@@ -190,12 +188,12 @@ function sync() {
 			
 		}, 1000);
 		
-		spinner.hide();					
+		Alloy.Globals.Spinner.hide();					
 	};
 	
 	var onProgress = function(message) {
 		Ti.API.info("On progress: " + message);
-		spinner.show(message);	
+		Alloy.Globals.Spinner.show(message);	
 	};
 	
 	stepsProvider.sync($.log, {

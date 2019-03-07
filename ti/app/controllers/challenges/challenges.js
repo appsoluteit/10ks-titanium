@@ -32,8 +32,7 @@ function showLogin() {
 }
 
 function fetchChallenges() {
-	var spinner = Alloy.createWidget('nl.fokkezb.loading');
-	spinner.show("Fetching challenges...");
+	Alloy.Globals.Spinner.show("Fetching challenges...");
 	
 	$.challengesView.tblChallenges.data = []; //Clear the table
 	
@@ -89,13 +88,13 @@ function fetchChallenges() {
 		
 		$.challengesView.tblChallenges.appendRow(linkRow);
 		
-		spinner.hide();	
+		Alloy.Globals.Spinner.hide();	
 	}
 	
 	function onFail(reason) {
 		Ti.API.error(reason);
 			
-		spinner.hide();
+		Alloy.Globals.Spinner.hide();
 		if(SessionHelper.isTokenInvalid(reason)) {
 			SessionHelper.showInvalidTokenToast($.challenges);
 			

@@ -104,6 +104,7 @@
 	Ti.API.info('Environment: ' + Alloy.Globals.Env);
 	Ti.API.info('Is Debug: ' + Alloy.Globals.IsDebug);
 
+	Alloy.Globals.Spinner = Alloy.createWidget('nl.fokkezb.loading');
 	//Alloy.Globals.IsLoggedIn = false; //uncomment this line to force the user to login
 })();
 
