@@ -15,6 +15,9 @@
 	borderColor: "#C8C8C8",
 	font: {
 		fontSize: "18sp"
+	},
+	padding: {
+		left: 10
 	}
 }
 
