@@ -17,7 +17,7 @@
 		fontSize: "18sp"
 	},
 	padding: {
-		left: 10
+		left: 20
 	}
 }
 
