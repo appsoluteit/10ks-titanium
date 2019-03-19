@@ -121,7 +121,10 @@
 	borderRadius: '5dp',
 	height:"30dp",
 	borderColor: '#C8C8C8',
-	paddingLeft: '5',
+	paddingLeft: 5,
+	padding: {
+		left: 5
+	},
 	font: {
 		fontSize: '20sp'
 	}
@@ -135,7 +138,11 @@
 	borderColor: "#C8C8C8",
 	font: {
 		fontSize: '20sp'
-	}
+	},
+	paddingLeft: 20,
+	padding: {
+		left: 20
+	},
 }
 
 '.error': {
