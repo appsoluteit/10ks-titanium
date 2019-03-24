@@ -16,6 +16,7 @@ var Tests = require('tests/bootstrap');
 
 var args = $.args;
 var goalSteps = null;
+var hasLoaded = false;
 
 /**
  * @description Event handler for `btnBack`. Closes the window.
@@ -57,6 +58,8 @@ function makeRow(title) {
  * @memberof Controllers.Settings
  */
 function window_open() {	
+	Ti.API.log('open');
+
 	Alloy.Globals.tracker.addScreenView('Settings');
 	
 	if(Ti.Platform.osname !== "android") {
@@ -81,8 +84,15 @@ function window_open() {
 	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
-		
-	loadGoalSteps();
+}
+
+function window_focus() {
+	Ti.API.log('focus');
+	
+	if(!hasLoaded) {
+		hasLoaded = true;
+		loadGoalSteps();
+	}
 }
 
 function loadGoalSteps() {
