@@ -41,7 +41,7 @@ function loadMembers() {
             top: '25%',
             color: 'black',
             font: {
-                fontSize: '12pt'
+                fontSize: Ti.Platform.osname === 'android' ? undefined : '12pt'
             }
         }));
         nameView.add(Ti.UI.createLabel({
@@ -49,7 +49,7 @@ function loadMembers() {
             top: '25%',
             font: {
                 fontWeight: 'bold',
-                fontSize: '12pt'
+                fontSize: Ti.Platform.osname === 'android' ? undefined : '12pt'
             },
             color: 'black'
         }));
@@ -60,7 +60,7 @@ function loadMembers() {
             text: FormatHelper.formatNumber(contacts[i].steps),
             color: 'gray',
             font: {
-                fontSize: '12pt'
+                fontSize: Ti.Platform.osname === 'android' ? undefined : '12pt'
             }
         }));
         row.add(rowView);

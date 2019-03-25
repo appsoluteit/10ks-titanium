@@ -63,11 +63,10 @@ function drawCells(row, values, isHeader) {
 
     var labels = [];
     for(var i = 0; i < values.length; i++) {
-        labels.push(Ti.UI.createLabel({
+        var label = Ti.UI.createLabel({
             text: values[i],
             font: {
                 fontWeight: isHeader ? 'bold' : '',
-                fontSize: '12pt'
             },
             color: isHeader ? 'white' : 'black',
             top: '5dp',
@@ -79,7 +78,14 @@ function drawCells(row, values, isHeader) {
                 Ti.UI.TEXT_ALIGNMENT_LEFT,
 
             //backgroundColor: 'blue', // debug
-        }));
+        });
+
+        // Set a 12pt font size on iOS. On Android, leave the default.
+        if(Ti.Platform.osname !== "android") {
+            label.font.fontSize = '12pt';
+        }
+
+        labels.push(label);
     }
 
     labels.forEach(function(label) {

@@ -1,13 +1,13 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="settings" platform="ios">
-		<Window title="Settings" onOpen="window_open" id="window">			
+		<Window title="Settings" onOpen="window_open" onFocus="window_focus" id="window">			
 			<Require id="settingsView" src="settings/settingsView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="settings" platform="android" onOpen="window_open">
+	<Window id="settings" platform="android" onOpen="window_open" onFocus"window_focus">
 		<ActionBar 
 			title="Settings" 
 			displayHomeAsUp="true" 
