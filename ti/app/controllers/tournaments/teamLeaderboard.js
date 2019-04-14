@@ -85,7 +85,7 @@ function drawCells(row, values, isHeader) {
             width: cells[i],
 
             // debug
-            backgroundColor: colors[i]
+            //backgroundColor: colors[i]
         });
 
         // Set a 12pt font size on iOS. On Android, leave the default.
