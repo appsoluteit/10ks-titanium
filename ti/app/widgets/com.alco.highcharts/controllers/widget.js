@@ -29,6 +29,7 @@ function loadChart(chartOptions, customOptions) {
 	function onLoadTemplateUrl() {	
 		Ti.API.info('loading template');
 		
+		// DEBUG: Turn this off and let the chart show the static data
 		$.chartWebView.evalJS('plotChart('+ chartOptions + ',' + customOptions + ')');		
 		
 		//Remove any previously added event listeners to prevent them from stacking

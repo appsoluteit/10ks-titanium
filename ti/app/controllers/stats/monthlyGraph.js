@@ -70,6 +70,8 @@ function showChart(args, year) {
 		options.push($.monthlyGraphWindow.rect.height);
 		options.push($.monthlyGraphWindow.rect.width);
 	}
+
+	Ti.API.info('Showing monthly chart. Height options: ' + JSON.stringify(options));
 	
 	var viewHeight = MathHelper.smallestOf(options);
 	
@@ -79,13 +81,16 @@ function showChart(args, year) {
 			name: "Monthly Steps for " + year,
 			data: args		
 		};
-		
+
+		Ti.API.info('Args: ' + JSON.stringify(args));
+	
 		var customOptions = {
 			showGoalSteps: false,
 			chartHeight: viewHeight,
 			useMonthFormatter: 1	
 		};
 		
+		Ti.API.info('before loading chart. Custom options = ', JSON.stringify(customOptions));
 		$.monthlyGraphView.monthlyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {
