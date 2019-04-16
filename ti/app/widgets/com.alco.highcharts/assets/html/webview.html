@@ -4,10 +4,13 @@
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script src="jquery.min.js"></script>
-		<script src="highcharts.3.0.5.js"></script>
+		<script src="highcharts.7.1.1.js"></script>
+
 		<script type="text/javascript">	
 			function plotChart(chartOptions, customOptions) {	
 				$("#loading").show(); // this will only work properly on iOS
+
+				//alert(JSON.stringify(chartOptions));
 
 				try {
 			        var config = {
@@ -118,6 +121,27 @@
 					// hide the loading spinner after 5 seconds, just in case the load event failed
 					doneLoading();
 				}, 5000);
+			}
+
+			function test() {
+				window.Ti = { 
+					App: {
+						fireEvent: function(){ }
+					}
+				};
+
+				var customOptions = JSON.parse('{"showGoalSteps":false,"chartHeight":276,"useMonthFormatter":1}');
+				var options = JSON.parse('[{"name":"January","x":1,"y":10000},{"name":"February","x":2,"y":10000},{"name":"March","x":3,"y":0},{"name":"April","x":4,"y":0},{"name":"May","x":5,"y":0},{"name":"June","x":6,"y":0},{"name":"July","x":7,"y":0},{"name":"August","x":8,"y":0},{"name":"September","x":9,"y":0},{"name":"October","x":10,"y":0},{"name":"November","x":11,"y":0},{"name":"December","x":12,"y":0}]');
+
+				//var options = JSON.parse('[{"name":"January","x":1,"y":10000},{"name":"February","x":2,"y":20000},{"name":"March","x":3,"y":0},{"name":"April","x":4,"y":0},{"name":"May","x":5,"y":0},{"name":"June","x":6,"y":0},{"name":"July","x":7,"y":0},{"name":"August","x":8,"y":0},{"name":"September","x":9,"y":0},{"name":"October","x":10,"y":0},{"name":"November","x":11,"y":0},{"name":"December","x":12,"y":0}]');
+
+				var parentOptions = {
+					type: "column",
+					name: "Monthly Steps for 2019",
+					data: options		
+				};
+
+				plotChart(parentOptions, customOptions);
 			}
 
 			function doneLoading() {
