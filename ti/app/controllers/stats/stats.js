@@ -204,7 +204,7 @@ function btnDailyGraph_click() {
 		win.setAndroidMenuItems();
 	}
 	
-	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
+	//win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];
 	win.open();
 }
 
@@ -219,7 +219,7 @@ function btnMonthlyGraph_click() {
 		win.setAndroidMenuItems();
 	}
 	
-	win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];	
+	//win.orientationModes = [Ti.UI.LANDSCAPE_LEFT];	
 	win.open();
 }
 
