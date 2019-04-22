@@ -16,11 +16,7 @@ var hasLoaded = false; // flag for whether or not to load data,
 
 function window_open() {	
 	//Redraw the chart after an orientation change to use the right dimensions
-	Ti.Gesture.addEventListener('orientationchange', function(e) {
-		if(currentYear > 0 && currentMonth > 0) {
-			showChartForMonthAndYear(currentYear, currentMonth);
-		}
-	});
+	Ti.Gesture.addEventListener('orientationchange', onOrientationChange);
 
 	Alloy.Globals.tracker.addScreenView('Daily Graph');
 	
@@ -33,6 +29,12 @@ function window_postlayout() {
 	if(!hasLoaded) {
 		showChartForMonthAndYear(mostRecentYear, mostRecentMonth);	
 		hasLoaded = true;
+	}
+}
+
+function onOrientationChange() {
+	if(currentYear > 0 && currentMonth > 0) {
+		showChartForMonthAndYear(currentYear, currentMonth);
 	}
 }
 
@@ -204,5 +206,7 @@ function showMonthYearPicker(monthYears, currentYear, currentMonth) {
 }
 
 function btnBack_click() {
+	Ti.Gesture.removeEventListener('orientationchange', onOrientationChange);
 	$.dailyGraph.close();
+	$.args.callback();
 }

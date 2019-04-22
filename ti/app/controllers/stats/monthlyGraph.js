@@ -10,13 +10,7 @@ var hasLoaded = false;
 
 function window_open() {		
 	//Redraw the chart after an orientation change to use the right dimensions
-	Ti.Gesture.addEventListener('orientationchange',function(e) {		
-		Ti.API.info("Orientation change detected.");
-		
-		if(currentYear > 0) {
-			showChartForYear(currentYear);	
-		}
-	});
+	Ti.Gesture.addEventListener('orientationchange', onOrientationChange);
 	
 	Alloy.Globals.tracker.addScreenView('Monthly Graph');
 	
@@ -27,6 +21,14 @@ function window_postlayout() {
 	if(!hasLoaded) {
 		showChartForYear(mostRecentYear);
 		hasLoaded = true;
+	}
+}
+
+function onOrientationChange() {
+	Ti.API.info("Orientation change detected.");
+		
+	if(currentYear > 0) {
+		showChartForYear(currentYear);	
 	}
 }
 
@@ -184,5 +186,8 @@ function showYearPicker(years, currentYear) {
 
 function btnBack_click() {
 	Ti.App.fireEvent('app:fromWebView');
+	Ti.Gesture.removeEventListener('orientationchange', onOrientationChange);
+	
 	$.monthlyGraph.close();
+	$.args.callback();
 }

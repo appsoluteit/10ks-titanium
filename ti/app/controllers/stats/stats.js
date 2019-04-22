@@ -198,7 +198,9 @@ function loadPage() {
  * @memberof Controllers.Stats
  */
 function btnDailyGraph_click() {
-	var win = Alloy.createController("stats/dailyGraph").getView();
+	var win = Alloy.createController("stats/dailyGraph", {
+		callback: resetWindow
+	}).getView();
 	
 	if(Ti.Platform.osname === "android") {
 		win.setAndroidMenuItems();
@@ -208,12 +210,18 @@ function btnDailyGraph_click() {
 	win.open();
 }
 
+function resetWindow() {
+	Ti.API.info('Resetting orientation');
+	$.window.orientationModes = [Ti.UI.PORTRAIT];
+}
 /**
  * @description Event handler for `tblRowMonthlyGraph`. Opens the monthly graph window.
  * @memberof Controllers.Stats
  */
 function btnMonthlyGraph_click() {
-	var win = Alloy.createController("stats/monthlyGraph").getView();
+	var win = Alloy.createController("stats/monthlyGraph", {
+		callback: resetWindow
+	}).getView();
 	
 	if(Ti.Platform.osname === "android") {
 		win.setAndroidMenuItems();
