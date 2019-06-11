@@ -3,7 +3,7 @@
   xmlns:ti="http://ti.appcelerator.org">
   <id>au.org.steps10000.app</id>
   <name>10,000 Steps</name>
-  <version>4.2.2</version>
+  <version>4.2.3</version>
   <publisher>Appsolute IT Pty Ltd</publisher>
   <url>https://www.10000steps.org.au</url>
   <description>Every step counts. Challenge yourself, friends and workmates to the 10,000 Steps program.</description>
@@ -67,7 +67,7 @@
   </ios>
   <android 
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <manifest android:versionCode="422" android:versionName="4.2.2">
+    <manifest android:versionCode="423" android:versionName="4.2.3">
       <application android:theme="@style/Theme.AppCompat.Light"/>
       <uses-permission android:name="android.permission.READ_CALENDAR"/>
       <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
@@ -111,9 +111,9 @@
   <property name="appc-creator-user-id" type="string">1d7601ce-3a74-4808-ac11-63a8871742b9</property>
   <property name="ti.ui.defaultunit" type="string">dp</property>
   <!-- Custom Properties -->
-  <property name="google-analytics-id" type="string">UA-101176022-1</property>
+  <property name="google-analytics-id" type="string">UA-75895710-1</property>
   <!-- CQUs account -->
   <property name="is-debug" type="bool">false</property>
-  <property name="environment" type="string">Development</property>
+  <property name="environment" type="string">Production</property>
   <property name="run-on-main-thread" type="bool">true</property>
 </ti:app>
