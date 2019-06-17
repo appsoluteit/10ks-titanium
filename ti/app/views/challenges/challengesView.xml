@@ -1,4 +1,11 @@
 <Alloy>
-	<TableView id="tblChallenges">
-	</TableView>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
+			<!-- TableView Container -->
+			<View top="0dp" height="50%">
+				<TableView height="100%" id="tblChallengeTasks">
+				</TableView>
+			</View>
+		</View>
+	</View>
 </Alloy>

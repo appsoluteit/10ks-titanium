@@ -1,33 +1,33 @@
 <Alloy>
-	<TableView id="tblContainer" class="margin-10">
-		<!-- Reminder to log steps-->
-		<!--
-		<TableViewRow id="tblRowReminder">
-			<Label class="row-label">Reminder to Log Steps</Label>
-		</TableViewRow>
-		-->
-		
-		<!-- Goal Steps -->
-		<TableViewRow id="tblRowGoalSteps">
-			<View layout="horizontal">
-				<View width="48%">
-					<Label class="row-label">Goal Steps</Label>
-				</View>
-				
-				<View width="48%">
-					<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
-				</View>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
+			<!-- TableView Container -->
+			<View top="0dp" height="50%">
+				<TableView id="tblContainer" class="margin-10">		
+					<!-- Goal Steps -->
+					<TableViewRow id="tblRowGoalSteps">
+						<View layout="horizontal">
+							<View width="48%">
+								<Label class="row-label">Goal Steps</Label>
+							</View>
+							
+							<View width="48%">
+								<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
+							</View>
+						</View>
+					</TableViewRow>
+					
+					<!-- About -->
+					<TableViewRow id="tblRowAbout">
+						<Label class="row-label">About</Label>
+					</TableViewRow>
+					
+					<!-- Logout -->
+					<TableViewRow id="tblRowLogout">
+						<Label class="row-label">Logout</Label>
+					</TableViewRow>
+				</TableView>
 			</View>
-		</TableViewRow>
-		
-		<!-- About -->
-		<TableViewRow id="tblRowAbout">
-			<Label class="row-label">About</Label>
-		</TableViewRow>
-		
-		<!-- Logout -->
-		<TableViewRow id="tblRowLogout">
-			<Label class="row-label">Logout</Label>
-		</TableViewRow>
-	</TableView>
+		</View>
+	</View>
 </Alloy>
