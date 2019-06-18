@@ -104,7 +104,12 @@ function send(options) {
 		Ti.API.debug("Opening connection: " + Alloy.Globals.BaseURL + options.url);	
 	}
 	
-	req.open(options.method, Alloy.Globals.BaseURL + options.url);
+	// If the URL passed is relative, prepend the base URL to it
+	if(options.url.indexOf(Alloy.Globals.BaseURL) === -1) {
+		options.url = Alloy.Globals.BaseURL + options.url;
+	}
+
+	req.open(options.method, options.url);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	
 	if(options.headers) {

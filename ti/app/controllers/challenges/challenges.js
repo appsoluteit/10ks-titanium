@@ -45,18 +45,51 @@ function fetchCurrentChallenge() {
 
 		// Set the content
 		var taskDescription = ui.createLabel({
-			top: "5dp",
-			left: "5dp",
-			right: "5dp",
-			html: response.description,
+			top: "10dp",
+			left: "10dp",
+			right: "10dp",
+			html: response.description + "<br/>",
 			color: 'black'
 		});
 		$.challengesView.descriptionContainer.add(taskDescription);
 			
-		// Set the table tasks
-		// tblChallengeTasks
+		response.challenge_tasks.forEach(function(task) {
+			Ti.API.info('loading task: ' + task);
+
+			challengesProvider
+				.getTask(task)
+				.then(function(taskContent) {
+					var row = Ti.UI.createTableViewRow({
+						color: 'black',
+						height: '60dp',
+						title: taskContent.name,
+						font: {
+							fontWeight: 'bold'
+						}
+					});
+					row.addEventListener('click', tblRow_click);
+					$.challengesView.tblChallengeTasks.appendRow(row);
+
+					// TODO: Add right chevron
+					// TODO: Add subtitle: taskContent.steps_goal
+				})
+				.catch(function(err) {
+					Ti.API.error(err);
+
+					Alloy.createWidget("com.mcongrove.toast", null, {
+						text: "Couldn't get challenge tasks",
+						duration: 2000,
+						view: $.stats,
+						theme: "error"
+					});	
+				});
+		});
 		
 		Alloy.Globals.Spinner.hide();	
+	}
+
+	function tblRow_click() {
+
 	}
 	
 	function onFail(reason) {
@@ -72,7 +105,7 @@ function fetchCurrentChallenge() {
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't get challenges",
+				text: "Couldn't load current challenge",
 				duration: 2000,
 				view: $.stats,
 				theme: "error"

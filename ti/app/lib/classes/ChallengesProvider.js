@@ -78,7 +78,7 @@ ChallengesProvider.prototype.getCurrentChallenge = function() {
 	}
 	
 	function onFail(e) {
-		defer.reject(e);
+		deferer.reject(e);
 	}
 	
 	APIHelper.get({
@@ -104,7 +104,7 @@ ChallengesProvider.prototype.getTask = function(taskUrl) {
 	}
 	
 	function onFail(e) {
-		defer.reject(e);
+		deferer.reject(e);
 	}
 	
 	APIHelper.get({
