@@ -9,6 +9,7 @@ var ChallengesProvider = require('classes/ChallengesProvider');
 var FormatHelper = require('helpers/FormatHelper');
 var SessionHelper = require('helpers/SessionHelper');
 var NavBarButton = require('classes/NavBarButton');
+var ui = require('xp.ui');
 
 /**
  * @description Event handler for `btnBack` which closes the window.
@@ -41,7 +42,20 @@ function fetchCurrentChallenge() {
 	function onSuccess(response) {
 		Ti.API.info("Fetch current challenge success.");
 		Ti.API.info(JSON.stringify(response));
+
+		// Set the content
+		var taskDescription = ui.createLabel({
+			top: "5dp",
+			left: "5dp",
+			right: "5dp",
+			html: response.description,
+			color: 'black'
+		});
+		$.challengesView.descriptionContainer.add(taskDescription);
 			
+		// Set the table tasks
+		// tblChallengeTasks
+		
 		Alloy.Globals.Spinner.hide();	
 	}
 	

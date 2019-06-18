@@ -8,8 +8,24 @@
 					id = "txtGoalSteps" 
 					class="half" 
 					keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" />
-					
-				<Button id = "btnSave" title="Save"  />
+				
+				<!-- Button -->
+				<View top="10dp" height="Ti.UI.SIZE">
+					<Button 
+						id="btnSave" 
+						title="Save" 
+						font="{ fontSize: 10sp }"
+						platform="android"
+					/>
+						
+					<Widget
+						id="btnSave"
+						src="nl.fokkezb.button"
+						title="Save"
+						style="steps-default"
+						platform="ios"
+					/>
+				</View>
 			</View>
 		</View>
 	</View>

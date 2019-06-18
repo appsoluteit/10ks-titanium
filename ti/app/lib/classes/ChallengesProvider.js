@@ -93,6 +93,32 @@ ChallengesProvider.prototype.getCurrentChallenge = function() {
 	return deferer.promise;
 };
 
+ChallengesProvider.prototype.getTask = function(taskUrl) {
+	var deferer = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info("getTask success");
+		Ti.API.info(JSON.stringify(e));
+		
+		deferer.resolve(e);
+	}
+	
+	function onFail(e) {
+		defer.reject(e);
+	}
+	
+	APIHelper.get({
+		url: taskUrl,
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+
+	return deferer.promise;
+};
+
 ChallengesProvider.prototype.fetch = function() {
 	return this.getChallenges(); //return the promise returned by getChallenges
 };
