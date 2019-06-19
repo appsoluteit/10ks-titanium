@@ -60,18 +60,57 @@ function fetchCurrentChallenge() {
 				.getTask(task)
 				.then(function(taskContent) {
 					var row = Ti.UI.createTableViewRow({
-						color: 'black',
 						height: '60dp',
-						title: taskContent.name,
-						font: {
-							fontWeight: 'bold'
-						}
 					});
 					row.addEventListener('click', tblRow_click);
-					$.challengesView.tblChallengeTasks.appendRow(row);
 
-					// TODO: Add right chevron
-					// TODO: Add subtitle: taskContent.steps_goal
+					// Add the text
+					var view = Ti.UI.createView({
+						left: '10dp',
+						orientation: 'vertical'
+					});
+					var title = Ti.UI.createLabel({
+						text: taskContent.name,
+						font: {
+							fontWeight: 'bold'
+						},
+						width: Ti.UI.SIZE,
+						textAlign: 'left',
+						left: 0,
+						top: '5dp'
+					})
+					var subtitle = Ti.UI.createLabel({
+						textAlign: 'left',
+						color: 'black',
+						text: 'Avg Steps: ' + FormatHelper.formatNumber(taskContent.steps_goal),
+						width: Ti.UI.SIZE,
+						left: 0,
+						bottom: '5dp'
+					});
+					view.add(title);
+					view.add(subtitle);
+					row.add(view);
+
+					// Add the right chevron
+					var chevron = null;
+					if(Ti.Platform.osname === "android") {
+						//On Android, create an ImageView instead of a button
+						chevron = Ti.UI.createImageView({
+							right: "5dp",
+							image: "/common/chevrons/right-16.png"
+						});
+					}
+					else {
+						chevron = Ti.UI.createButton({
+							right: "5dp",
+							image: "/common/chevrons/right-16-g.png",
+							tintColor: "gray",
+							style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+						});
+					}
+					row.add(chevron);
+
+					$.challengesView.tblChallengeTasks.appendRow(row);
 				})
 				.catch(function(err) {
 					Ti.API.error(err);
