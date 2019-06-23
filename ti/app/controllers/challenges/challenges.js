@@ -62,7 +62,13 @@ function fetchCurrentChallenge() {
 					var row = Ti.UI.createTableViewRow({
 						height: '60dp',
 					});
-					row.addEventListener('click', tblRow_click);
+					row.addEventListener('click', function(e) {
+						var win = Alloy.createController('challenges/joinChallenge', {
+							challenge: taskContent
+						}).getView();	
+
+						win.open();
+					});
 
 					// Add the text
 					var view = Ti.UI.createView({
@@ -125,10 +131,6 @@ function fetchCurrentChallenge() {
 		});
 		
 		Alloy.Globals.Spinner.hide();	
-	}
-
-	function tblRow_click() {
-
 	}
 	
 	function onFail(reason) {
