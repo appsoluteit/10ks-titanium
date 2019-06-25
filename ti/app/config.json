@@ -16,6 +16,7 @@
     "nl.fokkezb.button": "*",
     "com.10000steps.badge": "1.0",
     "danielhanold.pickerWidget": "*",
-    "com.mcvendrell.valuebar": "*"
+    "com.mcvendrell.valuebar": "*",
+    "com.leorbrenman.tismallbarchart": "*"
   }
 }

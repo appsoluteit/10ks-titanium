@@ -1,4 +1,11 @@
 <Alloy>
-	<TableView id="tblChallenges">
-	</TableView>
+	<View class="background-gradient" height="100%" layout="vertical">
+		<View class="margin-10 inner-content" top="10dp" height="Ti.UI.SIZE" id="descriptionContainer">
+		</View>
+
+		<View class="margin-10 inner-content" bottom="10dp" height="40%">
+			<TableView id="tblChallengeTasks">
+			</TableView>
+		</View>
+	</View>
 </Alloy>

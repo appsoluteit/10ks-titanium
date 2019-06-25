@@ -1,0 +1,6 @@
+"#monthlyGraphChart": {
+	data: [{"month": "Jan", "val": 3}, {"month": "Feb", "val": 11}, {"month": "Mar", "val": 4}, {"month": "Apr", "val": 2} , {"month": "May", "val": -11} , {"month": "May", "val": 7} ,  {"month": "Jun", "val": 5},  {"month": "Jul", "val": -5}],
+	negativeColor: "#D74B4B",
+	colors: "#354B5E",
+    height: Ti.UI.SIZE
+}

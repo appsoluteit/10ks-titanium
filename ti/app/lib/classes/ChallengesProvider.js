@@ -31,7 +31,7 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	
 	function onSuccess(e) {
 		Ti.API.info("Get challenges success. Page = ", page);
-		
+
 		if(e.next) {
 			setTimeout(function() {
 				//Sleep a little so we don't flood the network
@@ -46,6 +46,7 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 			}, 200);
 		}
 		else {
+			Ti.API.info("Last page finished: " + page);
 			defer.resolve(e);
 		}
 	}
@@ -53,10 +54,6 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	function onFail(e) {
 		defer.reject(e);
 	}
-	
-	var data = {
-		Authorization: "Token " + Alloy.Globals.AuthKey
-	};
 	
 	APIHelper.get({
 		url:		"challenges/?page=" + page,
@@ -68,6 +65,58 @@ ChallengesProvider.prototype.getChallenges = function(page) {
 	});
 	
 	return defer.promise;
+};
+
+ChallengesProvider.prototype.getCurrentChallenge = function() {
+	var deferer = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info("getCurrentChallenge success");
+
+		// Pass back the top result (the most recent)
+		deferer.resolve(e.results[0]);
+	}
+	
+	function onFail(e) {
+		deferer.reject(e);
+	}
+	
+	APIHelper.get({
+		url:		"challenges/",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+
+	return deferer.promise;
+};
+
+ChallengesProvider.prototype.getTask = function(taskUrl) {
+	var deferer = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info("getTask success");
+		Ti.API.info(JSON.stringify(e));
+		
+		deferer.resolve(e);
+	}
+	
+	function onFail(e) {
+		deferer.reject(e);
+	}
+	
+	APIHelper.get({
+		url: taskUrl,
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+
+	return deferer.promise;
 };
 
 ChallengesProvider.prototype.fetch = function() {

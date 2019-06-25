@@ -9,6 +9,7 @@ var ChallengesProvider = require('classes/ChallengesProvider');
 var FormatHelper = require('helpers/FormatHelper');
 var SessionHelper = require('helpers/SessionHelper');
 var NavBarButton = require('classes/NavBarButton');
+var ui = require('xp.ui');
 
 /**
  * @description Event handler for `btnBack` which closes the window.
@@ -19,7 +20,7 @@ function btnBack_click() {
 }
 
 function btnRefresh_click() {
-	fetchChallenges();	
+	fetchCurrentChallenge();	
 }
 
 function showLogin() {
@@ -27,66 +28,107 @@ function showLogin() {
 	win.open();
 	
 	win.addEventListener("close", function() {
-		fetchChallenges();
+		fetchCurrentChallenge();
 	});
 }
 
-function fetchChallenges() {
-	Alloy.Globals.Spinner.show("Fetching challenges...");
+function fetchCurrentChallenge() {
+	Alloy.Globals.Spinner.show("Loading challenge...");
 	
-	$.challengesView.tblChallenges.data = []; //Clear the table
+	$.challengesView.tblChallengeTasks.data = []; //Clear the table
 	
 	var challengesProvider = new ChallengesProvider();
 	
 	function onSuccess(response) {
-		var activeCount = 0;
-		
-		response.results.forEach(function(result) {
-			//Only show 'active' challenges
-			if(result.is_active) {
-				Ti.API.info(JSON.stringify(result));
-				
-				var row = Ti.UI.createTableViewRow({ });
-				
-				Alloy.createWidget("com.10000steps.challengerow", null, {
-					taskName: result.task.name,
-					taskDescription: result.task.description,
-					goalSteps: FormatHelper.formatNumber(result.steps_goal) + ' steps',
-					percentComplete: result.percentage_complete + '%',
-					image:  "/common/challenge_badge_small.png",
-					view: row
+		Ti.API.info("Fetch current challenge success.");
+		Ti.API.info(JSON.stringify(response));
+
+		// Set the content
+		var taskDescription = ui.createLabel({
+			top: "10dp",
+			left: "10dp",
+			right: "10dp",
+			html: response.description + "<br/>",
+			color: 'black'
+		});
+		$.challengesView.descriptionContainer.add(taskDescription);
+			
+		response.challenge_tasks.forEach(function(task) {
+			Ti.API.info('loading task: ' + task);
+
+			challengesProvider
+				.getTask(task)
+				.then(function(taskContent) {
+					var row = Ti.UI.createTableViewRow({
+						height: '60dp',
+					});
+					row.addEventListener('click', function(e) {
+						var win = Alloy.createController('challenges/joinChallenge', {
+							challenge: taskContent
+						}).getView();	
+
+						win.open();
+					});
+
+					// Add the text
+					var view = Ti.UI.createView({
+						left: '10dp',
+						orientation: 'vertical'
+					});
+					var title = Ti.UI.createLabel({
+						text: taskContent.name,
+						font: {
+							fontWeight: 'bold'
+						},
+						width: Ti.UI.SIZE,
+						textAlign: 'left',
+						left: 0,
+						top: '5dp'
+					})
+					var subtitle = Ti.UI.createLabel({
+						textAlign: 'left',
+						color: 'black',
+						text: 'Avg Steps: ' + FormatHelper.formatNumber(taskContent.steps_goal),
+						width: Ti.UI.SIZE,
+						left: 0,
+						bottom: '5dp'
+					});
+					view.add(title);
+					view.add(subtitle);
+					row.add(view);
+
+					// Add the right chevron
+					var chevron = null;
+					if(Ti.Platform.osname === "android") {
+						//On Android, create an ImageView instead of a button
+						chevron = Ti.UI.createImageView({
+							right: "5dp",
+							image: "/common/chevrons/right-16.png"
+						});
+					}
+					else {
+						chevron = Ti.UI.createButton({
+							right: "5dp",
+							image: "/common/chevrons/right-16-g.png",
+							tintColor: "gray",
+							style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+						});
+					}
+					row.add(chevron);
+
+					$.challengesView.tblChallengeTasks.appendRow(row);
+				})
+				.catch(function(err) {
+					Ti.API.error(err);
+
+					Alloy.createWidget("com.mcongrove.toast", null, {
+						text: "Couldn't get challenge tasks",
+						duration: 2000,
+						view: $.stats,
+						theme: "error"
+					});	
 				});
-				
-				row.addEventListener('click', function() {
-					var overviewWindow = Alloy.createController('challenges/challengesOverview', result).getView();
-					overviewWindow.open();
-				});
-				
-				$.challengesView.tblChallenges.appendRow(row);	
-				activeCount++;
-			}				
 		});
-		
-		if(activeCount === 0) {
-			var row = Ti.UI.createTableViewRow({ title: 'There are no active challenges.' });
-			$.challengesView.tblChallenges.appendRow(row);		
-		}
-		
-		var webLink = Ti.UI.createLabel({
-			text: "To view a list of all available challenges or to join a challenge, please visit the 10,000 steps website",
-			color: "#0645AD",
-			font: {
-				fontSize: 9
-			},
-			textAlign: "center"
-		});
-		webLink.addEventListener('click', function() {
-			Ti.Platform.openURL('https://www.10000steps.org.au/dashboard/challenges/');
-		});
-		var linkRow = Ti.UI.createTableViewRow();
-		linkRow.add(webLink);
-		
-		$.challengesView.tblChallenges.appendRow(linkRow);
 		
 		Alloy.Globals.Spinner.hide();	
 	}
@@ -104,7 +146,7 @@ function fetchChallenges() {
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't get challenges",
+				text: "Couldn't load current challenge",
 				duration: 2000,
 				view: $.stats,
 				theme: "error"
@@ -112,7 +154,7 @@ function fetchChallenges() {
 		}		
 	}
 	
-	challengesProvider.fetch().then(onSuccess, onFail);
+	challengesProvider.getCurrentChallenge().then(onSuccess, onFail);
 }
 
 function setNavButtons() {
@@ -134,12 +176,12 @@ function setNavButtons() {
 }
 
 /**
- * @description Event handler for the Window's `open` event. Calls `fetchChallenges()`.
+ * @description Event handler for the Window's `open` event. Calls `fetchCurrentChallenge()`.
  * @memberOf Controllers.Challenges
  */
 function window_open() {	
 	Alloy.Globals.tracker.addScreenView('Challenges');
 	
 	setNavButtons();
-	fetchChallenges();
+	fetchCurrentChallenge();
 }

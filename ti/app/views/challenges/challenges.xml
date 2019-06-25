@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="challenges" platform="ios">
-		<Window id="window" title="Challenges" onOpen="window_open">
+		<Window id="window" title="Start a Challenge" onOpen="window_open">
 			<Require id="challengesView" src="challenges/challengesView" type="view"/>
 		</Window>
 	</NavigationWindow>
@@ -9,7 +9,7 @@
 	<!-- Android -->
 	<Window id="challenges" platform="android" onOpen="window_open">
 		<ActionBar 
-			title="Challenges" 
+			title="Start a Challenge" 
 			displayHomeAsUp="true" 
 			homeButtonEnabled="true" 
 			onHomeIconItemSelected="btnBack_click"></ActionBar>

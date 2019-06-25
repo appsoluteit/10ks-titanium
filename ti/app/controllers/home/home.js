@@ -113,8 +113,6 @@ function btnStatistics_click() {
  * @description Event handler for the `btnChallenges` button. Opens the challenges view.
  * @memberOf Controllers.Home
  */
-// <Praj Basnet @22/03/2018> Disable challenges
-/*
 function btnChallenges_click() {
 	var win = Alloy.createController('challenges/challenges').getView();
 	win.open();
@@ -123,7 +121,6 @@ function btnChallenges_click() {
 		window_load();
 	});
 }
-*/
 
 /**
  * @description Event handler for the `btnTournaments` button. Opens the tournaments view.
@@ -183,8 +180,7 @@ function window_open() {
 	$.homeView.btnStepLog.addEventListener('click', btnStepLog_click);
 	$.homeView.btnStatistics.addEventListener('click', btnStatistics_click);
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
-	// <Praj Basnet @22/03/2018> Disable challenges
-	//$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
+	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
 
 	window_load();

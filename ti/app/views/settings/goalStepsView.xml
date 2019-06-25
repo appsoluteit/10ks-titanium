@@ -1,14 +1,32 @@
 <Alloy>
-	<View class="margin-10" layout="vertical">
-		<Label>Your current daily goal steps are:</Label>
-		
-		<View layout="vertical" class="margin-10">
-			<TextField 
-				id = "txtGoalSteps" 
-				class="half" 
-				keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" />
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
+			<Label top="10dp">Your current daily goal steps are:</Label>
+			
+			<View layout="vertical" class="margin-10">
+				<TextField 
+					id = "txtGoalSteps" 
+					class="half" 
+					keyboardType="Ti.UI.KEYBOARD_TYPE_NUMBER_PAD" />
 				
-			<Button id = "btnSave" title="Save"  />
+				<!-- Button -->
+				<View top="10dp" height="Ti.UI.SIZE">
+					<Button 
+						id="btnSave" 
+						title="Save" 
+						font="{ fontSize: 10sp }"
+						platform="android"
+					/>
+						
+					<Widget
+						id="btnSave"
+						src="nl.fokkezb.button"
+						title="Save"
+						style="steps-default"
+						platform="ios"
+					/>
+				</View>
+			</View>
 		</View>
 	</View>
 </Alloy>
