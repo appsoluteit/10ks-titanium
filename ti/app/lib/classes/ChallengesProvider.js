@@ -93,6 +93,36 @@ ChallengesProvider.prototype.getCurrentChallenge = function() {
 	return deferer.promise;
 };
 
+ChallengesProvider.prototype.getActiveTask = function() {
+	var deferer = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info("getActiveTask success");
+
+		var results = e.results.filter(function(r) {
+			return r.is_active;
+		});
+
+		// Pass back the top result (the most recent) active task
+		deferer.resolve(results[0]);
+	}
+	
+	function onFail(e) {
+		deferer.reject(e);
+	}
+	
+	APIHelper.get({
+		url:		"challenge_participant//",
+		headers: [{
+				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		success: 	onSuccess,
+		fail: 		onFail
+	});
+
+	return deferer.promise;
+};
+
 ChallengesProvider.prototype.getTask = function(taskUrl) {
 	var deferer = q.defer();
 

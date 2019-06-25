@@ -157,6 +157,59 @@ function fetchCurrentChallenge() {
 	challengesProvider.getCurrentChallenge().then(onSuccess, onFail);
 }
 
+function fetchActiveTask() {
+	Alloy.Globals.Spinner.show("Loading active task...");
+
+	var challengesProvider = new ChallengesProvider();
+
+	function onSuccess(result) {
+		if(!result) {
+			// no active task. Load the challenge.
+			fetchCurrentChallenge();
+		}
+		else {
+			challengesProvider
+				.getTask(result.task)
+				.then(function(taskContent) {
+					Alloy.Globals.Spinner.hide();
+
+					Ti.API.info('fetchActiveTask - showing progress');
+					
+					var win = Alloy.createController('challenges/challengeProgress', {
+						challenge: taskContent
+					}).getView();	
+					
+					Ti.API.info(win);
+
+					win.open();
+				});
+		}
+	}
+
+	function onFail(reason) {
+		Ti.API.error(reason);
+			
+		Alloy.Globals.Spinner.hide();
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.challenges);
+			
+			setTimeout(function() {
+				showLogin();
+			}, 2000);
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't load current challenge",
+				duration: 2000,
+				view: $.stats,
+				theme: "error"
+			});	
+		}			
+	}
+
+	challengesProvider.getActiveTask().then(onSuccess, onFail);
+}
+
 function setNavButtons() {
 	if(Ti.Platform.osname === "android") {
 		//On Android, call this to ensure the correct actionbar menu is displayed
@@ -169,7 +222,7 @@ function setNavButtons() {
 		});
 		
 		$.window.rightNavButton = NavBarButton.createRightNavButton({
-			image: '/common/icons/refresh-button.png',
+			image: '/common/icons/refresh-button-32.png',
 			onClick: btnRefresh_click
 		});
 	}
@@ -183,5 +236,5 @@ function window_open() {
 	Alloy.Globals.tracker.addScreenView('Challenges');
 	
 	setNavButtons();
-	fetchCurrentChallenge();
+	fetchActiveTask();
 }
