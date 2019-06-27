@@ -10,6 +10,8 @@
 
 var StepsProvider = require('classes/StepsProvider');
 var stepsProvider = new StepsProvider();
+var ChallengesProvider = require('classes/ChallengesProvider');
+var SessionHelper = require('helpers/SessionHelper');
 
 /**
  * @description If the user is not logged in (based off the last known state, stored locally) then the login window is shown. Otherwise, on Android, this function
@@ -112,12 +114,66 @@ function btnStatistics_click() {
  * @memberOf Controllers.Home
 */
 function btnChallenges_click() {
-	var win = Alloy.createController('challenges/challenges').getView();
-	win.open();
+	// Show the active challenge or show the active challenge option? First check if the user
+	// has already joined a challenge task.
 
-	win.addEventListener('close', function() {
-		window_load();
-	});
+	fetchActiveTask();
+}
+
+function fetchActiveTask() {
+	Alloy.Globals.Spinner.show("Loading active challenge...");
+
+	var challengesProvider = new ChallengesProvider();
+
+	function onSuccess(result) {
+		if(!result) {
+			// no active task. Load the challenge.
+			var win = Alloy.createController('challenges/challenges').getView();
+			win.open();
+		}
+		else {
+			// we have an active task. Go straight to the progress page.
+			challengesProvider
+				.getTask(result.task)
+				.then(function(taskContent) {
+					Alloy.Globals.Spinner.hide();
+					
+					var win = Alloy.createController('challenges/challengeProgress', {
+						challenge: taskContent
+					}).getView();	
+
+					win.open();
+				});
+		}
+	}
+
+	function onFail(reason) {
+		Ti.API.error(reason);
+			
+		Alloy.Globals.Spinner.hide();
+		if(SessionHelper.isTokenInvalid(reason)) {
+			SessionHelper.showInvalidTokenToast($.home);
+			
+			setTimeout(function() {
+				showLogin();
+			}, 2000);
+		}
+		else {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: "Couldn't load current challenge",
+				duration: 2000,
+				view: $.home,
+				theme: "error"
+			});	
+		}			
+	}
+
+	challengesProvider.getActiveTask().then(onSuccess, onFail);
+}
+
+function showLogin() {
+	var win = Alloy.createController("auth/login").getView();
+	win.open();
 }
 
 /**

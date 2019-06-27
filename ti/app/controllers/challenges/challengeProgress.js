@@ -9,4 +9,6 @@ function btnBack_click() {
 
 function window_open() {
     $.window.title = challenge.name;
+
+    Alloy.Globals.tracker.addScreenView('Challenge Progress');
 }
