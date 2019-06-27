@@ -7,8 +7,6 @@
  * @namespace Controllers.Home
  */
 
-var CalendarFactory = require('classes/CalendarFactory');
-var ReminderRepeatSetting = require('classes/ReminderRepeatSetting');
 
 var StepsProvider = require('classes/StepsProvider');
 var stepsProvider = new StepsProvider();
@@ -112,7 +110,7 @@ function btnStatistics_click() {
 /**
  * @description Event handler for the `btnChallenges` button. Opens the challenges view.
  * @memberOf Controllers.Home
- */
+*/
 function btnChallenges_click() {
 	var win = Alloy.createController('challenges/challenges').getView();
 	win.open();
