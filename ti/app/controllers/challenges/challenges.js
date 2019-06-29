@@ -64,7 +64,8 @@ function fetchCurrentChallenge() {
 					});
 					row.addEventListener('click', function(e) {
 						var win = Alloy.createController('challenges/joinChallenge', {
-							challenge: taskContent
+							challenge: taskContent,
+							parent: $.challenges
 						}).getView();	
 
 						win.open();
@@ -148,7 +149,7 @@ function fetchCurrentChallenge() {
 			Alloy.createWidget("com.mcongrove.toast", null, {
 				text: "Couldn't load current challenge",
 				duration: 2000,
-				view: $.stats,
+				view: $.challenges,
 				theme: "error"
 			});	
 		}		
