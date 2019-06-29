@@ -1,0 +1,6 @@
+<Alloy>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" height="Ti.UI.SIZE" id="descriptionContainer">
+        </View>
+    </View>
+</Alloy>

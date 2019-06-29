@@ -11,4 +11,12 @@ function window_open() {
     $.window.title = challenge.name;
 
     Alloy.Globals.tracker.addScreenView('Challenge Progress');
+    $.challengeProgressView.btnChallengeDetails.addEventListener('click', function() {
+        var win = Alloy.createController('challenges/challengeDetails', {
+            challenge: challenge
+        })
+        .getView();
+
+        win.open();
+    });
 }

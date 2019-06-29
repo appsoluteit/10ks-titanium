@@ -1,0 +1,27 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="challengeDetails" platform="ios">
+		<Window id="window" title="" onOpen="window_open">
+			<LeftNavButton>
+				<Button 
+					id="btnBack" 
+					image="/common/chevrons/left-16.png"
+					onClick="btnBack_click">
+				</Button>	
+			</LeftNavButton>
+			
+			<Require id="challengeDetailsView" src="challenges/challengeDetailsView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="challengeDetails" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="challengeDetailsView" src="challenges/challengeDetailsView" type="view"/>
+	</Window>
+</Alloy>
