@@ -159,6 +159,36 @@ ChallengesProvider.prototype.fetch = function() {
 	return this.getChallenges(); //return the promise returned by getChallenges
 };
 
+ChallengesProvider.prototype.getProgress = function() {
+	// Create requires task_id (int) and show_rank (boolean)
+
+	var deferred = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info('ChallengesProvider getProgress success. Response:', e);
+
+		var result = e.results[0]; // take the first item in the response
+		deferred.resolve(result);
+	}
+
+	function onFail(e) {
+		Ti.API.error(e);
+		deferred.reject(e);
+	}
+
+	APIHelper.get({
+		headers: [{
+			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		message:    'Loading progress...',
+		url: 		'challenge_participant/',
+		success: 	onSuccess,
+		fail:		onFail
+	});
+
+	return deferred.promise;
+};
+
 ChallengesProvider.prototype.join = function(taskId) {
 	// Create requires task_id (int) and show_rank (boolean)
 

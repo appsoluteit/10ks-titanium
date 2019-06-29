@@ -2,7 +2,7 @@
 	<View class="background-gradient" height="100%">
 		<View class="margin-10 inner-content" height="Ti.UI.SIZE">
 			<!-- TableView Container -->
-			<View top="0dp" height="Ti.UI.SIZE">
+			<View top="0dp" bottom="10dp" height="Ti.UI.SIZE" layout="vertical">
 				<TableView top="0dp" height="Ti.UI.SIZE">
 					<!-- Goal Steps -->
 					<TableViewRow>
@@ -31,7 +31,7 @@
 					<!-- Required steps / day  -->
 					<TableViewRow>
 						<View class="whole">
-							<Label class="row-label">Required Steps/Day</Label>
+							<Label color="red" class="row-label">Required Steps/Day</Label>
 							<Label right="10dp" id="lblRequiredDailySteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
@@ -39,16 +39,18 @@
 					<!-- Days Remaining -->
 					<TableViewRow>
 						<View class="whole">
-							<Label class="row-label">Days Remaining</Label>
+							<Label color="red" class="row-label">Days Remaining</Label>
 							<Label right="10dp" id="lblDaysRemaining" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 				</TableView>
+
+				<Widget id="vbar1" src="com.mcvendrell.valuebar" title="" bottom="5dp" />
 			</View>       
         </View>
 
         <!-- Buttons Container -->
-        <View left="10dp" right="10dp" bottom="20dp">				
+        <View left="10dp" right="10dp" bottom="20dp" height="Ti.UI.SIZE">		
             <!-- Details Button -->
             <Button 
                 id="btnChallengeDetails" 
