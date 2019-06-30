@@ -3,7 +3,7 @@
 	
 	<ScrollView scrollType="vertical" showVerticalScrollIndicator="true" top="0" >
 		<View layout="horizontal" top="0">
-			<View class="column" left="1%" layout="vertical">
+			<View class="column" left="1%">
 				<Widget 
 					id="btnStepLog" 
 					class="push-down"
@@ -46,7 +46,7 @@
 				</ImageView>
 			</View>
 			
-			<View class="column" right="1%" layout="vertical">
+			<View class="column" right="1%">
 				<Button
 					id="btnStatistics"
 					class="push-down"

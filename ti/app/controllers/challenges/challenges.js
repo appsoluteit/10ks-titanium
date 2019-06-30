@@ -64,7 +64,8 @@ function fetchCurrentChallenge() {
 					});
 					row.addEventListener('click', function(e) {
 						var win = Alloy.createController('challenges/joinChallenge', {
-							challenge: taskContent
+							challenge: taskContent,
+							parent: $.challenges
 						}).getView();	
 
 						win.open();
@@ -148,66 +149,13 @@ function fetchCurrentChallenge() {
 			Alloy.createWidget("com.mcongrove.toast", null, {
 				text: "Couldn't load current challenge",
 				duration: 2000,
-				view: $.stats,
+				view: $.challenges,
 				theme: "error"
 			});	
 		}		
 	}
 	
 	challengesProvider.getCurrentChallenge().then(onSuccess, onFail);
-}
-
-function fetchActiveTask() {
-	Alloy.Globals.Spinner.show("Loading active task...");
-
-	var challengesProvider = new ChallengesProvider();
-
-	function onSuccess(result) {
-		if(!result) {
-			// no active task. Load the challenge.
-			fetchCurrentChallenge();
-		}
-		else {
-			challengesProvider
-				.getTask(result.task)
-				.then(function(taskContent) {
-					Alloy.Globals.Spinner.hide();
-
-					Ti.API.info('fetchActiveTask - showing progress');
-					
-					var win = Alloy.createController('challenges/challengeProgress', {
-						challenge: taskContent
-					}).getView();	
-					
-					Ti.API.info(win);
-
-					win.open();
-				});
-		}
-	}
-
-	function onFail(reason) {
-		Ti.API.error(reason);
-			
-		Alloy.Globals.Spinner.hide();
-		if(SessionHelper.isTokenInvalid(reason)) {
-			SessionHelper.showInvalidTokenToast($.challenges);
-			
-			setTimeout(function() {
-				showLogin();
-			}, 2000);
-		}
-		else {
-			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't load current challenge",
-				duration: 2000,
-				view: $.stats,
-				theme: "error"
-			});	
-		}			
-	}
-
-	challengesProvider.getActiveTask().then(onSuccess, onFail);
 }
 
 function setNavButtons() {
@@ -236,5 +184,5 @@ function window_open() {
 	Alloy.Globals.tracker.addScreenView('Challenges');
 	
 	setNavButtons();
-	fetchActiveTask();
+	fetchCurrentChallenge();
 }

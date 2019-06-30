@@ -130,6 +130,12 @@ ChallengesProvider.prototype.getTask = function(taskUrl) {
 		Ti.API.info("getTask success");
 		Ti.API.info(JSON.stringify(e));
 		
+		var parts = taskUrl.split('/').filter(function(e) { return e.length; });
+		var taskId = parts[parts.length - 1];
+
+		e.url = taskUrl;
+		e.id = taskId;
+
 		deferer.resolve(e);
 	}
 	
@@ -151,6 +157,69 @@ ChallengesProvider.prototype.getTask = function(taskUrl) {
 
 ChallengesProvider.prototype.fetch = function() {
 	return this.getChallenges(); //return the promise returned by getChallenges
+};
+
+ChallengesProvider.prototype.getProgress = function() {
+	// Create requires task_id (int) and show_rank (boolean)
+
+	var deferred = q.defer();
+
+	function onSuccess(e) {
+		Ti.API.info('ChallengesProvider getProgress success. Response:', e);
+
+		var result = e.results[0]; // take the first item in the response
+		deferred.resolve(result);
+	}
+
+	function onFail(e) {
+		Ti.API.error(e);
+		deferred.reject(e);
+	}
+
+	APIHelper.get({
+		headers: [{
+			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		message:    'Loading progress...',
+		url: 		'challenge_participant/',
+		success: 	onSuccess,
+		fail:		onFail
+	});
+
+	return deferred.promise;
+};
+
+ChallengesProvider.prototype.join = function(taskId) {
+	// Create requires task_id (int) and show_rank (boolean)
+
+	var deferred = q.defer();
+
+	function onSuccess(e) {
+		deferred.resolve(e);
+	}
+
+	function onFail(e) {
+		Ti.API.error(e);
+		deferred.reject(e);
+	}
+
+	var data = {
+		task_id: taskId,
+		show_rank: true
+	};
+
+	APIHelper.post({
+		headers: [{
+			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
+		}],
+		message:    'Joining challenge...',
+		url: 		'challenge_participant/',
+		data: 		data,
+		success: 	onSuccess,
+		fail:		onFail
+	});
+
+	return deferred.promise;
 };
 
 module.exports = ChallengesProvider;

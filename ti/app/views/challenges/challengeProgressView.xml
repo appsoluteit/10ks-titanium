@@ -1,3 +1,71 @@
 <Alloy>
-    <Label>Challenge progress. Coming soon.</Label>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" height="Ti.UI.SIZE">
+			<!-- TableView Container -->
+			<View top="0dp" bottom="10dp" height="Ti.UI.SIZE" layout="vertical">
+				<TableView top="0dp" height="Ti.UI.SIZE">
+					<!-- Goal Steps -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Goal steps</Label>
+							<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+					
+					<!-- Progress steps  -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Progress (steps)</Label>
+							<Label right="10dp" id="lblProgressSteps" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+					
+					<!-- Total remaining steps -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Total Remaining (steps)</Label>
+							<Label right="10dp" id="lblRemainingSteps" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+								
+					<!-- Required steps / day  -->
+					<TableViewRow>
+						<View class="whole">
+							<Label color="red" class="row-label">Required Steps/Day</Label>
+							<Label right="10dp" id="lblRequiredDailySteps" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+						
+					<!-- Days Remaining -->
+					<TableViewRow>
+						<View class="whole">
+							<Label color="red" class="row-label">Days Remaining</Label>
+							<Label right="10dp" id="lblDaysRemaining" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+				</TableView>
+
+				<Widget id="vbar1" src="com.mcvendrell.valuebar" title="" bottom="5dp" />
+			</View>       
+        </View>
+
+        <!-- Buttons Container -->
+        <View left="10dp" right="10dp" bottom="20dp" height="Ti.UI.SIZE">		
+            <!-- Details Button -->
+            <Button 
+                id="btnChallengeDetails" 
+                title="Details" 
+                font="{ fontSize: 10sp }"					
+                platform="android"
+            />
+                
+            <Widget
+                id="btnChallengeDetails"
+                src="nl.fokkezb.button"
+                title="Details"
+                style="steps-default"
+                platform="ios"
+            />	
+        </View>    
+    </View>
 </Alloy>
