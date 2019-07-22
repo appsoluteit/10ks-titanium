@@ -60,7 +60,7 @@ function fetchCurrentChallenge() {
 				.getTask(task)
 				.then(function(taskContent) {
 					var row = Ti.UI.createTableViewRow({
-						height: '60dp',
+						height: Ti.UI.SIZE
 					});
 					row.addEventListener('click', function(e) {
 						var win = Alloy.createController('challenges/joinChallenge', {
@@ -74,28 +74,21 @@ function fetchCurrentChallenge() {
 					// Add the text
 					var view = Ti.UI.createView({
 						left: '10dp',
-						orientation: 'vertical'
+						height: Ti.UI.SIZE
 					});
-					var title = Ti.UI.createLabel({
-						text: taskContent.name,
-						font: {
-							fontWeight: 'bold'
-						},
+
+					var text = ui.createLabel({
+						html: '<b>' + taskContent.name + "</b><br/>" +
+							  'Avg Steps: ' + FormatHelper.formatNumber(taskContent.steps_goal),
 						width: Ti.UI.SIZE,
+						height: Ti.UI.SIZE,
 						textAlign: 'left',
 						left: 0,
-						top: '5dp'
-					})
-					var subtitle = Ti.UI.createLabel({
-						textAlign: 'left',
-						color: 'black',
-						text: 'Avg Steps: ' + FormatHelper.formatNumber(taskContent.steps_goal),
-						width: Ti.UI.SIZE,
-						left: 0,
+						top: '5dp',
 						bottom: '5dp'
 					});
-					view.add(title);
-					view.add(subtitle);
+
+					view.add(text);
 					row.add(view);
 
 					// Add the right chevron
