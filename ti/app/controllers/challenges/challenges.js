@@ -54,74 +54,60 @@ function fetchCurrentChallenge() {
 		$.challengesView.descriptionContainer.add(taskDescription);
 			
 		response.challenge_tasks.forEach(function(task) {
-			Ti.API.info('loading task: ' + task);
+			Ti.API.info('loading task: ' + JSON.stringify(task));
 
-			challengesProvider
-				.getTask(task)
-				.then(function(taskContent) {
-					var row = Ti.UI.createTableViewRow({
-						height: Ti.UI.SIZE
-					});
-					row.addEventListener('click', function(e) {
-						var win = Alloy.createController('challenges/joinChallenge', {
-							challenge: taskContent,
-							parent: $.challenges
-						}).getView();	
+			var row = Ti.UI.createTableViewRow({
+				height: Ti.UI.SIZE
+			});
+			row.addEventListener('click', function(e) {
+				var win = Alloy.createController('challenges/joinChallenge', {
+					challenge: task,
+					parent: $.challenges
+				}).getView();	
 
-						win.open();
-					});
+				win.open();
+			});
 
-					// Add the text
-					var view = Ti.UI.createView({
-						left: '10dp',
-						height: Ti.UI.SIZE
-					});
+			// Add the text
+			var view = Ti.UI.createView({
+				left: '10dp',
+				height: Ti.UI.SIZE
+			});
 
-					var text = ui.createLabel({
-						html: '<b>' + taskContent.name + "</b><br/>" +
-							  'Avg Steps: ' + FormatHelper.formatNumber(taskContent.steps_goal),
-						width: Ti.UI.SIZE,
-						height: Ti.UI.SIZE,
-						textAlign: 'left',
-						left: 0,
-						top: '5dp',
-						bottom: '5dp'
-					});
+			var text = ui.createLabel({
+				html: '<b>' + task.name + "</b><br/>" +
+					  'Avg Steps: ' + FormatHelper.formatNumber(task.steps_goal),
+				width: Ti.UI.SIZE,
+				height: Ti.UI.SIZE,
+				textAlign: 'left',
+				left: 0,
+				top: '5dp',
+				bottom: '5dp'
+			});
 
-					view.add(text);
-					row.add(view);
+			view.add(text);
+			row.add(view);
 
-					// Add the right chevron
-					var chevron = null;
-					if(Ti.Platform.osname === "android") {
-						//On Android, create an ImageView instead of a button
-						chevron = Ti.UI.createImageView({
-							right: "5dp",
-							image: "/common/chevrons/right-16.png"
-						});
-					}
-					else {
-						chevron = Ti.UI.createButton({
-							right: "5dp",
-							image: "/common/chevrons/right-16-g.png",
-							tintColor: "gray",
-							style: Ti.UI.iOS.SystemButtonStyle.PLAIN
-						});
-					}
-					row.add(chevron);
-
-					$.challengesView.tblChallengeTasks.appendRow(row);
-				})
-				.catch(function(err) {
-					Ti.API.error(err);
-
-					Alloy.createWidget("com.mcongrove.toast", null, {
-						text: "Couldn't get challenge tasks",
-						duration: 2000,
-						view: $.stats,
-						theme: "error"
-					});	
+			// Add the right chevron
+			var chevron = null;
+			if(Ti.Platform.osname === "android") {
+				//On Android, create an ImageView instead of a button
+				chevron = Ti.UI.createImageView({
+					right: "5dp",
+					image: "/common/chevrons/right-16.png"
 				});
+			}
+			else {
+				chevron = Ti.UI.createButton({
+					right: "5dp",
+					image: "/common/chevrons/right-16-g.png",
+					tintColor: "gray",
+					style: Ti.UI.iOS.SystemButtonStyle.PLAIN
+				});
+			}
+			row.add(chevron);
+
+			$.challengesView.tblChallengeTasks.appendRow(row);
 		});
 		
 		Alloy.Globals.Spinner.hide();	
