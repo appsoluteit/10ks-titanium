@@ -82,7 +82,7 @@ ChallengesProvider.prototype.getCurrentChallenge = function() {
 	}
 	
 	APIHelper.get({
-		url:		"challenges/",
+		url:		"challenges/?version=2&is_active=true",
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
@@ -99,6 +99,8 @@ ChallengesProvider.prototype.getActiveTask = function() {
 	function onSuccess(e) {
 		Ti.API.info("getActiveTask success");
 
+		// Only active results should be returned from the API now,
+		// but leave this filter here just in case.
 		var results = e.results.filter(function(r) {
 			return r.is_active;
 		});
@@ -112,7 +114,7 @@ ChallengesProvider.prototype.getActiveTask = function() {
 	}
 	
 	APIHelper.get({
-		url:		"challenge_participant//",
+		url:		"challenge_participant/?is_active=true",
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
