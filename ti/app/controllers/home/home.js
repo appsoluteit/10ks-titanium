@@ -77,6 +77,11 @@ function loginIfNeeded() {
 	}
 }
 
+function btnAbout_click() {
+	var win = Alloy.createController('about/about').getView();
+	win.open();
+}
+
 /**
  * @description Event handler for the `btnStepLog` button. Opens the steps view.
  * @memberOf Controllers.Home
@@ -203,6 +208,10 @@ function btnSettings_click() {
 	});
 }
 
+function lblWebsiteLink_click() {
+	Ti.Platform.openURL(Alloy.Globals.WebURL);
+}
+
 /**
  * @description Event handler for the `back` button on Android devices. Confirms with the user whether or not they want to exit the app and closes this window
  * on confirmation.
@@ -236,6 +245,8 @@ function window_open() {
 	$.homeView.btnTournaments.addEventListener('click', btnTournaments_click);
 	$.homeView.btnChallenges.addEventListener('click', btnChallenges_click);
 	$.homeView.btnSettings.addEventListener('click', btnSettings_click);
+	$.homeView.btnAbout.addEventListener('click', btnAbout_click);
+	$.homeView.lblWebsiteLink.addEventListener('click', lblWebsiteLink_click);
 
 	window_load();
 }

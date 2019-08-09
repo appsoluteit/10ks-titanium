@@ -33,6 +33,15 @@
 	//backgroundColor: "blue"
 }
 
+"#btnAbout": {
+	image: "/common/icons/question-mark.png"
+}
+
+"btnAbout[platform=ios formFactor=tablet]": {
+	image: "/common/icons/question-mark.png"
+}
+
+
 "#btnStatistics": {
 	image: "/common/home/stats@2x.png"
 }

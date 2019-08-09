@@ -72,7 +72,24 @@
 					class="push-down"
 					platform="android">
 				</ImageView>
+
+				<Button
+					id="btnAbout"
+					class="push-down"
+					platform="ios"
+					style="PLAIN">
+				</Button>
+
+				<ImageView
+					id="btnAbout"
+					class="push-down"
+					platform="android">
+				</ImageView>
 			</View>
+		</View>
+
+		<View backgroundColor="f0f0f0">
+			<Label id="lblWebsiteLink" color="white">www.10000steps.org.au</Label>
 		</View>
 	</ScrollView>
 </Alloy>
