@@ -80,8 +80,6 @@ function window_open() {
 	}
 	
 	//Set child view event handlers
-	//$.settingsView.tblRowReminder.addEventListener('click', tblRowReminder_click);
-	$.settingsView.tblRowAbout.addEventListener('click', tblRowAbout_click);
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
 }
@@ -174,15 +172,6 @@ function tblRowGoalSteps_click() {
 		}		
 	}).getView();
 	
-	win.open();
-}
-
-/**
- * @description Event handler for `tblRowAbout`. Opens the about view.
- * @memberof Controllers.Settings
- */
-function tblRowAbout_click() {
-	var win = Alloy.createController('settings/about').getView();
 	win.open();
 }
 
