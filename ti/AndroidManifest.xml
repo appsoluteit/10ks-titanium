@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="au.org.steps10000.app" android:versionCode="451" android:versionName="4.5.1">
+          package="au.org.steps10000.app" android:versionCode="453" android:versionName="4.5.3">
 	<uses-sdk android:minSdkVersion="23"/>
 	<application android:icon="@drawable/appicon" android:label="10,000 Steps" android:name="_10000StepsApplication" android:debuggable="false" android:theme="@style/Theme.AppCompat.Light" android:resizeableActivity="true">
 		<activity android:name="._10000StepsActivity" android:label="@string/app_name" android:theme="@style/Theme.Titanium" android:configChanges="keyboardHidden|orientation|fontScale|screenSize|smallestScreenSize|screenLayout|density">
