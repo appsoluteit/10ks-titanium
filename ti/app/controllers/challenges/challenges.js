@@ -41,7 +41,7 @@ function fetchCurrentChallenge() {
 	
 	function onSuccess(response) {
 		Ti.API.info("Fetch current challenge success.");
-		Ti.API.info(JSON.stringify(response));
+		//Ti.API.info(JSON.stringify(response));
 
 		// Set the content
 		var taskDescription = ui.createLabel({
@@ -52,7 +52,7 @@ function fetchCurrentChallenge() {
 			color: 'black'
 		});
 		$.challengesView.descriptionContainer.add(taskDescription);
-			
+
 		response.challenge_tasks.forEach(function(task) {
 			Ti.API.info('loading task: ' + JSON.stringify(task));
 

@@ -17,11 +17,6 @@
 						</View>
 					</TableViewRow>
 					
-					<!-- About -->
-					<TableViewRow id="tblRowAbout">
-						<Label class="row-label">About</Label>
-					</TableViewRow>
-					
 					<!-- Logout -->
 					<TableViewRow id="tblRowLogout">
 						<Label class="row-label">Logout</Label>
