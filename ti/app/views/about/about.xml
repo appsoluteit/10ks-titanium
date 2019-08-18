@@ -10,7 +10,7 @@
 				</Button>	
 			</LeftNavButton>
 			
-			<Require id="aboutView" src="settings/aboutView" type="view"/>
+			<Require id="aboutView" src="about/aboutView" type="view"/>
 		</Window>
 	</NavigationWindow>
 	
@@ -22,6 +22,6 @@
 			homeButtonEnabled="true" 
 			onHomeIconItemSelected="btnBack_click"></ActionBar>
 			
-		<Require id="aboutView" src="settings/aboutView" type="view"/>
+		<Require id="aboutView" src="about/aboutView" type="view"/>
 	</Window>
 </Alloy>
