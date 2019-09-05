@@ -16,53 +16,64 @@
 
 //Increased button sizes for iPad
 "#btnStepLog": {
-	image: "/common/home/steps@2x.png"
+	image: "/common/home/v2/steps@4x.png"
 }
 
+/*
 "#btnStepLog[platform=ios formFactor=tablet]": {
 	image: "/common/home/steps-ipad@2x.png",
 	//backgroundColor: "blue"
 }
+*/
 
 "#btnSettings": {
-	image: "/common/home/settings@2x.png"
+	image: "/common/home/v2/settings@4x.png"
 }
 
+/*
 "#btnSettings[platform=ios formFactor=tablet]": {
 	image: "/common/home/settings-ipad@2x.png",
 	//backgroundColor: "blue"
 }
+*/
 
 "#btnAbout": {
-	image: "/common/icons/question-mark.png"
+	image: "/common/home/v2/about@4x.png"
 }
 
+/*
 "btnAbout[platform=ios formFactor=tablet]": {
 	image: "/common/icons/question-mark.png"
 }
-
+*/
 
 "#btnStatistics": {
-	image: "/common/home/stats@2x.png"
+	image: "/common/home/v2/statistics@4x.png"
 }
 
+/*
 "#btnStatistics[platform=ios formFactor=tablet]": {
 	image: "/common/home/stats-ipad@2x.png",
 	//backgroundColor: "blue"
 }
+*/
 
 "#btnChallenges": {
-	image: "/common/home/challenges@2x.png"
+	image: "/common/home/v2/challenges@4x.png"
 }
 
+/*
 "#btnChallenges[platform=ios formFactor=tablet]": {
 	image: "/common/home/challenges-ipad@2x.png"
 }
+*/
 
 "#btnTournaments": {
-	image: "/common/home/tournaments@2x.png"
+	image: "/common/home/v2/tournaments@4x.png"
 }
 
+/*
 "#btnTournaments[platform=ios formFactor=tablet]": {
 	image: "/common/home/tournaments-ipad@2x.png"
 }
+*/
