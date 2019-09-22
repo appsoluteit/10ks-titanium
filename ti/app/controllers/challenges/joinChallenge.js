@@ -16,6 +16,8 @@ function window_open() {
 	$.joinChallengeView.labelContainer.add(descriptionLabel);	
 	
 	$.joinChallengeView.btnJoin.addEventListener('click', btnJoin_click);
+
+	Ti.API.info('[JoinChallengeController] window_open. Challenge description: ' + challenge.description);
 }
 
 function btnBack_click() {

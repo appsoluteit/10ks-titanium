@@ -95,10 +95,10 @@ function showChart(args, year, month) {
 		};
 		
 		Ti.API.info('before loading chart. Custom options = ', JSON.stringify(customOptions));
-		//$.dailyGraphView.dailyGraphChart.loadChart(chartOptions, customOptions);	
+		$.dailyGraphView.dailyGraphChart.loadChart(chartOptions, customOptions);	
 	}
 	else {		
-		//$.dailyGraphView.dailyGraphChart.showMessage("No steps logged for " + currentMonthLabel + ", " + year);	
+		$.dailyGraphView.dailyGraphChart.showMessage("No steps logged for " + currentMonthLabel + ", " + year);	
 	}
 }
 

@@ -1,4 +1,4 @@
 <Alloy>
-	<!--<Widget src="com.alco.highcharts" id="dailyGraphChart"/>-->
-	<Widget id='dailyGraphChart' src="com.leorbrenman.tismallbarchart" negativeColor="red" />
+	<Widget src="com.alco.highcharts" id="dailyGraphChart"/>-
+	<!--<Widget id='dailyGraphChart' src="com.leorbrenman.tismallbarchart" negativeColor="red" />-->
 </Alloy>
