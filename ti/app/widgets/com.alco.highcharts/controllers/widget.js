@@ -9,6 +9,7 @@
 */
 
 Ti.App.addEventListener('app:fromWebView', function(e) {
+	Ti.API.info('fromWebView');
     Alloy.Globals.Spinner.hide();
 });
 
@@ -27,10 +28,17 @@ function loadChart(chartOptions, customOptions) {
 	customOptions = JSON.stringify(customOptions);
 	
 	function onLoadTemplateUrl() {	
-		Ti.API.info('loading template');
+		Ti.API.info('loading template 2');
 		
 		// DEBUG: Turn this off and let the chart show the static data
-		$.chartWebView.evalJS('plotChart('+ chartOptions + ',' + customOptions + ')');		
+		var js = 'plotChart('+ chartOptions + ',' + customOptions + ')';
+		Ti.API.info(js);
+
+		// the empty callback is now required
+		// https://jira.appcelerator.org/browse/TIMOB-26709
+		// https://jira.appcelerator.org/browse/TIMOB-25862
+		
+		$.chartWebView.evalJS(js, function(err, result) {});		
 		
 		//Remove any previously added event listeners to prevent them from stacking
 		$.chartWebView.removeEventListener('load', onLoadTemplateUrl);	
