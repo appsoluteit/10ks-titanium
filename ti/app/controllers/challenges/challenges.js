@@ -76,7 +76,7 @@ function fetchCurrentChallenge() {
 
 			var text = ui.createLabel({
 				html: '<b>' + task.name + "</b><br/>" +
-					  'Avg Steps: ' + FormatHelper.formatNumber(task.steps_goal),
+					  'Goal Steps: ' + FormatHelper.formatNumber(task.steps_goal),
 				width: Ti.UI.SIZE,
 				height: Ti.UI.SIZE,
 				textAlign: 'left',
