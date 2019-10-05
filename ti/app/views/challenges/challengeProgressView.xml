@@ -27,20 +27,44 @@
 							<Label right="10dp" id="lblRemainingSteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
-								
+
+					<!-- Start Date -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Start Date</Label>
+							<Label right="10dp" id="lblStartDate" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
+					<!-- End Date -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">End Date</Label>
+							<Label right="10dp" id="lblEndDate" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
+					<!-- Time Left -->
+					<TableViewRow>
+						<View class="whole">
+							<Label class="row-label">Time Left</Label>
+							<Label right="10dp" id="lblTimeLeft" class="row-value"></Label>
+						</View>
+					</TableViewRow>
+
 					<!-- Required steps / day  -->
 					<TableViewRow>
 						<View class="whole">
-							<Label color="red" class="row-label">Required Steps/Day</Label>
+							<Label class="row-label">Required Steps/Day</Label>
 							<Label right="10dp" id="lblRequiredDailySteps" class="row-value"></Label>
 						</View>
 					</TableViewRow>
-						
-					<!-- Days Remaining -->
+
+					<!-- % complete -->
 					<TableViewRow>
 						<View class="whole">
-							<Label color="red" class="row-label">Days Remaining</Label>
-							<Label right="10dp" id="lblDaysRemaining" class="row-value"></Label>
+							<Label class="row-label">% Complete</Label>
+							<Label right="10dp" id="lblPercentComplete" class="row-value"></Label>
 						</View>
 					</TableViewRow>
 				</TableView>
