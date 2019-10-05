@@ -14,6 +14,19 @@
 	backgroundColor: 'transparent' 
 }
 
+"#lblWebsiteLink[platform=ios]": {
+  font: {
+      fontFamily: 'Gresta-Regular'
+	  //fontFamily: 'ComicSansMS'
+  }
+}
+
+"#lblWebsiteLink[platform=android]": {
+  font: {
+      fontFamily: 'Gresta-Regular'
+  }
+}
+
 //Increased button sizes for iPad
 "#btnStepLog": {
 	image: "/common/home/v2/steps@4x.png"
