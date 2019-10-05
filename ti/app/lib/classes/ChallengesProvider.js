@@ -105,8 +105,11 @@ ChallengesProvider.prototype.getActiveTask = function() {
 			return r.is_active;
 		});
 
+		var activeTask = results[0];
+		Ti.API.info(activeTask);
+
 		// Pass back the top result (the most recent) active task
-		deferer.resolve(results[0]);
+		deferer.resolve(activeTask);
 	}
 	
 	function onFail(e) {
