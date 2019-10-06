@@ -53,7 +53,7 @@ function fetchCurrentChallenge() {
 		});
 		$.challengesView.descriptionContainer.add(taskDescription);
 
-		response.challenge_tasks.forEach(function(task) {
+		response.challenge_tasks.forEach(function(task, index) {
 			Ti.API.info('loading task: ' + JSON.stringify(task));
 
 			var row = Ti.UI.createTableViewRow({
@@ -71,20 +71,37 @@ function fetchCurrentChallenge() {
 			// Add the text
 			var view = Ti.UI.createView({
 				left: '10dp',
-				height: Ti.UI.SIZE
+				height: Ti.UI.SIZE,
+				layout: 'horizontal',
+				horizontalWrap: false
+			});
+
+			// Just in case we get extra rows from the API, recycle the icons
+			if(index > 3) {
+				index = 0;
+			}
+
+			var badge = Ti.UI.createImageView({
+				image: "/common/icons/challenges/challenge-" + (index + 1) + ".png",
+				//backgroundColor: 'red',
+				height: Ti.UI.SIZE,
+				width: Ti.UI.SIZE
 			});
 
 			var text = ui.createLabel({
+				//backgroundColor: 'blue',
+
 				html: '<b>' + task.name + "</b><br/>" +
 					  'Goal Steps: ' + FormatHelper.formatNumber(task.steps_goal),
-				width: Ti.UI.SIZE,
+				width: '75%',
 				height: Ti.UI.SIZE,
 				textAlign: 'left',
-				left: 0,
+				left: '5dp',
 				top: '5dp',
 				bottom: '5dp'
 			});
 
+			view.add(badge);
 			view.add(text);
 			row.add(view);
 

@@ -3,7 +3,7 @@
 		<View class="margin-10 inner-content" top="10dp" height="Ti.UI.SIZE" id="descriptionContainer">
 		</View>
 
-		<View class="margin-10 inner-content" bottom="10dp" height="40%">
+		<View class="margin-10 inner-content" bottom="10dp" height="50%">
 			<TableView id="tblChallengeTasks">
 			</TableView>
 		</View>
