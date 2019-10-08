@@ -8,16 +8,15 @@ var SessionHelper = require('helpers/SessionHelper');
 function window_open() {	
 	Alloy.Globals.tracker.addScreenView('Join Challenge');
 	
+	$.joinChallengeView.title.text = challenge.name;
+	
 	var descriptionLabel = ui.createLabel({
 		html: challenge.description.replace("\n", "<br/>"),
 		color: 'black'
 	});
-	
-	$.joinChallengeView.labelContainer.add(descriptionLabel);	
+	$.joinChallengeView.descriptionContainer.add(descriptionLabel);	
 	
 	$.joinChallengeView.btnJoin.addEventListener('click', btnJoin_click);
-
-	Ti.API.info('[JoinChallengeController] window_open. Challenge description: ' + challenge.description);
 }
 
 function btnBack_click() {

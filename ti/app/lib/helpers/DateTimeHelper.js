@@ -13,6 +13,7 @@ module.exports.getDateLabel = getDateLabel;
 module.exports.getDayBefore = getDayBefore;
 module.exports.getIndexFromMonthName = getIndexFromMonthName;
 module.exports.getMinutesBetween = getMinutesBetween;
+module.exports.getDaysBetween = getDaysBetween;
 module.exports.getMonthLabel = getMonthLabel;
 module.exports.getMonthNameFromIndex = getMonthNameFromIndex;
 module.exports.getShortDateLabel = getShortDateLabel;
@@ -21,6 +22,10 @@ module.exports.isValidDate = isValidDate;
 module.exports.localise = localise;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+const MINUTES_PER_HOUR = 60;
+const MINUTES_PER_DAY = MINUTES_PER_HOUR * 24;
+const MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
 
  /**
  * Adds a number of weeks to a date and returns the result.
@@ -140,15 +145,24 @@ function getMinutesBetween(firstDate, secondDate) {
 }
 
 /**
+ * Computes and returns the number of days between two dates. If firstDate is prior to secondDate, 0 is returned.
+ * Rounded to the nearest whole number
+ * @param {*} firstDate 
+ * @param {*} secondDate 
+ */
+function getDaysBetween(firstDate, secondDate) {
+	var totalMins = getMinutesBetween(firstDate, secondDate);
+  	var weeksRemainder = totalMins % MINUTES_PER_WEEK;
+	var daysRemainder = weeksRemainder % MINUTES_PER_DAY;
+	  
+	return Math.round(daysRemainder);
+}
+/**
  * Computes and returns the time between two dates in a formatted string. Eg: 2 weeks, 3 days, 6 hours, 32 minutes.
  * @param {Date} firstDate 
  * @param {Date} secondDate 
  */
 function getTimeBetween(firstDate, secondDate) {
-	var MINUTES_PER_HOUR = 60;
-	var MINUTES_PER_DAY = MINUTES_PER_HOUR * 24;
-	var MINUTES_PER_WEEK = MINUTES_PER_DAY * 7;
-
 	var totalMins = getMinutesBetween(firstDate, secondDate);
   
 	var weeks = Math.floor(totalMins / MINUTES_PER_WEEK);

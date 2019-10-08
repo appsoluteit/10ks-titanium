@@ -126,7 +126,7 @@ function btnChallenges_click() {
 }
 
 function fetchActiveTask() {
-	Alloy.Globals.Spinner.show("Loading active challenge...");
+	Alloy.Globals.Spinner.show("Loading current challenge...");
 
 	var challengesProvider = new ChallengesProvider();
 

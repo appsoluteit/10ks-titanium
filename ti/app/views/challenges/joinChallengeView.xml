@@ -1,8 +1,10 @@
 <Alloy>
 	<View class="background-gradient" height="100%" top="0" layout="vertical">
 		<View class="margin-10" height="Ti.UI.FILL" layout="vertical">
+			<Label id="title"></Label>
+
 			<ScrollView id="view" layout="vertical" scrollType="vertical" class="inner-content" height="90%">				
-				<View id="labelContainer" class="labelContainer margin-10" top="10dp" height="Ti.UI.SIZE">
+				<View id="descriptionContainer" class="labelContainer margin-10" top="10dp" height="Ti.UI.SIZE">
 					<!-- 
 						The task description gets dynamically generated and added to this container, since the html is only
 						'settable' during construction
