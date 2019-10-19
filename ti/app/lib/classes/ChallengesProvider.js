@@ -217,7 +217,7 @@ ChallengesProvider.prototype.join = function(taskId) {
 		headers: [{
 			key: 	"Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
-		message:    'Joining challenge...',
+		message:    'Joining Challenge...',
 		url: 		'challenge_participant/',
 		data: 		data,
 		success: 	onSuccess,
