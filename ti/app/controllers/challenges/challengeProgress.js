@@ -92,7 +92,8 @@ function fetchProgress() {
 }
 
 function window_open() {
-    $.window.title = challenge.name;
+    //$.window.title = challenge.name;
+    $.challengeProgressView.title.text = challenge.name;
 
     Alloy.Globals.tracker.addScreenView('Challenge Progress');
     $.challengeProgressView.btnChallengeDetails.addEventListener('click', function() {

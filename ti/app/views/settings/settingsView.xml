@@ -1,9 +1,9 @@
 <Alloy>
 	<View class="background-gradient" height="100%">
-		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
+		<View class="margin-10 inner-content" layout="vertical" height="Ti.UI.SIZE">
 			<!-- TableView Container -->
-			<View top="0dp" height="50%">
-				<TableView id="tblContainer" class="margin-10">		
+			<View top="0dp" height="Ti.UI.SIZE">
+				<TableView id="tblContainer" class="margin-10" height="Ti.UI.SIZE">		
 					<!-- Goal Steps -->
 					<TableViewRow id="tblRowGoalSteps">
 						<View layout="horizontal">

@@ -3,7 +3,9 @@
 		<View class="margin-10 inner-content" height="Ti.UI.SIZE">
 			<!-- TableView Container -->
 			<View top="0dp" bottom="10dp" height="Ti.UI.SIZE" layout="vertical">
-				<TableView top="0dp" height="Ti.UI.SIZE">
+				<Label id="title"></Label>
+
+				<TableView height="Ti.UI.SIZE">
 					<!-- Goal Steps -->
 					<TableViewRow>
 						<View class="whole">

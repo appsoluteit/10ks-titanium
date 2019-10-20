@@ -32,7 +32,7 @@ function btnJoin_click(e) {
 	var confirmDialog = Ti.UI.createAlertDialog({
 		cancel: 0,
 		buttonNames: ['Cancel', 'OK'],
-		message: 'Do you want to join this challenge?',
+		message: 'Do you want to join this Challenge?',
 		title: 'Join challenge'
 	});
 
