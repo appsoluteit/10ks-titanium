@@ -33,7 +33,7 @@ function btnJoin_click(e) {
 		cancel: 0,
 		buttonNames: ['Cancel', 'OK'],
 		message: 'Do you want to join this Challenge?',
-		title: 'Join challenge'
+		title: 'Join Challenge'
 	});
 
 	confirmDialog.addEventListener('click', function(e) {
@@ -42,7 +42,7 @@ function btnJoin_click(e) {
 				.join(challenge.id)
 				.then(function(e) {
 					Alloy.createWidget("com.mcongrove.toast", null, {
-						text: "Joined challenge successfully",
+						text: "Joined Challenge successfully",
 						duration: 2000,
 						view: $.joinChallenge,
 						theme: "success"
@@ -64,7 +64,7 @@ function btnJoin_click(e) {
 					}
 					else {
 						Alloy.createWidget("com.mcongrove.toast", null, {
-							text: "Couldn't join challenge",
+							text: "Couldn't join Challenge",
 							duration: 2000,
 							view: $.joinChallenge,
 							theme: "error"
