@@ -75,14 +75,12 @@
     </manifest>
   </android>
   <modules>
-    <module platform="android" version="4.0.1">ti.ga</module>
     <module platform="commonjs">nl.fokkezb.html2as</module>
     <module platform="commonjs">ti.cloud</module>
-
-    <!-- Add the appropriate line(s) to your modules section -->
+    <module platform="android" version="4.0.1">ti.ga</module>
     <module platform="android">facebook</module>
     <module platform="iphone">facebook</module>
-    
+
     <!--
         <module platform="iphone" version="3.1.0">ti.ga</module><module platform="iphone">facebook</module>
         -->
