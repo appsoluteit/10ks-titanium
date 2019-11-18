@@ -165,7 +165,7 @@ function fetchActiveTask() {
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't load current challenge",
+				text: "Couldn't load current Challenge",
 				duration: 2000,
 				view: $.home,
 				theme: "error"

@@ -7,7 +7,7 @@
 	</NavigationWindow>
 	
 	<!-- Android -->
-	<Window id="settings" platform="android" onOpen="window_open" onFocus"window_focus">
+	<Window id="settings" platform="android" onOpen="window_open" onFocus="window_focus">
 		<ActionBar 
 			title="Settings" 
 			displayHomeAsUp="true" 

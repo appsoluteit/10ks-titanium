@@ -33,7 +33,7 @@ function showLogin() {
 }
 
 function fetchCurrentChallenge() {
-	Alloy.Globals.Spinner.show("Loading challenge...");
+	Alloy.Globals.Spinner.show("Loading Challenge...");
 	
 	$.challengesView.tblChallengeTasks.data = []; //Clear the table
 	
@@ -143,7 +143,7 @@ function fetchCurrentChallenge() {
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't load current challenge",
+				text: "Couldn't load current Challenge",
 				duration: 2000,
 				view: $.challenges,
 				theme: "error"
