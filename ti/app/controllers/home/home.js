@@ -264,8 +264,12 @@ function window_load() {
 
 	Ti.API.info("Number of unsynced steps: " + numSteps);
 	if(Ti.Platform.osname === "android") {
+		if(numSteps > 99) {
+			numSteps = 99;
+		}
+
 		if(numSteps === 0) {
-			$.homeView.btnStepLog.image = '/common/home/steps@2x.png';
+			$.homeView.btnStepLog.image = '/common/home/v2/steps.png';
 		}
 		else {
 			$.homeView.btnStepLog.image = '/steps/steps_' + numSteps + '.png';

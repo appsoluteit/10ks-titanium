@@ -2,7 +2,13 @@ var challenge = $.args.challenge;
 var ui = require('xp.ui');
 
 function window_open() {
-    $.window.title = challenge.name;
+    
+    if(Ti.Platform.osname === "android") {
+        $.challengeDetails.activity.actionBar.setTitle(challenge.name);
+    }
+    else {
+        $.window.title = challenge.name;
+    }	
 
     // Set the content
     var taskDescription = ui.createLabel({

@@ -157,7 +157,7 @@ function fetchCurrentChallenge() {
 function setNavButtons() {
 	if(Ti.Platform.osname === "android") {
 		//On Android, call this to ensure the correct actionbar menu is displayed
-		$.stats.activity.invalidateOptionsMenu();	
+		$.challenges.activity.invalidateOptionsMenu();	
 	}
 	else {
 		$.window.leftNavButton = NavBarButton.createLeftNavButton({
