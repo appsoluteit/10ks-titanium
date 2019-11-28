@@ -269,7 +269,7 @@ function window_load() {
 		}
 
 		if(numSteps === 0) {
-			$.homeView.btnStepLog.image = '/common/home/v2/steps.png';
+			$.homeView.btnStepLog.image = '/common/home/v2/steps@4x.png';
 		}
 		else {
 			$.homeView.btnStepLog.image = '/steps/steps_' + numSteps + '.png';

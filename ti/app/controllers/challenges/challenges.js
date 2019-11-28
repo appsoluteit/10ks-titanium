@@ -90,7 +90,7 @@ function fetchCurrentChallenge() {
 
 			var text = ui.createLabel({
 				//backgroundColor: 'blue',
-
+				color: 'black',
 				html: '<b>' + task.name + "</b><br/>" +
 					  'Goal Steps: ' + FormatHelper.formatNumber(task.steps_goal),
 				width: '75%',
