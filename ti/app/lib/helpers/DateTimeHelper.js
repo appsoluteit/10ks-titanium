@@ -151,18 +151,30 @@ function getMinutesBetween(firstDate, secondDate) {
  * @param {*} secondDate 
  */
 function getDaysBetween(firstDate, secondDate) {
+	Ti.API.info(`Get days between ${firstDate} and ${secondDate}`);
+
 	var totalMins = getMinutesBetween(firstDate, secondDate);
-  	var weeksRemainder = totalMins % MINUTES_PER_WEEK;
-	var daysRemainder = weeksRemainder % MINUTES_PER_DAY;
+	Ti.API.info('minutes diff: ' + totalMins);
+
+	var days = totalMins / MINUTES_PER_DAY;
+	Ti.API.info('days diff: ' + days);
+
+	//var weeksRemainder = totalMins % MINUTES_PER_WEEK;
+	//Ti.API.info('total weeks: ')  
+	//var daysRemainder = weeksRemainder % MINUTES_PER_DAY;
 	  
-	return Math.round(daysRemainder);
+	return Math.round(days);
 }
 /**
  * Computes and returns the time between two dates in a formatted string. Eg: 2 weeks, 3 days, 6 hours, 32 minutes.
  * @param {Date} firstDate 
  * @param {Date} secondDate 
  */
-function getTimeBetween(firstDate, secondDate) {
+function getTimeBetween(firstDate, secondDate, showHours) {
+	if (showHours === undefined) {
+		showHours = true;
+	}
+
 	var totalMins = getMinutesBetween(firstDate, secondDate);
   
 	var weeks = Math.floor(totalMins / MINUTES_PER_WEEK);
@@ -179,7 +191,7 @@ function getTimeBetween(firstDate, secondDate) {
   		ret += ', ' + days + ' days';
   	}
   
-  	if(hours > 0) {
+  	if(hours > 0 && showHours) {
   		ret += ', ' + hours + ' hours';
   	}
   

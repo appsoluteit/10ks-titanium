@@ -22,12 +22,12 @@ function fetchProgress() {
     new ChallengesProvider()
         .getProgress()
         .then(function(result) {
-            Ti.API.info('Current challenge', challenge);
-            Ti.API.info('Got progress', result);
+            Ti.API.info('Current challenge', JSON.stringify(challenge));
+            Ti.API.info('Got progress', JSON.stringify(result));
 
-            var today = new Date();
-            var startDate = new Date(result.start_date);
-            var endDate = new Date(challenge.challenge.end_date);
+            var today = DateTimeHelper.localise(new Date());
+            var startDate = DateTimeHelper.localise(new Date(challenge.challenge.start_date));
+            var endDate = DateTimeHelper.localise(new Date(challenge.challenge.end_date));
 
             $.challengeProgressView.lblGoalSteps.text = 
                 FormatHelper.formatNumber(result.steps_goal);
@@ -43,7 +43,7 @@ function fetchProgress() {
 
             // Calculate day diff between today and result.end_date.
             
-            var timeLeft = DateTimeHelper.getTimeBetween(endDate, today);
+            var timeLeft = DateTimeHelper.getTimeBetween(endDate, today, false); // don't show hours
             $.challengeProgressView.lblTimeLeft.text = timeLeft;
 
             // Remaining steps
@@ -55,11 +55,15 @@ function fetchProgress() {
 
             // Required steps / day
             var remainingDays = DateTimeHelper.getDaysBetween(endDate, today);
+            Ti.API.info('Remaining days: ' + remainingDays);
+
             var stepsPerDay = remainingDays > 0 ?
                 Math.round(remainingSteps / remainingDays) :
                 0;
 
-            $.challengeProgressView.lblRequiredDailySteps.text = stepsPerDay;
+            Ti.API.info('Steps per day: ' + stepsPerDay);
+            $.challengeProgressView.lblRequiredDailySteps.text = 
+                FormatHelper.formatNumber(stepsPerDay);
 
             // % complete
             var percentComplete = result.steps_total / result.steps_goal;
