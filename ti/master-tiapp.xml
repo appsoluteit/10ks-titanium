@@ -74,7 +74,7 @@
       <application android:theme="@style/Theme.AppCompat.Light"/>
       <uses-permission android:name="android.permission.READ_CALENDAR"/>
       <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-      <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="26"/>
+      <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="27"/>
       <!-- Firebase -->
       <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
       <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
