@@ -107,12 +107,10 @@
     </manifest>
   </android>
   <modules>
-    <module platform="android">facebook</module>
-    <module platform="iphone">facebook</module>
     <module platform="commonjs">ti.cloud</module>
     <module platform="commonjs">nl.fokkezb.html2as</module>
-    <module platform="iphone">firebase.core</module>
-    <module platform="iphone">firebase.analytics</module>
+    <module platform="iphone">facebook</module>
+    <module platform="android">facebook</module>
     <module platform="android">firebase.core</module>
     <module platform="android">firebase.analytics</module>
   </modules>
