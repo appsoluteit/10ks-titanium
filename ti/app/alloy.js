@@ -177,13 +177,12 @@
 //Facebook SDK Integration
 //https://github.com/appcelerator-modules/ti.facebook
 (function() {
-   //if(!Alloy.Globals.Env === 'Development') {
-	//Ti.API.warn('initialising facebook sdk');
+   if(!Alloy.Globals.Env === 'Development') {
+	Ti.API.warn('initialising facebook sdk');
 	var fb = require('facebook');
-	fb.initialize();
-	
+	fb.initialize();	
 	// Only need Pixel support, not login
-   //}
+   }
 })();
 
 //ACS
