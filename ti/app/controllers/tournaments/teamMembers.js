@@ -12,8 +12,8 @@ function btnBack_click() {
 }
 
 function loadMembers() {
-    //var contacts = membersProvider.fetch(args.tournament); 
-    var contacts = membersProvider.fetchFake();
+    var contacts = membersProvider.fetch(args.tournament); 
+    //var contacts = membersProvider.fetchFake();
 
     // https://stackoverflow.com/questions/22763035/appcelerator-titanium-js-table-alphabetical-index-not-working
     var sectionArr = [];
