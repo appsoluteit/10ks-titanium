@@ -9,5 +9,6 @@ tmp
 .settings
 Thumbs.db
 gimp
-platform
+modules
+# platform
 ti/tiapp*
