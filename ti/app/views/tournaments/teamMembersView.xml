@@ -2,7 +2,7 @@
 	<View class="background-gradient" height="100%">
 		<View class="margin-10 inner-content" bottom="10dp" layout="vertical">
 			<!-- TableView Container -->
-			<View top="0dp" height="80%">
+			<View top="0dp" height="Ti.UI.FILL">
                 <TableView height="100%" id="tbMembers">
                 </TableView>
 			</View>

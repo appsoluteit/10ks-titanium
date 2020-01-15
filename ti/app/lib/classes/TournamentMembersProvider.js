@@ -176,6 +176,11 @@ TournamentMembersProvider.prototype.fetchFake = function() {
           "firstName": "Velma",
           "lastName": "Slater",
           "steps": 94966
+        },
+        {
+          "firstName": "まこと",
+          "lastName": "いとう",
+          "steps": 9999
         }
       ]`);
 
