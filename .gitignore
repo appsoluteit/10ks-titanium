@@ -13,4 +13,3 @@ ti/platform/*
 !ti/app/platform/android/AndroidManifest.xml
 !ti/app/platform/android/res/values
 ti/tiapp*
-ti/dist

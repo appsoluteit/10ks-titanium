@@ -137,6 +137,10 @@
 //Firebase (GA)
 (function() {	
 	if(Alloy.Globals.Env === 'Development') {
+		// If in development, we don't want to trigger false-positive stats
+		// to send to Firebase Analytics. So we expose a constant with the same
+		// interface and exit early.
+
 		Alloy.Globals.tracker = {
 			addScreenView: function(screenName) {
 				Ti.API.info('Logging ' + screenName);
@@ -177,7 +181,6 @@
 //Facebook SDK Integration
 //https://github.com/appcelerator-modules/ti.facebook
 (function() {
-	Ti.API.warn('initialising facebook sdk');
 	var fb = require('facebook');	
 	fb.initialize();	
 })();

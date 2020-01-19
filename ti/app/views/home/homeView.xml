@@ -1,107 +1,112 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
 	
-	<ScrollView scrollType="vertical" orientation="vertical" showVerticalScrollIndicator="true" top="0" >
-		<View layout="horizontal" height="90%">
-			<View class="column" left="1%">
-				<Widget 
-					id="btnStepLog" 
-					class="push-down"
-					src="com.10000steps.badge"
-					platform="ios"
-				/>
-				
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnStepLog"
-					class="push-down"
-					style="PLAIN"
-					platform="android">
-				</ImageView>
-				
-				<Button
-					id="btnChallenges"
-					class="push-down"
-					platform="ios"
-					style="PLAIN">
-				</Button>
-				
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnChallenges"
-					class="push-down"
-					style="PLAIN"
-					platform="android">
-				</ImageView>
-				
-				<Button
-					id="btnSettings"
-					class="push-down"
-					platform="ios"
-					style="PLAIN">
-				</Button>
-				
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnSettings"
-					class="push-down"
-					platform="android">
-				</ImageView>
-			</View>
-			
-			<View class="column" right="1%">
-				<Button
-					id="btnStatistics"
-					class="push-down"
-					platform="ios"
-					style="PLAIN">
-				</Button>
-				
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnStatistics"
-					class="push-down"
-					platform="android">
-				</ImageView>
-				
-				<Button
-					id="btnTournaments"
-					class="push-down"
-					platform="ios"
-					style="PLAIN">
-				</Button>
-				
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnTournaments"
-					class="push-down"
-					platform="android">
-				</ImageView>
+	<View>
+		<ScrollView 
+			scrollType="vertical" 
+			orientation="vertical" 
+			showVerticalScrollIndicator="true">
+				<View layout="horizontal">
+					<View class="column" left="1%">
+						<Widget 
+							id="btnStepLog" 
+							class="push-down"
+							src="com.10000steps.badge"
+							platform="ios"
+						/>
+						
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnStepLog"
+							class="push-down"
+							style="PLAIN"
+							platform="android">
+						</ImageView>
+						
+						<Button
+							id="btnChallenges"
+							class="push-down"
+							platform="ios"
+							style="PLAIN">
+						</Button>
+						
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnChallenges"
+							class="push-down"
+							style="PLAIN"
+							platform="android">
+						</ImageView>
+						
+						<Button
+							id="btnSettings"
+							class="push-down"
+							platform="ios"
+							style="PLAIN">
+						</Button>
+						
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnSettings"
+							class="push-down"
+							platform="android">
+						</ImageView>
+					</View>
+					
+					<View class="column" right="1%">
+						<Button
+							id="btnStatistics"
+							class="push-down"
+							platform="ios"
+							style="PLAIN">
+						</Button>
+						
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnStatistics"
+							class="push-down"
+							platform="android">
+						</ImageView>
+						
+						<Button
+							id="btnTournaments"
+							class="push-down"
+							platform="ios"
+							style="PLAIN">
+						</Button>
+						
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnTournaments"
+							class="push-down"
+							platform="android">
+						</ImageView>
 
-				<Button
-					id="btnAbout"
-					class="push-down"
-					platform="ios"
-					style="PLAIN">
-				</Button>
+						<Button
+							id="btnAbout"
+							class="push-down"
+							platform="ios"
+							style="PLAIN">
+						</Button>
 
-				<ImageView
-					height='120dp'
-					width='auto'
-					id="btnAbout"
-					class="push-down"
-					platform="android">
-				</ImageView>
-			</View>
-		</View>
+						<ImageView
+							height='25%'
+							width='auto'
+							id="btnAbout"
+							class="push-down"
+							platform="android">
+						</ImageView>
+					</View>
+				</View>
+		</ScrollView>
 
 		<View backgroundColor="black" height="10%" bottom="0">
 			<Label id="lblWebsiteLink" color="white">www.10000steps.org.au</Label>
 		</View>
-	</ScrollView>
+	</View>
 </Alloy>
