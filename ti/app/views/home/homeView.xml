@@ -3,7 +3,6 @@
 	
 	<View>
 		<ScrollView 
-			backgroundColor="blue" 
 			scrollType="vertical" 
 			orientation="vertical" 
 			showVerticalScrollIndicator="true">
