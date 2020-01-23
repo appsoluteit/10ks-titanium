@@ -256,6 +256,38 @@ function window_open() {
  * steps log badge.
  */
 function window_load() {
+	if(Alloy.Globals.Env === 'Development') {
+		// If in development, we don't want to trigger false-positive stats
+		// to send to Firebase Analytics. So we expose a constant with the same
+		// interface and exit early.
+	
+		Alloy.Globals.tracker = {
+			addScreenView: function(screenName) {
+				Ti.API.info('Logging ' + screenName);
+			}
+		};
+	}
+	else {
+		var FirebaseCore = require('firebase.core');	
+		var FirebaseAnalytics = require('firebase.analytics');
+
+		// Configure Firebase
+		FirebaseCore.configure();
+		
+		if(Alloy.Globals.IsLoggedIn) {
+			FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
+		}
+		
+		Alloy.Globals.tracker = {
+			addScreenView: function(screenName) {
+				FirebaseAnalytics.setScreenNameAndScreenClass({
+					screenName: screenName,
+					screenClass: screenName
+				});	
+			}
+		};
+	}
+
 	Alloy.Globals.tracker.addScreenView('Home');
 
 	loginIfNeeded();

@@ -87,8 +87,17 @@
   <modules>
     <module platform="commonjs">nl.fokkezb.html2as</module>
     <module platform="commonjs">ti.cloud</module>
+
     <module platform="android">facebook</module>
     <module platform="iphone">facebook</module>
+    
+    <!-- https://github.com/hansemannn/titanium-firebase -->
+    <module platform="android">ti.playservices</module>
+    <module platform="android" version="3.0.0">firebase.analytics</module>
+    <module platform="android" version="5.0.0">firebase.core</module>
+  
+    <module platform="iphone" version="1.4.1">firebase.analytics</module>
+    <module platform="iphone" version="2.2.0">firebase.core</module>
   </modules>
   <deployment-targets>
     <target device="android">true</target>
@@ -125,5 +134,5 @@
   <property name="google-analytics-id" type="string">UA-101176022-1</property>
   <!-- Jason's dummy account -->
   <property name="is-debug" type="bool">false</property>
-  <property name="environment" type="string">Development</property>
+  <property name="environment" type="string">Production</property>
 </ti:app>
