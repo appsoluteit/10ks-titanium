@@ -15,3 +15,15 @@
         }],
     }
 }
+
+"TableView[platform=ios]": {
+    height: Ti.UI.SIZE
+}
+
+"TableView[platform=android formFactor=tablet]": {
+    height: Ti.UI.SIZE
+}
+
+"TableView[platform=android]": {
+    height: '70%'
+}
