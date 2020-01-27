@@ -4,94 +4,102 @@
 			<Label id="title"></Label>
 
 			<!-- TableView Container -->
-			<View height="Ti.UI.SIZE" layout="vertical" class="inner-content">
-				<TableView height="Ti.UI.SIZE">
-					<!-- Goal Steps -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Goal steps</Label>
-							<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
-						</View>
-					</TableViewRow>
-					
-					<!-- Progress steps  -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Progress (steps)</Label>
-							<Label right="10dp" id="lblProgressSteps" class="row-value"></Label>
-						</View>
-					</TableViewRow>
-					
-					<!-- Total remaining steps -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Total Remaining (steps)</Label>
-							<Label right="10dp" id="lblRemainingSteps" class="row-value"></Label>
-						</View>
-					</TableViewRow>
+			<View 
+				height="Ti.UI.SIZE"
+				layout="vertical" 
+				class="inner-content">
+					<!-- We need to give this a fixed height to accomodate smaller screens -->
+					<TableView 
+						showVerticalScrollIndicator="true">
+						<!-- Goal Steps -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Goal steps</Label>
+								<Label right="10dp" id="lblGoalSteps" class="row-value"></Label>
+							</View>
+						</TableViewRow>
+						
+						<!-- Progress steps  -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Progress (steps)</Label>
+								<Label right="10dp" id="lblProgressSteps" class="row-value"></Label>
+							</View>
+						</TableViewRow>
+						
+						<!-- Total remaining steps -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Total Remaining (steps)</Label>
+								<Label right="10dp" id="lblRemainingSteps" class="row-value"></Label>
+							</View>
+						</TableViewRow>
 
-					<!-- Start Date -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Start Date</Label>
-							<Label right="10dp" id="lblStartDate" class="row-value"></Label>
-						</View>
-					</TableViewRow>
+						<!-- Start Date -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Start Date</Label>
+								<Label right="10dp" id="lblStartDate" class="row-value"></Label>
+							</View>
+						</TableViewRow>
 
-					<!-- End Date -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">End Date</Label>
-							<Label right="10dp" id="lblEndDate" class="row-value"></Label>
-						</View>
-					</TableViewRow>
+						<!-- End Date -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">End Date</Label>
+								<Label right="10dp" id="lblEndDate" class="row-value"></Label>
+							</View>
+						</TableViewRow>
 
-					<!-- Time Left -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Time Left</Label>
-							<Label right="10dp" id="lblTimeLeft" class="row-value"></Label>
-						</View>
-					</TableViewRow>
+						<!-- Time Left -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Time Left</Label>
+								<Label right="10dp" id="lblTimeLeft" class="row-value"></Label>
+							</View>
+						</TableViewRow>
 
-					<!-- Required steps / day  -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">Required Steps/Day</Label>
-							<Label right="10dp" id="lblRequiredDailySteps" class="row-value"></Label>
-						</View>
-					</TableViewRow>
+						<!-- Required steps / day  -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">Required Steps/Day</Label>
+								<Label right="10dp" id="lblRequiredDailySteps" class="row-value"></Label>
+							</View>
+						</TableViewRow>
 
-					<!-- % complete -->
-					<TableViewRow>
-						<View class="whole">
-							<Label class="row-label">% Complete</Label>
-							<Label right="10dp" id="lblPercentComplete" class="row-value"></Label>
-						</View>
-					</TableViewRow>
-				</TableView>
+						<!-- % complete -->
+						<TableViewRow>
+							<View class="whole">
+								<Label class="row-label">% Complete</Label>
+								<Label right="10dp" id="lblPercentComplete" class="row-value"></Label>
+							</View>
+						</TableViewRow>
+					</TableView>
 
-				<Widget id="vbar1" src="com.mcvendrell.valuebar" title="" top="0" />
+					<Widget 
+						id="vbar1" 
+						src="com.mcvendrell.valuebar" 
+					/>
 			</View>       
-        </View>
+		</View>
 
-        <!-- Buttons Container -->
-        <View left="10dp" right="10dp" bottom="10dp" height="Ti.UI.SIZE">		
-            <!-- Details Button -->
-            <Button 
-                id="btnChallengeDetails" 
-                title="Details" 
-                font="{ fontSize: 10sp }"					
-                platform="android"
-            />
-                
-            <Widget
-                id="btnChallengeDetails"
-                src="nl.fokkezb.button"
-                title="Details"
-                style="steps-default"
-                platform="ios"
-            />	
-        </View>    
-    </View>
+		<!-- Buttons Container -->
+		<View left="10dp" right="10dp" bottom="10dp" height="Ti.UI.SIZE">		
+			<!-- Details Button -->
+			<Button 
+				id="btnChallengeDetails" 
+				title="Details" 
+				font="{ fontSize: 10sp }"					
+				platform="android"
+			/>
+				
+			<Widget
+				id="btnChallengeDetails"
+				src="nl.fokkezb.button"
+				title="Details"
+				style="steps-default"
+				platform="ios"
+			/>	
+		</View>    
+	</View>
 </Alloy>

@@ -134,44 +134,6 @@
 	});
 })();
 
-//Firebase (GA)
-(function() {	
-	if(Alloy.Globals.Env === 'Development') {
-		// If in development, we don't want to trigger false-positive stats
-		// to send to Firebase Analytics. So we expose a constant with the same
-		// interface and exit early.
-
-		Alloy.Globals.tracker = {
-			addScreenView: function(screenName) {
-				Ti.API.info('Logging ' + screenName);
-			}
-		};
-		return;
-	}
-
-	// Require the Firebase Core module (own project!)
-	var FirebaseCore = require('firebase.core');
-	
-	// Configure Firebase
-	FirebaseCore.configure();
-	
-	// Require the Firebase Analytics module
-	var FirebaseAnalytics = require('firebase.analytics');
-	
-	if(Alloy.Globals.IsLoggedIn) {
-		FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
-	}
-	
-	Alloy.Globals.tracker = {
-		addScreenView: function(screenName) {
-			FirebaseAnalytics.setScreenNameAndScreenClass({
-  				screenName: screenName,
-  				screenClass: screenName
-			});	
-		}
-	};
-})();
-
 //Steps Singleton
 (function() {
 	var StepsDataProvider = require('classes/StepsDataProvider');

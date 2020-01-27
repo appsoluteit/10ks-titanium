@@ -1,1 +1,69 @@
-app/platform/android/AndroidManifest.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest    xmlns:android="http://schemas.android.com/apk/res/android"        package="au.org.steps10000.app" android:versionCode="46" android:versionName="4.6.0">
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="28"/>
+	<application android:icon="@drawable/appicon" android:label="10,000 Steps" android:name="_10000StepsApplication" android:debuggable="false" android:theme="@style/Theme.AppCompat.Light" android:resizeableActivity="true">
+		<activity android:name="._10000StepsActivity" android:label="@string/app_name" android:theme="@style/Theme.Titanium" android:configChanges="keyboardHidden|orientation|fontScale|screenSize|smallestScreenSize|screenLayout|density">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+			<!-- Firebase -->
+			<service android:name="com.google.android.gms.measurement.AppMeasurementService" android:enabled="true" android:exported="false" />
+						<service android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="true" android:exported="false" />
+						<service android:name="au.org.steps10000.app.gcm.RegistrationIntentService" android:exported="false" />
+						<receiver android:name="com.google.android.gms.measurement.AppMeasurementReceiver" android:enabled="true">
+			   <intent-filter>
+				  <action android:name="com.google.android.gms.measurement.UPLOAD" />
+			   </intent-filter>
+			</receiver>
+
+			<service android:name="au.org.steps10000.app.gcm.GcmIntentService" android:exported="false">
+			   <intent-filter>
+				  <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				  <action android:name="com.google.android.c2dm.intent.SEND" />
+			   </intent-filter>
+			</service>
+
+			<service android:name="au.org.steps10000.app.gcm.GcmIDListenerService" android:exported="false">
+			   <intent-filter>
+				  <action android:name="com.google.android.gms.iid.InstanceID" />
+			   </intent-filter>
+			</service>
+
+		    <!-- Facebook SDK -->
+            <activity
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="10,000 Steps"
+                android:name="au.org.steps10000.app" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            <meta-data 
+android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>            
+						<activity
+				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_id"
+                android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+					<activity android:name="org.appcelerator.titanium.TiActivity" android:configChanges="keyboardHidden|orientation|fontScale|screenSize|smallestScreenSize|screenLayout|density"/>
+			<activity android:name="org.appcelerator.titanium.TiTranslucentActivity" android:configChanges="keyboardHidden|orientation|fontScale|screenSize|smallestScreenSize|screenLayout|density" android:theme="@style/Theme.Titanium.Translucent"/>
+			<activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:configChanges="screenSize|density"/>
+			<provider android:name="org.appcelerator.titanium.io.TiFileProvider" android:authorities="au.org.steps10000.app.tifileprovider" android:exported="false" android:grantUriPermissions="true"/>
+			<service android:name="com.appcelerator.aps.APSAnalyticsService" android:exported="false"/>
+	</application>
+	<uses-permission android:name="android.permission.READ_CALENDAR"/>
+	<uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+	<supports-screens android:resizeable="true"
+                  android:smallScreens="true"
+                  android:normalScreens="true"
+                  android:largeScreens="true"
+                  android:xlargeScreens="true"
+                  android:anyDensity="true"/>
+</manifest>

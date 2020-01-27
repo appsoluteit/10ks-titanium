@@ -1,6 +1,9 @@
 <Alloy>
-    <View id="wrapper">
+    <View id="wrapper" backgroundColor="pink">
+        <!--
         <Label id="title" />
+        -->
+        
         <View id="valueWrapper">
             <View id="value" />
             <Label id="valueText" />
