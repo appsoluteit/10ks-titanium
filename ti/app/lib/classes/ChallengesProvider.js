@@ -117,7 +117,7 @@ ChallengesProvider.prototype.getActiveTask = function() {
 	}
 	
 	APIHelper.get({
-		url:		"challenge_participant/?is_active=true",
+		url:		"challenge_participant_current",
 		headers: [{
 				 	key: "Authorization", value: "Token " + Alloy.Globals.AuthKey
 		}],
