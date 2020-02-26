@@ -41,12 +41,12 @@ function valToPct(value, total) {
 exports.init = function(value, total) {
     // Set config
     $.wrapper.width = width;
-    $.title.text = title;
-    $.title.textAlign = titleAlign;
+    //$.title.text = title;
+    //$.title.textAlign = titleAlign;
     $.valueWrapper.backgroundColor = backgroundColor;
     $.valueWrapper.height = barHeight;
     $.value.backgroundColor = valueColor;
-    $.value.font = titleFont;
+    //$.value.font = titleFont;
 
     if(args.gradient) {
         $.value.backgroundColor = undefined;

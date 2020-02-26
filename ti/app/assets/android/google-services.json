@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:160449843114:android:f5bac6b7b26f238f35a5d3",
+        "mobilesdk_app_id": "1:160449843114:android:bbba9dfb8645d87435a5d3",
         "android_client_info": {
           "package_name": "au.org.steps10000.app"
         }
@@ -30,6 +30,14 @@
             {
               "client_id": "160449843114-klbcq2vgmcksuig6l0pl1m0he3bkkm3h.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "160449843114-epa5k0kfj7dn28m3tdssichbbshq2egv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "au.org.steps10000.app",
+                "app_store_id": "1230221426"
+              }
             }
           ]
         }
