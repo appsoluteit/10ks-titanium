@@ -89,6 +89,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentName: item.name,
                     tournamentWeeks: item.weeks,
                     tournamentStartDate: new Date(item.date_started),
+                    tournamentEndDate: new Date(item.end_date),
                     type: 'timeout',
                     teams: item.timeout_teams,
                     teamSteps: teamSteps

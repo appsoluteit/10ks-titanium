@@ -38,14 +38,10 @@ function window_open() {
     }	
 
     // Populate the labels
-    var startDate = new Date(args.tournament.tournamentStartDate);
-    var tournamentWeeks = args.tournament.tournamentWeeks * 1;
-    var endDate = DateTimeHelper.addWeeks(startDate, tournamentWeeks);
-
-    $.timeoutsView.lblStartDate.text = DateTimeHelper.getDateLabel(startDate, true);
+    $.timeoutsView.lblStartDate.text = DateTimeHelper.getDateLabel(args.tournament.tournamentStartDate, true);
     $.timeoutsView.lblDuration.text = args.tournament.tournamentWeeks + " weeks";
-    $.timeoutsView.lblEndDate.text = DateTimeHelper.getDateLabel(endDate, true);
-    $.timeoutsView.lblTimeLeft.text = DateTimeHelper.getTimeBetween(endDate, new Date());
+    $.timeoutsView.lblEndDate.text = DateTimeHelper.getDateLabel(args.tournament.tournamentEndDate, true);
+    $.timeoutsView.lblTimeLeft.text = DateTimeHelper.getTimeBetween(args.tournament.tournamentEndDate, new Date());
     $.timeoutsView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 }
 
