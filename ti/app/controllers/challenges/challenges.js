@@ -133,11 +133,6 @@ function setNavButtons() {
 			text: leftButtonTitle,
 			onClick: btnBack_click	
 		});
-		
-		$.window.rightNavButton = NavBarButton.createRightNavButton({
-			image: '/common/icons/refresh-button-32.png',
-			onClick: btnRefresh_click
-		});
 	}
 }
 
