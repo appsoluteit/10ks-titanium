@@ -10,7 +10,7 @@
 
 var StepsProvider = require('classes/StepsProvider');
 var stepsProvider = new StepsProvider();
-var ChallengesProvider = require('classes/ChallengesProvider');
+var ChallengesProviderV2 = require('classes/ChallengesProviderV2');
 var SessionHelper = require('helpers/SessionHelper');
 
 /**
@@ -119,36 +119,36 @@ function btnStatistics_click() {
  * @memberOf Controllers.Home
 */
 function btnChallenges_click() {
-	// Show the active challenge or show the active challenge option? First check if the user
-	// has already joined a challenge task.
+	// If there is a last joined challenge, show it (with a link to start the next challenge)
+	// Otherwise, show the next available challenge.
 
-	fetchActiveTask();
+	loadChallenges();
 }
 
-function fetchActiveTask() {
-	Alloy.Globals.Spinner.show("Loading Current Challenge ...");
+function loadChallenges() {
+	Alloy.Globals.Spinner.show("Loading challenges...");
 
-	var challengesProvider = new ChallengesProvider();
+	var challengesProvider = new ChallengesProviderV2();
 
 	function onSuccess(result) {
-		if(!result) {
-			// no active task. Load the challenge.
-			var win = Alloy.createController('challenges/challenges').getView();
+		Alloy.Globals.Spinner.hide();
+		//Ti.API.info('loadChallenges onSuccess', result);
+
+		if(!result.lastJoinedChallenge) {
+			// no last joined challenge. Just show next available challenge.
+			var win = Alloy.createController('challenges/challenges', {
+				challengeData: result
+			}).getView();
+
 			win.open();
 		}
 		else {
-			// we have an active task. Go straight to the progress page.
-			challengesProvider
-				.getTask(result.task)
-				.then(function(taskContent) {
-					Alloy.Globals.Spinner.hide();
-					
-					var win = Alloy.createController('challenges/challengeProgress', {
-						challenge: taskContent
-					}).getView();	
+			// we have last joined challenge. Show it
+			var win = Alloy.createController('challenges/challengeProgress', {
+				challengeData: result
+			}).getView();	
 
-					win.open();
-				});
+			win.open();
 		}
 	}
 
@@ -165,7 +165,7 @@ function fetchActiveTask() {
 		}
 		else {
 			Alloy.createWidget("com.mcongrove.toast", null, {
-				text: "Couldn't load current Challenge",
+				text: "Couldn't load challenges",
 				duration: 2000,
 				view: $.home,
 				theme: "error"
@@ -173,7 +173,10 @@ function fetchActiveTask() {
 		}			
 	}
 
-	challengesProvider.getActiveTask().then(onSuccess, onFail);
+	challengesProvider
+		.load()
+		.then(onSuccess)
+		.catch(onFail);
 }
 
 function showLogin() {
