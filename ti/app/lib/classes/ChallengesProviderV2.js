@@ -110,18 +110,33 @@ ChallengesProviderV2.prototype.load = function() {
 		.then(function(challenge) {
 			Ti.API.info('ChallengesProviderV2 got last joined challenge');
 
-			return getTask(challenge.task)
-				.then(function(task) {
-					Ti.API.info('ChallengesProviderV2 got task');
+			if (challenge) {
+				return getTask(challenge.task)
+					.then(function(task) {
+						Ti.API.info('ChallengesProviderV2 got task');
 
-					return q.resolve({
-						challenge: challenge,
-						task: task
+						return q.resolve({
+							challenge: challenge,
+							task: task
+						});
 					});
+			}
+			else {
+				return q.resolve({
+					challenge: null,
+					task: null
 				});
+			}
 		})
 		.then(function(lastJoinedChallenge) {
 			Ti.API.info('ChallengesProviderV2 got last joined challenge and task');
+
+			// if the challenge and task are null, set the last joined challenge to null
+			// for simplicity.
+			if (lastJoinedChallenge.challenge == null &&
+				lastJoinedChallenge.task == null ) {
+					lastJoinedChallenge = null;
+			}
 
 			return getAvailableChallenge()
 				.then(function(availableChallenge) {

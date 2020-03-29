@@ -132,7 +132,7 @@ function loadChallenges() {
 
 	function onSuccess(result) {
 		Alloy.Globals.Spinner.hide();
-		//Ti.API.info('loadChallenges onSuccess', result);
+		Ti.API.info('loadChallenges onSuccess', result);
 
 		if(!result.lastJoinedChallenge) {
 			// no last joined challenge. Just show next available challenge.

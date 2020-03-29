@@ -12,8 +12,8 @@ function populateTable() {
     var challenge = ChallengeData.lastJoinedChallenge.challenge;
     var task = ChallengeData.lastJoinedChallenge.task;
 
-    Ti.API.info('challenge', challenge);
-    Ti.API.info('task', task);
+    //Ti.API.info('challenge', challenge);
+    //Ti.API.info('task', task);
 
     var today = DateTimeHelper.localise(new Date());
     var startDate = DateTimeHelper.localise(new Date(task.challenge.start_date));
@@ -70,7 +70,17 @@ function populateTable() {
 }
 
 function promptForNewChallenge() {
-    if (ChallengeData.availableChallenge) {
+    // If there is an available challenge and the last joined challenge 
+    // task id does not exist within the available challenge tasks 
+    // (i.e - you haven't already joined the challenge), prompt the user
+    // to join it.
+    
+    var shouldPromptForNewChallenge = ChallengeData.availableChallenge &&
+        ChallengeData.availableChallenge.challenge_tasks.filter(function(task) {
+            return task.id == ChallengeData.lastJoinedChallenge.task.id;
+        }).length === 0;
+        
+    if (shouldPromptForNewChallenge) {
         var confirmDialog = Ti.UI.createAlertDialog({
             cancel: 0,
             buttonNames: ['No thanks', 'Sure!'],
