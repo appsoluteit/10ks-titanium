@@ -74,11 +74,22 @@ function promptForNewChallenge() {
     // task id does not exist within the available challenge tasks 
     // (i.e - you haven't already joined the challenge), prompt the user
     // to join it.
-    
+
+    Ti.API.info('available challenge', ChallengeData.availableChallenge);
+
+    var today = new Date(); // debug: set this to be the last day of the month to
+                            // test the case where the available challenge isn't ready yet
+                            
+    var challengeStartDate = new Date(ChallengeData.availableChallenge.start_date);
+
+    Ti.API.info('today', today);
+    Ti.API.info('challenge start', challengeStartDate);
+
     var shouldPromptForNewChallenge = ChallengeData.availableChallenge &&
         ChallengeData.availableChallenge.challenge_tasks.filter(function(task) {
             return task.id == ChallengeData.lastJoinedChallenge.task.id;
-        }).length === 0;
+        }).length === 0 &&
+        today >= challengeStartDate;
         
     if (shouldPromptForNewChallenge) {
         var confirmDialog = Ti.UI.createAlertDialog({
