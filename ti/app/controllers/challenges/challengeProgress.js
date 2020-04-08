@@ -61,7 +61,7 @@ function populateTable() {
 
     // % complete
     var percentComplete = challenge.percentage_complete;
-    $.challengeProgressView.lblPercentComplete.text = Math.round(percentComplete * 100) + '%';
+    $.challengeProgressView.lblPercentComplete.text = percentComplete + '%';
 
     $.challengeProgressView.vbar1.init(
         challenge.steps_total, 
@@ -95,8 +95,8 @@ function promptForNewChallenge() {
         var confirmDialog = Ti.UI.createAlertDialog({
             cancel: 0,
             buttonNames: ['No thanks', 'Sure!'],
-            message: 'Do you want to view the new challenge?',
-            title: 'A new challenge is available!'
+            message: 'Do you want to view the new Challenge?',
+            title: 'A new Challenge is available!'
         });
     
         confirmDialog.addEventListener('click', function(e) {
