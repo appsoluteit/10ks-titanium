@@ -3,7 +3,7 @@
     "project_number": "160449843114",
     "firebase_url": "https://steps-mobile-app.firebaseio.com",
     "project_id": "steps-mobile-app",
-    "storage_bucket": "steps-mobile-app.appspot.com"
+    "storage_bucket": "steps-mobile-app.appspot.com"    
   },
   "client": [
     {
