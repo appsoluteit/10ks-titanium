@@ -3,7 +3,7 @@
   xmlns:ti="http://ti.appcelerator.org">
   <id>au.org.steps10000.app</id>
   <name>10,000 Steps</name>
-  <version>4.6.6</version>
+  <version>4.6.7</version>
   <publisher>10000 Steps</publisher>
   <url>https://www.10000steps.org.au</url>
   <description>Every step counts. Challenge yourself, friends and workmates to the 10,000 Steps program.</description>
@@ -11,7 +11,7 @@
   <icon>appicon.png</icon>
   <fullscreen>false</fullscreen>
   <navbar-hidden>false</navbar-hidden>
-  <analytics>false</analytics>
+  <analytics>true</analytics>
   <guid>fb7ab385-9929-4e5a-9888-10362e73642a</guid>
   <ios>
     <plist>
@@ -71,7 +71,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Specify ABI For Android Emulator only, not for Google Play builds -->
     <abi>armeabi-v7a,arm64-v8a,x86</abi>
-    <manifest android:versionCode="466" android:versionName="4.6.6">
+    <manifest android:versionCode="467" android:versionName="4.6.7">
       <!-- Standard stuff -->      
       <application android:theme="@style/Theme.AppCompat.Light"/>
       <uses-permission android:name="android.permission.READ_CALENDAR"/>
@@ -113,15 +113,20 @@
     </manifest>
   </android>
   <modules>
-    <module platform="android">facebook</module>
-    <module platform="android">firebase.core</module>
-    <module platform="android">firebase.analytics</module>
-    <module platform="android">firebase.cloudmessaging</module>
-    <module platform="commonjs">ti.cloud</module>
     <module platform="commonjs">nl.fokkezb.html2as</module>
+    <module platform="commonjs">ti.cloud</module>
+
+    <module platform="android">facebook</module>
     <module platform="iphone">facebook</module>
-    <module platform="iphone">firebase.core</module>
-    <module platform="iphone">firebase.analytics</module>
+    
+    <!-- https://github.com/hansemannn/titanium-firebase -->
+    <module platform="android">ti.playservices</module>
+    <module platform="android" version="3.0.0">firebase.analytics</module>
+    <module platform="android" version="5.0.0">firebase.core</module>
+    <module platform="android" version="2.0.3">firebase.cloudmessaging</module>
+  
+    <module platform="iphone" version="1.4.1">firebase.analytics</module>
+    <module platform="iphone" version="2.2.0">firebase.core</module>
   </modules>
   <deployment-targets>
     <target device="android">true</target>
@@ -154,6 +159,6 @@
   <property name="google-analytics-id" type="string">UA-75895710-1</property>
   <!-- CQUs account -->
   <property name="is-debug" type="bool">false</property>
-  <property name="environment" type="string">Development</property>
+  <property name="environment" type="string">Production</property>
   <property name="run-on-main-thread" type="bool">true</property>
 </ti:app>

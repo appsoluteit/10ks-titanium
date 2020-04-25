@@ -271,24 +271,24 @@ function window_load() {
 		};
 	}
 	else {
-		var FirebaseCore = require('firebase.core');	
-		var FirebaseAnalytics = require('firebase.analytics');
+	var FirebaseCore = require('firebase.core');	
+	var FirebaseAnalytics = require('firebase.analytics');
 
-		// Configure Firebase
-		FirebaseCore.configure();
-		
-		if(Alloy.Globals.IsLoggedIn) {
-			FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
+	// Configure Firebase
+	FirebaseCore.configure();
+	
+	if(Alloy.Globals.IsLoggedIn) {
+		FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
+	}
+	
+	Alloy.Globals.tracker = {
+		addScreenView: function(screenName) {
+			FirebaseAnalytics.setScreenNameAndScreenClass({
+				screenName: screenName,
+				screenClass: screenName
+			});	
 		}
-		
-		Alloy.Globals.tracker = {
-			addScreenView: function(screenName) {
-				FirebaseAnalytics.setScreenNameAndScreenClass({
-					screenName: screenName,
-					screenClass: screenName
-				});	
-			}
-		};
+	};
 	}
 
 	Alloy.Globals.tracker.addScreenView('Home');
