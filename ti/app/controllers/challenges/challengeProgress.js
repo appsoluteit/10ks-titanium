@@ -42,6 +42,7 @@ function populateTable() {
 
     // Remaining steps
     var remainingSteps = challenge.steps_goal - challenge.steps_total;
+    if (remainingSteps < 0) remainingSteps = 0;
     Ti.API.info('Remaining steps: ' + remainingSteps);
 
     $.challengeProgressView.lblRemainingSteps.text = 
