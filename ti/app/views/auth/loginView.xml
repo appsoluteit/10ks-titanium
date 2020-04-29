@@ -9,6 +9,7 @@
 	
 	<TextField 
 		id="txtUsername" 
+		bubbleParent="false"
 		class="three-quarters"
 		top="10dp"
 		autocorrect="false" 
@@ -26,6 +27,7 @@
 	
 	<TextField 
 		id="txtPassword" 
+		bubbleParent="false"
 		class="three-quarters"
 		top="10dp"
 		hintText="Password"
