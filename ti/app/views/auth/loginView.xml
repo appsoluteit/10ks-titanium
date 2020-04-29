@@ -1,86 +1,88 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
 	
-	<Label 
-		class='three-quarters bold'
-		textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
-		text="Login">
-	</Label>
-	
-	<TextField 
-		id="txtUsername" 
-		bubbleParent="false"
-		class="three-quarters"
-		top="10dp"
-		autocorrect="false" 
-		hintText="Username or email"
-		autocapitalization="false" 
-		keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
-	</TextField>			
-	
-	<Label 
-		top = "10dp" 
-		class='three-quarters bold'
-		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
-		text="Password">
-	</Label>
-	
-	<TextField 
-		id="txtPassword" 
-		bubbleParent="false"
-		class="three-quarters"
-		top="10dp"
-		hintText="Password"
-		passwordMask="true">
-	</TextField>
-	
-	<Label 
-		id="lblError" 
-		top="10dp" 
-		textAlign="center" 
-		class="whole error">
-	</Label>
+	<ScrollView layout="vertical" class="margin-10" height="Ti.UI.FILL">	
+		<Label 
+			class='three-quarters bold'
+			textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
+			text="Login">
+		</Label>
+		
+		<TextField 
+			id="txtUsername" 
+			bubbleParent="false"
+			class="three-quarters"
+			top="10dp"
+			autocorrect="false" 
+			hintText="Username or email"
+			autocapitalization="false" 
+			keyboardType="Ti.UI.KEYBOARD_TYPE_EMAIL">
+		</TextField>			
+		
+		<Label 
+			top = "10dp" 
+			class='three-quarters bold'
+			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+			text="Password">
+		</Label>
+		
+		<TextField 
+			id="txtPassword" 
+			bubbleParent="false"
+			class="three-quarters"
+			top="10dp"
+			hintText="Password"
+			passwordMask="true">
+		</TextField>
+		
+		<Label 
+			id="lblError" 
+			top="10dp" 
+			textAlign="center" 
+			class="whole error">
+		</Label>
 
-	<View layout="horizontal" left="12.5%" height="Ti.UI.SIZE">
-		<Switch id="swRememberMe" value="false" top="10dp">
-		</Switch>
+		<View layout="horizontal" left="12.5%" height="Ti.UI.SIZE">
+			<Switch id="swRememberMe" value="false" top="10dp">
+			</Switch>
+			
+			<Label text="Remember Me" left="10dp" bottom="0dp"></Label>
+		</View>
 		
-		<Label text="Remember Me" left="10dp" bottom="0dp"></Label>
-	</View>
-	
-	<Label
-		id="lblForgotPassword"
-		top="10dp"
-		class="three-quarters"
-		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
-		color="#02B5FF">
-			Forgot Password?
-	</Label>
-	
-	<Label
-		id="lblSignUp"
-		top="10dp"
-		class="three-quarters"
-		textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
-		color="#02B5FF">
-			Sign Up
-	</Label>
-	
-	<Button 
-		id="btnLogin" 
-		title="Login" 
-		top="10dp"
-		left="12.5%"
-		platform="android"
-		class="half"></Button>
+		<Label
+			id="lblForgotPassword"
+			top="10dp"
+			class="three-quarters"
+			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+			color="#02B5FF">
+				Forgot Password?
+		</Label>
 		
-	<Widget
-		id="btnLogin"
-		top="10dp"
-		left="12.5%"
-		src="nl.fokkezb.button"
-		title="Login"
-		style="steps-default"
-		platform="ios"
-	/>	
+		<Label
+			id="lblSignUp"
+			top="10dp"
+			class="three-quarters"
+			textAlign="Ti.UI.TEXT_ALIGNMENT_LEFT"
+			color="#02B5FF">
+				Sign Up
+		</Label>
+		
+		<Button 
+			id="btnLogin" 
+			title="Login" 
+			top="10dp"
+			left="12.5%"
+			platform="android"
+			class="half"></Button>
+			
+		<Widget
+			id="btnLogin"
+			top="10dp"
+			left="12.5%"
+			src="nl.fokkezb.button"
+			title="Login"
+			style="steps-default"
+			platform="ios"
+		/>	
+	</ScrollView>
 </Alloy>
