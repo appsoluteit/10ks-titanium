@@ -3,7 +3,7 @@
   xmlns:ti="http://ti.appcelerator.org">
   <id>au.org.steps10000.app</id>
   <name>10,000 Steps</name>
-  <version>4.6.7</version>
+  <version>4.6.8</version>
   <publisher>10000 Steps</publisher>
   <url>https://www.10000steps.org.au</url>
   <description>Every step counts. Challenge yourself, friends and workmates to the 10,000 Steps program.</description>
@@ -71,7 +71,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Specify ABI For Android Emulator only, not for Google Play builds -->
     <abi>armeabi-v7a,arm64-v8a,x86</abi>
-    <manifest android:versionCode="467" android:versionName="4.6.7">
+    <manifest android:versionCode="468" android:versionName="4.6.8">
       <!-- Standard stuff -->      
       <application android:theme="@style/Theme.AppCompat.Light"/>
       <uses-permission android:name="android.permission.READ_CALENDAR"/>
@@ -131,7 +131,7 @@
     <target device="ipad">true</target>
     <target device="iphone">true</target>
   </deployment-targets>
-  <sdk-version>8.3.1.GA</sdk-version>
+  <sdk-version>9.0.1.GA</sdk-version>
   <plugins>
     <plugin version="1.0">ti.alloy</plugin>
   </plugins>

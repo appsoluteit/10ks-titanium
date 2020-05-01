@@ -1,7 +1,8 @@
 <Alloy>
 	<Require src="header" type="view"></Require>
 	
-	<Label 
+	<ScrollView layout="vertical" class="margin-10" height="Ti.UI.FILL">	
+		<Label 
 		class='three-quarters bold'
 		textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT"
 		text="Login">
@@ -9,7 +10,8 @@
 	
 	<TextField 
 		id="txtUsername" 
-		class="three-quarters"
+		bubbleParent="false"
+			class="three-quarters"
 		top="10dp"
 		autocorrect="false" 
 		hintText="Username or email"
@@ -26,7 +28,8 @@
 	
 	<TextField 
 		id="txtPassword" 
-		class="three-quarters"
+		bubbleParent="false"
+			class="three-quarters"
 		top="10dp"
 		hintText="Password"
 		passwordMask="true">
@@ -81,4 +84,5 @@
 		style="steps-default"
 		platform="ios"
 	/>	
+	</ScrollView>
 </Alloy>

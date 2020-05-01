@@ -31,6 +31,11 @@ function window_open() {
 	}
 }
 
+function window_click() {
+	$.loginView.txtUsername.blur();
+	$.loginView.txtPassword.blur();	
+}
+
 /**
  * @description Event handler for `btnLogin` on the view. If `Alloy.Globals.IsDebug` is turned on, this will automatically add the default
  * account information in `txtUsername` and `txtPassword`. In either case, it will call `login` on the `AuthProvider`, then call `getUser`.

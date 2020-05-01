@@ -1,11 +1,11 @@
 <Alloy>
 	<!-- iOS -->
-	<Window id="login" title="Login" onOpen="window_open" platform="ios">
+	<Window id="login" title="Login" onOpen="window_open" onClick="window_click" platform="ios">
 		<Require id="loginView" src="auth/loginView" type="view"></Require>	
 	</Window>
 	
 	<!-- Android -->
-	<Window id="login" title="Login" platform="android" onAndroid:back="androidBack_click" onOpen="window_open">
+	<Window id="login" title="Login" platform="android" onClick="window_click" onAndroid:back="androidBack_click" onOpen="window_open">
 		<Require id="loginView" src="auth/loginView" type="view"></Require>	
 	</Window>	
 </Alloy>
