@@ -77,6 +77,15 @@ function window_open() {
 		var tblRowReset = makeRow("Reset");
 		$.settingsView.tblContainer.appendRow(tblRowReset);
 		tblRowReset.addEventListener('click', tblRowReset_click);
+
+		// ios module tests
+		var TestModule = require('ti.healthkit');
+		var tblTestProperty = makeRow('Test module');
+		$.settingsView.tblContainer.appendRow(tblTestProperty);
+		tblTestProperty.addEventListener('click', function() {
+			Ti.API.info('Test property: ' + TestModule.exampleProp);
+			Ti.API.info('Test function: ' + TestModule.example());
+		});
 	}
 	
 	//Set child view event handlers
