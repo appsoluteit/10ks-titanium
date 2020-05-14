@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69C7CDAF246D2F7E00CE2FD8 /* HealthKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C7CDAE246D2F7E00CE2FD8 /* HealthKitProvider.swift */; };
-		69C7CDB1246D315D00CE2FD8 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C7CDB0246D315D00CE2FD8 /* Response.swift */; };
+		69B28B17246DD74B0071B192 /* HealthKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B28B15246DD74A0071B192 /* HealthKitProvider.swift */; };
+		69B28B18246DD74B0071B192 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B28B16246DD74B0071B192 /* Response.swift */; };
+		69B28B1A246DD8590071B192 /* StepInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B28B19246DD8590071B192 /* StepInfo.swift */; };
 		DB24E03C20766AC90033B2B1 /* TiHealthkitExampleProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24E03B20766AC90033B2B1 /* TiHealthkitExampleProxy.swift */; };
 		DB34CDE0207B998A005F8E8C /* TiHealthkitModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = DB34CDDE207B998A005F8E8C /* TiHealthkitModuleAssets.m */; };
 		DB34CDE1207B998A005F8E8C /* TiHealthkitModuleAssets.h in Headers */ = {isa = PBXBuildFile; fileRef = DB34CDDF207B998A005F8E8C /* TiHealthkitModuleAssets.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -20,8 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		69C7CDAE246D2F7E00CE2FD8 /* HealthKitProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitProvider.swift; sourceTree = "<group>"; };
-		69C7CDB0246D315D00CE2FD8 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		69B28B15246DD74A0071B192 /* HealthKitProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthKitProvider.swift; path = Classes/HealthKitProvider.swift; sourceTree = "<group>"; };
+		69B28B16246DD74B0071B192 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Classes/Response.swift; sourceTree = "<group>"; };
+		69B28B19246DD8590071B192 /* StepInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StepInfo.swift; path = Classes/StepInfo.swift; sourceTree = "<group>"; };
 		DB24E03B20766AC90033B2B1 /* TiHealthkitExampleProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TiHealthkitExampleProxy.swift; path = Classes/TiHealthkitExampleProxy.swift; sourceTree = "<group>"; };
 		DB34CDDE207B998A005F8E8C /* TiHealthkitModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiHealthkitModuleAssets.m; path = Classes/TiHealthkitModuleAssets.m; sourceTree = SOURCE_ROOT; };
 		DB34CDDF207B998A005F8E8C /* TiHealthkitModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiHealthkitModuleAssets.h; path = Classes/TiHealthkitModuleAssets.h; sourceTree = SOURCE_ROOT; };
@@ -71,10 +73,11 @@
 		DB258CA51F0964F6000D0D8D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				69B28B15246DD74A0071B192 /* HealthKitProvider.swift */,
+				69B28B16246DD74B0071B192 /* Response.swift */,
 				DB52E2421E9CD0F800AAAEE0 /* TiHealthkitModule.swift */,
 				DB24E03B20766AC90033B2B1 /* TiHealthkitExampleProxy.swift */,
-				69C7CDAE246D2F7E00CE2FD8 /* HealthKitProvider.swift */,
-				69C7CDB0246D315D00CE2FD8 /* Response.swift */,
+				69B28B19246DD8590071B192 /* StepInfo.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -209,8 +212,9 @@
 				DB24E03C20766AC90033B2B1 /* TiHealthkitExampleProxy.swift in Sources */,
 				DB34CDE0207B998A005F8E8C /* TiHealthkitModuleAssets.m in Sources */,
 				DB52E2431E9CD0F800AAAEE0 /* TiHealthkitModule.swift in Sources */,
-				69C7CDB1246D315D00CE2FD8 /* Response.swift in Sources */,
-				69C7CDAF246D2F7E00CE2FD8 /* HealthKitProvider.swift in Sources */,
+				69B28B17246DD74B0071B192 /* HealthKitProvider.swift in Sources */,
+				69B28B18246DD74B0071B192 /* Response.swift in Sources */,
+				69B28B1A246DD8590071B192 /* StepInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

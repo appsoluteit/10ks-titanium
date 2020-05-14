@@ -86,6 +86,15 @@ function window_open() {
 			healthkit.authoriseHealthKit(function(response) {
 				Ti.API.info('healthkit authoriseHealthKit got response!');
 				Ti.API.info(response);
+				Ti.API.info('message: ' + response.message);
+
+				var from = new Date(0); // 01/01/1970
+				var to = new Date(); // today
+
+				healthkit.querySteps(from, to, function(response) {
+					Ti.API.info('healthkit query steps got response!');
+					Ti.API.info(response);
+				});
 			});
 		});
 	}

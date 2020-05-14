@@ -3,7 +3,7 @@
 //  ti.healthkit
 //
 //  Created by Jason Sultana
-//  Copyright (c) 2020 Your Company. All rights reserved.
+//  Copyright (c) 2020 AppsoluteIT. All rights reserved.
 //
 
 import UIKit
@@ -52,15 +52,48 @@ class TiHealthkitModule: TiModule {
                     message = "\(message). Reason: \(error.localizedDescription)"
                 }
                 
-                self.invokeCallback(callback: callback, response: message)
+                self.invokeCallback(callback: callback, response: ["message": message])
                 return
             }
             
-            self.invokeCallback(callback: callback, response: "HealthKit Authorization Successful")
+            self.invokeCallback(callback: callback, response: ["message": "HealthKit Authorization Successful"])
         }
     }
     
-    func invokeCallback(callback: KrollCallback, response: String) {
-        callback.call([["response": response]], thisObject: self)
+    @objc(querySteps:)
+    func querySteps(arguments: Array<Any>?) {
+        guard let args = arguments,
+            let from = args[0] as? Date,
+            let to = args[1] as? Date,
+            let callback = args[2] as? KrollCallback else {
+                fatalError("Invalid parameters provided!")
+        }
+        
+        let provider = HealthKitProvider()
+        provider.querySteps(start: from, end: to) { (steps, errorText) in
+            
+//            self.invokeCallback(callback: callback, response: [
+//                "message": errorText,
+//                "steps": steps
+//            ])
+            
+            // the module bridge has trouble returning complex types.
+            // return it as JSON instead
+            let encoder = JSONEncoder()
+            let data = try? encoder.encode(steps)
+            if let json = data {
+                let response = String(data: json, encoding: .utf8)!
+                self.invokeCallback(callback: callback, response: [
+                    "response": response,
+                    "message": errorText
+                ])
+            }
+        }
+    }
+    
+    // Pass a dictionary of values back to the caller. These will be transformed into a
+    // response object
+    func invokeCallback(callback: KrollCallback, response: [String: Any]) {
+        callback.call([response], thisObject: self)
     }
 }
