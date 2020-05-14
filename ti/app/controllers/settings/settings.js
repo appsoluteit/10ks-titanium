@@ -79,12 +79,14 @@ function window_open() {
 		tblRowReset.addEventListener('click', tblRowReset_click);
 
 		// ios module tests
-		var TestModule = require('ti.healthkit');
-		var tblTestProperty = makeRow('Test module');
+		var healthkit = require('ti.healthkit');
+		var tblTestProperty = makeRow('Test healthkit');
 		$.settingsView.tblContainer.appendRow(tblTestProperty);
 		tblTestProperty.addEventListener('click', function() {
-			Ti.API.info('Test property: ' + TestModule.exampleProp);
-			Ti.API.info('Test function: ' + TestModule.example());
+			healthkit.authoriseHealthKit(function(response) {
+				Ti.API.info('healthkit authoriseHealthKit got response!');
+				Ti.API.info(response);
+			});
 		});
 	}
 	

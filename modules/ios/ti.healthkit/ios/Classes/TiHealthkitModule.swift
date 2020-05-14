@@ -25,39 +25,42 @@ import TitaniumKit
 
 @objc(TiHealthkitModule)
 class TiHealthkitModule: TiModule {
+    func moduleGUID() -> String {
+        return "294b9204-6239-4d8e-9b07-e8590cd23800"
+    }
 
-  public let testProperty: String = "Hello World"
-  
-  func moduleGUID() -> String {
-    return "294b9204-6239-4d8e-9b07-e8590cd23800"
-  }
-  
-  override func moduleId() -> String! {
-    return "ti.healthkit"
-  }
+    override func moduleId() -> String! {
+        return "ti.healthkit"
+    }
 
-  override func startup() {
-    super.startup()
-    debugPrint("[DEBUG] \(self) loaded")
-  }
+    override func startup() {
+        super.startup()
+        debugPrint("[DEBUG] \(self) loaded")
+    }
 
-  @objc(example:)
-  func example(arguments: Array<Any>?) -> String {
-    // Example method. 
-    // Call with "MyModule.example(args)"
+    @objc(authoriseHealthKit:)
+    func authoriseHealthKit(arguments: Array<Any>?) {
+        guard let args = arguments,
+              let callback = args[0] as? KrollCallback else { fatalError("Invalid parameters provided!") }
 
-    return "hello world!"
-  }
-  
-  @objc public var exampleProp: String {
-     get { 
-        // Example property getter
-        return "Titanium rocks!"
-     }
-     set {
-        // Example property setter
-        // Call with "MyModule.exampleProp = 'newValue'"
-        self.replaceValue(newValue, forKey: "exampleProp", notification: false)
-     }
-   }
+        let provider = HealthKitProvider()
+        provider.authorizeHealthKit { (authorized, error) in
+            guard authorized else {
+                var message = "HealthKit Authorization Failed"
+
+                if let error = error {
+                    message = "\(message). Reason: \(error.localizedDescription)"
+                }
+                
+                self.invokeCallback(callback: callback, response: message)
+                return
+            }
+            
+            self.invokeCallback(callback: callback, response: "HealthKit Authorization Successful")
+        }
+    }
+    
+    func invokeCallback(callback: KrollCallback, response: String) {
+        callback.call([["response": response]], thisObject: self)
+    }
 }

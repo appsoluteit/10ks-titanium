@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/TiHealthkit-Swift.h</key>
 		<data>
-		gR2bxig8lwg8sjW92Dut1rrbrPM=
+		bfGBZNO6lVXmVANYPexB8LjbGuw=
 		</data>
 		<key>Headers/TiHealthkit.h</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Modules/TiHealthkit.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		5Q9PiOCJ+F7Qn0zdNHVb8UYybmE=
+		K8Rb32dGf80ZfgppibR7m/APG3c=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -39,7 +39,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			W1DCcagvjxP0xi+XyxZMLHoDy/F5ZFTUU9kYvHRA0IM=
+			II+ngiF0anbvEZhPqfJ+JZusHlZ2Fm3InYUKH/Gt7fE=
 			</data>
 		</dict>
 		<key>Headers/TiHealthkit.h</key>
@@ -67,7 +67,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BqSOophiN35WPjTA9nM7YfvzDSaadrJMUb6iA0HV8j8=
+			jyLVXSdnkkXHfA3HcEwst9h1Jdd79+LjqMFO1jAms2I=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
