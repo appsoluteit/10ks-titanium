@@ -1,20 +1,6 @@
-# Appcelerator Titanium Mobile Module Project
+# Ti.HealthKit
 
-This is a skeleton Titanium Mobile Mobile module project.
-
-## Module Naming
-
-Choose a unique module id for your module.  This ID usually follows a namespace
-convention using DNS notation.  For example, com.appcelerator.module.test.  This
-ID can only be used once by all public modules in Titanium.
-
-## Getting Started
-
-1. Edit the `manifest` with the appropriate details about your module.
-2. Edit the `LICENSE` to add your license details.
-3. Place any assets (such as PNG files) that are required anywhere in the module folder.
-4. Edit the `timodule.xml` and configure desired settings.
-5. Code and build.
+This is a Titanium Mobile Mobile module project that exposes a subset of the HealthKit API for consumption by the 10K Steps app. It exposes operations to authorise the application to use HealthKit and to read steps for a given date range.
 
 ## Documentation
 -----------------------------

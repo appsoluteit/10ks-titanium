@@ -52,11 +52,18 @@ class TiHealthkitModule: TiModule {
                     message = "\(message). Reason: \(error.localizedDescription)"
                 }
                 
-                self.invokeCallback(callback: callback, response: ["message": message])
+                self.invokeCallback(callback: callback, response: [
+                    "success": false,
+                    "message": message
+                ])
+                
                 return
             }
             
-            self.invokeCallback(callback: callback, response: ["message": "HealthKit Authorization Successful"])
+            self.invokeCallback(callback: callback, response: [
+                "success": true,
+                "message": "HealthKit Authorization Successful"
+            ])
         }
     }
     
@@ -72,19 +79,15 @@ class TiHealthkitModule: TiModule {
         let provider = HealthKitProvider()
         provider.querySteps(start: from, end: to) { (steps, errorText) in
             
-//            self.invokeCallback(callback: callback, response: [
-//                "message": errorText,
-//                "steps": steps
-//            ])
-            
             // the module bridge has trouble returning complex types.
             // return it as JSON instead
             let encoder = JSONEncoder()
             let data = try? encoder.encode(steps)
             if let json = data {
-                let response = String(data: json, encoding: .utf8)!
+                let result = String(data: json, encoding: .utf8)!
                 self.invokeCallback(callback: callback, response: [
-                    "response": response,
+                    "success": true,
+                    "result": result,
                     "message": errorText
                 ])
             }

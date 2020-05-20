@@ -2,7 +2,7 @@
 
 ## Description
 
-TODO: Enter your module description here
+This module exposes a subset of the iOS HealthKit api for consumption by the 10K Steps Appcelerator Alloy app.
 
 ## Accessing the ti.healthkit Module
 
@@ -14,26 +14,56 @@ The ti_healthkit variable is a reference to the Module object.
 
 ## Reference
 
-TODO: If your module has an API, you should document
-the reference here.
+### ti_healthkit.authoriseHealthKit(cb);
+Accepts a callback with a single parameter and no return value.
+The argument passed to the callback will be a `response` with the following schema:
 
-### ti_healthkit.function
+```
+{
+	"success": bool,
+	"message": string
+}
+```
 
-TODO: This is an example of a module function.
+### ti_healthkit.querySteps(from, to, cb);
 
-### ti_healthkit.property
+`from`: `Date` object representing the lower bound.
+`to`: `Date` object representing the upper bound.
+`cb`: A callback function with a single parameter and no return value. The argument passed to the callback will be a `response` with the following schema:
 
-TODO: This is an example of a module property.
+```
+{
+	"success": bool,
+	"message": string,
+	"result": [{
+		"steps": int,
+		"eventDate": timestamp(int)
+	}]
+}
+```
 
 ## Usage
 
-TODO: Enter your usage example here
+```
+			healthkit.authoriseHealthKit(function(response) {
+				Ti.API.info('healthkit authoriseHealthKit got response!');
+				Ti.API.info(response);
+				Ti.API.info('message: ' + response.message);
+
+				var from = new Date(0); // 01/01/1970
+				var to = new Date(); // today
+
+				healthkit.querySteps(from, to, function(response) {
+					Ti.API.info('healthkit query steps got response!');
+					Ti.API.info(response);
+				});
+			});
+```
 
 ## Author
 
-TODO: Enter your author name, email and other contact
-details you want to share here.
+Jason Sultana for AppsoluteIT.
 
 ## License
 
-TODO: Enter your license/legal information here.
+All rights reserved.
