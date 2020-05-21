@@ -17,6 +17,11 @@
 						</View>
 					</TableViewRow>
 					
+					<!-- Integrations -->
+					<TableViewRow id="tblRowIntegrations">
+						<Label class="row-label">Integrations</Label>
+					</TableViewRow>
+
 					<!-- Logout -->
 					<TableViewRow id="tblRowLogout">
 						<Label class="row-label">Logout</Label>

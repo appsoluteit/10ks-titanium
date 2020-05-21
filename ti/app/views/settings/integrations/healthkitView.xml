@@ -1,0 +1,19 @@
+<Alloy>
+	<View class="background-gradient" height="100%">
+		<View class="margin-10 inner-content" layout="vertical" bottom="10dp">
+            <View height="Ti.UI.SIZE" layout="horizontal" top="20dp">
+                <View class="half" height="Ti.UI.SIZE">
+                    <Switch id="swHealthKitEnabled" value="false" />
+                </View>
+                
+                <View class="half" height="Ti.UI.SIZE">
+                    <Label>Enable HealthKit</Label>
+                </View>
+			</View>
+
+		    <Label top="20dp" left="20dp" right="20dp">
+If this option is enabled, this app will import steps from HealthKit whenever you open the Step Log. You will then have the option the sync the steps to the 10K Steps website. 
+            </Label>
+		</View>
+	</View>
+</Alloy>

@@ -102,6 +102,7 @@ function window_open() {
 	//Set child view event handlers
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
+	$.settingsView.tblRowIntegrations.addEventListener('click', tblRowIntegrations_click);
 }
 
 function window_focus() {
@@ -247,4 +248,9 @@ function tblRowTests_click() {
 function tblRowReset_click() {
 	Alloy.Globals.Steps.removeAll();
 	alert("Steps data removed");
+}
+
+function tblRowIntegrations_click() {
+	var win = Alloy.createController('settings/integrations/integrations').getView();
+	win.open();
 }
