@@ -1,0 +1,71 @@
+<h1>ti.healthkit Module</h1>
+
+<h2>Description</h2>
+
+<p>This module exposes a subset of the iOS HealthKit api for consumption by the 10K Steps Appcelerator Alloy app.</p>
+
+<h2>Accessing the ti.healthkit Module</h2>
+
+<p>To access this module from JavaScript, you would do the following:</p>
+
+<pre><code>var ti_healthkit = require(&quot;ti.healthkit&quot;);</code></pre>
+
+<p>The ti_healthkit variable is a reference to the Module object.</p>
+
+<h2>Reference</h2>
+
+<h3>ti_healthkit.authoriseHealthKit(cb);</h3>
+
+<p>Accepts a callback with a single parameter and no return value.
+The argument passed to the callback will be a <code>response</code> with the following schema:</p>
+
+<p><code>
+{
+	&quot;success&quot;: bool,
+	&quot;message&quot;: string
+}
+</code></p>
+
+<h3>ti_healthkit.querySteps(from, to, cb);</h3>
+
+<p><code>from</code>: <code>Date</code> object representing the lower bound.
+<code>to</code>: <code>Date</code> object representing the upper bound.
+<code>cb</code>: A callback function with a single parameter and no return value. The argument passed to the callback will be a <code>response</code> with the following schema:</p>
+
+<p><code>
+{
+	&quot;success&quot;: bool,
+	&quot;message&quot;: string,
+	&quot;result&quot;: [{
+		&quot;steps&quot;: int,
+		&quot;eventDate&quot;: timestamp(int)
+	}]
+}
+</code></p>
+
+<h2>Usage</h2>
+
+<p><code></code>`
+			healthkit.authoriseHealthKit(function(response) {
+				Ti.API.info(&#39;healthkit authoriseHealthKit got response!&#39;);
+				Ti.API.info(response);
+				Ti.API.info(&#39;message: &#39; + response.message);</p>
+
+<pre><code>			var from = new Date(0); // 01/01/1970
+			var to = new Date(); // today
+
+			healthkit.querySteps(from, to, function(response) {
+				Ti.API.info(&#39;healthkit query steps got response!&#39;);
+				Ti.API.info(response);
+			});
+		});</code></pre>
+
+<p><code></code>`</p>
+
+<h2>Author</h2>
+
+<p>Jason Sultana for AppsoluteIT.</p>
+
+<h2>License</h2>
+
+<p>All rights reserved.</p>

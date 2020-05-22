@@ -202,6 +202,36 @@ function sync() {
 	});	
 }
 
+function importSteps() {
+	// TODO: We might want to refactor this into a platform-agnostic CommonJS service proxy
+	// that calls the appropriate native module.
+	var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled", true);
+	if (isHealthKitEnabled) {
+		var healthkit = require('ti.healthkit');
+		healthkit.authoriseHealthKit(function(response) {
+			Ti.API.info(response);
+			if (!response.success) {
+				Alloy.createWidget("com.mcongrove.toast", null, {
+					text: response.message,
+					duration: 2000,
+					view: $.steps,
+					theme: "error"
+				});					
+				return;
+			}
+
+			var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
+			var from = new Date(lastSyncDate);
+			var to = new Date(); // today
+
+			healthkit.querySteps(from, to, function(response) {
+				Ti.API.info('healthkit query steps got response!');
+				Ti.API.info(response);
+			});
+		});
+	}
+}
+
 /**
  * @description Calls `addDateRow` for today and yesterday, then calls `loadDatesFrom` from the date before yesterday.
  * @memberof Controllers.Steps
