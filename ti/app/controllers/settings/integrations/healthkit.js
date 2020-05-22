@@ -9,7 +9,7 @@ var healthkit = require('ti.healthkit');
 function window_open() {
     Ti.API.info('Healthkit window open.');
 
-    var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled", true);
+    var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled");
     var sw = $.healthkitView.swHealthKitEnabled;
     sw.value = isHealthKitEnabled;
 

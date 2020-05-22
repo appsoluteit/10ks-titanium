@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/TiHealthkit-Swift.h</key>
 		<data>
-		gR2bxig8lwg8sjW92Dut1rrbrPM=
+		GR3cwGhG+fpq2hbpYHuAVdlmcwE=
 		</data>
 		<key>Headers/TiHealthkit.h</key>
 		<data>
@@ -26,11 +26,15 @@
 		</data>
 		<key>Modules/TiHealthkit.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		Tg6c3ViHKoK//yt2pVBwC1XZWXE=
+		Y5xOSN5TKvxDYVekNyNyGmeSBng=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		KYubwYcv3y0xGmy4UF6PCWTjbLQ=
+		</data>
+		<key>manifest</key>
+		<data>
+		pXRSmCA2shAugP2VqY0wi/wtWwM=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -39,7 +43,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			W1DCcagvjxP0xi+XyxZMLHoDy/F5ZFTUU9kYvHRA0IM=
+			UWUnnZ0IC0si9zPKFRoldTg0B1wRl0Kgd3ejLFqLaow=
 			</data>
 		</dict>
 		<key>Headers/TiHealthkit.h</key>
@@ -67,7 +71,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			u7WXtlCZQ2zI3GS9Kr2y84SqCNplPEEv4zb8s2nDzWI=
+			kLP06TXEA3RnLpg36hOHReu0SBTzX5Agoj/W38bhL4U=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -75,6 +79,13 @@
 			<key>hash2</key>
 			<data>
 			RMGz4ueIX7LJwzQTHqEVICTUBRZfHX62czk6sg8m16Q=
+			</data>
+		</dict>
+		<key>manifest</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Gl26FGUfQxX+/XTiMUgwVGdBFVgIdLHAdN8oojZ5Vxc=
 			</data>
 		</dict>
 	</dict>

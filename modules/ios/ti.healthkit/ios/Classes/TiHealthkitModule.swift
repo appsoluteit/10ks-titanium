@@ -80,8 +80,15 @@ class TiHealthkitModule: TiModule {
         provider.querySteps(start: from, end: to) { (steps, errorText) in
             
             // the module bridge has trouble returning complex types.
-            // return it as JSON instead
+            // return it as JSON instead. Also note that by default,
+            // the encoder will serialise the date using a `timeIntervalSinceReferenceDate`.
+            // We may be best off specifying the encoder to use a different format.
+            // https://www.raywenderlich.com/3418439-encoding-and-decoding-in-swift
+            // https://developer.apple.com/documentation/foundation/nsdate/1417376-timeintervalsincereferencedate
+            
+            
             let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .formatted(.dateFormatter)
             let data = try? encoder.encode(steps)
             if let json = data {
                 let result = String(data: json, encoding: .utf8)!

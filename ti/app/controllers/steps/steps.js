@@ -208,26 +208,56 @@ function importSteps() {
 	var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled", true);
 	if (isHealthKitEnabled) {
 		var healthkit = require('ti.healthkit');
-		healthkit.authoriseHealthKit(function(response) {
+
+		//Alloy.Globals.Spinner.show("Importing from HealthKit...");
+
+		var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
+		//var from = new Date(lastSyncDate);
+		var from = new Date(0);
+		var to = new Date(); // today
+
+		Ti.API.info('Importing steps from: ', from);
+		healthkit.querySteps(from, to, function(response) {
+			Ti.API.info('healthkit query steps got response!');
 			Ti.API.info(response);
+
+			// The most likely reason for a failure here is if the user manually revokes
+			// permission to access healthkit
 			if (!response.success) {
 				Alloy.createWidget("com.mcongrove.toast", null, {
 					text: response.message,
 					duration: 2000,
 					view: $.steps,
 					theme: "error"
-				});					
+				});		
 				return;
 			}
 
-			var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-			var from = new Date(lastSyncDate);
-			var to = new Date(); // today
+			response.result = JSON.parse(response.result);
+			response.result.forEach(element => {
+				var date = new Date(element.eventDate);
+				var steps = element.steps;
 
-			healthkit.querySteps(from, to, function(response) {
-				Ti.API.info('healthkit query steps got response!');
-				Ti.API.info(response);
+				var item = Alloy.Globals.Steps.readByDate(date); // find an existing steps record for that date
+				if (!item) {
+					item = {
+						activityPart: 0,
+						moderateMins: 0,
+						vigorousMins: 0,
+						stepsWalked: 0,
+						stepsTotal: 0,
+						stepsDate: date
+					};
+				}
+
+				item.stepsTotal += steps;
+
+				Ti.API.info('Saving item from HealthKit', item);
+				Alloy.Globals.Steps.writeSingle(item);
 			});
+
+			Ti.App.Properties.setString('lastSyncDate', to.toISOString());
+			//Alloy.Globals.Spinner.hide();
 		});
 	}
 }
@@ -259,7 +289,8 @@ function window_open() {
 		setiOSNavButtons();
 	}
 	
-	populateRows();
+	importSteps(); // import steps from a linked provider, if any
+	populateRows(); // populate the rows AFTER importing
 }
 
 function setiOSNavButtons() {

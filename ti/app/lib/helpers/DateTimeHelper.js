@@ -71,7 +71,7 @@ function getCurrentMonthName() {
  * @returns {String} The date label
  */
 function getDateLabel(dateObj, includeYear) {
-	Ti.API.info('Getting date label for: ' + dateObj);
+	// Ti.API.info('Getting date label for: ' + dateObj);
 
 	var dayNames = [
 		"Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"

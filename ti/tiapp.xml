@@ -106,7 +106,7 @@
         <module platform="android" version="2.0.3">firebase.cloudmessaging</module>
         <module platform="iphone" version="1.4.1">firebase.analytics</module>
         <module platform="iphone" version="2.2.0">firebase.core</module>
-        <module platform="iphone" version="1.0.1">ti.healthkit</module>
+        <module platform="iphone" version="1.0.2">ti.healthkit</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
