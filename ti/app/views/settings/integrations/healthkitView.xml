@@ -1,19 +1,40 @@
 <Alloy>
 	<View class="background-gradient" height="100%">
 		<View class="margin-10 inner-content" layout="vertical" bottom="10dp">
-            <View height="Ti.UI.SIZE" layout="horizontal" top="20dp">
-                <View class="half" height="Ti.UI.SIZE">
-                    <Switch id="swHealthKitEnabled" value="false" />
-                </View>
-                
-                <View class="half" height="Ti.UI.SIZE">
-                    <Label>Enable HealthKit</Label>
-                </View>
-			</View>
+        	<!-- TableView Container -->
+			<View top="0dp" height="Ti.UI.SIZE">
+				<TableView id="tblContainer" class="margin-10" height="Ti.UI.SIZE">					
+					<TableViewRow id="tblRowEnableHealthKit">
+						<View layout="horizontal">
+							<View width="48%" layout="vertical">
+                                <View layout="horizontal" height="Ti.UI.SIZE">
+                                    <Label class="row-label">Enable HealthKit</Label>
+                                    <Button
+                                        id="btnHealthKitHelp"
+                                        image="/common/icons/question-mark.png">
+                                    </Button>
+                                </View>
+							</View>
+							
+							<View width="48%" layout="vertical">
+                                <Switch id="swHealthKitEnabled" value="false" right="10dp" />
+							</View>
+						</View>
+					</TableViewRow>
 
-		    <Label top="20dp" left="20dp" right="20dp">
-If this option is enabled, this app will import steps from HealthKit whenever you open the Step Log. You will then have the option the sync the steps to the 10K Steps website. 
-            </Label>
+                    <TableViewRow>
+						<View layout="horizontal">
+							<View width="38%">
+								<Label class="row-label">Last sync date</Label>
+							</View>
+							
+							<View width="58%">
+                                <Label id="lblLastImportDate" class="row-value"></Label>
+							</View>
+						</View>                        
+                    </TableViewRow>
+				</TableView>
+			</View>
 		</View>
 	</View>
 </Alloy>

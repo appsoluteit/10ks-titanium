@@ -212,8 +212,8 @@ function importSteps() {
 		//Alloy.Globals.Spinner.show("Importing from HealthKit...");
 
 		var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-		//var from = new Date(lastSyncDate);
-		var from = new Date(0);
+		var from = new Date(lastSyncDate);
+		//var from = new Date(0);
 		var to = new Date(); // today
 
 		Ti.API.info('Importing steps from: ', from);
@@ -249,8 +249,8 @@ function importSteps() {
 						stepsDate: date
 					};
 				}
-
-				item.stepsTotal += steps;
+				
+				item.stepsWalked += steps; 
 
 				Ti.API.info('Saving item from HealthKit', item);
 				Alloy.Globals.Steps.writeSingle(item);
