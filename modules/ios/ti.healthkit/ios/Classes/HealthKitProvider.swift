@@ -39,11 +39,10 @@ class HealthKitProvider {
         }
     }
     
-    func querySteps(start: Date, end: Date, completion: @escaping ([StepInfo], String) -> Swift.Void) {
+    func querySteps(start: Date, end: Date, completion: @escaping (Bool, String, [StepInfo]) -> Swift.Void) {
         guard let stepsSampleType = HKSampleType.quantityType(forIdentifier: .stepCount) else {
             let err = "Steps Sample Type is no longer available in HealthKit"
-            print(err)
-            completion([], err)
+            completion(false, err, [])
             return
         }
         
@@ -63,7 +62,7 @@ class HealthKitProvider {
             //2. Always dispatch to the main thread when complete.
             DispatchQueue.main.async {
                 guard let samples = samples else {
-                    completion([], error?.localizedDescription ?? "Unable to unwrap samples.")
+                    completion(false, error?.localizedDescription ?? "Unable to unwrap samples.", [])
                     return
                 }
                 
@@ -74,7 +73,7 @@ class HealthKitProvider {
                     return StepInfo(steps: Int(steps), eventDate: sample.startDate)
                 }
                 
-                completion(results, "")
+                completion(true, "", results)
             }
         }
 

@@ -77,7 +77,7 @@ class TiHealthkitModule: TiModule {
         }
         
         let provider = HealthKitProvider()
-        provider.querySteps(start: from, end: to) { (steps, errorText) in
+        provider.querySteps(start: from, end: to) { (success, errorText, steps) in
             
             // the module bridge has trouble returning complex types.
             // return it as JSON instead. Also note that by default,
@@ -93,7 +93,7 @@ class TiHealthkitModule: TiModule {
             if let json = data {
                 let result = String(data: json, encoding: .utf8)!
                 self.invokeCallback(callback: callback, response: [
-                    "success": true,
+                    "success": success,
                     "result": result,
                     "message": errorText
                 ])

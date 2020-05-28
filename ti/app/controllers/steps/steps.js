@@ -12,6 +12,7 @@ var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
 var NavBarButton = require('classes/NavBarButton');
+var q = require('q');
 
 /**
  * @description Adds a row to the dates table
@@ -203,9 +204,11 @@ function sync() {
 }
 
 function importSteps() {
+	var deferred = q.defer();
+
 	// TODO: We might want to refactor this into a platform-agnostic CommonJS service proxy
 	// that calls the appropriate native module.
-	var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled", true);
+	var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled");
 	if (isHealthKitEnabled) {
 		var healthkit = require('ti.healthkit');
 
@@ -230,6 +233,7 @@ function importSteps() {
 					view: $.steps,
 					theme: "error"
 				});		
+				deferred.resolve();
 				return;
 			}
 
@@ -250,16 +254,26 @@ function importSteps() {
 					};
 				}
 				
+				// we need to increment both of these fields; stepsWalked so that it's editable in the form,
+				// stepsTotal so that it shows up in the list
 				item.stepsWalked += steps; 
+				item.stepsTotal += steps;
 
 				Ti.API.info('Saving item from HealthKit', item);
 				Alloy.Globals.Steps.writeSingle(item);
 			});
 
 			Ti.App.Properties.setString('lastSyncDate', to.toISOString());
+			deferred.resolve();
+
 			//Alloy.Globals.Spinner.hide();
 		});
 	}
+	else {
+		deferred.resolve();
+	}
+
+	return deferred.promise;
 }
 
 /**
@@ -289,8 +303,12 @@ function window_open() {
 		setiOSNavButtons();
 	}
 	
-	importSteps(); // import steps from a linked provider, if any
-	populateRows(); // populate the rows AFTER importing
+	//Alloy.Globals.Spinner.show("Loading steps...");
+
+	importSteps()
+		.then(function() {
+			populateRows(); // populate the rows AFTER importing
+		});
 }
 
 function setiOSNavButtons() {
