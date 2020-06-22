@@ -77,11 +77,32 @@ function window_open() {
 		var tblRowReset = makeRow("Reset");
 		$.settingsView.tblContainer.appendRow(tblRowReset);
 		tblRowReset.addEventListener('click', tblRowReset_click);
+
+		// ios module tests
+		var healthkit = require('ti.healthkit');
+		var tblTestProperty = makeRow('Test healthkit');
+		$.settingsView.tblContainer.appendRow(tblTestProperty);
+		tblTestProperty.addEventListener('click', function() {
+			healthkit.authoriseHealthKit(function(response) {
+				Ti.API.info('healthkit authoriseHealthKit got response!');
+				Ti.API.info(response);
+				Ti.API.info('message: ' + response.message);
+
+				var from = new Date(0); // 01/01/1970
+				var to = new Date(); // today
+
+				healthkit.querySteps(from, to, function(response) {
+					Ti.API.info('healthkit query steps got response!');
+					Ti.API.info(response);
+				});
+			});
+		});
 	}
 	
 	//Set child view event handlers
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
+	$.settingsView.tblRowIntegrations.addEventListener('click', tblRowIntegrations_click);
 }
 
 function window_focus() {
@@ -227,4 +248,9 @@ function tblRowTests_click() {
 function tblRowReset_click() {
 	Alloy.Globals.Steps.removeAll();
 	alert("Steps data removed");
+}
+
+function tblRowIntegrations_click() {
+	var win = Alloy.createController('settings/integrations/integrations').getView();
+	win.open();
 }

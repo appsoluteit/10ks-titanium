@@ -1,0 +1,27 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="integrations" platform="ios">
+		<Window title="Integrations" onOpen="window_open">
+			<LeftNavButton>
+				<Button 
+					id="btnBack" 
+					image="/common/chevrons/left-16.png"
+					onClick="btnBack_click">
+				</Button>	
+			</LeftNavButton>
+			
+			<Require id="integrationsView" src="settings/integrations/integrationsView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="integrations" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="Integrations" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="integrationsView" src="settings/integrations/integrationsView" type="view"/>
+	</Window>
+</Alloy>

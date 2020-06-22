@@ -1,0 +1,19 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.3
+apiversion: 2
+#architectures: armv7 arm64 i386 x86_64
+architectures: x86_64 arm64
+description: ti.healthkit is a Swift based Titanium module.
+author: Jason Sultana
+license: Specify your license
+copyright: Copyright (c) 2020 by Your Company
+
+# these should not be edited
+name: ti.healthkit
+moduleid: ti.healthkit
+guid: 294b9204-6239-4d8e-9b07-e8590cd23800
+platform: iphone
+minsdk: 8.0.3.v20190711103731

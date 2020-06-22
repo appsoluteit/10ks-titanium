@@ -1,0 +1,27 @@
+<Alloy>
+	<!-- iOS -->
+	<NavigationWindow id="healthkit" platform="ios">
+		<Window title="HealthKit" onOpen="window_open">
+			<LeftNavButton>
+				<Button 
+					id="btnBack" 
+					image="/common/chevrons/left-16.png"
+					onClick="btnBack_click">
+				</Button>	
+			</LeftNavButton>
+			
+			<Require id="healthkitView" src="settings/integrations/healthkitView" type="view"/>
+		</Window>
+	</NavigationWindow>
+	
+	<!-- Android -->
+	<Window id="healthkit" platform="android" onOpen="window_open">
+		<ActionBar 
+			title="HealthKit" 
+			displayHomeAsUp="true" 
+			homeButtonEnabled="true" 
+			onHomeIconItemSelected="btnBack_click"></ActionBar>
+			
+		<Require id="healthkitView" src="settings/integrations/healthkitView" type="view"/>
+	</Window>
+</Alloy>

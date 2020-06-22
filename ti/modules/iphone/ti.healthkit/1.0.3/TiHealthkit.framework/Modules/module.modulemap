@@ -1,0 +1,11 @@
+framework module TiHealthkit {
+  umbrella header "TiHealthkit.h"
+
+  export *
+  module * { export * }
+}
+
+module TiHealthkit.Swift {
+    header "TiHealthkit-Swift.h"
+    requires objc
+}
