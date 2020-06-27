@@ -12,6 +12,7 @@ var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 var StepsProvider = require('classes/StepsProvider');
 var NavBarButton = require('classes/NavBarButton');
+var healthProvider = require('classes/health/HealthProvider');
 var q = require('q');
 
 /**
@@ -206,72 +207,20 @@ function sync() {
 function importSteps() {
 	var deferred = q.defer();
 
-	// TODO: We might want to refactor this into a platform-agnostic CommonJS service proxy
-	// that calls the appropriate native module.
-	var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled");
-	if (isHealthKitEnabled) {
-		var healthkit = require('ti.healthkit');
-
-		//Alloy.Globals.Spinner.show("Importing from HealthKit...");
-
-		var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-		var from = new Date(lastSyncDate);
-		//var from = new Date(0);
-		var to = new Date(); // today
-
-		Ti.API.info('Importing steps from: ', from);
-		healthkit.querySteps(from, to, function(response) {
-			Ti.API.info('healthkit query steps got response!');
-			Ti.API.info(response);
-
-			// The most likely reason for a failure here is if the user manually revokes
-			// permission to access healthkit
-			if (!response.success) {
-				Alloy.createWidget("com.mcongrove.toast", null, {
-					text: response.message,
-					duration: 2000,
-					view: $.steps,
-					theme: "error"
-				});		
-				deferred.resolve();
-				return;
-			}
-
-			response.result = JSON.parse(response.result);
-			response.result.forEach(element => {
-				var date = new Date(element.eventDate);
-				var steps = element.steps;
-
-				var item = Alloy.Globals.Steps.readByDate(date); // find an existing steps record for that date
-				if (!item) {
-					item = {
-						activityPart: 0,
-						moderateMins: 0,
-						vigorousMins: 0,
-						stepsWalked: 0,
-						stepsTotal: 0,
-						stepsDate: date
-					};
-				}
-				
-				// we need to increment both of these fields; stepsWalked so that it's editable in the form,
-				// stepsTotal so that it shows up in the list
-				item.stepsWalked += steps; 
-				item.stepsTotal += steps;
-
-				Ti.API.info('Saving item from HealthKit', item);
-				Alloy.Globals.Steps.writeSingle(item);
-			});
-
-			Ti.App.Properties.setString('lastSyncDate', to.toISOString());
+	healthProvider
+		.importSteps()
+		.then(function() {
 			deferred.resolve();
-
-			//Alloy.Globals.Spinner.hide();
+		})
+		.catch(function(response) {
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: response.message,
+				duration: 2000,
+				view: $.steps,
+				theme: "error"
+			});		
+			deferred.resolve();
 		});
-	}
-	else {
-		deferred.resolve();
-	}
 
 	return deferred.promise;
 }
@@ -302,8 +251,6 @@ function window_open() {
 	if(Ti.Platform.osname !== "android") {
 		setiOSNavButtons();
 	}
-	
-	//Alloy.Globals.Spinner.show("Loading steps...");
 
 	importSteps()
 		.then(function() {

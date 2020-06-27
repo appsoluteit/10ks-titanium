@@ -5,13 +5,14 @@
  */
 
 var healthkit = require('ti.healthkit');
+var healthProvider = require('classes/health/HealthProvider');
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 
 function window_open() {
     Ti.API.info('Healthkit window open.');
 
-    var isHealthKitEnabled = Ti.App.Properties.getBool("is-healthkit-enabled");
+    var isHealthKitEnabled = Ti.App.Properties.getString("healthProvider", null) === 'healthkit';
     var sw = $.healthkitView.swHealthKitEnabled;
     sw.value = isHealthKitEnabled;
 
@@ -22,7 +23,7 @@ function window_open() {
             authoriseHealthKit();
         }
         else {
-            Ti.App.Properties.setBool('is-healthkit-enabled', false);
+            Ti.App.Properties.setString('healthProvider', null);
         }
     });
 
@@ -36,19 +37,28 @@ function window_open() {
          dialog.show();
     });
 
-    var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-    var lastSyncDateDt = new Date(lastSyncDate);
-    var lastSyncDateLabel = DateTimeHelper.getDateLabel(lastSyncDateDt);
-    var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
+    populateLastSyncDate();
+ }
 
-    $.healthkitView.lblLastImportDate.text = lastSyncDateLabel + ' at ' + lastSyncTimeLabel;
+ function populateLastSyncDate() {
+    var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
+    if (lastSyncDate == null) {
+        $.healthkitView.lblLastImportDate.text = 'Never';
+    }
+    else {
+        var lastSyncDateDt = new Date(lastSyncDate);
+        var lastSyncDateLabel = DateTimeHelper.getDateLabel(lastSyncDateDt);
+        var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
+    
+        $.healthkitView.lblLastImportDate.text = lastSyncDateLabel + ' at ' + lastSyncTimeLabel;
+    }
  }
 
  function authoriseHealthKit() {
     healthkit.authoriseHealthKit(function(response) {
         Ti.API.info(response);
         if (response.success) {
-            Ti.App.Properties.setBool('is-healthkit-enabled', true);
+            Ti.App.Properties.setString('healthProvider', 'healthkit');
 
             Alloy.createWidget("com.mcongrove.toast", null, {
                 text: 'HealthKit enabled successfully.',
@@ -56,6 +66,27 @@ function window_open() {
                 view: $.healthkit,
                 theme: "success"
             });		
+
+            healthProvider
+                .importSteps()
+                .then(function() {
+                    Alloy.createWidget("com.mcongrove.toast", null, {
+                        text: 'HealthKit import was successful.',
+                        duration: 2000,
+                        view: $.healthkit,
+                        theme: "success"
+                    });
+
+                    populateLastSyncDate();
+                })
+                .catch(function(response) {
+                    Alloy.createWidget("com.mcongrove.toast", null, {
+                        text: response.message,
+                        duration: 2000,
+                        view: $.healthkit,
+                        theme: "error"
+                    });
+                });
         }
         else {
             Alloy.createWidget("com.mcongrove.toast", null, {
