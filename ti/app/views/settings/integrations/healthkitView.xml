@@ -6,7 +6,7 @@
 				<TableView id="tblContainer" class="margin-10" height="Ti.UI.SIZE">					
 					<TableViewRow id="tblRowEnableHealthKit">
 						<View layout="horizontal">
-							<View width="48%" layout="vertical">
+							<View width="68%" layout="vertical">
                                 <View layout="horizontal" height="Ti.UI.SIZE">
                                     <Label class="row-label">Enable HealthKit</Label>
                                     <Button
@@ -16,7 +16,7 @@
                                 </View>
 							</View>
 							
-							<View width="48%" layout="vertical">
+							<View width="28%" layout="vertical">
                                 <Switch id="swHealthKitEnabled" value="false" right="10dp" />
 							</View>
 						</View>
