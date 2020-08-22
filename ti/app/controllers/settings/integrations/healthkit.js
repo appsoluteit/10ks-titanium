@@ -65,10 +65,14 @@ function window_open() {
         $.healthkitView.lblLastImportDate.text = 'Never';
         $.healthkitView.vwImportStepsFrom.visible = true;
         $.healthkitView.vwFirstImportPicker.visible = true;
-        $.healthkitView.pkFirstImportPicker.maxDate = new Date();
 
         // Set the default first import date to 1 week in the past
-        importFromDate = DateTimeHelper.addWeeks(new Date(), -1);;
+        // Set the minimum first import date to 12 weeks (3 months) in the past
+        var today = new Date();
+        importFromDate = DateTimeHelper.addWeeks(today, -1);;
+
+        $.healthkitView.pkFirstImportPicker.maxDate = today;
+        $.healthkitView.pkFirstImportPicker.minDate = DateTimeHelper.addWeeks(today, -12);
         $.healthkitView.pkFirstImportPicker.value = importFromDate;
     }
     else {
