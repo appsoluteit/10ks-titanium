@@ -9,6 +9,8 @@ var healthProvider = require('classes/health/HealthProvider');
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 
+var importFromDate;
+
 function window_open() {
     Ti.API.info('Healthkit window open.');
 
@@ -37,13 +39,37 @@ function window_open() {
          dialog.show();
     });
 
-    populateLastSyncDate();
+    // If the user has never imported before, wire up events
+    if (Ti.App.Properties.getString('lastSyncDate', null) == null) {
+        $.healthkitView.vwImportStepsFrom.addEventListener('click', function() {
+            var dialog = Ti.UI.createAlertDialog({
+                cancel: 1,
+                buttonNames: ['OK'],
+                message: 'Choose when you would like to import your steps from when this feature is enabled. Note that choosing an older date will take longer to import.',
+                title: 'Import steps from'
+             });
+             dialog.show();
+        });
+    
+        $.healthkitView.pkFirstImportPicker.addEventListener('change', function(event) {
+            importFromDate = event.value;
+        });
+    }
+
+    populateRows();
  }
 
- function populateLastSyncDate() {
+ function populateRows() {
     var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
     if (lastSyncDate == null) {
         $.healthkitView.lblLastImportDate.text = 'Never';
+        $.healthkitView.vwImportStepsFrom.visible = true;
+        $.healthkitView.vwFirstImportPicker.visible = true;
+        $.healthkitView.pkFirstImportPicker.maxDate = new Date();
+
+        // Set the default first import date to 1 week in the past
+        importFromDate = DateTimeHelper.addWeeks(new Date(), -1);;
+        $.healthkitView.pkFirstImportPicker.value = importFromDate;
     }
     else {
         var lastSyncDateDt = new Date(lastSyncDate);
@@ -51,6 +77,10 @@ function window_open() {
         var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
     
         $.healthkitView.lblLastImportDate.text = lastSyncDateLabel + ' at ' + lastSyncTimeLabel;
+        $.healthkitView.vwImportStepsFrom.visible = false;
+        $.healthkitView.vwFirstImportPicker.visible = false;
+
+        importFromDate = lastSyncDateDt;
     }
  }
 
@@ -68,16 +98,16 @@ function window_open() {
             });		
 
             healthProvider
-                .importSteps()
+                .importSteps(importFromDate)
                 .then(function() {
                     Alloy.createWidget("com.mcongrove.toast", null, {
                         text: 'HealthKit import was successful.',
                         duration: 2000,
                         view: $.healthkit,
                         theme: "success"
-                    });
+                    }); 
 
-                    populateLastSyncDate();
+                    populateRows();
                 })
                 .catch(function(response) {
                     Alloy.createWidget("com.mcongrove.toast", null, {

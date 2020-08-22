@@ -29,27 +29,27 @@ function getProvider() {
     }
 }
 
-function importSteps() {
+function importSteps(customFrom) {
     var provider = getProvider();
     if (provider == null) {
         return q.resolve();
     }
     else {
         var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-		var from = new Date(lastSyncDate);
+		var defaultFrom = new Date(lastSyncDate);
         var to = new Date(); // today
         var twoWeeksAgo = new Date(to.getTime() - (1000*60*60*24*14)); // milliseconds * seconds * minutes * hours * days
 
-        Ti.API.info('Importing steps from: ', from);
+        Ti.API.info('Importing steps from: ', defaultFrom);
         Ti.API.info('2 weeks ago:', twoWeeksAgo);
 
-        if (from < twoWeeksAgo) {
+        if (defaultFrom < twoWeeksAgo) {
             Ti.API.info('Showing spinner');
             Alloy.Globals.Spinner.show('Importing steps...');
         }
 
         return provider
-            .querySteps(from, to)
+            .querySteps(customFrom || defaultFrom, to)
             .then(function(response) {
                 Ti.API.info('HealthProvider processing results.');
 

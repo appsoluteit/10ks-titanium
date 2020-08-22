@@ -4,7 +4,7 @@ var q = require('q');
 function querySteps(from, to) {
     var deferred = q.defer();
 
-    Ti.API.info('Importing steps from HealthKit');
+    Ti.API.info(`[HealthkitProxy] Importing steps from HealthKit. From ${from}, to ${to}.`);
 
     healthkit.querySteps(from, to, function(response) {
         Ti.API.info('healthkit query steps got response!');
