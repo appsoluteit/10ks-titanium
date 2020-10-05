@@ -44,7 +44,7 @@ function loadStatistics() {
 
 		if(response.max_month) {
 			if(response.max_month.month) {
-				var busiestMonth = new Date(response.max_month.month);
+				var busiestMonth = DateTimeHelper.parseLocal(response.max_month.month);
 				$.statsView.lblBusiestMonth.text = DateTimeHelper.getMonthLabel(busiestMonth);	
 			}	
 			
@@ -55,7 +55,7 @@ function loadStatistics() {
 		
 		if(response.max_day) {
 			if(response.max_day.steps_date) {
-				var busiestDay = new Date(response.max_day.steps_date);
+				var busiestDay = DateTimeHelper.parseLocal(response.max_day.steps_date);
 				$.statsView.lblBusiestDay.text = DateTimeHelper.getDateLabel(busiestDay, true);	
 			}
 			
@@ -72,7 +72,8 @@ function loadStatistics() {
 			$.statsView.lblSevenDayAverage.text = FormatHelper.formatNumber(response.seven_day_average);
 		}
 		
-		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(new Date().getFullYear());
+		var thisYear = DateTimeHelper.today().getFullYear();
+		var monthlySteps = Alloy.Globals.Steps.readByMonthForYear(thisYear);
 		var yearlyTotal = 0;
 		monthlySteps.forEach(function(item) {
 			yearlyTotal += item;
@@ -118,6 +119,8 @@ function loadLifetimeSteps() {
 		var total_steps = Ti.App.Properties.getInt("total_steps", 0);
 		$.statsView.lblLifeTimeSteps.text = FormatHelper.formatNumber(total_steps);
 		
+		Ti.API.info('Total steps from local storage: ' + total_steps);
+
 		defer.resolve();
 	}, function onFail(reason) {
 		Ti.API.debug("Loading user failed. Reason: ", reason);
@@ -369,7 +372,9 @@ function window_open() {
 	$.statsView.lblLifeTimeSteps.text = 0;
 	$.statsView.lblYearlySteps.text = 0;
 	$.statsView.lblSevenDayAverage.text = 0;
-	$.statsView.lblYearlyStepsTitle.text = new Date().getFullYear() + " steps:";
+
+	var thisYear = DateTimeHelper.today().getFullYear();
+	$.statsView.lblYearlyStepsTitle.text = thisYear + " steps:";
 	
 	$.statsView.btnDailyGraph.addEventListener('click', btnDailyGraph_click);
 	$.statsView.btnMonthlyGraph.addEventListener('click', btnMonthlyGraph_click);

@@ -14,7 +14,7 @@ function show(_message, _cancelable) {
     newCtrl.show(_message, _cancelable);
 
     if (ctrl) {
-        Ti.API.info('Already exists. Hiding');
+        Ti.API.info('[Loading Spinner Widget] Already exists. Hiding');
         hide();
     }
 

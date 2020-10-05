@@ -71,7 +71,8 @@
 	 * @type {Date}
 	 * @memberof Alloy.Globals
 	 */
-	Alloy.Globals.ReminderEndDate = new Date();
+	var DateTimeHelper = require('helpers/DateTimeHelper');
+	Alloy.Globals.ReminderEndDate = DateTimeHelper.today();
 	Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
 
 	/**

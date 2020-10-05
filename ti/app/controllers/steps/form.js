@@ -5,6 +5,7 @@
  * @namespace Controllers.Steps.Form
  */
 
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require('helpers/FormatHelper');
 var item = {};	//a model to contain the data on the form. This gets written to local storage by the data provider.
 var isDirty = false;
@@ -28,7 +29,7 @@ function btnDone_click() {
 	if(isDirty) {			
 		isDirty = false;
 		
-		item.lastUpdatedOn = new Date();
+		item.lastUpdatedOn = DateTimeHelper.today();
 		item.stepsDate = args.date;
 		
 		Alloy.Globals.Steps.writeSingle(item);

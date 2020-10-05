@@ -230,7 +230,7 @@ function importSteps() {
  * @memberof Controllers.Steps
  */
 function populateRows() {	
-	var today = new Date();
+	var today = DateTimeHelper.today();
 	Ti.API.info("Today: ", today);
 	
 	addDateRow("Today", today);

@@ -49,7 +49,7 @@ function showChartForMonthAndYear(year, month) {
 	
 	dailyData.forEach(function(steps) {
 		chartData.push({
-			name: dayIndex + "/" + (new Date().getMonth() + 1),
+			name: dayIndex + "/" + (DateTimeHelper.today().getMonth() + 1),
 			x: dayIndex,
 			y: steps
 		});

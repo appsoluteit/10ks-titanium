@@ -5,7 +5,15 @@
  */
 
  function window_open() {
-	$.integrationsView.tblRowHealthKit.addEventListener('click', tblRowHealthKit_click);
+	if (Ti.Platform.osname !== 'android') {
+		Ti.API.info('Making healthkit row');
+
+		var healthKitRow = makeRow('HealthKit');
+		healthKitRow.addEventListener('click', tblRowHealthKit_click);
+		$.integrationsView.tblContainer.appendRow(healthKitRow);
+	}
+
+	// TODO: Add Android integrations
  }
 
  /**
@@ -19,4 +27,27 @@ function btnBack_click() {
 function tblRowHealthKit_click() {
     var win = Alloy.createController('settings/integrations/healthkit').getView();
 	win.open();
+}
+
+function makeRow(title) {
+	var row = Ti.UI.createTableViewRow({
+		height: "50dp"
+	});
+	
+	row.add(Ti.UI.createLabel({
+		text: title,
+		left: "10dp",
+		textAlign: "left",
+		width: Ti.UI.SIZE,
+		height: Ti.UI.SIZE,
+		color: '#000',
+		
+		font: {
+			fontFamily: 'Arial',
+			fontSize: '10',
+			fontWeight: "bold"
+		}
+	}));
+	
+	return row;
 }

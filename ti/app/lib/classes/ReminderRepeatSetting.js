@@ -16,6 +16,7 @@
  * http://docs.appcelerator.com/platform/latest/#!/api/daysOfTheWeekDictionary
  */
 
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require("helpers/FormatHelper");
 
 /**
@@ -71,7 +72,7 @@ ReminderRepeatSetting.prototype.isSet = function() {
 
 /**
  * Returns a JS DateTime for the next reminder date at the specified reminder time.
- * @param startFrom Date The date to start calculations from. This will most likely be new Date()
+ * @param startFrom Date The date to start calculations from. This will most likely be today.
  */
 ReminderRepeatSetting.prototype.getNextReminderDateTime = function(startFrom) {
 	/*	There are four different cases to handle when finding the next reminder (in order):
@@ -191,7 +192,7 @@ ReminderRepeatSetting.prototype.getScheduledRemindersBetween = function(startDat
 	}
 	
 	function makeScheduledTime(day, reminderTime) {
-		var reminder = new Date(day.getTime());
+		var reminder = DateTimeHelper.localise(new Date(day.getTime()));
 		
 		reminder.setHours(reminderTime.getHours());
 		reminder.setMinutes(reminderTime.getMinutes());
@@ -200,7 +201,7 @@ ReminderRepeatSetting.prototype.getScheduledRemindersBetween = function(startDat
 	}
 	
 	var now = startDate;
-	var currentDay = new Date(now.getTime());
+	var currentDay = DateTimeHelper.localise(new Date(now.getTime()));
 	var reminders = [];
 	var activeDays = this.get();
 	var reminderTime = FormatHelper.unformatTime(Ti.App.Properties.getString("ReminderTime"));
@@ -242,8 +243,8 @@ ReminderRepeatSetting.prototype.willExpire = function(now) {
 	if(reminderExpiry) {
 		Ti.API.debug("Reminder expiry: " + reminderExpiry);
 		
-		reminderExpiry = new Date(reminderExpiry); //yyyy-mm-dd should work in the constructor
-		var today = new Date(now.getTime());
+		reminderExpiry = DateTimeHelper.parseLocal(reminderExpiry); //yyyy-mm-dd should work in the constructor
+		var today = DateTimeHeler.localise(new Date(now.getTime()));
 		today.setDate(Alloy.Globals.ReminderExpiryBufferDays); //Add days to today based on the config setting
 		
 		Ti.API.debug("Buffer days: " + Alloy.Globals.ReminderExpiryBufferDays);

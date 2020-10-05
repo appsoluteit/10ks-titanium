@@ -81,7 +81,9 @@ AuthProvider.prototype.getUser = function() {
 		//Set some attributes required by settings, statistics, etc
 		if(response.walker) {
 			Ti.App.Properties.setInt("total_steps", response.walker.total_steps);	
-			Ti.App.Properties.setInt("average_daily_steps", response.walker.average_daily_steps);		
+			Ti.App.Properties.setInt("average_daily_steps", response.walker.average_daily_steps);	
+			
+			Ti.API.info('Total steps from api: ' + response.walker.total_steps);
 		}
 		
 		defer.resolve();

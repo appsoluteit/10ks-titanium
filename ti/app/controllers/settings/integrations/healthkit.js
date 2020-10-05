@@ -68,7 +68,7 @@ function window_open() {
 
         // Set the default first import date to 1 week in the past
         // Set the minimum first import date to 12 weeks (3 months) in the past
-        var today = new Date();
+        var today = DateTimeHelper.today();
         importFromDate = DateTimeHelper.addWeeks(today, -1);;
 
         $.healthkitView.pkFirstImportPicker.maxDate = today;
@@ -76,7 +76,7 @@ function window_open() {
         $.healthkitView.pkFirstImportPicker.value = importFromDate;
     }
     else {
-        var lastSyncDateDt = new Date(lastSyncDate);
+        var lastSyncDateDt = DateTimeHelper.parseLocal(lastSyncDate);
         var lastSyncDateLabel = DateTimeHelper.getDateLabel(lastSyncDateDt);
         var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
     
