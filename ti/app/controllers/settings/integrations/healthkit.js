@@ -76,7 +76,12 @@ function window_open() {
         $.healthkitView.pkFirstImportPicker.value = importFromDate;
     }
     else {
-        var lastSyncDateDt = DateTimeHelper.parseLocal(lastSyncDate);
+        Ti.API.info('Last synced on ', lastSyncDate);
+        
+        var lastSyncDateDt = new Date(lastSyncDate); // this is an ISO-string, so it's okay to init this way
+
+        Ti.API.info('Last synced date', lastSyncDateDt);
+
         var lastSyncDateLabel = DateTimeHelper.getDateLabel(lastSyncDateDt);
         var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
     

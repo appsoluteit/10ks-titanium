@@ -38,7 +38,7 @@ function importSteps(customFrom) {
     else {
         var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
 		var defaultFrom = DateTimeHelper.parseLocal(lastSyncDate);
-        var to = DateTimeHelper.today();
+        var to = DateTimeHelper.now();
         var twoWeeksAgo = DateTimeHelper.localise(new Date(to.getTime() - (1000*60*60*24*14))); // milliseconds * seconds * minutes * hours * days
 
         Ti.API.info('Importing steps from: ', defaultFrom);

@@ -44,7 +44,7 @@ function makeRow(title) {
 		
 		font: {
 			fontFamily: 'Arial',
-			fontSize: '10',
+			fontSize: '16',
 			fontWeight: "bold"
 		}
 	}));
