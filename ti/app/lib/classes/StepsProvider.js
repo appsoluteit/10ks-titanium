@@ -149,7 +149,9 @@ StepsProvider.prototype.sync = function(rootView, options) {
     	if(typeof(options.onProgress === 'function')) {
     		options.onProgress("Saving steps...");	
     	}
-    	
+		
+		Ti.API.info('Processing results');
+
      	steps.results.forEach(function(item) {
      		var json = {
      			stepsWalked: item.steps_walked,
@@ -157,10 +159,9 @@ StepsProvider.prototype.sync = function(rootView, options) {
      			activityPart: item.activity_part,
      			vigorousMins: item.vigorous,
      			moderateMins: item.moderate,
-     			stepsDate: DateTimeHelper.localise(new Date(item.steps_date)),
-     			lastSyncedOn: new Date(),
+     			stepsDate: DateTimeHelper.parseLocal(item.steps_date),
+     			lastSyncedOn: DateTimeHelper.today(),
      			lastUpdatedOn: null
-     			//lastUpdatedOn: new Date()
      		};
 
 			//Overwrite any existing items
@@ -172,7 +173,9 @@ StepsProvider.prototype.sync = function(rootView, options) {
 			Ti.API.info("Writing date ", item.steps_date);
      		Alloy.Globals.Steps.writeSingle(json);	
      	});
-     	
+		 
+		Ti.API.info('Calling onComplete');
+
      	options.onComplete();
     }
     

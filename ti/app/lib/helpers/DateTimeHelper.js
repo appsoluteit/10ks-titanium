@@ -20,6 +20,9 @@ module.exports.getShortDateLabel = getShortDateLabel;
 module.exports.getTimeBetween = getTimeBetween;
 module.exports.isValidDate = isValidDate;
 module.exports.localise = localise;
+module.exports.parseLocal = parseLocal;
+module.exports.today = today;
+module.exports.now = now;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,6 +178,8 @@ function getTimeBetween(firstDate, secondDate, showHours) {
 		showHours = true;
 	}
 
+	Ti.API.info('getTimeBetween', firstDate, secondDate);
+
 	var totalMins = getMinutesBetween(firstDate, secondDate);
   
 	var weeks = Math.floor(totalMins / MINUTES_PER_WEEK);
@@ -183,6 +188,8 @@ function getTimeBetween(firstDate, secondDate, showHours) {
   	var days = Math.floor(weeksRemainder / MINUTES_PER_DAY);
   	var daysRemainder = weeksRemainder % MINUTES_PER_DAY;
   
+	Ti.API.info('Days remainder: ' + daysRemainder);
+	
   	var hours = Math.ceil(daysRemainder / MINUTES_PER_HOUR);
      
   	var ret = weeks + ' weeks';
@@ -289,4 +296,24 @@ function localise(dateObj) {
     //Ti.API.info("Local date", localTime);
     
     return localTime;
+}
+
+/**
+ * Parses a date string and returs a localised date object.
+ * @param {String} dateStr A date string
+ */
+function parseLocal(dateStr) {
+	var obj = new Date(dateStr);
+	return localise(obj);
+}
+
+/**
+ * Returns a localised instance of the current date and time
+ */
+function today() {
+	return localise(new Date());
+}
+
+function now() {
+	return new Date();
 }

@@ -33,7 +33,7 @@
 							</View>
 						</View>                        
                     </TableViewRow>
-									<TableViewRow>
+														<TableViewRow>
 						<View layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" id="vwImportStepsFrom">
 							<Label class="row-label">Import steps from</Label>
 							<Button
@@ -44,7 +44,7 @@
 					</TableViewRow>
 				</TableView>
 			</View>
-					<View id="vwFirstImportPicker" visible="false" height="Ti.UI.FILL" layout="vertical">
+								<View id="vwFirstImportPicker" visible="false" height="Ti.UI.FILL" layout="vertical">
 				<Picker 
 					id="pkFirstImportPicker"
 					type="Ti.UI.PICKER_TYPE_DATE"

@@ -1,4 +1,5 @@
 var q = require('q');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 
 function getProvider() {
     // Will return a proxy to one of:
@@ -36,9 +37,9 @@ function importSteps(customFrom) {
     }
     else {
         var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
-		var defaultFrom = new Date(lastSyncDate);
-        var to = new Date(); // today
-        var twoWeeksAgo = new Date(to.getTime() - (1000*60*60*24*14)); // milliseconds * seconds * minutes * hours * days
+		var defaultFrom = DateTimeHelper.parseLocal(lastSyncDate);
+        var to = DateTimeHelper.now();
+        var twoWeeksAgo = DateTimeHelper.localise(new Date(to.getTime() - (1000*60*60*24*14))); // milliseconds * seconds * minutes * hours * days
 
         Ti.API.info('Importing steps from: ', defaultFrom);
         Ti.API.info('2 weeks ago:', twoWeeksAgo);
@@ -55,7 +56,7 @@ function importSteps(customFrom) {
 
                 response.result = JSON.parse(response.result);
                 response.result.forEach(element => {
-                    var date = new Date(element.eventDate);
+                    var date = DateTimeHelper.parseLocal(element.eventDate);
                     var steps = element.steps;
     
                     var item = Alloy.Globals.Steps.readByDate(date); // find an existing steps record for that date

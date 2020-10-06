@@ -4,11 +4,7 @@
 			<!-- TableView Container -->
 			<View top="0dp" height="Ti.UI.SIZE">
 				<TableView id="tblContainer" class="margin-10" height="Ti.UI.SIZE">					
-					<!-- Integrations -->
-					<TableViewRow id="tblRowHealthKit">
-						<Label class="row-label">Healthkit</Label>
-					</TableViewRow>
-				</TableView>
+					</TableView>
 			</View>
 		</View>
 	</View>

@@ -1,4 +1,6 @@
 /**
+ * [Deprecated] Feature no longer used.
+ * 
  * @file Calendar Factory
  * @description Provides an abstraction of setting reminders between iOS (using Ti.Calendar.Event and Ti.Calendar.RecurrenceRule) and Android (using multiple event instances)
  * module.
@@ -19,6 +21,7 @@
 
 var q = require('q');
 var ReminderRepeatSetting = require("classes/ReminderRepeatSetting");
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require('helpers/FormatHelper');
 
 var reminderRepeatSetting = new ReminderRepeatSetting();
@@ -113,7 +116,8 @@ AndroidReminder.prototype.add = function(calendar) {
 	var scheduledReminders;
 	try {
 		//calculate the next reminders until 1 month from now
-		scheduledReminders = reminderRepeatSetting.getScheduledRemindersBetween(new Date(), Alloy.Globals.ReminderEndDate);
+		var today = DateTimeHelper.today();
+		scheduledReminders = reminderRepeatSetting.getScheduledRemindersBetween(today, Alloy.Globals.ReminderEndDate);
 	}
 	catch(e) {
 		defer.reject(e);
@@ -247,7 +251,7 @@ AppleReminder.prototype.add = function(calendar) {
 	var nextReminder;
 	try {
 		//calculate the next reminder DT from now
-		nextReminder = reminderRepeatSetting.getNextReminderDateTime(new Date()); 
+		nextReminder = reminderRepeatSetting.getNextReminderDateTime(DateTimeHelper.today()); 
 	}
 	catch(e) {
 		defer.reject(e);

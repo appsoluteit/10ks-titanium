@@ -71,7 +71,8 @@
 	 * @type {Date}
 	 * @memberof Alloy.Globals
 	 */
-	Alloy.Globals.ReminderEndDate = new Date();
+	var DateTimeHelper = require('helpers/DateTimeHelper');
+	Alloy.Globals.ReminderEndDate = DateTimeHelper.today();
 	Alloy.Globals.ReminderEndDate.setMonth(Alloy.Globals.ReminderEndDate.getMonth() + 1); //one month in advance
 
 	/**
@@ -143,8 +144,8 @@
 //Facebook SDK Integration
 //https://github.com/appcelerator-modules/ti.facebook
 (function() {
-	var fb = require('facebook');	
-	fb.initialize();	
+	var fb = require('facebook');
+	fb.initialize();
 })();
 
 //ACS

@@ -49,6 +49,10 @@ function loadTournaments() {
 	$.tournamentsView.tblTournaments.setData([]); // first, clear the table
 
 	function onLoadTournamentsSuccess(results) {
+		Ti.API.info('Tournaments success', JSON.stringify(results));
+		var endDates = results.map(r => r.tournamentEndDate)[0];
+		Ti.API.info(endDates);
+		
 		results.forEach(function(element) {
 			var row = Ti.UI.createTableViewRow({
 				color: 'black',
@@ -91,7 +95,7 @@ function loadTournaments() {
 
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
-				text: DateTimeHelper.getDateLabel(new Date(element.tournamentStartDate), true),
+				text: DateTimeHelper.getDateLabel(DateTimeHelper.parseLocal(element.tournamentStartDate), true),
 				color: 'gray'
 			}));
 

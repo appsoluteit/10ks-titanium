@@ -9,6 +9,7 @@
 
 var APIHelper = require('helpers/APIHelper');
 var AuthProvider = require('classes/AuthProvider');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var FormatHelper = require('helpers/FormatHelper');
 var NavBarButton = require('classes/NavBarButton');
 var SessionHelper = require('helpers/SessionHelper');
@@ -79,30 +80,38 @@ function window_open() {
 		tblRowReset.addEventListener('click', tblRowReset_click);
 
 		// ios module tests
-		var healthkit = require('ti.healthkit');
-		var tblTestProperty = makeRow('Test healthkit');
-		$.settingsView.tblContainer.appendRow(tblTestProperty);
-		tblTestProperty.addEventListener('click', function() {
-			healthkit.authoriseHealthKit(function(response) {
-				Ti.API.info('healthkit authoriseHealthKit got response!');
-				Ti.API.info(response);
-				Ti.API.info('message: ' + response.message);
-
-				var from = new Date(0); // 01/01/1970
-				var to = new Date(); // today
-
-				healthkit.querySteps(from, to, function(response) {
-					Ti.API.info('healthkit query steps got response!');
+		if (Ti.Platform.osname !== 'android') {
+			var healthkit = require('ti.healthkit');
+			var tblTestProperty = makeRow('Test healthkit');
+			$.settingsView.tblContainer.appendRow(tblTestProperty);
+			tblTestProperty.addEventListener('click', function() {
+				healthkit.authoriseHealthKit(function(response) {
+					Ti.API.info('healthkit authoriseHealthKit got response!');
 					Ti.API.info(response);
+					Ti.API.info('message: ' + response.message);
+	
+					var from = DateTimeHelper.localise('1970-01-01');
+					var to = DateTimeHelper.today();
+	
+					healthkit.querySteps(from, to, function(response) {
+						Ti.API.info('healthkit query steps got response!');
+						Ti.API.info(response);
+					});
 				});
 			});
-		});
+		}
 	}
 	
 	//Set child view event handlers
 	$.settingsView.tblRowLogout.addEventListener('click', tblRowLogout_click);
 	$.settingsView.tblRowGoalSteps.addEventListener('click', tblRowGoalSteps_click);
 	$.settingsView.tblRowIntegrations.addEventListener('click', tblRowIntegrations_click);
+
+	// TEMP: Remove the integrations row on Android, until we add some integrations for Android
+	if (Ti.Platform.osname === 'android') {
+		var row = $.settingsView.tblRowIntegrations;
+		$.settingsView.tblContainer.deleteRow(row);
+	}
 }
 
 function window_focus() {

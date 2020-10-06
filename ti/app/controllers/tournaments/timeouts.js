@@ -41,7 +41,7 @@ function window_open() {
     $.timeoutsView.lblStartDate.text = DateTimeHelper.getDateLabel(args.tournament.tournamentStartDate, true);
     $.timeoutsView.lblDuration.text = args.tournament.tournamentWeeks + " weeks";
     $.timeoutsView.lblEndDate.text = DateTimeHelper.getDateLabel(args.tournament.tournamentEndDate, true);
-    $.timeoutsView.lblTimeLeft.text = DateTimeHelper.getTimeBetween(args.tournament.tournamentEndDate, new Date());
+    $.timeoutsView.lblTimeLeft.text = DateTimeHelper.getTimeBetween(args.tournament.tournamentEndDate, DateTimeHelper.now());
     $.timeoutsView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 }
 

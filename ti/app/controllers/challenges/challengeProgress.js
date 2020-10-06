@@ -12,12 +12,8 @@ function populateTable() {
     var challenge = ChallengeData.lastJoinedChallenge.challenge;
     var task = ChallengeData.lastJoinedChallenge.task;
 
-    //Ti.API.info('challenge', challenge);
-    //Ti.API.info('task', task);
-
-    var today = DateTimeHelper.localise(new Date());
-    var startDate = DateTimeHelper.localise(new Date(task.challenge.start_date));
-    var endDate = DateTimeHelper.localise(new Date(task.challenge.end_date));
+    var startDate = DateTimeHelper.parseLocal(task.challenge.start_date);
+    var endDate = DateTimeHelper.parseLocal(task.challenge.end_date);
 
     Ti.API.info('Populating goal steps');
     $.challengeProgressView.lblGoalSteps.text = 
@@ -35,9 +31,8 @@ function populateTable() {
     $.challengeProgressView.lblEndDate.text = 
         DateTimeHelper.getDateLabel(endDate, true);
 
-    // Calculate day diff between today and task.end_date.
-    
-    var timeLeft = DateTimeHelper.getTimeBetween(endDate, today, false); // don't show hours
+    // Calculate day diff between now and task.end_date.
+    var timeLeft = DateTimeHelper.getTimeBetween(endDate, DateTimeHelper.now(), false); // don't show hours
     $.challengeProgressView.lblTimeLeft.text = timeLeft;
 
     // Remaining steps
@@ -49,7 +44,7 @@ function populateTable() {
         FormatHelper.formatNumber(remainingSteps);
 
     // Required steps / day
-    var remainingDays = DateTimeHelper.getDaysBetween(endDate, today);
+    var remainingDays = DateTimeHelper.getDaysBetween(endDate, DateTimeHelper.today());
     Ti.API.info('Remaining days: ' + remainingDays);
 
     var stepsPerDay = remainingDays > 0 ?
@@ -78,10 +73,11 @@ function promptForNewChallenge() {
 
     Ti.API.info('available challenge', ChallengeData.availableChallenge);
 
-    var today = new Date(); // debug: set this to be the last day of the month to
-                            // test the case where the available challenge isn't ready yet
+    var today = DateTimeHelper.today();
+        // debug: set this to be the last day of the month to
+        // test the case where the available challenge isn't ready yet
                             
-    var challengeStartDate = new Date(ChallengeData.availableChallenge.start_date);
+    var challengeStartDate = DateTimeHelper.parseLocal(ChallengeData.availableChallenge.start_date);
 
     Ti.API.info('today', today);
     Ti.API.info('challenge start', challengeStartDate);

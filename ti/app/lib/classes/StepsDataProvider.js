@@ -34,7 +34,7 @@ function JsonModel(model) {
 		this.stepsWalked = model.get('steps_walked');
 		this.stepsTotal = model.get('steps_total');
 		
-		this.stepsDate = new Date(model.get('steps_date'));
+		this.stepsDate = DateTimeHelper.parseLocal(model.get('steps_date'));
 		
 		if (!DateTimeHelper.isValidDate(this.stepsDate)) {
 			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
@@ -49,9 +49,11 @@ function JsonModel(model) {
 		
 		this.lastUpdatedOn = new Date();
 		this.lastUpdatedOn.setTime(model.get('last_updated_on'));
+		this.lastUpdatedOn = DateTimeHelper.localise(this.lastUpdatedOn);
 		
 		this.lastSyncedOn = new Date();
 		this.lastSyncedOn.setTime(model.get('last_synced_on'));
+		this.lastSyncedOn = DateTimeHelper.localise(this.lastSyncedOn);
 
 		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
 			Ti.API.error(this.lastUpdatedOn + " is not a lastUpdatedOn date. Setting to undefined. Source = " + model.get('last_updated_on'));
@@ -269,8 +271,7 @@ StepsDataProvider.prototype.saveAsSynced = function(modelId) {
 		return item.id == modelId;
 	})[0];
 	
-	record.lastSyncedOn = new Date(); //now 
-	
+	record.lastSyncedOn = DateTimeHelper.today();
 	this.writeSingle(record); //save the record
 };
 

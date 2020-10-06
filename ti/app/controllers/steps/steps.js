@@ -213,13 +213,13 @@ function importSteps() {
 			deferred.resolve();
 		})
 		.catch(function(response) {
-				Alloy.createWidget("com.mcongrove.toast", null, {
-					text: response.message,
-					duration: 2000,
-					view: $.steps,
-					theme: "error"
-				});		
-				deferred.resolve();
+			Alloy.createWidget("com.mcongrove.toast", null, {
+				text: response.message,
+				duration: 2000,
+				view: $.steps,
+				theme: "error"
+			});		
+			deferred.resolve();
 		});
 
 	return deferred.promise;
@@ -230,7 +230,7 @@ function importSteps() {
  * @memberof Controllers.Steps
  */
 function populateRows() {	
-	var today = new Date();
+	var today = DateTimeHelper.today();
 	Ti.API.info("Today: ", today);
 	
 	addDateRow("Today", today);
@@ -251,7 +251,7 @@ function window_open() {
 	if(Ti.Platform.osname !== "android") {
 		setiOSNavButtons();
 	}
-	
+
 	importSteps()
 		.then(function() {
 			populateRows(); // populate the rows AFTER importing

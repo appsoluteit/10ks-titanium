@@ -8,7 +8,9 @@
  */
 
 var APIHelper = require('helpers/APIHelper');
+var DateTimeHelper = require('helpers/DateTimeHelper');
 var q = require('q');
+
 //Array.prototype.sort = require('polyfills/array.prototype.sort');
 
 /**
@@ -88,8 +90,8 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentId: item.id,
                     tournamentName: item.name,
                     tournamentWeeks: item.weeks,
-                    tournamentStartDate: new Date(item.date_started),
-                    tournamentEndDate: new Date(item.end_date),
+                    tournamentStartDate: DateTimeHelper.parseLocal(item.date_started),
+                    tournamentEndDate: DateTimeHelper.parseLocal(item.end_date),
                     type: 'timeout',
                     teams: item.timeout_teams,
                     teamSteps: teamSteps
@@ -116,7 +118,7 @@ TournamentsProvider.prototype.fetch = function(page) {
                     tournamentTime: item.tournament.default_time,
                     tournamentTotalSteps: item.tournament.total_steps,
                     tournamentDistance: item.tournament.distance_metres,
-                    tournamentStartDate: new Date(item.date_started),
+                    tournamentStartDate: DateTimeHelper.parseLocal(item.date_started),
 
                     teamSteps: teamSteps,
                     type: 'race',
