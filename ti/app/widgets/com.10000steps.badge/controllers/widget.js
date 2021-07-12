@@ -25,18 +25,18 @@ var args = $.args;
 		var iconWidth = iconImage.width;
 		iconImage = null;
 		
-		Ti.API.debug("Icon width: " + iconWidth);	
+		console.log("Icon width: " + iconWidth);	
 		
-		var badgeSize = iconWidth / 3;
+		var badgeSize = iconWidth / 10;
 		
-		Ti.API.debug("Badge size: " + badgeSize);
-		$.badge.setHeight(badgeSize + 'dp');
-		$.badge.setWidth(badgeSize + 'dp');
-		$.badge.setBorderRadius(badgeSize / 2 + 'dp');	
+		console.log("Badge size: " + badgeSize);
+		$.badge.setHeight(badgeSize);
+		$.badge.setWidth(badgeSize);
+		$.badge.setBorderRadius(badgeSize / 2);	
 		
 		//Set the counter font to be 1/5 of the icon width on iOS
 		$.counter.font = {
-			fontSize: iconWidth / 5
+			fontSize: 'small' // badgeSize / 5
 		};			
 	}
 	
@@ -61,13 +61,14 @@ var args = $.args;
 			}
 		}
 		else {
-			if(counter > 0) {
-				$.badge.visible = true;	
-			}
-			else {
-				$.badge.visible = false;
-			}
+			// if(counter > 0) {
+			// 	$.badge.visible = true;	
+			// }
+			// else {
+			// 	$.badge.visible = false;
+			// }
 			
+			$.badge.visible = true; // debug
 			$.counter.text = counter;	
 		}
 	};
