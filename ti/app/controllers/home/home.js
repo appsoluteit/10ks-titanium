@@ -298,11 +298,12 @@ function window_load() {
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 
 	Ti.API.info("Number of unsynced steps: " + numSteps);
-	if(Ti.Platform.osname === "android") {
-		if(numSteps > 99) {
-			numSteps = 99;
-		}
 
+	if(numSteps > 99) {
+		numSteps = 99;
+	}
+
+	if(Ti.Platform.osname === "android") {
 		if(numSteps === 0) {
 			$.homeView.btnStepLog.image = '/common/home/v2/steps@4x.png';
 		}
