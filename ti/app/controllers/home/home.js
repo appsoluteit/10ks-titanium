@@ -271,24 +271,24 @@ function window_load() {
 		};
 	}
 	else {
-	var FirebaseCore = require('firebase.core');	
-	var FirebaseAnalytics = require('firebase.analytics');
+		var FirebaseCore = require('firebase.core');	
+		var FirebaseAnalytics = require('firebase.analytics');
 
-	// Configure Firebase
-	FirebaseCore.configure();
-	
-	if(Alloy.Globals.IsLoggedIn) {
-		FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
-	}
-	
-	Alloy.Globals.tracker = {
-		addScreenView: function(screenName) {
-			FirebaseAnalytics.setScreenNameAndScreenClass({
-				screenName: screenName,
-				screenClass: screenName
-			});	
+		// Configure Firebase
+		FirebaseCore.configure();
+		
+		if(Alloy.Globals.IsLoggedIn) {
+			FirebaseAnalytics.userID = Alloy.Globals.AuthKey;
 		}
-	};
+		
+		Alloy.Globals.tracker = {
+			addScreenView: function(screenName) {
+				FirebaseAnalytics.setScreenNameAndScreenClass({
+					screenName: screenName,
+					screenClass: screenName
+				});	
+			}
+		};
 	}
 
 	Alloy.Globals.tracker.addScreenView('Home');
@@ -298,11 +298,12 @@ function window_load() {
 	var numSteps = Alloy.Globals.Steps.readWhereNeedsSyncing().length;
 
 	Ti.API.info("Number of unsynced steps: " + numSteps);
-	if(Ti.Platform.osname === "android") {
-		if(numSteps > 99) {
-			numSteps = 99;
-		}
 
+	if(numSteps > 99) {
+		numSteps = 99;
+	}
+
+	if(Ti.Platform.osname === "android") {
 		if(numSteps === 0) {
 			$.homeView.btnStepLog.image = '/common/home/v2/steps@4x.png';
 		}
