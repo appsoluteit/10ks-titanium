@@ -61,14 +61,14 @@ var args = $.args;
 			}
 		}
 		else {
-			// if(counter > 0) {
-			// 	$.badge.visible = true;	
-			// }
-			// else {
-			// 	$.badge.visible = false;
-			// }
+			if(counter > 0) {
+				$.badge.visible = true;	
+			}
+			else {
+				$.badge.visible = false;
+			}
 			
-			$.badge.visible = true; // debug
+			//$.badge.visible = true; // debug
 			$.counter.text = counter;	
 		}
 	};
