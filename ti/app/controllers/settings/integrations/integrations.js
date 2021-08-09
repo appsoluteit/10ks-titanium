@@ -8,7 +8,7 @@
 	if (Ti.Platform.osname !== 'android') {
 		Ti.API.info('Making healthkit row');
 
-		var healthKitRow = makeRow('HealthKit');
+		var healthKitRow = makeRow('Apple Health');
 		healthKitRow.addEventListener('click', tblRowHealthKit_click);
 		$.integrationsView.tblContainer.appendRow(healthKitRow);
 	}

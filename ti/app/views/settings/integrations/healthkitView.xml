@@ -8,7 +8,7 @@
 						<View layout="horizontal">
 							<View width="68%" layout="vertical">
                                 <View layout="horizontal" height="Ti.UI.SIZE">
-                                    <Label class="row-label">Enable HealthKit</Label>
+                                    <Label class="row-label">Enable Apple Health</Label>
                                     <Button
                                         id="btnHealthKitHelp"
                                         image="/common/icons/question-mark.png">

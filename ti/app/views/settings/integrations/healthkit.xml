@@ -1,7 +1,7 @@
 <Alloy>
 	<!-- iOS -->
 	<NavigationWindow id="healthkit" platform="ios">
-		<Window title="HealthKit" onOpen="window_open">
+		<Window title="Apple Health" onOpen="window_open">
 			<LeftNavButton>
 				<Button 
 					id="btnBack" 
@@ -17,7 +17,7 @@
 	<!-- Android -->
 	<Window id="healthkit" platform="android" onOpen="window_open">
 		<ActionBar 
-			title="HealthKit" 
+			title="Apple Health" 
 			displayHomeAsUp="true" 
 			homeButtonEnabled="true" 
 			onHomeIconItemSelected="btnBack_click"></ActionBar>
