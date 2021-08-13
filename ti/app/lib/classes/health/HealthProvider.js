@@ -84,14 +84,18 @@ function importSteps(customFrom) {
                             activityPart: 0,
                             moderateMins: 0,
                             vigorousMins: 0,
-                            stepsWalked: steps,
-                            stepsTotal: steps,
+                            stepsWalked: 0,
+                            stepsTotal: 0,
                             stepsDate: date
                         };
-        
-                        Ti.API.info('Saving item from health provider', item);
-                        Alloy.Globals.Steps.writeSingle(item);
                     }
+
+                    // We need to increment each time, as the step records imported from the health provider may have multiple entries for each day
+                    item.stepsWalked += steps; 
+                    item.stepsTotal += steps;
+
+                    Ti.API.info('Saving item from health provider', item);
+                    Alloy.Globals.Steps.writeSingle(item);
                 });
     
                 Ti.App.Properties.setString('lastSyncDate', to.toISOString());
