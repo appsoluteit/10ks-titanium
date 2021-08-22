@@ -9,8 +9,6 @@ var healthProvider = require('classes/health/HealthProvider');
 var FormatHelper = require('helpers/FormatHelper');
 var DateTimeHelper = require('helpers/DateTimeHelper');
 
-var importFromDate;
-
 function window_open() {
     Ti.API.info('Healthkit window open.');
 
@@ -39,23 +37,6 @@ function window_open() {
          dialog.show();
     });
 
-    // If the user has never imported before, wire up events
-    if (Ti.App.Properties.getString('lastSyncDate', null) == null) {
-        $.healthkitView.vwImportStepsFrom.addEventListener('click', function() {
-            var dialog = Ti.UI.createAlertDialog({
-                cancel: 1,
-                buttonNames: ['OK'],
-                message: 'Choose when you would like to import your steps from when this feature is enabled. Note that choosing an older date will take longer to import.',
-                title: 'Import steps from'
-             });
-             dialog.show();
-        });
-    
-        $.healthkitView.pkFirstImportPicker.addEventListener('change', function(event) {
-            importFromDate = event.value;
-        });
-    }
-
     populateRows();
  }
 
@@ -63,17 +44,6 @@ function window_open() {
     var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
     if (lastSyncDate == null) {
         $.healthkitView.lblLastImportDate.text = 'Never';
-        $.healthkitView.vwImportStepsFrom.visible = true;
-        $.healthkitView.vwFirstImportPicker.visible = true;
-
-        // Set the default first import date to 1 week in the past
-        // Set the minimum first import date to 12 weeks (3 months) in the past
-        var today = DateTimeHelper.today();
-        importFromDate = DateTimeHelper.addWeeks(today, -1);;
-
-        $.healthkitView.pkFirstImportPicker.maxDate = today;
-        $.healthkitView.pkFirstImportPicker.minDate = DateTimeHelper.addWeeks(today, -12);
-        $.healthkitView.pkFirstImportPicker.value = importFromDate;
     }
     else {
         Ti.API.info('Last synced on ', lastSyncDate);
@@ -86,10 +56,6 @@ function window_open() {
         var lastSyncTimeLabel = FormatHelper.formatTime(lastSyncDateDt);
     
         $.healthkitView.lblLastImportDate.text = lastSyncDateLabel + ' at ' + lastSyncTimeLabel;
-        $.healthkitView.vwImportStepsFrom.visible = false;
-        $.healthkitView.vwFirstImportPicker.visible = false;
-
-        importFromDate = lastSyncDateDt;
     }
  }
 
@@ -106,26 +72,32 @@ function window_open() {
                 theme: "success"
             });		
 
-            healthProvider
-                .importSteps(importFromDate)
-                .then(function() {
-                    Alloy.createWidget("com.mcongrove.toast", null, {
-                        text: 'HealthKit import was successful.',
-                        duration: 2000,
-                        view: $.healthkit,
-                        theme: "success"
-                    }); 
+            // Since we're not importing any steps from before the feature is enabled, no need to import here. Just save the last sync date as today.
+            var now = DateTimeHelper.now();
+            Ti.App.Properties.setString('lastSyncDate', now.toISOString());
 
-                    populateRows();
-                })
-                .catch(function(response) {
-                    Alloy.createWidget("com.mcongrove.toast", null, {
-                        text: response.message,
-                        duration: 2000,
-                        view: $.healthkit,
-                        theme: "error"
-                    });
-                });
+            populateRows();
+            
+            // healthProvider
+            //     .importSteps()
+            //     .then(function() {
+            //         Alloy.createWidget("com.mcongrove.toast", null, {
+            //             text: 'HealthKit import was successful.',
+            //             duration: 2000,
+            //             view: $.healthkit,
+            //             theme: "success"
+            //         }); 
+
+            //         populateRows();
+            //     })
+            //     .catch(function(response) {
+            //         Alloy.createWidget("com.mcongrove.toast", null, {
+            //             text: response.message,
+            //             duration: 2000,
+            //             view: $.healthkit,
+            //             theme: "error"
+            //         });
+            //     });
         }
         else {
             Alloy.createWidget("com.mcongrove.toast", null, {

@@ -30,7 +30,7 @@ function getProvider() {
     }
 }
 
-function importSteps(customFrom) {
+function importSteps() {
     var provider = getProvider();
     if (provider == null) {
         console.warn('Health provider is null. exiting...');
@@ -43,22 +43,25 @@ function importSteps(customFrom) {
         // such that if a step entry looks like it already exists, it's not written again. 
         // We can't use the new /steps/latest endpoint here, since that could cause steps to not get synced if the user syncs first,
         // then imports second.
-        var lastSyncDate = Ti.App.Properties.getString('lastSyncDate', null);
+        var lastSyncDateStr = Ti.App.Properties.getString('lastSyncDate', null);
 
-		var defaultFrom = DateTimeHelper.parseLocal(lastSyncDate);
+		var from = new Date(lastSyncDateStr);
         var to = DateTimeHelper.now();
-        var twoWeeksAgo = DateTimeHelper.localise(new Date(to.getTime() - (1000*60*60*24*14))); // milliseconds * seconds * minutes * hours * days
+        var twoWeeksAgo = new Date(to.getTime() - (1000*60*60*24*14)); // milliseconds * seconds * minutes * hours * days
 
-        Ti.API.info('Importing steps from: ', defaultFrom);
+        Ti.API.info('last sync date: ', lastSyncDateStr);
+        Ti.API.info('Importing steps from: ', from);
         Ti.API.info('2 weeks ago:', twoWeeksAgo);
+        Ti.API.info('Importing steps to: ', to);
 
-        if (defaultFrom < twoWeeksAgo) {
+        if (from < twoWeeksAgo) {
+            // If the last import was more than two weeks ago, show a spinner as this may take a while.
             Ti.API.info('Showing spinner');
             Alloy.Globals.Spinner.show('Importing steps...');
         }
 
         return provider
-            .querySteps(customFrom || defaultFrom, to)
+            .querySteps(from, to)
             .then(function(response) {
                 // If the result is a string, assume its JSON and parse it
                 if (typeof(response.result) === 'string') {
@@ -68,7 +71,7 @@ function importSteps(customFrom) {
                 Ti.API.info('HealthProvider processing results. Count = ' + response.result.length);
 
                 response.result.forEach(element => {
-                    var date = DateTimeHelper.parseLocal(element.eventDate);
+                    var date = new Date(element.eventDate); //DateTimeHelper.parseLocal(element.eventDate);
                     var steps = element.steps;
     
                     console.log('HealthProvider processing item', element);

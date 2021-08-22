@@ -33,16 +33,6 @@
 							</View>
 						</View>                        
                     </TableViewRow>
-
-					<TableViewRow>
-						<View layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" id="vwImportStepsFrom">
-							<Label class="row-label">Import steps from</Label>
-							<Button
-								id="btnImportFromHelp"
-								image="/common/icons/question-mark.png">
-							</Button>
-						</View>
-					</TableViewRow>
 				</TableView>
 			</View>
 
