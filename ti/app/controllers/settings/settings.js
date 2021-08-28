@@ -75,6 +75,9 @@ function window_open() {
 		$.settingsView.tblContainer.appendRow(tblRowTests);
 		tblRowTests.addEventListener('click', tblRowTests_click);
 		
+		var tblRowDump = makeRow('Dump steps');
+		$.settingsView.tblContainer.appendRow(tblRowDump);
+		tblRowDump.addEventListener('click', tblRowDump_click);
 		var tblRowReset = makeRow("Reset");
 		$.settingsView.tblContainer.appendRow(tblRowReset);
 		tblRowReset.addEventListener('click', tblRowReset_click);
@@ -262,4 +265,9 @@ function tblRowReset_click() {
 function tblRowIntegrations_click() {
 	var win = Alloy.createController('settings/integrations/integrations').getView();
 	win.open();
+}
+
+function tblRowDump_click() {
+	console.log('Dumping steps to console...');
+	Alloy.Globals.Steps.dump();
 }

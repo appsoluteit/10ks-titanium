@@ -40,20 +40,21 @@ function JsonModel(model) {
 			Ti.API.error(this.stepsDate + " is not a steps date. Setting to undefined. Source = " + model.get('steps_date'));
 			this.stepsDate = undefined;
 		}
-		else {
-			this.stepsDate = DateTimeHelper.localise(this.stepsDate);	
-		}
+		// else {
+			// Don't localise twice!
+		// 	this.stepsDate = DateTimeHelper.localise(this.stepsDate);	
+		// }
 		
 		//the engine doesn't like creating a date via ticks
 		//passed to the constructor. Do it this way.
 		
 		this.lastUpdatedOn = new Date();
-		this.lastUpdatedOn.setTime(model.get('last_updated_on'));
-		this.lastUpdatedOn = DateTimeHelper.localise(this.lastUpdatedOn);
+		this.lastUpdatedOn.setTime(model.get('last_updated_on')); // These ticks should already be in the local timezone. No need to localise again.
+		//this.lastUpdatedOn = DateTimeHelper.localise(this.lastUpdatedOn);
 		
 		this.lastSyncedOn = new Date();
 		this.lastSyncedOn.setTime(model.get('last_synced_on'));
-		this.lastSyncedOn = DateTimeHelper.localise(this.lastSyncedOn);
+		//this.lastSyncedOn = DateTimeHelper.localise(this.lastSyncedOn);
 
 		if (!DateTimeHelper.isValidDate(this.lastUpdatedOn)) {
 			Ti.API.error(this.lastUpdatedOn + " is not a lastUpdatedOn date. Setting to undefined. Source = " + model.get('last_updated_on'));
@@ -151,6 +152,13 @@ StepsDataProvider.prototype.readByDate = function(dateObj) {
 		return DateTimeHelper.areDatesEqual(item.stepsDate, dateObj);
 	})[0];
 };
+
+/**
+ * @description Writes all steps to console
+ */
+StepsDataProvider.prototype.dump = function() {
+	console.log(JSON.stringify(this.models));
+}
 
 /**
  * @description Returns an array of step records which either have not been synced yet or have been updated since their last sync.

@@ -43,9 +43,11 @@ function importSteps() {
         // such that if a step entry looks like it already exists, it's not written again. 
         // We can't use the new /steps/latest endpoint here, since that could cause steps to not get synced if the user syncs first,
         // then imports second.
+
+        // We'll need to localise these dates, after all. For GMT +10, they should all be yesterday at 14:00 UTC time.
         var lastSyncDateStr = Ti.App.Properties.getString('lastSyncDate', null);
 
-		var from = new Date(lastSyncDateStr);
+		var from = new Date(lastSyncDateStr); // This should always be an ISO string, so okay to init with new Date(isoString)
         var to = DateTimeHelper.now();
         var twoWeeksAgo = new Date(to.getTime() - (1000*60*60*24*14)); // milliseconds * seconds * minutes * hours * days
 
@@ -71,7 +73,8 @@ function importSteps() {
                 Ti.API.info('HealthProvider processing results. Count = ' + response.result.length);
 
                 response.result.forEach(element => {
-                    var date = new Date(element.eventDate); //DateTimeHelper.parseLocal(element.eventDate);
+                    var date = DateTimeHelper.parseLocal(element.eventDate); // Use parseLocal to make this relative to your timezone. 
+                                                                             // Eg: for GMT +10, this should be at 1400 the previous day with a +10 timezone offset
                     var steps = element.steps;
     
                     console.log('HealthProvider processing item', element);
@@ -96,6 +99,7 @@ function importSteps() {
                     // We need to increment each time, as the step records imported from the health provider may have multiple entries for each day
                     item.stepsWalked += steps; 
                     item.stepsTotal += steps;
+                    item.lastUpdatedOn = new Date(); // Update the lastUpdatedOn timestamp, so it appears red and will be synced to the API
 
                     Ti.API.info('Saving item from health provider', item);
                     Alloy.Globals.Steps.writeSingle(item);

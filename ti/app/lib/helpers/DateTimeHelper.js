@@ -312,7 +312,8 @@ function parseLocal(dateStr) {
  * Returns a localised instance of the current date and time
  */
 function today() {
-	return localise(new Date());
+	//return localise(new Date());
+	return midnight();
 }
 
 function now() {

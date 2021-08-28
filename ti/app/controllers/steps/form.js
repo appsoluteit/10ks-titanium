@@ -29,7 +29,8 @@ function btnDone_click() {
 	if(isDirty) {			
 		isDirty = false;
 		
-		item.lastUpdatedOn = DateTimeHelper.today();
+		// Set lastUpdatedOn to the current local time
+		item.lastUpdatedOn = new Date(); //DateTimeHelper.today();
 		item.stepsDate = args.date;
 		
 		Alloy.Globals.Steps.writeSingle(item);
