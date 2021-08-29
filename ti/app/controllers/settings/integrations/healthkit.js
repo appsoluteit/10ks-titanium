@@ -72,9 +72,13 @@ function window_open() {
                 theme: "success"
             });		
 
-            // Since we're not importing any steps from before the feature is enabled, no need to import here. Just save the last sync date as today.
-            var now = DateTimeHelper.now();
-            Ti.App.Properties.setString('lastSyncDate', now.toISOString());
+            // Since we're not importing any steps from before the feature is enabled, no need to import here. 
+            // Just save the last sync date as at midnight today (so all of today's steps will be imported)
+            var syncAfter = DateTimeHelper.midnight();
+            var syncAfterStr = syncAfter.toISOString();
+            Ti.App.Properties.setString('lastSyncDate', syncAfterStr);
+
+            console.log('Syncing after: ' + syncAfterStr);
 
             populateRows();
             

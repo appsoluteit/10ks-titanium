@@ -160,18 +160,20 @@ StepsProvider.prototype.sync = function(rootView, options) {
      			vigorousMins: item.vigorous,
      			moderateMins: item.moderate,
      			stepsDate: DateTimeHelper.parseLocal(item.steps_date),
-     			lastSyncedOn: DateTimeHelper.today(),
+     			lastSyncedOn: new Date(), //DateTimeHelper.today(),
      			lastUpdatedOn: null
      		};
 
-			//Overwrite any existing items
+			// Since we POST before we GET, this shouldn't overwrite local items. The local data should always be the source of truth.
+			// The only exception here is if the local step record wasn't updated, but the record on the API side was. In that case,
+			// we update the local record. I think that's reasonable.
 			var existingItem = Alloy.Globals.Steps.readByDate(json.stepsDate);
 			if(existingItem) {
-				json.id = existingItem.id;	
+				json.id = existingItem.id;
 			}
 			
 			Ti.API.info("Writing date ", item.steps_date);
-     		Alloy.Globals.Steps.writeSingle(json);	
+			Alloy.Globals.Steps.writeSingle(json);	
      	});
 		 
 		Ti.API.info('Calling onComplete');

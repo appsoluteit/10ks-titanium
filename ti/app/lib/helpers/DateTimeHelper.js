@@ -23,6 +23,7 @@ module.exports.localise = localise;
 module.exports.parseLocal = parseLocal;
 module.exports.today = today;
 module.exports.now = now;
+module.exports.midnight = midnight;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -311,9 +312,19 @@ function parseLocal(dateStr) {
  * Returns a localised instance of the current date and time
  */
 function today() {
-	return localise(new Date());
+	//return localise(new Date());
+	return midnight();
 }
 
 function now() {
 	return new Date();
+}
+
+/**
+ * Returns a date instance set to midnight, today.
+ * Eg: if today is 25/08/2021, it will return 25/08/2021 00:00:00.
+ */
+function midnight() {
+	var now = new Date();
+	return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0); // hours, minutes, seconds, milliseconds = 0
 }
