@@ -54,3 +54,6 @@ function showMessage(message) {
 
 exports.loadChart = loadChart;
 exports.showMessage = showMessage;
+
+$.chartWebView.loadChart = loadChart;
+$.chartWebView.showMessage = showMessage;
