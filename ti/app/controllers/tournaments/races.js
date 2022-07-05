@@ -20,7 +20,7 @@ function window_open() {
     // Populate the labels
     $.racesView.lblGoal.text = FormatHelper.formatNumber(args.tournament.tournamentTotalSteps) + " steps";
     $.racesView.lblDistance.text = FormatHelper.formatNumber(args.tournament.tournamentDistance) + "m";
-    $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(DateTimeHelper.parseLocal(args.tournament.tournamentStartDate), true);
+    $.racesView.lblStartDate.text = DateTimeHelper.getDateLabel(args.tournament.tournamentStartDate, true);
     $.racesView.lblTeamTotalSteps.text = FormatHelper.formatNumber(args.tournament.teamSteps);
 
     var percentComplete = args.tournament.teamSteps / args.tournament.tournamentTotalSteps;
