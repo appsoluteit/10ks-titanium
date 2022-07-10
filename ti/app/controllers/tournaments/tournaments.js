@@ -95,7 +95,7 @@ function loadTournaments() {
 
 			labelView.add(Ti.UI.createLabel({
 				left: '10dp',
-				text: DateTimeHelper.getDateLabel(DateTimeHelper.parseLocal(element.tournamentStartDate), true),
+				text: DateTimeHelper.getDateLabel(element.tournamentStartDate, true),
 				color: 'gray'
 			}));
 
